@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  background: #040718;
+}
+#container {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  padding: 20px 0;
+}
+#hard_edge {
+  margin: 0 0 0 580px;
+  border-left: 1px solid #253739;
+  background: #121427;
+  position: absolute;
+  left: 410px; right: 0; bottom: 0; top: 0;
+}
+  #hard_edge_overlay {
+    background: #121427;
+    opacity: 0.3;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 100;
+  }
+#docs {
+  position: relative;
+  width: 400px;
+  margin: 0;
+  font-family: Arial;
+  font-size: 13px;
+  line-height: 18px;
+}
+  .comment {
+    margin-left: 10px;
+    position: absolute;
+    color: #fff;
+    width: 390px;
+  }
+    .comment_button {
+      height: 18px;
+      opacity: 0.1;
+      background: #dedede;
+      z-index: 100;
+      position: absolute;
+      left: 411px; top: 12px;
+      cursor: pointer;
+      width: 1000px;
+    }
+    .comment_inner {
+      padding: 10px;
+      width: 369px;
+      border: 1px solid #253739;
+    }
+      .comment_background {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: #dedede;
+        opacity: 0.1;
+      }
+#code {
+  position: relative;
+  margin: 0 0 0 410px;
+  font-size: 12px;
+  font-family: Monaco, monospace;
+  line-height: 17px;
+  color: #ccc;
+  z-index: 50;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Docco</title>
+  <style type="text/css">
+    <%= @styles %>
+  </style>
+  <script type="text/javascript">
+    window.toggleComment = function(top) {
+      var inner = document.getElementById('comment_inner_' + top);
+      inner.style.display = inner.style.display == 'none' ? 'block' : 'none';
+    };
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div id="hard_edge">
+      <div id="hard_edge_overlay"></div>
+    </div>
+    <div id="docs">
+      <% @comments.each do |comment| %>
+        <% top = comment.top %>
+        <div class="comment" id="comment_<%= top %>" style="top: <%= top %>px;">
+          <div class="comment_button" onclick="toggleComment('<%= top %>');"></div>
+          <div class="comment_inner" id="comment_inner_<%= top %>" style="display:none;">
+            <div class="comment_background"></div>
+            <%= comment.text %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <pre id="code"><%= @code.join %></pre>
+  </div>
+</body>
+</html>

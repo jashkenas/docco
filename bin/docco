@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require "#{File.dirname(__FILE__)}/../lib/docco"
+
+Docco::CommandLine.new.run
