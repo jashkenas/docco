@@ -1,8 +1,10 @@
-fs:   require 'fs'
-path: require 'path'
+# External dependencies, including Showdown.js
+fs:       require 'fs'
+path:     require 'path'
+showdown: require(process.cwd() + '/vendor/showdown').Showdown
 
 # Does the line begin with a comment?
-comment_matcher: /^\s*#/
+comment_matcher: /^\s*#\s?/
 
 # Compute the destination HTML path for an input source file.
 destination: (filepath) ->
@@ -10,18 +12,21 @@ destination: (filepath) ->
 
 # Wrap the HTML block in our template.
 apply_template: (title, html) ->
-  fs.readFileSync('resources/template.html')
-    .replace 'DOCUMENTATION', html
-    .replace 'TITLE', title
+  fs.readFileSync(process.cwd() + '/resources/template.html')
+    .replace('DOCUMENTATION', html)
+    .replace('TITLE', title)
 
-# Highlight a chunk of CoffeeScript code, using Pygments.
+# Highlight a chunk of CoffeeScript code, using **Pygments**, and run the text of
+# its corresponding comment through **Markdown**, using the **Github-flavored-Markdown**
+# modification of **Showdown.js**.
 highlight: (section, callback) ->
   pygments: process.createChildProcess 'pygmentize', ['-l', 'coffee-script', '-f', 'html']
   pygments.addListener 'output', (result) ->
     if result
-      section.html: result
+      section.code_html:    result
+      section.comment_html: showdown.makeHtml section.comment_text
       callback()
-  pygments.write section.code
+  pygments.write section.code_text
   pygments.close()
 
 # Parse out comments and the code that follows into an individual section.
@@ -35,8 +40,8 @@ parse: (code) ->
     if line.match comment_matcher
       if has_code
         sections.push {
-          comment: comment_text
-          code:    code_text
+          comment_text: comment_text
+          code_text:    code_text
         }
         has_code:     false
         comment_text: ''
@@ -53,13 +58,13 @@ generate_html: (source, sections) ->
   title: path.basename(source)
   html: '<h1>' + title + '</h1>'
   for section in sections
-    html += '<div class="doc">'  + section.comment + '</div>' +
-            '<div class="code">' + section.html    + '</div>' +
+    html += '<div class="doc">'  + section.comment_html + '</div>' +
+            '<div class="code">' + section.code_html    + '</div>' +
             '<div class="divider"></div>'
   fs.writeFile destination(source), apply_template(title, html)
 
 # Generate the HTML documentation for a CoffeeScript source file.
-document: (source) ->
+generate_documentation: (source) ->
   code:     fs.readFileSync source
   sections: parse code
   counter:  sections.length
@@ -69,4 +74,4 @@ document: (source) ->
       generate_html source, sections if counter is 0
 
 # For each source file passed in as an argument, generate the documentation.
-document source for source in process.ARGV
+generate_documentation source for source in process.ARGV
