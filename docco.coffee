@@ -9,8 +9,10 @@ destination: (filepath) ->
   path.basename(filepath, path.extname(filepath)) + '.html'
 
 # Wrap the HTML block in our template.
-apply_template: (html) ->
-  fs.readFileSync('resources/template.html').replace 'DOCUMENTATION', html
+apply_template: (title, html) ->
+  fs.readFileSync('resources/template.html')
+    .replace 'DOCUMENTATION', html
+    .replace 'TITLE', title
 
 # Highlight a chunk of CoffeeScript code, using Pygments.
 highlight: (section, callback) ->
@@ -48,12 +50,13 @@ parse: (code) ->
 # Once all of the code is finished highlighting, we can generate the HTML file
 # and write out the documentation.
 generate_html: (source, sections) ->
-  html: '<h1>' + path.basename(source) + '</h1>'
+  title: path.basename(source)
+  html: '<h1>' + title + '</h1>'
   for section in sections
     html += '<div class="doc">'  + section.comment + '</div>' +
             '<div class="code">' + section.html    + '</div>' +
             '<div class="divider"></div>'
-  fs.writeFile destination(source), apply_template(html)
+  fs.writeFile destination(source), apply_template(title, html)
 
 # Generate the HTML documentation for a CoffeeScript source file.
 document: (source) ->
