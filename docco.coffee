@@ -8,11 +8,11 @@ comment_matcher: /^\s*#\s?/
 
 # Compute the destination HTML path for an input source file.
 destination: (filepath) ->
-  path.basename(filepath, path.extname(filepath)) + '.html'
+  'output/' + path.basename(filepath, path.extname(filepath)) + '.html'
 
 # Wrap the HTML block in our template.
 apply_template: (title, html) ->
-  fs.readFileSync(process.cwd() + '/resources/template.html')
+  fs.readFileSync('./' + __dirname + '/resources/template.html')
     .replace('DOCUMENTATION', html)
     .replace('TITLE', title)
 
@@ -50,6 +50,10 @@ parse: (code) ->
     else
       has_code: true
       code_text += line + '\n'
+  sections.push {
+    comment_text: comment_text
+    code_text:    code_text
+  }
   sections
 
 # Once all of the code is finished highlighting, we can generate the HTML file
