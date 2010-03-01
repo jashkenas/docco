@@ -4,31 +4,44 @@ body {
   font-size: 16px;
   line-height: 24px;
   color: #252519;
+  margin: 0; padding: 0;
 }
 p {
   margin: 0;
 }
+h1 {
+  margin: 50px 0 0 0;
+}
+table td {
+  border: 0;
+  outline: 0;
+}
   #container {
-    margin: 50px 0 50px 50px;
+    margin-left: 50px;
     overflow: visible;
   }
     .divider {
       clear: both;
     }
-    td.doc {
-      max-width: 550px;
+    td.doc, th.doc {
+      max-width: 500px;
+      min-width: 500px;
       min-height: 5px;
       padding: 0 30px 26px 0;
       overflow: hidden;
       vertical-align: top;
+      text-align: left;
     }
       .doc pre {
         margin: 15px 0 15px;
         padding-left: 15px;
       }
-    td.code {
-      padding: 4px 0 26px 0;
+    td.code, th.code {
+      padding: 4px 15px 26px 15px;
+      width: 100%;
       vertical-align: top;
+      background: #f5f5ff;
+      border-left: 1px solid #e5e5ee;
     }
       pre {
         font-size: 12px; line-height: 18px;

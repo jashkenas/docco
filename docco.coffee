@@ -60,7 +60,7 @@ parse: (code) ->
 # and write out the documentation.
 generate_html: (source, sections) ->
   title: path.basename(source)
-  html: '<h1>' + title + '</h1>'
+  html: '<thead><tr><th class="doc"><h1>' + title + '</h1></th><th class="code"></th></tr></thead>'
   for section in sections
     html += '<tr><td class="doc">'  + section.comment_html + '</td>' +
             '<td class="code">' + section.code_html    + '</td></tr>'
