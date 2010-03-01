@@ -62,9 +62,8 @@ generate_html: (source, sections) ->
   title: path.basename(source)
   html: '<h1>' + title + '</h1>'
   for section in sections
-    html += '<div class="doc">'  + section.comment_html + '</div>' +
-            '<div class="code">' + section.code_html    + '</div>' +
-            '<div class="divider"></div>'
+    html += '<tr><td class="doc">'  + section.comment_html + '</td>' +
+            '<td class="code">' + section.code_html    + '</td></tr>'
   fs.writeFile destination(source), apply_template(title, html)
 
 # Generate the HTML documentation for a CoffeeScript source file.

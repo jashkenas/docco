@@ -15,20 +15,20 @@ p {
     .divider {
       clear: both;
     }
-    .doc {
-      width: 500px;
-      float: left;
+    td.doc {
+      max-width: 550px;
       min-height: 5px;
-      margin: 0 30px 26px 0;
+      padding: 0 30px 26px 0;
       overflow: hidden;
+      vertical-align: top;
     }
       .doc pre {
         margin: 15px 0 15px;
         padding-left: 15px;
       }
-    .code {
-      float: left;
-      margin: 4px 0 26px 0;
+    td.code {
+      padding: 4px 0 26px 0;
+      vertical-align: top;
     }
       pre {
         font-size: 12px; line-height: 18px;
