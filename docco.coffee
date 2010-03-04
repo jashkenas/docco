@@ -83,8 +83,10 @@ parse: (code) ->
 # these HTML strings into a template.
 generate_html: (source, sections) ->
   title: path.basename source
-  html:  docco_template {title: title, sections: sections}
-  fs.writeFile destination(source), html
+  html:  docco_template {
+    title: title, sections: sections, sources: sources, path: path, destination: destination
+  }
+  fs.writeFileSync destination(source), html
 
 # Helpers
 # -------
@@ -146,4 +148,5 @@ highlight_end: '</pre></div>'
 
 # Run the script.
 # For each source file passed in as an argument, generate the documentation.
-generate_documentation source for source in process.ARGV
+sources: process.ARGV.sort()
+generate_documentation source for source in sources
