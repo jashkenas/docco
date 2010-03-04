@@ -83,12 +83,13 @@ parse: (code) ->
 # these HTML strings into a template.
 generate_html: (source, sections) ->
   title: path.basename(source)
-  html: '<thead><tr><th class="doc"><h1>' +
+  html: '<thead><tr><th class="docs"><h1>' +
           title +
         '</h1></th><th class="code"></th></tr></thead>'
-  for section in sections
-    html += '<tr><td class="doc">' + section.docs_html + '</td>' +
-            '<td class="code">'    + section.code_html + '</td></tr>'
+  for section, i in sections
+    html += '<tr id="section_' + (i + 1) + '">' +
+            '<td class="docs">' + section.docs_html + '</td>' +
+            '<td class="code">' + section.code_html + '</td></tr>'
   fs.writeFile destination(source), apply_template(title, html)
 
 # Wrap the generated HTML block in our external template (doctype, body tag, etc).
@@ -97,7 +98,7 @@ apply_template: (title, html) ->
     .replace('DOCUMENTATION', html)
     .replace('TITLE', title)
 
-# Helper Functions
+# Helpers
 # ----------------
 
 # A map of the languages that Docco supports.
@@ -130,6 +131,21 @@ set_language: (source) ->
 # Compute the destination HTML path for an input source file.
 destination: (filepath) ->
   path.basename(filepath, path.extname(filepath)) + '.html'
+
+# Micro-templating, borrowed from John Resig, by way of
+# [Underscore.js](http://documentcloud.github.com/underscore/).
+template: (str) ->
+  new Function 'obj',
+    'var p=[],print=function(){p.push.apply(p,arguments);};' +
+    'with(obj){p.push(\'' +
+    str.replace(/[\r\t\n]/g, " ")
+       .replace(/'(?=[^<]*%>)/g,"\t")
+       .split("'").join("\\'")
+       .split("\t").join("'")
+       .replace(/<%=(.+?)%>/g, "',$1,'")
+       .split('<%').join("');")
+       .split('%>').join("p.push('") +
+       "');}return p.join('');"
 
 # The start of each Pygments highlight block.
 highlight_start: '<div class="highlight"><pre>'

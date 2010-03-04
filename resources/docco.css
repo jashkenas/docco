@@ -23,7 +23,7 @@ table td {
     .divider {
       clear: both;
     }
-    td.doc, th.doc {
+    td.docs, th.docs {
       max-width: 500px;
       min-width: 500px;
       min-height: 5px;
@@ -32,7 +32,7 @@ table td {
       vertical-align: top;
       text-align: left;
     }
-      .doc pre {
+      .docs pre {
         margin: 15px 0 15px;
         padding-left: 15px;
       }
