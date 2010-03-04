@@ -21,23 +21,26 @@ showdown: require(process.cwd() + '/vendor/showdown').Showdown
 generate_documentation: (source) ->
   code:     fs.readFileSync source
   sections: parse code
-  counter:  sections.length
-  for section in sections
-    highlight section, ->
-      counter -= 1
-      generate_html source, sections if counter is 0
+  highlight source, sections, ->
+    generate_html source, sections
 
 # Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
 # and runs the text of its corresponding comment through **Markdown**, using the
 # **Github-flavored-Markdown** modification of **Showdown.js**.
-highlight: (section, callback) ->
+highlight: (source, sections, callback) ->
   pygments: process.createChildProcess 'pygmentize', ['-l', 'coffee-script', '-f', 'html']
+  output: ''
+  pygments.addListener 'error',  (error)  ->
+    process.stdio.writeError error if error
   pygments.addListener 'output', (result) ->
-    if result
-      section.code_html: result
+    output += result if result
+  pygments.addListener 'exit', ->
+    fragments: output.split divider_html
+    for section, i in sections
+      section.code_html: '<div class="highlight"><pre>' + fragments[i] + '</pre></div>'
       section.docs_html: showdown.makeHtml section.docs_text
       callback()
-  pygments.write section.code_text
+  pygments.write((section.code_text for section in sections).join(divider_text))
   pygments.close()
 
 # Parse out each comments and the code that follows into a individual section.
@@ -94,6 +97,14 @@ apply_template: (title, html) ->
 
 # Does the line begin with a comment? Handle `#` and `//` -style comments.
 comment_matcher: /^\s*(#|\/\/)\s?/
+
+# The dividing token we feed into Pygments, so that we can get all of the
+# sections to be highlighted in a single pass.
+divider_text: '\n#DIVIDER\n'
+
+# The mirror of the divider that Pygments returns, that we split on in order
+# to recover the original sections.
+divider_html: '<span class="c1">#DIVIDER</span>'
 
 # Compute the destination HTML path for an input source file.
 destination: (filepath) ->
