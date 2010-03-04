@@ -23,9 +23,16 @@
       <tbody>
         <% for (var i=0, l=sections.length; i<l; i++) { %>
           <% var section = sections[i]; %>
-          <tr id="section_<%= i + 1 %>">
-            <td class="docs"><%= section.docs_html %></td>
-            <td class="code"><%= section.code_html %></td>
+          <tr id="section-<%= i + 1 %>">
+            <td class="docs">
+              <div class="octowrap">
+                <a class="octothorpe" href="#section-<%= i + 1 %>">#</a>
+              </div>
+              <%= section.docs_html %>
+            </td>
+            <td class="code">
+              <%= section.code_html %>
+            </td>
           </tr>
         <% } %>
       </tbody>

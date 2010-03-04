@@ -17,7 +17,6 @@ table td {
   outline: 0;
 }
   #container {
-    margin-left: 50px;
     overflow: visible;
   }
     .divider {
@@ -27,8 +26,7 @@ table td {
       max-width: 500px;
       min-width: 500px;
       min-height: 5px;
-      padding: 0 30px 26px 0;
-      overflow: hidden;
+      padding: 0 30px 26px 50px;
       vertical-align: top;
       text-align: left;
     }
@@ -36,6 +34,22 @@ table td {
         margin: 15px 0 15px;
         padding-left: 15px;
       }
+      .octowrap {
+        position: relative;
+      }
+        .octothorpe {
+          font: 12px Arial;
+          text-decoration: none;
+          color: #454545;
+          position: absolute;
+          top: 3px; left: -20px;
+          padding: 1px 2px;
+          opacity: 0;
+          -webkit-transition: opacity 0.2s linear;
+        }
+          td.docs:hover .octothorpe {
+            opacity: 1;
+          }
     td.code, th.code {
       padding: 4px 15px 26px 15px;
       width: 100%;
