@@ -92,8 +92,8 @@ parse: (code) ->
   save docs_text, code_text
   sections
 
-# Does the line begin with a comment?
-comment_matcher: /^\s*#\s?/
+# Does the line begin with a comment? Handle `#` and `//` -style comments.
+comment_matcher: /^\s*(#|\/\/)\s?/
 
 # Compute the destination HTML path for an input source file.
 destination: (filepath) ->
