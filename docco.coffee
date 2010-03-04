@@ -19,7 +19,8 @@ showdown: require(process.cwd() + '/vendor/showdown').Showdown
 # which is quite wasteful. In the future, we should either use a JavaScript-based
 # syntax highlighter, or insert section delimiters and run a single **Pygments** process.
 generate_documentation: (source) ->
-  code:     fs.readFileSync source
+  set_language source
+  code: fs.readFileSync source
   sections: parse code
   highlight source, sections, ->
     generate_html source, sections
@@ -28,19 +29,19 @@ generate_documentation: (source) ->
 # and runs the text of its corresponding comment through **Markdown**, using the
 # **Github-flavored-Markdown** modification of **Showdown.js**.
 highlight: (source, sections, callback) ->
-  pygments: process.createChildProcess 'pygmentize', ['-l', 'coffee-script', '-f', 'html']
+  pygments: process.createChildProcess 'pygmentize', ['-l', language.name, '-f', 'html']
   output: ''
   pygments.addListener 'error',  (error)  ->
     process.stdio.writeError error if error
   pygments.addListener 'output', (result) ->
     output += result if result
   pygments.addListener 'exit', ->
-    fragments: output.split divider_html
+    fragments: output.split language.divider_html
     for section, i in sections
       section.code_html: '<div class="highlight"><pre>' + fragments[i] + '</pre></div>'
       section.docs_html: showdown.makeHtml section.docs_text
       callback()
-  pygments.write((section.code_text for section in sections).join(divider_text))
+  pygments.write((section.code_text for section in sections).join(language.divider_text))
   pygments.close()
 
 # Parse out each comments and the code that follows into a individual section.
@@ -65,11 +66,11 @@ parse: (code) ->
     }
 
   for line in lines
-    if line.match comment_matcher
+    if line.match language.comment_matcher
       if has_code
         save docs_text, code_text
         has_code: docs_text: code_text: ''
-      docs_text += line.replace(comment_matcher, '') + '\n'
+      docs_text += line.replace(language.comment_matcher, '') + '\n'
     else
       has_code: true
       code_text += line + '\n'
@@ -95,16 +96,35 @@ apply_template: (title, html) ->
     .replace('DOCUMENTATION', html)
     .replace('TITLE', title)
 
-# Does the line begin with a comment? Handle `#` and `//` -style comments.
-comment_matcher: /^\s*(#|\/\/)\s?/
+# Helper Functions
+# ----------------
 
-# The dividing token we feed into Pygments, so that we can get all of the
-# sections to be highlighted in a single pass.
-divider_text: '\n#DIVIDER\n'
+# A map of the languages that Docco supports.
+# File extension mapped to Pygments name and comment symbol.
+languages: {
+  '.coffee': {name: 'coffee-script', symbol: '#'}
+  '.js':     {name: 'javascript',    symbol: '//'}
+  '.rb':     {name: 'ruby',          symbol: '#'}
+}
 
-# The mirror of the divider that Pygments returns, that we split on in order
-# to recover the original sections.
-divider_html: '<span class="c1">#DIVIDER</span>'
+# The language of the current sourcefile.
+language: null
+
+# Set the current language we're documenting, based on the extension of the
+# source file.
+set_language: (source) ->
+  l: language: languages[path.extname(source)]
+
+  # Does the line begin with a comment? Handle `#` and `//` -style comments.
+  l.comment_matcher ||= new RegExp('^\\s*' + l.symbol + '\\s?')
+
+  # The dividing token we feed into Pygments, so that we can get all of the
+  # sections to be highlighted in a single pass.
+  l.divider_text ||= '\n' + l.symbol + 'DIVIDER\n'
+
+  # The mirror of the divider that Pygments returns, that we split on in order
+  # to recover the original sections.
+  l.divider_html ||= new RegExp('\\n*<span class="c1">' + l.symbol + 'DIVIDER<\\/span>\\n*')
 
 # Compute the destination HTML path for an input source file.
 destination: (filepath) ->
