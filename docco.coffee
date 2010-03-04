@@ -19,11 +19,13 @@ showdown: require(process.cwd() + '/vendor/showdown').Showdown
 # which is quite wasteful. In the future, we should either use a JavaScript-based
 # syntax highlighter, or insert section delimiters and run a single **Pygments** process.
 generate_documentation: (source) ->
-  set_language source
-  code: fs.readFileSync source
-  sections: parse code
-  highlight source, sections, ->
-    generate_html source, sections
+  ensure_directory ->
+    set_language source
+    code: fs.readFileSync source
+    sections: parse code
+    highlight source, sections, ->
+      generate_html source, sections
+      fs.writeFileSync 'docs/docco.css', docco_styles
 
 # Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
 # and runs the text of its corresponding comment through **Markdown**, using the
@@ -120,7 +122,11 @@ set_language: (source) ->
 
 # Compute the destination HTML path for an input source file.
 destination: (filepath) ->
-  path.basename(filepath, path.extname(filepath)) + '.html'
+  'docs/' + path.basename(filepath, path.extname(filepath)) + '.html'
+
+# Ensure that the destination directory exists.
+ensure_directory: (callback) ->
+  exec 'mkdir -p docs', -> callback()
 
 # Micro-templating, borrowed from John Resig, by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
@@ -138,13 +144,16 @@ template: (str) ->
        "');}return p.join('');"
 
 # The template that we use to generate the Docco HTML page.
-docco_template: template fs.readFileSync './' + __dirname + '/resources/docco.jst'
+docco_template:  template fs.readFileSync './' + __dirname + '/resources/docco.jst'
+
+# The CSS styles we'd like to apply to the documentation.
+docco_styles:    fs.readFileSync './' + __dirname + '/resources/docco.css'
 
 # The start of each Pygments highlight block.
 highlight_start: '<div class="highlight"><pre>'
 
 # The end of each Pygments highlight block.
-highlight_end: '</pre></div>'
+highlight_end:   '</pre></div>'
 
 # Run the script.
 # For each source file passed in as an argument, generate the documentation.
