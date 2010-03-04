@@ -19,36 +19,41 @@ h1 {
   margin: 40px 0 0 0;
 }
 #jump_to, #jump_page {
-  position: fixed;
-  right: 0; top: 0;
   background: white;
   -webkit-box-shadow: 0 0 25px #777; -moz-box-shadow: 0 0 25px #777;
   -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px;
   font: 10px Arial;
   text-transform: uppercase;
-  padding: 5px 10px;
   cursor: pointer;
   text-align: right;
 }
-  #jump_page {
-    padding: 5px 0 3px;
+#jump_to, #jump_wrapper {
+  position: fixed;
+  right: 0; top: 0;
+  padding: 5px 10px;
+}
+  #jump_wrapper {
+    padding: 0;
     display: none;
   }
-    #jump_to:hover #jump_page {
+    #jump_to:hover #jump_wrapper {
       display: block;
     }
-    #jump_page .source {
-      display: block;
-      padding: 5px 10px;
-      text-decoration: none;
-      border-top: 1px solid #eee;
+    #jump_page {
+      padding: 5px 0 3px;
+      margin: 0 0 25px 25px;
     }
-      #jump_page .source:hover {
-        background: #f5f5ff;
+      #jump_page .source {
+        display: block;
+        padding: 5px 10px;
+        text-decoration: none;
+        border-top: 1px solid #eee;
       }
-      #jump_page .source:first-child {
-        border-top: 0;
-      }
+        #jump_page .source:hover {
+          background: #f5f5ff;
+        }
+        #jump_page .source:first-child {
+        }
 table td {
   border: 0;
   outline: 0;
