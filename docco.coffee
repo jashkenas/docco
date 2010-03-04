@@ -27,25 +27,6 @@ generate_documentation: (source) ->
       counter -= 1
       generate_html source, sections if counter is 0
 
-# Once all of the code is finished highlighting, we can generate the HTML file
-# and write out the documentation. In the future, it would be nice to extract
-# these HTML strings into a template.
-generate_html: (source, sections) ->
-  title: path.basename(source)
-  html: '<thead><tr><th class="doc"><h1>' +
-          title +
-        '</h1></th><th class="code"></th></tr></thead>'
-  for section in sections
-    html += '<tr><td class="doc">' + section.docs_html + '</td>' +
-            '<td class="code">'    + section.code_html + '</td></tr>'
-  fs.writeFile destination(source), apply_template(title, html)
-
-# Wrap the generated HTML block in our external template (doctype, body tag, etc).
-apply_template: (title, html) ->
-  fs.readFileSync('./' + __dirname + '/resources/template.html')
-    .replace('DOCUMENTATION', html)
-    .replace('TITLE', title)
-
 # Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
 # and runs the text of its corresponding comment through **Markdown**, using the
 # **Github-flavored-Markdown** modification of **Showdown.js**.
@@ -91,6 +72,25 @@ parse: (code) ->
       code_text += line + '\n'
   save docs_text, code_text
   sections
+
+# Once all of the code is finished highlighting, we can generate the HTML file
+# and write out the documentation. In the future, it would be nice to extract
+# these HTML strings into a template.
+generate_html: (source, sections) ->
+  title: path.basename(source)
+  html: '<thead><tr><th class="doc"><h1>' +
+          title +
+        '</h1></th><th class="code"></th></tr></thead>'
+  for section in sections
+    html += '<tr><td class="doc">' + section.docs_html + '</td>' +
+            '<td class="code">'    + section.code_html + '</td></tr>'
+  fs.writeFile destination(source), apply_template(title, html)
+
+# Wrap the generated HTML block in our external template (doctype, body tag, etc).
+apply_template: (title, html) ->
+  fs.readFileSync('./' + __dirname + '/resources/template.html')
+    .replace('DOCUMENTATION', html)
+    .replace('TITLE', title)
 
 # Does the line begin with a comment? Handle `#` and `//` -style comments.
 comment_matcher: /^\s*(#|\/\/)\s?/
