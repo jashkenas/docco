@@ -36,9 +36,10 @@ highlight: (source, sections, callback) ->
   pygments.addListener 'output', (result) ->
     output += result if result
   pygments.addListener 'exit', ->
+    output: output.replace(highlight_start, '').replace(highlight_end, '')
     fragments: output.split language.divider_html
     for section, i in sections
-      section.code_html: '<div class="highlight"><pre>' + fragments[i] + '</pre></div>'
+      section.code_html: highlight_start + fragments[i] + highlight_end
       section.docs_html: showdown.makeHtml section.docs_text
       callback()
   pygments.write((section.code_text for section in sections).join(language.divider_text))
@@ -129,6 +130,12 @@ set_language: (source) ->
 # Compute the destination HTML path for an input source file.
 destination: (filepath) ->
   path.basename(filepath, path.extname(filepath)) + '.html'
+
+# The start of each Pygments highlight block.
+highlight_start: '<div class="highlight"><pre>'
+
+# The end of each Pygments highlight block.
+highlight_end: '</pre></div>'
 
 # Run the script.
 # For each source file passed in as an argument, generate the documentation.
