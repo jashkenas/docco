@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title><%= title %></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="resources/docco.css" />
+</head>
+<body>
+  <div id="container">
+    <table cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <th class="docs">
+            <h1>
+              <%= title %>
+            </h1>
+          </th>
+          <th class="code">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var i=0, l=sections.length; i<l; i++) { %>
+          <% var section = sections[i]; %>
+          <tr id="section_<%= i + 1 %>">
+            <td class="docs"><%= section.docs_html %></td>
+            <td class="code"><%= section.code_html %></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

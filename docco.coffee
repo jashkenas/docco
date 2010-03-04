@@ -82,24 +82,12 @@ parse: (code) ->
 # and write out the documentation. In the future, it would be nice to extract
 # these HTML strings into a template.
 generate_html: (source, sections) ->
-  title: path.basename(source)
-  html: '<thead><tr><th class="docs"><h1>' +
-          title +
-        '</h1></th><th class="code"></th></tr></thead>'
-  for section, i in sections
-    html += '<tr id="section_' + (i + 1) + '">' +
-            '<td class="docs">' + section.docs_html + '</td>' +
-            '<td class="code">' + section.code_html + '</td></tr>'
-  fs.writeFile destination(source), apply_template(title, html)
-
-# Wrap the generated HTML block in our external template (doctype, body tag, etc).
-apply_template: (title, html) ->
-  fs.readFileSync('./' + __dirname + '/resources/template.html')
-    .replace('DOCUMENTATION', html)
-    .replace('TITLE', title)
+  title: path.basename source
+  html:  docco_template {title: title, sections: sections}
+  fs.writeFile destination(source), html
 
 # Helpers
-# ----------------
+# -------
 
 # A map of the languages that Docco supports.
 # File extension mapped to Pygments name and comment symbol.
@@ -146,6 +134,9 @@ template: (str) ->
        .split('<%').join("');")
        .split('%>').join("p.push('") +
        "');}return p.join('');"
+
+# The template that we use to generate the Docco HTML page.
+docco_template: template fs.readFileSync './' + __dirname + '/resources/docco.jst'
 
 # The start of each Pygments highlight block.
 highlight_start: '<div class="highlight"><pre>'
