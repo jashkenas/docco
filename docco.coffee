@@ -31,7 +31,6 @@ generate_documentation: (source) ->
       sections: parse code
       highlight source, sections, ->
         generate_html source, sections
-        fs.writeFile 'docs/docco.css', docco_styles
 
 # Given a string of source code, parse out each comment and the code that
 # follows it, and create an individual **section** for it.
@@ -87,7 +86,7 @@ highlight: (source, sections, callback) ->
     for section, i in sections
       section.code_html: highlight_start + fragments[i] + highlight_end
       section.docs_html: showdown.makeHtml section.docs_text
-      callback()
+    callback()
   pygments.write((section.code_text for section in sections).join(language.divider_text))
   pygments.close()
 
@@ -177,4 +176,6 @@ highlight_end:   '</pre></div>'
 # Run the script.
 # For each source file passed in as an argument, generate the documentation.
 sources: process.ARGV.sort()
-generate_documentation source for source in sources
+if sources.length
+  generate_documentation source for source in sources
+  fs.writeFile 'docs/docco.css', docco_styles
