@@ -22,11 +22,12 @@ showdown: require('vendor/showdown').Showdown
 generate_documentation: (source) ->
   ensure_directory ->
     set_language source
-    code: fs.readFileSync source
-    sections: parse code
-    highlight source, sections, ->
-      generate_html source, sections
-      fs.writeFileSync 'docs/docco.css', docco_styles
+    code: fs.readFile source, (error, code) ->
+      throw error if error
+      sections: parse code
+      highlight source, sections, ->
+        generate_html source, sections
+        fs.writeFile 'docs/docco.css', docco_styles
 
 # Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
 # and runs the text of its corresponding comment through **Markdown**, using the
@@ -89,7 +90,7 @@ generate_html: (source, sections) ->
   html:  docco_template {
     title: title, sections: sections, sources: sources, path: path, destination: destination
   }
-  fs.writeFileSync destination(source), html
+  fs.writeFile destination(source), html
 
 # Helpers
 # -------
