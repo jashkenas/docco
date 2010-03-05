@@ -110,15 +110,15 @@ set_language: (source) ->
   l: language: languages[path.extname(source)]
 
   # Does the line begin with a comment? Handle `#` and `//` -style comments.
-  l.comment_matcher ||= new RegExp('^\\s*' + l.symbol + '\\s?')
+  l.comment_matcher: new RegExp('^\\s*' + l.symbol + '\\s?')
 
   # The dividing token we feed into Pygments, so that we can get all of the
   # sections to be highlighted in a single pass.
-  l.divider_text ||= '\n' + l.symbol + 'DIVIDER\n'
+  l.divider_text: '\n' + l.symbol + 'DIVIDER\n'
 
   # The mirror of the divider that Pygments returns, that we split on in order
   # to recover the original sections.
-  l.divider_html ||= new RegExp('\\n*<span class="c1">' + l.symbol + 'DIVIDER<\\/span>\\n*')
+  l.divider_html: new RegExp('\\n*<span class="c1">' + l.symbol + 'DIVIDER<\\/span>\\n*')
 
 # Compute the destination HTML path for an input source file.
 destination: (filepath) ->
