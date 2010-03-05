@@ -13,10 +13,10 @@ a {
     color: #261a3b;
   }
 p {
-  margin: 0;
+  margin: 0 0 15px 0;
 }
-h1 {
-  margin: 40px 0 0 0;
+h1, h2, h3, h4, h5, h6 {
+  margin: 40px 0 15px 0;
 }
 #jump_to, #jump_page {
   background: white;
@@ -68,13 +68,19 @@ table td {
       max-width: 500px;
       min-width: 500px;
       min-height: 5px;
-      padding: 10px 30px 16px 50px;
+      padding: 10px 30px 1px 50px;
       vertical-align: top;
       text-align: left;
     }
       .docs pre {
         margin: 15px 0 15px;
         padding-left: 15px;
+      }
+      .docs p tt, .docs p code {
+        background: #f8f8ff;
+        border: 1px solid #dedede;
+        font-size: 12px;
+        padding: 0 0.2em;
       }
       .octowrap {
         position: relative;
@@ -99,7 +105,7 @@ table td {
       background: #f5f5ff;
       border-left: 1px solid #e5e5ee;
     }
-      pre {
+      pre, tt, code {
         font-size: 12px; line-height: 18px;
         font-family: Monaco, Consolas, "Lucida Console", monospace;
         margin: 0; padding: 0;
