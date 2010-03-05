@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+process.mixin(require('sys'));
+var path = require('path');
+var fs   = require('fs');
+var lib  = path.join(path.dirname(fs.realpathSync(__filename)), '../');
+var cmd  = 'coffee ' + path.join(lib, 'docco.coffee') + ' -- ' + process.ARGV.slice(2).join(' ');
+
+exec(cmd, function(err, stdout, stderr) {
+  if (err) process.stdio.writeError(stderr.read());
+});

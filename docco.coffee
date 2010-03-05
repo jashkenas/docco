@@ -9,9 +9,10 @@
 
 # External dependencies, including **Showdown.js** (the JavaScript implementation
 # of Markdown).
+require.paths.unshift __dirname
 fs:       require 'fs'
 path:     require 'path'
-showdown: require(process.cwd() + '/vendor/showdown').Showdown
+showdown: require('vendor/showdown').Showdown
 
 # Generate the documentation for a source file by reading it in, splitting it
 # up into comment/code sections, highlighting them, and generating the corresponding
@@ -144,10 +145,10 @@ template: (str) ->
        "');}return p.join('');"
 
 # The template that we use to generate the Docco HTML page.
-docco_template:  template fs.readFileSync './' + __dirname + '/resources/docco.jst'
+docco_template:  template fs.readFileSync __dirname + '/resources/docco.jst'
 
 # The CSS styles we'd like to apply to the documentation.
-docco_styles:    fs.readFileSync './' + __dirname + '/resources/docco.css'
+docco_styles:    fs.readFileSync __dirname + '/resources/docco.css'
 
 # The start of each Pygments highlight block.
 highlight_start: '<div class="highlight"><pre>'
