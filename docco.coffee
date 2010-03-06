@@ -23,14 +23,13 @@
 # Generate the documentation for a source file by reading it in, splitting it
 # up into comment/code sections, highlighting them for the appropriate language,
 # and merging them into an HTML template.
-generate_documentation: (source) ->
-  ensure_directory ->
-    set_language source
-    code: fs.readFile source, (error, code) ->
-      throw error if error
-      sections: parse code
-      highlight source, sections, ->
-        generate_html source, sections
+generate_documentation: (source, callback) ->
+  fs.readFile source, (error, code) ->
+    throw error if error
+    sections: parse source, code
+    highlight source, sections, ->
+      generate_html source, sections
+      callback()
 
 # Given a string of source code, parse out each comment and the code that
 # follows it, and create an individual **section** for it.
@@ -43,9 +42,10 @@ generate_documentation: (source) ->
 #       code_html: ...
 #     }
 #
-parse: (code) ->
+parse: (source, code) ->
   lines: code.split '\n'
   sections: []
+  language: get_language source
   has_code: docs_text: code_text: ''
 
   save: (docs, code) ->
@@ -74,6 +74,7 @@ parse: (code) ->
 # marker comments between each section and then splitting the result string
 # wherever our markers occur.
 highlight: (source, sections, callback) ->
+  language: get_language source
   pygments: process.createChildProcess 'pygmentize', ['-l', language.name, '-f', 'html']
   output: ''
   pygments.addListener 'error',  (error)  ->
@@ -118,13 +119,8 @@ languages: {
   '.rb':     {name: 'ruby',          symbol: '#'}
 }
 
-# The language object, containing the appropriate matchers and delimiters for
-# for the current sourcefile's language.
-language: null
-
-# Set the current language we're documenting, based on the extension.
-set_language: (source) ->
-  l: language: languages[path.extname(source)]
+# Build out the appropriate matchers and delimiters for each language.
+for ext, l of languages
 
   # Does the line begin with a comment?
   l.comment_matcher: new RegExp('^\\s*' + l.symbol + '\\s?')
@@ -136,6 +132,9 @@ set_language: (source) ->
   # The mirror of `divider_text` that we expect Pygments to return. We can split
   # on this to recover the original sections.
   l.divider_html: new RegExp('\\n*<span class="c1">' + l.symbol + 'DIVIDER<\\/span>\\n*')
+
+# Get the current language we're documenting, based on the extension.
+get_language: (source) -> languages[path.extname(source)]
 
 # Compute the destination HTML path for an input source file path. If the source
 # is `lib/example.coffee`, the HTML will be at `docs/example.html`
@@ -177,5 +176,8 @@ highlight_end:   '</pre></div>'
 # For each source file passed in as an argument, generate the documentation.
 sources: process.ARGV.sort()
 if sources.length
-  generate_documentation source for source in sources
-  fs.writeFile 'docs/docco.css', docco_styles
+  ensure_directory ->
+    fs.writeFile 'docs/docco.css', docco_styles
+    files: sources.slice(0)
+    next_file: -> generate_documentation files.shift(), next_file if files.length
+    next_file()
