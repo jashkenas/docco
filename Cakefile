@@ -11,7 +11,7 @@ task 'install', 'install the `docco` command into /usr/local (or --prefix)', (op
    if err then print stderr
   )
 
-task 'docs', 'rebuild the Docco documentation', ->
+task 'doc', 'rebuild the Docco documentation', ->
   exec([
     'bin/docco docco.coffee'
     'mv docs/docco.html index.html'
