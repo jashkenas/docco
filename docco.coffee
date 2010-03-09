@@ -17,6 +17,10 @@
 # `/usr/local`:
 #
 #     sudo cake install
+#
+# If **Node.js** doesn't run on your platform, or you'd prefer a more convenient
+# package, get [Rocco](http://rtomayko.github.com/rocco/), the Ruby port that's
+# available as a gem.
 
 #### Main Documentation Generation Functions
 
