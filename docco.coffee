@@ -100,10 +100,12 @@ highlight: (source, sections, callback) ->
 # found in `resources/docco.jst`
 generate_html: (source, sections) ->
   title: path.basename source
+  dest:  destination source
   html:  docco_template {
     title: title, sections: sections, sources: sources, path: path, destination: destination
   }
-  fs.writeFile destination(source), html
+  puts "docco: $source -> $dest"
+  fs.writeFile dest, html
 
 #### Helpers & Setup
 
