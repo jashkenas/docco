@@ -111,10 +111,9 @@ generate_html: (source, sections) ->
 
 # Require our external dependencies, including **Showdown.js**
 # (the JavaScript implementation of Markdown).
-require.paths.unshift __dirname
 fs:       require 'fs'
 path:     require 'path'
-showdown: require('vendor/showdown').Showdown
+showdown: require('./vendor/showdown').Showdown
 
 # A list of the languages that Docco supports, mapping the file extension to
 # the name of the Pygments lexer and the symbol that indicates a comment. To
