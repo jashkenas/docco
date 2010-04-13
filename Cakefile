@@ -1,3 +1,5 @@
+exec: require('child_process').exec
+
 option '-p', '--prefix [DIR]', 'set the installation prefix for `cake install`'
 
 task 'install', 'install the `docco` command into /usr/local (or --prefix)', (options) ->

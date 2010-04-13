@@ -79,11 +79,11 @@ parse: (source, code) ->
 # wherever our markers occur.
 highlight: (source, sections, callback) ->
   language: get_language source
-  pygments: process.createChildProcess 'pygmentize', ['-l', language.name, '-f', 'html']
+  pygments: spawn 'pygmentize', ['-l', language.name, '-f', 'html']
   output: ''
-  pygments.addListener 'error',  (error)  ->
-    process.stdio.writeError error if error
-  pygments.addListener 'output', (result) ->
+  pygments.stderr.addListener 'data',  (error)  ->
+    puts error if error
+  pygments.stdout.addListener 'data', (result) ->
     output += result if result
   pygments.addListener 'exit', ->
     output: output.replace(highlight_start, '').replace(highlight_end, '')
@@ -92,8 +92,8 @@ highlight: (source, sections, callback) ->
       section.code_html: highlight_start + fragments[i] + highlight_end
       section.docs_html: showdown.makeHtml section.docs_text
     callback()
-  pygments.write((section.code_text for section in sections).join(language.divider_text))
-  pygments.close()
+  pygments.stdin.write((section.code_text for section in sections).join(language.divider_text))
+  pygments.stdin.end()
 
 # Once all of the code is finished highlighting, we can generate the HTML file
 # and write out the documentation. Pass the completed sections into the template
@@ -114,6 +114,7 @@ generate_html: (source, sections) ->
 fs:       require 'fs'
 path:     require 'path'
 showdown: require('./vendor/showdown').Showdown
+{spawn: spawn, exec: exec}: require('child_process')
 
 # A list of the languages that Docco supports, mapping the file extension to
 # the name of the Pygments lexer and the symbol that indicates a comment. To
