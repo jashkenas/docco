@@ -12,9 +12,9 @@
 # ...will generate linked HTML documentation for the named source files, saving
 # it into a `docs` folder.
 #
-# To install Docco, first make sure you have [Node.js](http://nodejs.org/) and
-# [CoffeeScript](http://coffeescript.org/). Then, to install system-wide in
-# `/usr/local`:
+# To install Docco, first make sure you have [Node.js](http://nodejs.org/),
+# [Pygments](http://pygments.org/), and [CoffeeScript](http://coffeescript.org/).
+# Then, to install system-wide in `/usr/local`:
 #
 #     sudo cake install
 #
