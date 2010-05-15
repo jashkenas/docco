@@ -30,7 +30,7 @@
 generate_documentation: (source, callback) ->
   fs.readFile source, (error, code) ->
     throw error if error
-    sections: parse source, code
+    sections: parse source, code.toString()
     highlight source, sections, ->
       generate_html source, sections
       callback()
@@ -167,10 +167,10 @@ template: (str) ->
        "');}return p.join('');"
 
 # Create the template that we will use to generate the Docco HTML page.
-docco_template:  template fs.readFileSync __dirname + '/resources/docco.jst'
+docco_template:  template fs.readFileSync(__dirname + '/resources/docco.jst').toString()
 
 # The CSS styles we'd like to apply to the documentation.
-docco_styles:    fs.readFileSync __dirname + '/resources/docco.css'
+docco_styles:    fs.readFileSync(__dirname + '/resources/docco.css').toString()
 
 # The start of each Pygments highlight block.
 highlight_start: '<div class="highlight"><pre>'
