@@ -61,13 +61,6 @@
 //
 
 
-// **************************************************
-// GitHub Flavored Markdown modifications by Tekkub
-// http://github.github.com/github-flavored-markdown/
-//
-// Modifications are tagged with "GFM"
-// **************************************************
-
 //
 // Showdown namespace
 //
@@ -154,27 +147,9 @@ this.makeHtml = function(text) {
 	// attacklab: Restore tildes
 	text = text.replace(/~T/g,"~");
 
-  // ** GFM **  Auto-link URLs and emails
-  text = text.replace(/https?\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]\!]/g, function(wholeMatch){
-    var left = RegExp.leftContext
-    var right = RegExp.rightContext
-    if (left.match(/<[^>]+$/) && right.match(/^[^>]*>/)) {return wholeMatch}
-    return "<a href='" + wholeMatch + "'>" + wholeMatch + "</a>";
-  });
-  text = text.replace(/[a-z0-9_\-+=.]+@[a-z0-9\-]+(\.[a-z0-9-]+)+/ig, function(wholeMatch){return "<a href='mailto:" + wholeMatch + "'>" + wholeMatch + "</a>";});
-
-  // ** GFM ** Auto-link user/repo#issue
-  text = text.replace(/([a-z0-9_\-+=.]+\/[a-z0-9_\-+=.]+)#([0-9]+)/ig, function(wholeMatch,repo,issue){
-    return "<a href='http://github.com/" + repo + "/issues/#issue/" + issue + "'>" + wholeMatch + "</a>";
-  });
-
 	return text;
 }
 
-
-var _GetRepoName = function() {
-  return GitHub.nameWithOwner.match(/^.+\/(.+)$/)[1]
-}
 
 var _StripLinkDefinitions = function(text) {
 //
@@ -1006,7 +981,6 @@ var _DoItalicsAndBold = function(text) {
 	text = text.replace(/(\*\*|__)(?=\S)([^\r]*?\S[*_]*)\1/g,
 		"<strong>$2</strong>");
 
-	text = text.replace(/(\w)_(\w)/g, "$1~E95E$2") // ** GFM **  "~E95E" == escaped "_"
 	text = text.replace(/(\*|_)(?=\S)([^\r]*?\S)\1/g,
 		"<em>$2</em>");
 
@@ -1088,7 +1062,6 @@ var _FormParagraphs = function(text) {
 		}
 		else if (str.search(/\S/) >= 0) {
 			str = _RunSpanGamut(str);
-      // str = str.replace(/\n/g,"<br />");  // ** GFM **
 			str = str.replace(/^([ \t]*)/g,"<p>");
 			str += "</p>"
 			grafsOut.push(str);
