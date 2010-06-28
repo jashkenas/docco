@@ -20,7 +20,9 @@
 #
 # If **Node.js** doesn't run on your platform, or you'd prefer a more convenient
 # package, get [Rocco](http://rtomayko.github.com/rocco/), the Ruby port that's
-# available as a gem.
+# available as a gem. If you're writing shell scripts, try
+# [Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell**.
+# Both are by [Ryan Tomayko](http://github.com/rtomayko).
 
 #### Main Documentation Generation Functions
 
