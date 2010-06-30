@@ -22,7 +22,9 @@
 # package, get [Rocco](http://rtomayko.github.com/rocco/), the Ruby port that's
 # available as a gem. If you're writing shell scripts, try
 # [Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell**.
-# Both are by [Ryan Tomayko](http://github.com/rtomayko).
+# Both are by [Ryan Tomayko](http://github.com/rtomayko). If Python's more
+# your speed, take a look at [Nick Fitzgerald](http://github.com/fitzgen)'s
+# [Pocco](http://fitzgen.github.com/pocco/).
 
 #### Main Documentation Generation Functions
 
