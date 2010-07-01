@@ -13,8 +13,10 @@
 # it into a `docs` folder.
 #
 # To install Docco, first make sure you have [Node.js](http://nodejs.org/),
-# [Pygments](http://pygments.org/), and [CoffeeScript](http://coffeescript.org/).
-# Then, to install system-wide in `/usr/local`:
+# [Pygments](http://pygments.org/) (install the latest dev version of Pygments
+# from [its Mercurial repo](http://dev.pocoo.org/hg/pygments-main)), and
+# [CoffeeScript](http://coffeescript.org/).  Then, to install system-wide in
+# `/usr/local`:
 #
 #     sudo cake install
 #
