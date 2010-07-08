@@ -26,7 +26,7 @@
 # [Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell**.
 # Both are by [Ryan Tomayko](http://github.com/rtomayko). If Python's more
 # your speed, take a look at [Nick Fitzgerald](http://github.com/fitzgen)'s
-# [Pocco](http://fitzgen.github.com/pocco/).
+# [Pycco](http://fitzgen.github.com/pycco/).
 
 #### Main Documentation Generation Functions
 
