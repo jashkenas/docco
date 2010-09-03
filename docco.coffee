@@ -34,9 +34,9 @@
 # up into comment/code sections, highlighting them for the appropriate language,
 # and merging them into an HTML template.
 generate_documentation = (source, callback) ->
-  fs.readFile source, (error, code) ->
+  fs.readFile source, "utf-8", (error, code) ->
     throw error if error
-    sections = parse source, code.toString()
+    sections = parse source, code
     highlight source, sections, ->
       generate_html source, sections
       callback()
@@ -82,7 +82,7 @@ parse = (source, code) ->
 # wherever our markers occur.
 highlight = (source, sections, callback) ->
   language = get_language source
-  pygments = spawn 'pygmentize', ['-l', language.name, '-f', 'html']
+  pygments = spawn 'pygmentize', ['-l', language.name, '-f', 'html', '-O', 'encoding=utf-8']
   output   = ''
   pygments.stderr.addListener 'data',  (error)  ->
     puts error if error
@@ -192,3 +192,4 @@ if sources.length
     files = sources.slice(0)
     next_file = -> generate_documentation files.shift(), next_file if files.length
     next_file()
+
