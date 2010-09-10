@@ -1,10 +1,8 @@
 #!/usr/bin/env node
 
 var path = require('path');
-var fs   = require('fs');
-var lib  = path.join(path.dirname(fs.realpathSync(__filename)), '../');
-var cmd  = 'coffee ' + path.join(lib, 'docco.coffee') + ' -- ' + process.ARGV.slice(2).join(' ');
+var fs = require('fs');
+var lib = path.join(path.dirname(fs.realpathSync(__filename)), '../lib');
 
-require('child_process').exec(cmd, function(err, stdout, stderr) {
-  if (err) process.stdio.writeError(stderr.read());
-});
+process.ARGV = process.argv = process.argv.slice(2, process.argv.length);
+require(lib + '/docco.js');

@@ -15,10 +15,9 @@
 # To install Docco, first make sure you have [Node.js](http://nodejs.org/),
 # [Pygments](http://pygments.org/) (install the latest dev version of Pygments
 # from [its Mercurial repo](http://dev.pocoo.org/hg/pygments-main)), and
-# [CoffeeScript](http://coffeescript.org/).  Then, to install system-wide in
-# `/usr/local`:
+# [CoffeeScript](http://coffeescript.org/). Then, with NPM:
 #
-#     sudo cake install
+#     sudo npm install docco
 #
 # If **Node.js** doesn't run on your platform, or you'd prefer a more convenient
 # package, get [Rocco](http://rtomayko.github.com/rocco/), the Ruby port that's
@@ -107,7 +106,7 @@ generate_html = (source, sections) ->
   html  = docco_template {
     title: title, sections: sections, sources: sources, path: path, destination: destination
   }
-  puts "docco: $source -> $dest"
+  puts "docco: #{source} -> #{dest}"
   fs.writeFile dest, html
 
 #### Helpers & Setup
@@ -116,8 +115,9 @@ generate_html = (source, sections) ->
 # (the JavaScript implementation of Markdown).
 fs       = require 'fs'
 path     = require 'path'
-showdown = require('./vendor/showdown').Showdown
+showdown = require('./../vendor/showdown').Showdown
 {spawn, exec} = require 'child_process'
+{puts, print} = require 'sys'
 
 # A list of the languages that Docco supports, mapping the file extension to
 # the name of the Pygments lexer and the symbol that indicates a comment. To
@@ -172,10 +172,10 @@ template = (str) ->
        "');}return p.join('');"
 
 # Create the template that we will use to generate the Docco HTML page.
-docco_template  = template fs.readFileSync(__dirname + '/resources/docco.jst').toString()
+docco_template  = template fs.readFileSync(__dirname + '/../resources/docco.jst').toString()
 
 # The CSS styles we'd like to apply to the documentation.
-docco_styles    = fs.readFileSync(__dirname + '/resources/docco.css').toString()
+docco_styles    = fs.readFileSync(__dirname + '/../resources/docco.css').toString()
 
 # The start of each Pygments highlight block.
 highlight_start = '<div class="highlight"><pre>'
