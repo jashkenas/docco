@@ -1,2 +1,3 @@
 output
 docs
+test/*_examples.coffee
