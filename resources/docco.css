@@ -184,3 +184,54 @@ body .vc { color: #19469D }                     /* Name.Variable.Class */
 body .vg { color: #19469D }                     /* Name.Variable.Global */
 body .vi { color: #19469D }                     /* Name.Variable.Instance */
 body .il { color: #666666 }                     /* Literal.Number.Integer.Long */
+
+/******* Override with some TextMate defaults *******/
+
+/* Comment */
+body .c { color: #0075FF; font-style: italic }  /* Comment */
+body .cm { color: #0075FF; font-style: italic } /* Comment.Multiline */
+body .cp { color: #0075FF; font-style: italic } /* Comment.Preproc */
+body .c1 { color: #0075FF; font-style: italic } /* Comment.Single */
+body .cs { color: #0075FF; font-style: italic } /* Comment.Special */
+
+/* Keyword */
+body .k { color: #0000FF; font-weight: bold }   /* Keyword */
+body .kc { color: #0000FF; font-weight: bold }  /* Keyword.Constant */
+body .kd { color: #0000FF; font-weight: bold }  /* Keyword.Declaration */
+body .kn { color: #0000FF; font-weight: bold }  /* Keyword.Namespace */
+body .kp { color: #0000FF; font-weight: bold }  /* Keyword.Pseudo */
+body .kr { color: #0000FF; font-weight: bold }  /* Keyword.Reserved */
+body .kt { color: #0000FF; font-weight: bold }  /* Keyword.Type */
+
+/* Number */
+body .m { color: #0000DB }                      /* Literal.Number */
+body .mf { color: #0000DB }                     /* Literal.Number.Float */
+body .mh { color: #0000DB }                     /* Literal.Number.Hex */
+body .mi { color: #0000DB }                     /* Literal.Number.Integer */
+body .mo { color: #0000DB }                     /* Literal.Number.Oct */
+body .il { color: #0000DB }                     /* Literal.Number.Integer.Long */
+
+/* String */
+body .s { color: #008100 }                      /* Literal.String */
+body .sc { color: #008100 }                     /* Literal.String.Char */
+body .sd { color: #008100 }                     /* Literal.String.Doc */
+body .s2 { color: #008100 }                     /* Literal.String.Double */
+body .sh { color: #008100 }                     /* Literal.String.Heredoc */
+body .sx { color: #008100 }                     /* Literal.String.Other */
+body .sr { color: #008100 }                     /* Literal.String.Regex */
+body .s1 { color: #008100 }                     /* Literal.String.Single */
+body .ss { color: #008100 }                     /* Literal.String.Symbol */
+
+/* String interpolation */
+body .sb { color: #00C510 }                     /* Literal.String.Backtick */
+body .se { color: #00C510 }                     /* Literal.String.Escape */
+body .si { color: #00C510 }                     /* Literal.String.Interpol */
+
+/* Function name */
+body .nf { color: #0000B5; font-weight: bold; }                     /* Name.Function */
+
+/* Type name */
+body .nc { color: #000000; text-decoration: underline; }  /* Name.Class */
+
+/* Library object */
+body .nb { color: #7C89E8; font-weight: bold; }                     /* Name.Builtin */
