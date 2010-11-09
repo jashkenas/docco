@@ -130,6 +130,10 @@ languages =
     name: 'ruby', symbol: '#'
   '.py':
     name: 'python', symbol: '#'
+  '.cl':
+    name: 'cl', symbol: ';'
+  '.el':
+    name: 'cl', symbol: ';'
 
 # Build out the appropriate matchers and delimiters for each language.
 for ext, l of languages
