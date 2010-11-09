@@ -84,7 +84,7 @@ highlight = (source, sections, callback) ->
   pygments = spawn 'pygmentize', ['-l', language.name, '-f', 'html', '-O', 'encoding=utf-8']
   output   = ''
   pygments.stderr.addListener 'data',  (error)  ->
-    puts error if error
+    console.error error if error
   pygments.stdout.addListener 'data', (result) ->
     output += result if result
   pygments.addListener 'exit', ->
@@ -106,7 +106,7 @@ generate_html = (source, sections) ->
   html  = docco_template {
     title: title, sections: sections, sources: sources, path: path, destination: destination
   }
-  puts "docco: #{source} -> #{dest}"
+  console.log "docco: #{source} -> #{dest}"
   fs.writeFile dest, html
 
 #### Helpers & Setup
@@ -117,7 +117,6 @@ fs       = require 'fs'
 path     = require 'path'
 showdown = require('./../vendor/showdown').Showdown
 {spawn, exec} = require 'child_process'
-{puts, print} = require 'sys'
 
 # A list of the languages that Docco supports, mapping the file extension to
 # the name of the Pygments lexer and the symbol that indicates a comment. To
