@@ -139,7 +139,7 @@ languages =
 for ext, l of languages
 
   # Does the line begin with a comment?
-  l.comment_matcher = new RegExp('^\\s*' + l.symbol + '\\s?')
+  l.comment_matcher = new RegExp('^\\s*' + l.symbol + '+\\s?')
 
   # The dividing token we feed into Pygments, to delimit the boundaries between
   # sections.
