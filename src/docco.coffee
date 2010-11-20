@@ -12,6 +12,9 @@
 # ...will generate linked HTML documentation for the named source files, saving
 # it into a `docs` folder.
 #
+# The [source for Docco](http://github.com/jashkenas/docco) is available on GitHub,
+# and released under the MIT license.
+#
 # To install Docco, first make sure you have [Node.js](http://nodejs.org/),
 # [Pygments](http://pygments.org/) (install the latest dev version of Pygments
 # from [its Mercurial repo](http://dev.pocoo.org/hg/pygments-main)), and
