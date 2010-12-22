@@ -1,5 +1,5 @@
 # **Docco** is a quick-and-dirty, hundred-line-long, literate-programming-style
-# documentation generator for Javascript or CoffeeScript. It produces HTML
+# documentation generator for JavaScript or CoffeeScript. It produces HTML
 # that displays your comments alongside your code. Comments are passed through
 # [Markdown](http://daringfireball.net/projects/markdown/syntax), and code is
 # passed through [Pygments](http://pygments.org/) syntax highlighting.
