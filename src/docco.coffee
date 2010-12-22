@@ -1,6 +1,6 @@
 # **Docco** is a quick-and-dirty, hundred-line-long, literate-programming-style
-# documentation generator. It produces HTML that displays your comments
-# alongside your code. Comments are passed through
+# documentation generator for Javascript or CoffeeScript. It produces HTML
+# that displays your comments alongside your code. Comments are passed through
 # [Markdown](http://daringfireball.net/projects/markdown/syntax), and code is
 # passed through [Pygments](http://pygments.org/) syntax highlighting.
 # This page is the result of running Docco against its own source file.
@@ -8,6 +8,9 @@
 # If you install Docco, you can run it from the command-line:
 #
 #     docco src/*.coffee
+# or
+#
+#     docco src/*.js
 #
 # ...will generate linked HTML documentation for the named source files, saving
 # it into a `docs` folder.
@@ -22,13 +25,19 @@
 #
 #     sudo npm install docco
 #
+# When used to process JavaScript files, docco will only process end of line (`//`)
+# style comments, and only when they appear on a line by themselves.  Block comments
+# (`/* ... */`) and end of line comments on the same line as code (`var x = 1 // like this`)
+# are ignored by docco and will appear in your code.
+#
 # If **Node.js** doesn't run on your platform, or you'd prefer a more convenient
 # package, get [Rocco](http://rtomayko.github.com/rocco/), the Ruby port that's
-# available as a gem. If you're writing shell scripts, try
-# [Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell**.
+# available as a gem and processes `.rb` files. If you're writing shell scripts, try
+# [Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell** (`.sh`).
 # Both are by [Ryan Tomayko](http://github.com/rtomayko). If Python's more
 # your speed, take a look at [Nick Fitzgerald](http://github.com/fitzgen)'s
-# [Pycco](http://fitzgen.github.com/pycco/).
+# [Pycco](http://fitzgen.github.com/pycco/) which processes `.coffee`, `.js`, `.pl`,
+# `.sql`, `.c`, `.rb`, `.py`, `.scm`, `.lua`, and `.erl`, and can handle multi-line comments.
 
 #### Main Documentation Generation Functions
 
