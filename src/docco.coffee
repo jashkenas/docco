@@ -73,12 +73,11 @@ parse = (source, code) ->
     sections.push docs_text: docs, code_text: code
 
   for line in lines
-    if line.match language.comment_matcher
-      if not (line.match language.comment_filter)
-        if has_code
-          save docs_text, code_text
-          has_code = docs_text = code_text = ''
-        docs_text += line.replace(language.comment_matcher, '') + '\n'
+    if line.match(language.comment_matcher) and not line.match(language.comment_filter)
+      if has_code
+        save docs_text, code_text
+        has_code = docs_text = code_text = ''
+      docs_text += line.replace(language.comment_matcher, '') + '\n'
     else
       has_code = yes
       code_text += line + '\n'
@@ -151,7 +150,8 @@ for ext, l of languages
   l.comment_matcher = new RegExp('^\\s*' + l.symbol + '\\s?')
 
   # Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix))
-  l.comment_filter = new RegExp('^#![/]')
+  # and interpolations...
+  l.comment_filter = new RegExp('(^#![/]|^\\s*#\\{)')
 
   # The dividing token we feed into Pygments, to delimit the boundaries between
   # sections.
