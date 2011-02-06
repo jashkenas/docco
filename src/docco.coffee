@@ -196,11 +196,22 @@ highlight_end   = '</pre></div>'
 
 # Run the script.
 # For each source file passed in as an argument, generate the documentation.
-sources = process.ARGV.sort()
+sources = process.ARGV
 if sources.length
   ensure_directory ->
     fs.writeFile 'docs/docco.css', docco_styles
-    files = sources.slice(0)
-    next_file = -> generate_documentation files.shift(), next_file if files.length
-    next_file()
+    args = sources.slice(0)
+    next_arg = -> 
+        if args.length
+            a = args.shift()
+            if a is "-c" || a is "--css"
+                a = args.shift()
+                cssExtension = a.search /.css$/i
+                if cssExtension isnt -1
+                    new_styles = fs.readFileSync(fs.realpathSync(a)).toString()
+                    fs.writeFile 'docs/docco.css', docco_styles+"\n"+new_styles
+                    next_arg()
+                    return
+            generate_documentation a, next_arg
+    next_arg()
 
