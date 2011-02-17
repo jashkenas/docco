@@ -16,6 +16,6 @@
   },
   "main" :        "./lib/docco",
   "bin": {
-    "docco":      "./bin/docco",
+    "docco":      "./bin/docco"
   }
 }
