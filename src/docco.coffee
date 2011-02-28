@@ -12,8 +12,8 @@
 # ...will generate linked HTML documentation for the named source files, saving
 # it into a `docs` folder.
 #
-# The [source for Docco](http://github.com/jashkenas/docco) is available on GitHub,
-# and released under the MIT license.
+# The [source for Docco](http://github.com/jashkenas/docco) is available on
+# GitHub, and released under the MIT license.
 #
 # To install Docco, first make sure you have [Node.js](http://nodejs.org/),
 # [Pygments](http://pygments.org/) (install the latest dev version of Pygments
@@ -29,6 +29,37 @@
 # Both are by [Ryan Tomayko](http://github.com/rtomayko). If Python's more
 # your speed, take a look at [Nick Fitzgerald](http://github.com/fitzgen)'s
 # [Pycco](http://fitzgen.github.com/pycco/).
+
+
+# Processes the command line arguments, returns a hash with options and an
+# array of positional arguments for the source files. This allows the user to
+# pass some flags from the command line rather than modifying the file
+# everytime.
+parse_args = ->
+  opts    = {}
+  sources = []
+  args    = process.ARGV
+  while arg = args.shift()
+    # When we see a command line flag, do some slight processing on it, by
+    # removing the preceding dashes first, and then grabbing the value it
+    # refers to.
+    #
+    # We finish by sticking the arg=value pair in the `opts` object. Note
+    # that no processing is done on the argument's value. We assume all of
+    # them to be plain strings.
+    if /^--?/.test arg
+      arg = arg.replace /^--?/, ''
+      opts[arg] = args.shift()
+
+    # But if we don't get a command line flag, we just put the argument in
+    # the sources list.
+    else
+      sources.push arg
+
+  # And after all this small processing is done, we return an Array where the
+  # first element is the `opts` object, and the second is the sources list.
+  [opts, sources.sort()]
+
 
 #### Main Documentation Generation Functions
 
@@ -64,7 +95,8 @@ parse = (source, code) ->
     sections.push docs_text: docs, code_text: code
 
   for line in lines
-    if line.match(language.comment_matcher) and not line.match(language.comment_filter)
+    if line.match(language.comment_matcher) \
+       and not line.match(language.comment_filter)
       if has_code
         save docs_text, code_text
         has_code = docs_text = code_text = ''
@@ -77,14 +109,16 @@ parse = (source, code) ->
 
 # Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
 # and runs the text of its corresponding comment through **Markdown**, using the
-# **Github-flavored-Markdown** modification of [Showdown.js](http://attacklab.net/showdown/).
+# **Github-flavored-Markdown** modification of
+# [Showdown.js](http://attacklab.net/showdown/).
 #
 # We process the entire file in a single call to Pygments by inserting little
 # marker comments between each section and then splitting the result string
 # wherever our markers occur.
 highlight = (source, sections, callback) ->
   language = get_language source
-  pygments = spawn 'pygmentize', ['-l', language.name, '-f', 'html', '-O', 'encoding=utf-8']
+  pygments = spawn 'pygmentize', ['-l', language.name, '-f', 'html'
+                                 ,'-O', 'encoding=utf-8']
   output   = ''
   pygments.stderr.addListener 'data',  (error)  ->
     console.error error if error
@@ -97,7 +131,9 @@ highlight = (source, sections, callback) ->
       section.code_html = highlight_start + fragments[i] + highlight_end
       section.docs_html = showdown.makeHtml section.docs_text
     callback()
-  pygments.stdin.write((section.code_text for section in sections).join(language.divider_text))
+
+  sections_code = (section.code_text for section in sections)
+  pygments.stdin.write(sections_code.join(language.divider_text))
   pygments.stdin.end()
 
 # Once all of the code is finished highlighting, we can generate the HTML file
@@ -107,10 +143,16 @@ generate_html = (source, sections) ->
   title = path.basename source
   dest  = destination source
   html  = docco_template {
-    title: title, sections: sections, sources: sources, path: path, destination: destination
+    title:       title
+    sections:    sections
+    sources:     sources
+    path:        path
+    destination: destination
   }
   console.log "docco: #{source} -> #{dest}"
   fs.writeFile dest, html
+
+
 
 #### Helpers & Setup
 
@@ -120,6 +162,17 @@ fs       = require 'fs'
 path     = require 'path'
 showdown = require('./../vendor/showdown').Showdown
 {spawn, exec} = require 'child_process'
+
+# Takes a quick peak at the arguments in the command line, grabs any flag that
+# has been passed, so we can use it for overriding Docco's defaults, and use
+# everything else as the actual source files.
+#
+# Accepted command line options are:
+#
+#     --css       the stylesheet to use for the documentation
+#     --template  the template to use for the documentation
+#     --output    the directory to save the documentation
+[opts, sources] = parse_args()
 
 # A list of the languages that Docco supports, mapping the file extension to
 # the name of the Pygments lexer and the symbol that indicates a comment. To
@@ -151,19 +204,24 @@ for ext, l of languages
   # The mirror of `divider_text` that we expect Pygments to return. We can split
   # on this to recover the original sections.
   # Note: the class is "c" for Python and "c1" for the other languages
-  l.divider_html = new RegExp('\\n*<span class="c1?">' + l.symbol + 'DIVIDER<\\/span>\\n*')
+  l.divider_html = new RegExp('\\n*<span class="c1?">' + l.symbol +
+                              'DIVIDER<\\/span>\\n*')
 
 # Get the current language we're documenting, based on the extension.
 get_language = (source) -> languages[path.extname(source)]
 
 # Compute the destination HTML path for an input source file path. If the source
 # is `lib/example.coffee`, the HTML will be at `docs/example.html`
+#
+# `docs/` is the default output directory, however the user can specify any
+# other directory by providing a `--output` commandline flag.
+doc_dir = opts['output'] or 'docs'
 destination = (filepath) ->
-  'docs/' + path.basename(filepath, path.extname(filepath)) + '.html'
+  doc_dir + path.basename(filepath, path.extname(filepath)) + '.html'
 
 # Ensure that the destination directory exists.
 ensure_directory = (callback) ->
-  exec 'mkdir -p docs', -> callback()
+  exec 'mkdir -p #{doc_dir}', -> callback()
 
 # Micro-templating, originally by John Resig, borrowed by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
@@ -181,10 +239,22 @@ template = (str) ->
        "');}return p.join('');"
 
 # Create the template that we will use to generate the Docco HTML page.
-docco_template  = template fs.readFileSync(__dirname + '/../resources/docco.jst').toString()
+#
+# By default Docco will use the built-in template, however you can overwrite
+# this by just passing `--template` in the command line rather than changing
+# the default one.
+template_path  = opts['template'] or (__dirname + '/../resources/docco.jst')
+docco_template = template fs.readFileSync(template_path).toString()
+
 
 # The CSS styles we'd like to apply to the documentation.
-docco_styles    = fs.readFileSync(__dirname + '/../resources/docco.css').toString()
+#
+# By default Docco will use the built-in stylesheet, however you can overwrite
+# this by just passing `--css` in the command line rather than changing the
+# default one.
+css_path     = opts['css'] or (__dirname + '/../resources/docco.css')
+docco_styles = fs.readFileSync(css_path).toString()
+
 
 # The start of each Pygments highlight block.
 highlight_start = '<div class="highlight"><pre>'
@@ -192,13 +262,12 @@ highlight_start = '<div class="highlight"><pre>'
 # The end of each Pygments highlight block.
 highlight_end   = '</pre></div>'
 
-# Run the script.
-# For each source file passed in as an argument, generate the documentation.
-sources = process.ARGV.sort()
+
+# Run the script and for each source file passed in as an argument.
+# generates the documentation.
 if sources.length
   ensure_directory ->
     fs.writeFile 'docs/docco.css', docco_styles
-    files = sources.slice(0)
-    next_file = -> generate_documentation files.shift(), next_file if files.length
+    next_file = ->
+      generate_documentation sources.shift(), next_file if sources.length
     next_file()
-
