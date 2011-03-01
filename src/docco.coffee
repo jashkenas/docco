@@ -226,14 +226,28 @@ deflang   = (ext, name, symbol, ignore = [], filters = []) ->
 # the name of the Pygments lexer and the symbol that indicates a comment. To
 # add another language to Docco's repertoire, add it here.
 #
-# For CoffeeScript, we also ignore string interpolations (#{var})
-deflang '.coffee', 'coffee-script', '#', [/(#\{)/]
-deflang '.js',     'javascript',    '//'
+# For CoffeeScript, we also ignore string interpolations (#{var}) and here
+# comments.
+deflang '.coffee'
+      , 'coffee-script'
+      , '#'
+      , [/(\#\{)/]
+      , [/^\s*\#{3}(?:(?:.|\s)(?!\#{3}))+(?:.|\s)\#{3}\s*/m] #here comments
+
+deflang '.js'
+      , 'javascript'
+      , '//'
 
 # iirc, Ruby also uses the same string interpolations, but I don't know the
 # language. Included here for the sake of it though.
-deflang '.rb',     'ruby',          '#', [/(#\{)/]
-deflang '.py',     'python',        '#'
+deflang '.rb'
+      , 'ruby'
+      , '#'
+      , [/(\#\{)/]
+
+deflang '.py'
+      , 'python'
+      , '#'
 
 
 # Get the current language we're documenting, based on the extension.
