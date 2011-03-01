@@ -86,21 +86,33 @@ generate_documentation = (source, callback) ->
 #     }
 #
 parse = (source, code) ->
-  lines    = code.split '\n'
-  sections = []
-  language = get_language source
-  has_code = docs_text = code_text = ''
-
   save = (docs, code) ->
     sections.push docs_text: docs, code_text: code
 
+  should_ignore = (line) ->
+    for filter in language.ignore
+      return true if line.match(filter)
+
+  filter = ->
+    for filter in language.filters
+      if not filter.exec and not filter.test
+        code = filter(code)
+      else
+        code = code.replace(filter, '')
+    code
+
+  sections = []
+  language = get_language source
+  has_code = docs_text = code_text = ''
+  comment  = language.comment_matcher
+  lines    = (filter code).split '\n'
+
   for line in lines
-    if line.match(language.comment_matcher) \
-       and not line.match(language.comment_filter)
+    if line.match(comment) and not should_ignore(line)
       if has_code
         save docs_text, code_text
         has_code = docs_text = code_text = ''
-      docs_text += line.replace(language.comment_matcher, '') + '\n'
+      docs_text += line.replace(comment, '') + '\n'
     else
       has_code = yes
       code_text += line + '\n'
@@ -174,38 +186,55 @@ showdown = require('./../vendor/showdown').Showdown
 #     --output    the directory to save the documentation
 [opts, sources] = parse_args()
 
+# Build out the appropriate matchers and delimiters for each language.
+languages = {}
+deflang   = (ext, name, symbol, ignore = [], filters = []) ->
+  languages[ext] =
+    name:   name
+    symbol: symbol
+
+    # Does the line begin with a comment?
+    comment_matcher: new RegExp('^\\s*' + symbol + '\\s?')
+
+    # By default, ignore
+    # [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix))
+    ignore: [new RegExp '(^#![/])'].concat(ignore)
+
+    # A list of filters to pass the source code through before we move onto
+    # extracting the comments and source from it. Can be used to filter
+    # multiline comments and such.
+    #
+    # Accepts either a function or a regexp, which will have the match replaced
+    # by an empty string.
+    #
+    # By default, all lines containing only comment symbols, where these
+    # symbols are repeated at least once, are ignored.
+    filters: [new RegExp '(^\\s*' + symbol + '{2,}\\s*$)','mg'].concat(filters)
+
+    # The dividing token we feed into Pygments, to delimit the boundaries
+    # between sections.
+    divider_text: '\n' + symbol + 'DIVIDER\n'
+
+    # The mirror of `divider_text` that we expect Pygments to return. We can
+    # split on this to recover the original sections.
+    # Note: the class is "c" for Python and "c1" for the other languages
+    divider_html: new RegExp('\\n*<span class="c1?">' + symbol +
+                             'DIVIDER<\\/span>\\n*')
+
+
 # A list of the languages that Docco supports, mapping the file extension to
 # the name of the Pygments lexer and the symbol that indicates a comment. To
 # add another language to Docco's repertoire, add it here.
-languages =
-  '.coffee':
-    name: 'coffee-script', symbol: '#'
-  '.js':
-    name: 'javascript', symbol: '//'
-  '.rb':
-    name: 'ruby', symbol: '#'
-  '.py':
-    name: 'python', symbol: '#'
+#
+# For CoffeeScript, we also ignore string interpolations (#{var})
+deflang '.coffee', 'coffee-script', '#', [/(#\{)/]
+deflang '.js',     'javascript',    '//'
 
-# Build out the appropriate matchers and delimiters for each language.
-for ext, l of languages
+# iirc, Ruby also uses the same string interpolations, but I don't know the
+# language. Included here for the sake of it though.
+deflang '.rb',     'ruby',          '#', [/(#\{)/]
+deflang '.py',     'python',        '#'
 
-  # Does the line begin with a comment?
-  l.comment_matcher = new RegExp('^\\s*' + l.symbol + '\\s?')
-
-  # Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix))
-  # and interpolations...
-  l.comment_filter = new RegExp('(^#![/]|^\\s*#\\{)')
-
-  # The dividing token we feed into Pygments, to delimit the boundaries between
-  # sections.
-  l.divider_text = '\n' + l.symbol + 'DIVIDER\n'
-
-  # The mirror of `divider_text` that we expect Pygments to return. We can split
-  # on this to recover the original sections.
-  # Note: the class is "c" for Python and "c1" for the other languages
-  l.divider_html = new RegExp('\\n*<span class="c1?">' + l.symbol +
-                              'DIVIDER<\\/span>\\n*')
 
 # Get the current language we're documenting, based on the extension.
 get_language = (source) -> languages[path.extname(source)]
@@ -215,7 +244,7 @@ get_language = (source) -> languages[path.extname(source)]
 #
 # `docs/` is the default output directory, however the user can specify any
 # other directory by providing a `--output` commandline flag.
-doc_dir = opts['output'] or 'docs'
+doc_dir = opts['output'] or 'docs/'
 destination = (filepath) ->
   doc_dir + path.basename(filepath, path.extname(filepath)) + '.html'
 
@@ -255,7 +284,6 @@ docco_template = template fs.readFileSync(template_path).toString()
 css_path     = opts['css'] or (__dirname + '/../resources/docco.css')
 docco_styles = fs.readFileSync(css_path).toString()
 
-
 # The start of each Pygments highlight block.
 highlight_start = '<div class="highlight"><pre>'
 
@@ -267,7 +295,7 @@ highlight_end   = '</pre></div>'
 # generates the documentation.
 if sources.length
   ensure_directory ->
-    fs.writeFile 'docs/docco.css', docco_styles
+    fs.writeFile "#{doc_dir}docco.css", docco_styles
     next_file = ->
       generate_documentation sources.shift(), next_file if sources.length
     next_file()
