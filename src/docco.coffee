@@ -231,7 +231,7 @@ deflang   = (ext, name, symbol, ignore = [], filters = []) ->
 deflang '.coffee'
       , 'coffee-script'
       , '#'
-      , [/(\#\{)/]
+      , [/^\s*\#\{/]
       , [/^\s*\#{3}(?!\#)[\x00-\xFF]+?\#{3}/m] # here comment
 
 deflang '.js'
@@ -243,7 +243,7 @@ deflang '.js'
 deflang '.rb'
       , 'ruby'
       , '#'
-      , [/(\#\{)/]
+      , [/\s*\#\{/]
 
 deflang '.py'
       , 'python'
