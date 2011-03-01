@@ -232,7 +232,7 @@ deflang '.coffee'
       , 'coffee-script'
       , '#'
       , [/(\#\{)/]
-      , [/^\s*\#{3}(?!\#)(?:(?:.|\s)(?!\#{3}))+(?:.|\s)\#{3}\s*/m]
+      , [/^\s*\#{3}(?!\#)[\x00-\xFF]+?\#{3}/m] # here comment
 
 deflang '.js'
       , 'javascript'
