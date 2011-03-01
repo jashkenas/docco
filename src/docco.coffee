@@ -31,6 +31,8 @@
 # [Pycco](http://fitzgen.github.com/pycco/).
 
 
+#### Main Documentation Generation Functions
+
 # Processes the command line arguments, returns a hash with options and an
 # array of positional arguments for the source files. This allows the user to
 # pass some flags from the command line rather than modifying the file
@@ -60,8 +62,6 @@ parse_args = ->
   # first element is the `opts` object, and the second is the sources list.
   [opts, sources.sort()]
 
-
-#### Main Documentation Generation Functions
 
 # Generate the documentation for a source file by reading it in, splitting it
 # up into comment/code sections, highlighting them for the appropriate language,
@@ -232,7 +232,7 @@ deflang '.coffee'
       , 'coffee-script'
       , '#'
       , [/(\#\{)/]
-      , [/^\s*\#{3}(?:(?:.|\s)(?!\#{3}))+(?:.|\s)\#{3}\s*/m] #here comments
+      , [/^\s*\#{3}(?!\#)(?:(?:.|\s)(?!\#{3}))+(?:.|\s)\#{3}\s*/m]
 
 deflang '.js'
       , 'javascript'
@@ -264,7 +264,7 @@ destination = (filepath) ->
 
 # Ensure that the destination directory exists.
 ensure_directory = (callback) ->
-  exec 'mkdir -p #{doc_dir}', -> callback()
+  exec "mkdir -p #{doc_dir}", -> callback()
 
 # Micro-templating, originally by John Resig, borrowed by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
