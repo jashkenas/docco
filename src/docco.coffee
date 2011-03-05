@@ -85,9 +85,9 @@ parse = (source, code) ->
 highlight = (source, sections, callback) ->
   language = get_language source
   pygments = spawn 'pygmentize', ['-l', language.name, '-f', 'html', '-O', 'encoding=utf-8']
-  output   = ''
+  output = ''
   pygments.stderr.addListener 'data',  (error)  ->
-    console.error error if error
+    console.error error.toString() if error
   pygments.stdout.addListener 'data', (result) ->
     output += result if result
   pygments.addListener 'exit', ->
