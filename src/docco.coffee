@@ -131,6 +131,8 @@ languages =
     name: 'javascript', symbol: '//'
   '.rb':
     name: 'ruby', symbol: '#'
+  '.php':
+    name: 'php', symbol: '//'
   '.py':
     name: 'python', symbol: '#'
 
