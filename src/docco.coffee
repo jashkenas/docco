@@ -92,6 +92,7 @@ parse = (source, code) ->
   should_ignore = (line) ->
     for filter in language.ignore
       return true if line.match(filter)
+    false
 
   filter = ->
     for filter in language.filters
