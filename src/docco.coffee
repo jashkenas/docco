@@ -162,8 +162,8 @@ destination = (filepath) ->
   'docs/' + path.basename(filepath, path.extname(filepath)) + '.html'
 
 # Ensure that the destination directory exists.
-ensure_directory = (callback) ->
-  exec 'mkdir -p docs', -> callback()
+ensure_directory = (dir, callback) ->
+  exec "mkdir -p #{dir}", -> callback()
 
 # Micro-templating, originally by John Resig, borrowed by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
@@ -196,7 +196,7 @@ highlight_end   = '</pre></div>'
 # For each source file passed in as an argument, generate the documentation.
 sources = process.ARGV.sort()
 if sources.length
-  ensure_directory ->
+  ensure_directory 'docs', ->
     fs.writeFile 'docs/docco.css', docco_styles
     files = sources.slice(0)
     next_file = -> generate_documentation files.shift(), next_file if files.length
