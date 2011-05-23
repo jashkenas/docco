@@ -24,15 +24,24 @@ from <a href="http://dev.pocoo.org/hg/pygments-main">its Mercurial repo</a>), an
 <pre><code>sudo npm install docco
 </code></pre>
 
-<p>If <strong>Node.js</strong> doesn't run on your platform, or you'd prefer a more convenient
-package, get <a href="http://rtomayko.github.com/rocco/">Rocco</a>, the Ruby port that's
-available as a gem. If you're writing shell scripts, try
-<a href="http://rtomayko.github.com/shocco/">Shocco</a>, a port for the <strong>POSIX shell</strong>.
-Both are by <a href="http://github.com/rtomayko">Ryan Tomayko</a>. If Python's more
-your speed, take a look at <a href="http://github.com/fitzgen">Nick Fitzgerald</a>'s
-<a href="http://fitzgen.github.com/pycco/">Pycco</a>. And if you happen to be a <strong>.NET</strong>
+<h3>Partners in Crime:</h3>
+
+<ul>
+<li><p>If <strong>Node.js</strong> doesn't run on your platform, or you'd prefer a more convenient
+package, get <a href="http://github.com/rtomayko">Ryan Tomayko</a>'s 
+<a href="http://rtomayko.github.com/rocco/">Rocco</a>, the Ruby port that's available as a gem. </p></li>
+<li><p>If you're writing shell scripts, try
+<a href="http://rtomayko.github.com/shocco/">Shocco</a>, a port for the <strong>POSIX shell</strong>,
+also by Mr. Tomayko.</p></li>
+<li><p>If Python's more your speed, take a look at 
+<a href="http://github.com/fitzgen">Nick Fitzgerald</a>'s <a href="http://fitzgen.github.com/pycco/">Pycco</a>. </p></li>
+<li><p>For <strong>Clojure</strong> fans, <a href="http://blog.fogus.me/">Fogus</a>'s 
+<a href="http://fogus.me/fun/marginalia/">Marginalia</a> is a bit of a departure from 
+"quick-and-dirty", but it'll get the job done.</p></li>
+<li><p>And if you happen to be a <strong>.NET</strong>
 aficionado, check out <a href="https://github.com/dontangg">Don Wilson</a>'s 
-<a href="http://dontangg.github.com/nocco/">Nocco</a>.</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h3>Main Documentation Generation Functions</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Generate the documentation for a source file by reading it in, splitting it
+<a href="http://dontangg.github.com/nocco/">Nocco</a>.</p></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h3>Main Documentation Generation Functions</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Generate the documentation for a source file by reading it in, splitting it
 up into comment/code sections, highlighting them for the appropriate language,
 and merging them into an HTML template.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">generate_documentation = </span><span class="p">(</span><span class="nx">source</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="o">-&gt;</span>
   <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span> <span class="nx">source</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span> <span class="o">-&gt;</span>

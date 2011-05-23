@@ -22,13 +22,24 @@
 #
 #     sudo npm install docco
 #
-# If **Node.js** doesn't run on your platform, or you'd prefer a more convenient
-# package, get [Rocco](http://rtomayko.github.com/rocco/), the Ruby port that's
-# available as a gem. If you're writing shell scripts, try
-# [Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell**.
-# Both are by [Ryan Tomayko](http://github.com/rtomayko). If Python's more
-# your speed, take a look at [Nick Fitzgerald](http://github.com/fitzgen)'s
-# [Pycco](http://fitzgen.github.com/pycco/). And if you happen to be a **.NET**
+#### Partners in Crime:
+#
+# * If **Node.js** doesn't run on your platform, or you'd prefer a more convenient
+# package, get [Ryan Tomayko](http://github.com/rtomayko)'s 
+# [Rocco](http://rtomayko.github.com/rocco/), the Ruby port that's available as a gem. 
+# 
+# * If you're writing shell scripts, try
+# [Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell**,
+# also by Mr. Tomayko.
+# 
+# * If Python's more your speed, take a look at 
+# [Nick Fitzgerald](http://github.com/fitzgen)'s [Pycco](http://fitzgen.github.com/pycco/). 
+#
+# * For **Clojure** fans, [Fogus](http://blog.fogus.me/)'s 
+# [Marginalia](http://fogus.me/fun/marginalia/) is a bit of a departure from 
+# "quick-and-dirty", but it'll get the job done.
+# 
+# * And if you happen to be a **.NET**
 # aficionado, check out [Don Wilson](https://github.com/dontangg)'s 
 # [Nocco](http://dontangg.github.com/nocco/).
 
