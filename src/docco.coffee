@@ -38,6 +38,9 @@
 # * For **Clojure** fans, [Fogus](http://blog.fogus.me/)'s 
 # [Marginalia](http://fogus.me/fun/marginalia/) is a bit of a departure from 
 # "quick-and-dirty", but it'll get the job done.
+#
+# * **Lua** enthusiasts can get their fix with 
+# [Robert Gieseke](https://github.com/rgieseke)'s [Locco](http://rgieseke.github.com/locco/).
 # 
 # * And if you happen to be a **.NET**
 # aficionado, check out [Don Wilson](https://github.com/dontangg)'s 
