@@ -45,6 +45,7 @@
 # * And if you happen to be a **.NET**
 # aficionado, check out [Don Wilson](https://github.com/dontangg)'s 
 # [Nocco](http://dontangg.github.com/nocco/).
+version = '0.3.1'
 
 #### Main Documentation Generation Functions
 
@@ -120,13 +121,14 @@ highlight = (source, sections, callback) ->
 # and write out the documentation. Pass the completed sections into the template
 # found in `resources/docco.jst`
 generate_html = (source, sections) ->
-  title = path.basename source
-  dest  = destination source
-  html  = docco_template {
-    title: title, sections: sections, sources: sources, path: path, destination: destination
+  title      = path.basename source
+  dest       = destination source
+  html       = docco_template {
+    title: title, styles: (if inline_css then docco_styles else ""), sections: sections, sources: sources, path: path, destination: destination
   }
   console.log "docco: #{source} -> #{dest}"
-  fs.writeFile dest, html
+  ensure_directory path.dirname(dest), ->
+    fs.writeFile dest, html
 
 #### Helpers & Setup
 
@@ -173,9 +175,10 @@ for ext, l of languages
 get_language = (source) -> languages[path.extname(source)]
 
 # Compute the destination HTML path for an input source file path. If the source
-# is `lib/example.coffee`, the HTML will be at `docs/example.html`
+# is `lib/example.coffee`, the HTML will be at `docs/example.html`; unless the
+# `--structured-output` flag is set, in which case it will be `docs/lib/example.html`
 destination = (filepath) ->
-  'docs/' + path.basename(filepath, path.extname(filepath)) + '.html'
+  'docs/' + (if structured_output then path.dirname(filepath) + '/' else '') + path.basename(filepath, path.extname(filepath)) + '.html'
 
 # Ensure that the destination directory exists.
 ensure_directory = (dir, callback) ->
@@ -196,11 +199,37 @@ template = (str) ->
        .split('%>').join("p.push('") +
        "');}return p.join('');"
 
+# Loop through arguments; make the tough decisions
+sources = []
+args = process.ARGV.sort()
+while args.length
+  switch arg = args.shift()
+    # If you want to see the Docco version using `--version`, your ride ends here
+    when '--version'
+      console.log "Docco v" + version
+      return
+    # `--structured-output` will match the docs directory structure to your source
+    # directory structure. This will also trigger css to render inline.
+    when '--structured-output' then inline_css = structured_output = true
+    # `--inline-css` will add the styles into a `<style>` tag inline vs externally
+    # linking to the styles.
+    when '--inline-css' then inline_css = true
+    # `--css myStyles.css` or `-c myStyles.css` will trigger using a custom
+    # stylesheet; otherwise the default docco styles will be used.
+    when '--css', '-c' then css_file = args.shift() if args.length
+    else sources.push arg
+
 # Create the template that we will use to generate the Docco HTML page.
 docco_template  = template fs.readFileSync(__dirname + '/../resources/docco.jst').toString()
 
 # The CSS styles we'd like to apply to the documentation.
-docco_styles    = fs.readFileSync(__dirname + '/../resources/docco.css').toString()
+# Use a custom css file if specified
+if css_file?
+  docco_styles  = fs.readFileSync(css_file).toString()
+
+# Did we load custom styles? If not, use the default set.
+if not docco_styles?
+  docco_styles  = fs.readFileSync(__dirname + '/../resources/docco.css').toString()
 
 # The start of each Pygments highlight block.
 highlight_start = '<div class="highlight"><pre>'
@@ -210,10 +239,9 @@ highlight_end   = '</pre></div>'
 
 # Run the script.
 # For each source file passed in as an argument, generate the documentation.
-sources = process.ARGV.sort()
 if sources.length
   ensure_directory 'docs', ->
-    fs.writeFile 'docs/docco.css', docco_styles
+    fs.writeFile 'docs/docco.css', docco_styles if not inline_css
     files = sources.slice(0)
     next_file = -> generate_documentation files.shift(), next_file if files.length
     next_file()
