@@ -121,11 +121,27 @@ highlight = (source, sections, callback) ->
 # and write out the documentation. Pass the completed sections into the template
 # found in `resources/docco.jst`
 generate_html = (source, sections) ->
-  title      = path.basename source
-  dest       = destination source
-  html       = docco_template {
-    title: title, styles: (if inline_css then docco_styles else ""), sections: sections, sources: sources, path: path, destination: destination
-  }
+  title       = path.basename source
+  dest        = destination source
+  
+  # If using `--structured-output`: create a relative destination function
+  # to fix paths used in the "Jump to..." menu. The new function creates
+  # a string with a `../` for each level of depth in the current source file's
+  # path and prefixes it to the linked source file's path. Otherwise:
+  # the relative destination should simply be the filename.
+  relative_destination = if structured_output then (source)->
+    (path.dirname(dest) + '/').replace(/[^\/]*\//g, '../') + destination source
+  else (source) ->
+    path.basename destination source
+  
+  # If using `--structured-output`: we can pass in the sources array *as-is*.
+  # Otherwise: we map the sources to just the filenames.
+  html        = docco_template
+    title: title
+    styles: if inline_css then docco_styles else ''
+    sections: sections
+    sources: if structured_output then sources else sources.map (source)-> path.basename source
+    relative_destination: relative_destination
   console.log "docco: #{source} -> #{dest}"
   ensure_directory path.dirname(dest), ->
     fs.writeFile dest, html
@@ -206,7 +222,7 @@ while args.length
   switch arg = args.shift()
     # If you want to see the Docco version using `--version`, your ride ends here
     when '--version'
-      console.log "Docco v" + version
+      console.log 'Docco v' + version
       return
     # `--structured-output` will match the docs directory structure to your source
     # directory structure. This will also trigger css to render inline.
@@ -217,7 +233,7 @@ while args.length
     # `--css myStyles.css` or `-c myStyles.css` will trigger using a custom
     # stylesheet; otherwise the default docco styles will be used.
     when '--css', '-c' then css_file = args.shift() if args.length
-    else sources.push arg
+    else sources.push path.normalize arg
 
 # Create the template that we will use to generate the Docco HTML page.
 docco_template  = template fs.readFileSync(__dirname + '/../resources/docco.jst').toString()
