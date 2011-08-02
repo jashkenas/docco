@@ -217,7 +217,7 @@ template = (str) ->
 
 # Loop through arguments; make the tough decisions
 sources = []
-args = process.ARGV.sort()
+args = process.ARGV.slice()
 while args.length
   switch arg = args.shift()
     # If you want to see the Docco version using `--version`, your ride ends here
@@ -233,32 +233,40 @@ while args.length
     # `--css myStyles.css` or `-c myStyles.css` will trigger using a custom
     # stylesheet; otherwise the default docco styles will be used.
     when '--css', '-c' then css_file = args.shift() if args.length
+    when '--template', '-t' then template_file = args.shift() if args.length
     else sources.push path.normalize arg
+sources.sort()
 
 # Create the template that we will use to generate the Docco HTML page.
-docco_template  = template fs.readFileSync(__dirname + '/../resources/docco.jst').toString()
+# Use a custom template file if specified
+if template_file?
+  docco_template = template fs.readFileSync(template_file).toString()
+
+# Did we load a custom template? If not, use the default one.
+if not docco_template?
+  docco_template = template fs.readFileSync(__dirname + '/../resources/docco.jst').toString()
 
 # The CSS styles we'd like to apply to the documentation.
 # Use a custom css file if specified
 if css_file?
-  docco_styles  = fs.readFileSync(css_file).toString()
+  docco_styles   = fs.readFileSync(css_file).toString()
 
 # Did we load custom styles? If not, use the default set.
 if not docco_styles?
-  docco_styles  = fs.readFileSync(__dirname + '/../resources/docco.css').toString()
+  docco_styles   = fs.readFileSync(__dirname + '/../resources/docco.css').toString()
 
 # The start of each Pygments highlight block.
-highlight_start = '<div class="highlight"><pre>'
+highlight_start  = '<div class="highlight"><pre>'
 
 # The end of each Pygments highlight block.
-highlight_end   = '</pre></div>'
+highlight_end    = '</pre></div>'
 
 # Run the script.
 # For each source file passed in as an argument, generate the documentation.
 if sources.length
   ensure_directory 'docs', ->
     fs.writeFile 'docs/docco.css', docco_styles if not inline_css
-    files = sources.slice(0)
+    files = sources.slice()
     next_file = -> generate_documentation files.shift(), next_file if files.length
     next_file()
 
