@@ -9,10 +9,8 @@
 #
 #     docco src/*.coffee
 #
-# ...will generate linked HTML documentation for the named source files, saving
-# it into a `docs` folder. One HTML file per input source file will be generated.
-# For each call to docco, if there are multiple files, a menu will be generated to 
-# navigate between files.  This will contain only the files for the current invocation.
+# ...will generate an HTML documentation page for each of the named source files, 
+# with a menu linking to the other pages, saving it into a `docs` folder.
 #
 # The [source for Docco](http://github.com/jashkenas/docco) is available on GitHub,
 # and released under the MIT license.
