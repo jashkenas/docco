@@ -51,12 +51,12 @@
 # Generate the documentation for a source file by reading it in, splitting it
 # up into comment/code sections, highlighting them for the appropriate language,
 # and merging them into an HTML template.
-generate_documentation = (source, callback) ->
+generate_documentation = (source, context, callback) ->
   fs.readFile source, "utf-8", (error, code) ->
     throw error if error
     sections = parse source, code
     highlight source, sections, ->
-      generate_html source, sections
+      generate_html source, context, sections
       callback()
 
 # Given a string of source code, parse out each comment and the code that
@@ -119,11 +119,11 @@ highlight = (source, sections, callback) ->
 # Once all of the code is finished highlighting, we can generate the HTML file
 # and write out the documentation. Pass the completed sections into the template
 # found in `resources/docco.jst`
-generate_html = (source, sections) ->
+generate_html = (source, context, sections) ->
   title = path.basename source
   dest  = destination source
   html  = docco_template {
-    title: title, sections: sections, sources: sources, path: path, destination: destination
+    title: title, sections: sections, sources: context.sources, path: path, destination: destination
   }
   console.log "docco: #{source} -> #{dest}"
   fs.writeFile dest, html
@@ -173,7 +173,7 @@ for ext, l of languages
 get_language = (source) -> languages[path.extname(source)]
 
 # Compute the destination HTML path for an input source file path. If the source
-# is `lib/example.coffee`, the HTML will be at `docs/example.html`
+# is `lib/example.coffee`, the HTML will be at `docs/example.html`.
 destination = (filepath) ->
   'docs/' + path.basename(filepath, path.extname(filepath)) + '.html'
 
@@ -208,13 +208,25 @@ highlight_start = '<div class="highlight"><pre>'
 # The end of each Pygments highlight block.
 highlight_end   = '</pre></div>'
 
-# Run the script.
-# For each source file passed in as an argument, generate the documentation.
-sources = process.ARGV.sort()
-if sources.length
+# Process our arguments, passing an array of sources to generate docs for,
+# and an optional relative root.
+parseArgs = (callback) ->
+  args = process.ARGV.sort()
+
+  # Preserving past behavior: if no args are given, we do nothing (eventually
+  # display help?)
+  return unless args.length
+
+  callback(args)
+
+parseArgs (sources, relativeRoot) ->
+  # Rather than relying on globals, let's pass around a context w/ misc info
+  # that we require down the line.
+  context = sources: sources, relativeRoot: relativeRoot
+
   ensure_directory 'docs', ->
     fs.writeFile 'docs/docco.css', docco_styles
     files = sources.slice(0)
-    next_file = -> generate_documentation files.shift(), next_file if files.length
+    next_file = -> generate_documentation files.shift(), context, next_file if files.length
     next_file()
 
