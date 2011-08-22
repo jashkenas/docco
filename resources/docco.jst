@@ -1,23 +1,29 @@
+<%
+var root_path = relative_base(file_path, context).replace(/[^\/]+/, '..');
+%>
 <!DOCTYPE html>
 
 <html>
 <head>
   <title><%= title %></title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" media="all" href="docco.css" />
+  <link rel="stylesheet" media="all" href="<%= root_path %>docco.css" />
 </head>
 <body>
   <div id="container">
     <div id="background"></div>
-    <% if (sources.length > 1) { %>
+    <% if (context.sources.length > 1) { %>
       <div id="jump_to">
         Jump To &hellip;
         <div id="jump_wrapper">
           <div id="jump_page">
-            <% for (var i=0, l=sources.length; i<l; i++) { %>
-              <% var source = sources[i]; %>
-              <a class="source" href="<%= path.basename(destination(source)) %>">
-                <%= path.basename(source) %>
+            <% for (var i=0, l=context.sources.length; i<l; i++) { %>
+              <%
+              var source    = context.sources[i];
+              var base_path = relative_base(source, context);
+              %>
+              <a class="source" href="<%= root_path + base_path + path.basename(source, path.extname(source)) %>.html">
+                <span class="base_path"><%= base_path %></span><span class="file_name"><%= path.basename(source) %></span>
               </a>
             <% } %>
           </div>
@@ -56,3 +62,4 @@
   </div>
 </body>
 </html>
+

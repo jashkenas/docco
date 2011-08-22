@@ -121,12 +121,27 @@ highlight = (source, sections, callback) ->
 # found in `resources/docco.jst`
 generate_html = (source, context, sections) ->
   title = path.basename source
-  dest  = destination source
+  dest  = destination source, context
   html  = docco_template {
-    title: title, sections: sections, sources: context.sources, path: path, destination: destination
+    title: title, file_path: source, sections: sections, context: context, path: path, relative_base: relative_base
   }
-  console.log "docco: #{source} -> #{dest}"
-  fs.writeFile dest, html
+
+  # Generate the file's base dir as required
+  target_dir = path.dirname(dest)
+  write_func = ->
+    console.log "docco: #{source} -> #{dest}"
+    fs.writeFile dest, html, (err) -> throw err if err
+
+  fs.stat target_dir, (err, stats) ->
+    throw err if err and err.code != 'ENOENT'
+
+    return write_func() unless err
+
+    if err
+      exec "mkdir -p #{target_dir}", (err) ->
+        throw err if err
+
+        write_func()
 
 #### Helpers & Setup
 
@@ -172,10 +187,18 @@ for ext, l of languages
 # Get the current language we're documenting, based on the extension.
 get_language = (source) -> languages[path.extname(source)]
 
+# Compute the path of a source file relative to the docs folder
+relative_base = (filepath, context) ->
+  result = if context.relative_root then path.dirname(filepath)[context.relative_root.length..] + '/' else ''
+
+  if result == '/' then '' else result
+
 # Compute the destination HTML path for an input source file path. If the source
 # is `lib/example.coffee`, the HTML will be at `docs/example.html`.
-destination = (filepath) ->
-  'docs/' + path.basename(filepath, path.extname(filepath)) + '.html'
+destination = (filepath, context) ->
+  base_path = relative_base filepath, context
+
+  'docs/' + base_path + path.basename(filepath, path.extname(filepath)) + '.html'
 
 # Ensure that the destination directory exists.
 ensure_directory = (dir, callback) ->
@@ -208,21 +231,41 @@ highlight_start = '<div class="highlight"><pre>'
 # The end of each Pygments highlight block.
 highlight_end   = '</pre></div>'
 
+
 # Process our arguments, passing an array of sources to generate docs for,
 # and an optional relative root.
-parseArgs = (callback) ->
+parse_args = (callback) ->
   args = process.ARGV.sort()
 
   # Preserving past behavior: if no args are given, we do nothing (eventually
   # display help?)
   return unless args.length
 
-  callback(args)
+  # The traditional way of running docco is to just pass a globed list of files
+  # to build docs for.
+  unless args.length == 1 and fs.statSync(args[0]).isDirectory()
+    return callback(args)
 
-parseArgs (sources, relativeRoot) ->
+  # If we are given a single directory, treat this as a relative root and
+  # recursively build docs that mirror its file and subdirectory structure.
+  relative_root = args[0].replace(/\/+$/, '')
+
+  # Rather than deal with building a recursive tree walker via the fs module,
+  # let's save ourselves typing and testing and drop to the shell
+  exec "find #{relative_root} -type f", (err, stdout) ->
+    throw err if err
+
+    # Don't include hidden files, either
+    sources = stdout.split("\n").filter (file) -> file != '' and path.basename(file)[0] != '.'
+
+    console.log "docco: Recursively generating docs underneath #{relative_root}/"
+
+    callback(sources, relative_root + '/')
+
+parse_args (sources, relative_root) ->
   # Rather than relying on globals, let's pass around a context w/ misc info
   # that we require down the line.
-  context = sources: sources, relativeRoot: relativeRoot
+  context = sources: sources, relative_root: relative_root
 
   ensure_directory 'docs', ->
     fs.writeFile 'docs/docco.css', docco_styles
