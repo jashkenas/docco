@@ -24,9 +24,10 @@
 #
 #### Partners in Crime:
 #
-# * If **Node.js** doesn't run on your platform, or you'd prefer a more convenient
-# package, get [Ryan Tomayko](http://github.com/rtomayko)'s 
-# [Rocco](http://rtomayko.github.com/rocco/), the Ruby port that's available as a gem. 
+# * If **Node.js** doesn't run on your platform, or you'd prefer a more 
+# convenient package, get [Ryan Tomayko](http://github.com/rtomayko)'s 
+# [Rocco](http://rtomayko.github.com/rocco/rocco.html), the Ruby port that's 
+# available as a gem. 
 # 
 # * If you're writing shell scripts, try
 # [Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell**,
