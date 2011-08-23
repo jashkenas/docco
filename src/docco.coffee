@@ -102,13 +102,17 @@ highlight = (source, sections, callback) ->
   language = get_language source
   pygments = spawn 'pygmentize', ['-l', language.name, '-f', 'html', '-O', 'encoding=utf-8']
   output   = ''
+  
   pygments.stderr.addListener 'data',  (error)  ->
     console.error error if error
+    
   pygments.stdin.addListener 'error',  (error)  ->
-    console.error "Error trying to run pygmentized to highlight the source. Do you have it installed?"
+    console.error "Could not use Pygments to highlight the source."
     process.exit 1
+    
   pygments.stdout.addListener 'data', (result) ->
     output += result if result
+    
   pygments.addListener 'exit', ->
     output = output.replace(highlight_start, '').replace(highlight_end, '')
     fragments = output.split language.divider_html
