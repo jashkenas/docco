@@ -105,7 +105,7 @@ highlight = (source, sections, callback) ->
   pygments.stderr.addListener 'data',  (error)  ->
     console.error error if error
   pygments.stdin.addListener 'error',  (error)  ->
-    console.error "Error trying to run pygmentized to hilight the source. Do you have it installed?"
+    console.error "Error trying to run pygmentized to highlight the source. Do you have it installed?"
     process.exit 1
   pygments.stdout.addListener 'data', (result) ->
     output += result if result
