@@ -104,6 +104,9 @@ highlight = (source, sections, callback) ->
   output   = ''
   pygments.stderr.addListener 'data',  (error)  ->
     console.error error if error
+  pygments.stdin.addListener 'error',  (error)  ->
+    console.error "Error trying to run pygmentized to highlight the source. Do you have it installed?"
+    process.exit 1
   pygments.stdout.addListener 'data', (result) ->
     output += result if result
   pygments.addListener 'exit', ->
@@ -113,9 +116,11 @@ highlight = (source, sections, callback) ->
       section.code_html = highlight_start + fragments[i] + highlight_end
       section.docs_html = showdown.makeHtml section.docs_text
     callback()
-  pygments.stdin.write((section.code_text for section in sections).join(language.divider_text))
-  pygments.stdin.end()
-
+    
+  if pygments.stdin.writable
+    pygments.stdin.write((section.code_text for section in sections).join(language.divider_text))
+    pygments.stdin.end()
+  
 # Once all of the code is finished highlighting, we can generate the HTML file
 # and write out the documentation. Pass the completed sections into the template
 # found in `resources/docco.jst`
