@@ -105,8 +105,12 @@ highlight = (source, sections, callback) ->
   output   = ''
   
   pygments.stderr.addListener 'data',  (error)  ->
-    console.error error if error
-    
+    if error
+      if typeof error != 'string'
+        console.error error.toString('ascii')
+      else
+        console.error error
+
   pygments.stdin.addListener 'error',  (error)  ->
     console.error "Could not use Pygments to highlight the source."
     process.exit 1
