@@ -9,8 +9,8 @@
 #
 #     docco src/*.coffee
 #
-# ...will generate linked HTML documentation for the named source files, saving
-# it into a `docs` folder.
+# ...will generate an HTML documentation page for each of the named source files, 
+# with a menu linking to the other pages, saving it into a `docs` folder.
 #
 # The [source for Docco](http://github.com/jashkenas/docco) is available on GitHub,
 # and released under the MIT license.
@@ -22,13 +22,30 @@
 #
 #     sudo npm install docco
 #
-# If **Node.js** doesn't run on your platform, or you'd prefer a more convenient
-# package, get [Rocco](http://rtomayko.github.com/rocco/), the Ruby port that's
-# available as a gem. If you're writing shell scripts, try
-# [Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell**.
-# Both are by [Ryan Tomayko](http://github.com/rtomayko). If Python's more
-# your speed, take a look at [Nick Fitzgerald](http://github.com/fitzgen)'s
-# [Pycco](http://fitzgen.github.com/pycco/).
+#### Partners in Crime:
+#
+# * If **Node.js** doesn't run on your platform, or you'd prefer a more 
+# convenient package, get [Ryan Tomayko](http://github.com/rtomayko)'s 
+# [Rocco](http://rtomayko.github.com/rocco/rocco.html), the Ruby port that's 
+# available as a gem. 
+# 
+# * If you're writing shell scripts, try
+# [Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell**,
+# also by Mr. Tomayko.
+# 
+# * If Python's more your speed, take a look at 
+# [Nick Fitzgerald](http://github.com/fitzgen)'s [Pycco](http://fitzgen.github.com/pycco/). 
+#
+# * For **Clojure** fans, [Fogus](http://blog.fogus.me/)'s 
+# [Marginalia](http://fogus.me/fun/marginalia/) is a bit of a departure from 
+# "quick-and-dirty", but it'll get the job done.
+#
+# * **Lua** enthusiasts can get their fix with 
+# [Robert Gieseke](https://github.com/rgieseke)'s [Locco](http://rgieseke.github.com/locco/).
+# 
+# * And if you happen to be a **.NET**
+# aficionado, check out [Don Wilson](https://github.com/dontangg)'s 
+# [Nocco](http://dontangg.github.com/nocco/).
 
 #### Main Documentation Generation Functions
 
@@ -85,11 +102,18 @@ parse = (source, code) ->
 highlight = (source, sections, callback) ->
   language = get_language source
   pygments = spawn 'pygmentize', ['-l', language.name, '-f', 'html', '-O', 'encoding=utf-8']
-  output = ''
+  output   = ''
+  
   pygments.stderr.addListener 'data',  (error)  ->
     console.error error.toString() if error
+    
+  pygments.stdin.addListener 'error',  (error)  ->
+    console.error "Could not use Pygments to highlight the source."
+    process.exit 1
+    
   pygments.stdout.addListener 'data', (result) ->
     output += result if result
+    
   pygments.addListener 'exit', ->
     output = output.replace(highlight_start, '').replace(highlight_end, '')
     fragments = output.split language.divider_html
@@ -97,9 +121,11 @@ highlight = (source, sections, callback) ->
       section.code_html = highlight_start + fragments[i] + highlight_end
       section.docs_html = showdown.makeHtml section.docs_text
     callback()
-  pygments.stdin.write((section.code_text for section in sections).join(language.divider_text))
-  pygments.stdin.end()
-
+    
+  if pygments.stdin.writable
+    pygments.stdin.write((section.code_text for section in sections).join(language.divider_text))
+    pygments.stdin.end()
+  
 # Once all of the code is finished highlighting, we can generate the HTML file
 # and write out the documentation. Pass the completed sections into the template
 # found in `resources/docco.jst`
@@ -162,8 +188,8 @@ destination = (filepath) ->
   'docs/' + path.basename(filepath, path.extname(filepath)) + '.html'
 
 # Ensure that the destination directory exists.
-ensure_directory = (callback) ->
-  exec 'mkdir -p docs', -> callback()
+ensure_directory = (dir, callback) ->
+  exec "mkdir -p #{dir}", -> callback()
 
 # Micro-templating, originally by John Resig, borrowed by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
@@ -196,7 +222,7 @@ highlight_end   = '</pre></div>'
 # For each source file passed in as an argument, generate the documentation.
 sources = process.ARGV.sort()
 if sources.length
-  ensure_directory ->
+  ensure_directory 'docs', ->
     fs.writeFile 'docs/docco.css', docco_styles
     files = sources.slice(0)
     next_file = -> generate_documentation files.shift(), next_file if files.length
