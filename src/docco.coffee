@@ -24,9 +24,10 @@
 #
 #### Partners in Crime:
 #
-# * If **Node.js** doesn't run on your platform, or you'd prefer a more convenient
-# package, get [Ryan Tomayko](http://github.com/rtomayko)'s 
-# [Rocco](http://rtomayko.github.com/rocco/), the Ruby port that's available as a gem. 
+# * If **Node.js** doesn't run on your platform, or you'd prefer a more 
+# convenient package, get [Ryan Tomayko](http://github.com/rtomayko)'s 
+# [Rocco](http://rtomayko.github.com/rocco/rocco.html), the Ruby port that's 
+# available as a gem. 
 # 
 # * If you're writing shell scripts, try
 # [Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell**,
@@ -102,10 +103,17 @@ highlight = (source, sections, callback) ->
   language = get_language source
   pygments = spawn 'pygmentize', ['-l', language.name, '-f', 'html', '-O', 'encoding=utf-8']
   output   = ''
+  
   pygments.stderr.addListener 'data',  (error)  ->
-    console.error error if error
+    console.error error.toString() if error
+    
+  pygments.stdin.addListener 'error',  (error)  ->
+    console.error "Could not use Pygments to highlight the source."
+    process.exit 1
+    
   pygments.stdout.addListener 'data', (result) ->
     output += result if result
+    
   pygments.addListener 'exit', ->
     output = output.replace(highlight_start, '').replace(highlight_end, '')
     fragments = output.split language.divider_html
@@ -113,9 +121,11 @@ highlight = (source, sections, callback) ->
       section.code_html = highlight_start + fragments[i] + highlight_end
       section.docs_html = showdown.makeHtml section.docs_text
     callback()
-  pygments.stdin.write((section.code_text for section in sections).join(language.divider_text))
-  pygments.stdin.end()
-
+    
+  if pygments.stdin.writable
+    pygments.stdin.write((section.code_text for section in sections).join(language.divider_text))
+    pygments.stdin.end()
+  
 # Once all of the code is finished highlighting, we can generate the HTML file
 # and write out the documentation. Pass the completed sections into the template
 # found in `resources/docco.jst`
