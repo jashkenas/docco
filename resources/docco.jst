@@ -54,5 +54,24 @@
       </tbody>
     </table>
   </div>
+  <% if (sources.length > 1) { %>
+    <script>
+      (function(doc) {
+        var nav = doc.getElementById('jump_page');
+        if (!nav) return;
+
+        var links = nav.getElementsByTagName('a');
+        nav.className += ' hidden';
+
+        var onfocus = function() { nav.className = nav.className.replace(/(^|\s+)hidden(\s+|$)/, ' '); },
+          onblur = function() { nav.className += ' hidden'; };
+
+        for (var l = links.length; l--;) {
+          links[l].onfocus = onfocus;
+          links[l].onblur = onblur;
+        }
+      })(document)
+    </script>
+  <% } %>
 </body>
 </html>
