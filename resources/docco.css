@@ -103,7 +103,10 @@ table td {
         opacity: 0;
         -webkit-transition: opacity 0.2s linear;
       }
-        td.docs .pilcrow:focus,
+        td.docs .pilcrow:focus {
+          opacity: 1;
+          -webkit-transition: none;
+        }
         td.docs:hover .pilcrow {
           opacity: 1;
         }
