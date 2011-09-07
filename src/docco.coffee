@@ -93,8 +93,8 @@ parse = (source, code) ->
   sections
 
 # Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
-# and runs the text of its corresponding comment through **Markdown**, using the
-# **Github-flavored-Markdown** modification of [Showdown.js](http://attacklab.net/showdown/).
+# and runs the text of its corresponding comment through **Markdown**, using
+# [Showdown.js](http://attacklab.net/showdown/).
 #
 # We process the entire file in a single call to Pygments by inserting little
 # marker comments between each section and then splitting the result string
