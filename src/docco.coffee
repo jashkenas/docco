@@ -94,15 +94,15 @@ parse = (source, code) ->
   sections
 
 # Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
-# and runs the text of its corresponding comment through **Markdown**, using the
-# **Github-flavored-Markdown** modification of [Showdown.js](http://attacklab.net/showdown/).
+# and runs the text of its corresponding comment through **Markdown**, using
+# [Showdown.js](http://attacklab.net/showdown/).
 #
 # We process the entire file in a single call to Pygments by inserting little
 # marker comments between each section and then splitting the result string
 # wherever our markers occur.
 highlight = (source, sections, callback) ->
   language = get_language source
-  pygments = spawn 'pygmentize', ['-l', language.name, '-f', 'html', '-O', 'encoding=utf-8']
+  pygments = spawn 'pygmentize', ['-l', language.name, '-f', 'html', '-O', 'encoding=utf-8,tabsize=2']
   output   = ''
   
   pygments.stderr.addListener 'data',  (error)  ->
