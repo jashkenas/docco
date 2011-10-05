@@ -222,6 +222,7 @@ docco_fullscreen_template = template fs.readFileSync(__dirname + '/../resources/
 
 # The CSS styles we'd like to apply to the documentation.
 docco_styles    = fs.readFileSync(__dirname + '/../resources/docco.css').toString()
+docco_full_styles    = fs.readFileSync(__dirname + '/../resources/docco_full.css').toString()
 
 # The start of each Pygments highlight block.
 highlight_start = '<div class="highlight"><pre>'
@@ -235,6 +236,7 @@ sources = process.ARGV.sort()
 if sources.length
   ensure_directory 'docs', ->
     fs.writeFile 'docs/docco.css', docco_styles
+    fs.writeFile 'docs/docco_full.css', docco_full_styles
     files = sources.slice(0)
     next_file = -> generate_documentation files.shift(), next_file if files.length
     next_file()
