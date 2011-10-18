@@ -80,7 +80,20 @@ parse = (source, code) ->
   save = (docs, code) ->
     sections.push docs_text: docs, code_text: code
 
+  hasSeenOpeningDocComment=false
   for line in lines
+    if line == '###' or hasSeenOpeningDocComment
+        if not hasSeenOpeningDocComment
+            hasSeenOpeningDocComment = true
+            continue
+        else if hasSeenOpeningDocComment and line == '###'
+            hasSeenOpeningDocComment = false
+            continue
+        else
+            tline = line.replace(language.comment_matcher, '')
+            tline = line.replace(/^[^*][*]+/, '')
+            docs_text += tline + '\n'
+            continue
     if line.match(language.comment_matcher) and not line.match(language.comment_filter)
       if has_code
         save docs_text, code_text
