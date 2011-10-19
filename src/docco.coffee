@@ -86,7 +86,7 @@ parse = (source, code) ->
         if not hasSeenOpeningDocComment
             hasSeenOpeningDocComment = true
             continue
-        else if hasSeenOpeningDocComment and line == '###'
+        else if line == '###'
             hasSeenOpeningDocComment = false
             continue
         else
