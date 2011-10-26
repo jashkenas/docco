@@ -148,7 +148,7 @@ generate_html = (source, sections) ->
   # Otherwise: we map the sources to just the filenames.
   html        = docco_template
     title: title
-    styles: if inline_css then docco_styles else ''
+    styles: if inline then docco_styles else ''
     sections: sections
     sources: if structured then sources else sources.map (source)-> path.basename source
     relative_destination: relative_destination
@@ -236,10 +236,10 @@ while args.length
       return
     # `--structured` will match the docs directory structure to your source
     # directory structure. This will also trigger css to render inline.
-    when '--structured', '-s' then inline_css = structured = true
-    # `--inline-css` will add the styles into a `<style>` tag inline vs externally
+    when '--structured', '-s' then inline = structured = true
+    # `--inline` will add the styles into a `<style>` tag inline vs externally
     # linking to the styles.
-    when '--inline-css' then inline_css = true
+    when '--inline' then inline = true
     # `--css myStyles.css` or `-c myStyles.css` will trigger using a custom
     # stylesheet; otherwise the default docco styles will be used.
     when '--css', '-c' then css_file = args.shift() if args.length
@@ -275,7 +275,7 @@ highlight_end    = '</pre></div>'
 # For each source file passed in as an argument, generate the documentation.
 if sources.length
   ensure_directory 'docs', ->
-    fs.writeFile 'docs/docco.css', docco_styles if not inline_css
+    fs.writeFile 'docs/docco.css', docco_styles if not inline
     files = sources.slice()
     next_file = -> generate_documentation files.shift(), next_file if files.length
     next_file()
