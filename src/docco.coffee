@@ -166,7 +166,7 @@ for ext, l of languages
   # Does the line begin with a comment?
   l.comment_matcher = new RegExp('^\\s*' + l.symbol + '\\s?')
 
-  # Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix))
+  # Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\))
   # and interpolations...
   l.comment_filter = new RegExp('(^#![/]|^\\s*#\\{)')
 
