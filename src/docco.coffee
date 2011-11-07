@@ -1,5 +1,5 @@
 # **Docco** is a quick-and-dirty, hundred-line-long, literate-programming-style
-# documentation generator for JavaScript or CoffeeScript. It produces HTML
+# documentation generator. It produces HTML
 # that displays your comments alongside your code. Comments are passed through
 # [Markdown](http://daringfireball.net/projects/markdown/syntax), and code is
 # passed through [Pygments](http://pygments.org/) syntax highlighting.
@@ -8,9 +8,6 @@
 # If you install Docco, you can run it from the command-line:
 #
 #     docco src/*.coffee
-# or
-#
-#     docco src/*.js
 #
 # ...will generate an HTML documentation page for each of the named source files, 
 # with a menu linking to the other pages, saving it into a `docs` folder.
@@ -25,10 +22,8 @@
 #
 #     sudo npm install docco
 #
-# When used to process JavaScript files, docco will only process end of line (`//`)
-# style comments, and only when they appear on a line by themselves.  Block comments
-# (`/* ... */`) and end of line comments on the same line as code (`var x = 1 // like this`)
-# are ignored by docco and will appear in your code.
+# Docco can be used to process CoffeeScript, JavaScript, Ruby or Python files.
+# Only single-line comments are processed -- block comments are ignored.
 #
 #### Partners in Crime:
 #
