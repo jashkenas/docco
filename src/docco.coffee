@@ -226,7 +226,9 @@ highlight_end   = '</pre></div>'
 sources = process.ARGV.sort()
 if sources.length
   ensure_directory 'docs', ->
-    fs.writeFile 'docs/docco.css', docco_styles
+    path.exists 'docs/docco.css', (exists) ->
+        if not exists
+            fs.writeFile 'docs/docco.css', docco_styles
     files = sources.slice(0)
     next_file = -> generate_documentation files.shift(), next_file if files.length
     next_file()
