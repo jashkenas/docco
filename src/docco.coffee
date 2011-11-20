@@ -73,7 +73,6 @@ generate_documentation = (source, callback) ->
 #       code_text: ...
 #       code_html: ...
 #     }
-#
 parse = (source, code) ->
   lines    = code.split '\n'
   sections = []
@@ -94,7 +93,13 @@ parse = (source, code) ->
       code_text += line + '\n'
   save docs_text, code_text
   sections
-
+  
+  # Scan all sections for comment tags and apply appropriate filter logic.
+  ignoreValue = new RegExp tags.ignore
+  sections = (section for section, index in sections when not section.docs_text.match ignoreValue)
+  
+  sections
+  
 # Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
 # and runs the text of its corresponding comment through **Markdown**, using
 # [Showdown.js](http://attacklab.net/showdown/).
@@ -142,6 +147,12 @@ generate_html = (source, sections) ->
   fs.writeFile dest, html
 
 #### Helpers & Setup
+
+# Tags to be used in your source comments:
+#
+# - ignore: omit the marked section from final output
+tags =
+  ignore: "@ignore"
 
 # Require our external dependencies, including **Showdown.js**
 # (the JavaScript implementation of Markdown).
