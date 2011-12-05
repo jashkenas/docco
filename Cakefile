@@ -3,7 +3,7 @@
 option '-p', '--prefix [DIR]', 'set the installation prefix for `cake install`'
 option '-w', '--watch', 'continually build the docco library'
 
-task 'build', 'continually build the docco library with --watch', (options) ->
+task 'build', 'build the docco library', (options) ->
   coffee = spawn 'coffee', ['-c' + (if options.watch then 'w' else ''), '-o', 'lib', 'src']
   coffee.stdout.on 'data', (data) -> console.log data.toString().trim()
 
