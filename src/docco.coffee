@@ -135,9 +135,17 @@ highlight = (source, sections, callback) ->
 generate_html = (source, sections) ->
   title = path.basename source
   dest  = destination source
-  html  = docco_template {
+  file_ext = source.split(".").pop()
+  if file_ext is "md"
+   console.log("Using fullscreen jst template...")
+   html = docco_fullscreen_template {
     title: title, sections: sections, sources: sources, path: path, destination: destination
-  }
+   }
+  else
+   console.log("Using standard jst template...")
+   html  = docco_template {
+    title: title, sections: sections, sources: sources, path: path, destination: destination
+   }
   console.log "docco: #{source} -> #{dest}"
   fs.writeFile dest, html
 
@@ -162,6 +170,8 @@ languages =
     name: 'ruby', symbol: '#'
   '.py':
     name: 'python', symbol: '#'
+  '.md':
+    name: 'text', symbol: ''
 
 # Build out the appropriate matchers and delimiters for each language.
 for ext, l of languages
@@ -209,11 +219,13 @@ template = (str) ->
        .split('%>').join("p.push('") +
        "');}return p.join('');"
 
-# Create the template that we will use to generate the Docco HTML page.
+# Create the template's that we will use to generate the Docco HTML page.
 docco_template  = template fs.readFileSync(__dirname + '/../resources/docco.jst').toString()
+docco_fullscreen_template = template fs.readFileSync(__dirname + '/../resources/docco_full.jst').toString()
 
 # The CSS styles we'd like to apply to the documentation.
 docco_styles    = fs.readFileSync(__dirname + '/../resources/docco.css').toString()
+docco_full_styles    = fs.readFileSync(__dirname + '/../resources/docco_full.css').toString()
 
 # The start of each Pygments highlight block.
 highlight_start = '<div class="highlight"><pre>'
@@ -227,6 +239,7 @@ sources = process.ARGV.sort()
 if sources.length
   ensure_directory 'docs', ->
     fs.writeFile 'docs/docco.css', docco_styles
+    fs.writeFile 'docs/docco_full.css', docco_full_styles
     files = sources.slice(0)
     next_file = -> generate_documentation files.shift(), next_file if files.length
     next_file()
