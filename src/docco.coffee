@@ -79,16 +79,24 @@ parse = (source, code) ->
   sections = []
   language = get_language source
   has_code = docs_text = code_text = ''
+  incomment = false
 
   save = (docs, code) ->
     sections.push docs_text: docs, code_text: code
 
   for line in lines
-    if line.match(language.comment_matcher) and not line.match(language.comment_filter)
+    if line.match(language.comment_enter)
+      incomment = true
+    if not line.match(language.comment_filter) and (incomment or line.match(language.comment_matcher))
       if has_code
         save docs_text, code_text
         has_code = docs_text = code_text = ''
-      docs_text += line.replace(language.comment_matcher, '') + '\n'
+      if line.match(language.comment_exit)
+        incomment = false
+      line = line.replace(language.comment_exit, '')
+      line = line.replace(language.comment_enter, '')
+      line = line.replace(language.comment_matcher, '')
+      docs_text += line + '\n'
     else
       has_code = yes
       code_text += line + '\n'
@@ -157,7 +165,7 @@ languages =
   '.coffee':
     name: 'coffee-script', symbol: '#'
   '.js':
-    name: 'javascript', symbol: '//'
+    name: 'javascript', symbol: '//', enter: '/\\*', exit: '\\*/'
   '.rb':
     name: 'ruby', symbol: '#'
   '.py':
@@ -168,6 +176,10 @@ for ext, l of languages
 
   # Does the line begin with a comment?
   l.comment_matcher = new RegExp('^\\s*' + l.symbol + '\\s?')
+
+  if l.enter and l.exit
+     l.comment_enter = new RegExp('^\\s*' + l.enter + '\\s?')
+     l.comment_exit = new RegExp('\\s?' + l.exit + '\\s*$')
 
   # Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\))
   # and interpolations...
