@@ -22,7 +22,7 @@
 #
 #     sudo npm install docco
 #
-# Docco can be used to process CoffeeScript, JavaScript, Ruby or Python files.
+# Docco can be used to process CoffeeScript, JavaScript, Ruby, Python, or TeX files.
 # Only single-line comments are processed -- block comments are ignored.
 #
 #### Partners in Crime:
@@ -162,6 +162,10 @@ languages =
     name: 'ruby', symbol: '#'
   '.py':
     name: 'python', symbol: '#'
+  '.tex':
+    name: 'tex', symbol: '%'
+  '.latex':
+    name: 'tex', symbol: '%'
 
 # Build out the appropriate matchers and delimiters for each language.
 for ext, l of languages
