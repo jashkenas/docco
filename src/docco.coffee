@@ -165,7 +165,7 @@ languages =
   '.coffee':
     name: 'coffee-script', symbol: '#'
   '.js':
-    name: 'javascript', symbol: '//', enter: '/\\*', exit: '\\*/'
+    name: 'javascript', symbol: '//', enter: '/\\*\+', exit: '\\*\+/'
   '.rb':
     name: 'ruby', symbol: '#'
   '.py':
@@ -178,8 +178,8 @@ for ext, l of languages
   l.comment_matcher = new RegExp('^\\s*' + l.symbol + '\\s?')
 
   if l.enter and l.exit
-     l.comment_enter = new RegExp('^\\s*' + l.enter + '\\s?')
-     l.comment_exit = new RegExp('\\s?' + l.exit + '\\s*$')
+     l.comment_enter = new RegExp('^\\s*' + l.enter)
+     l.comment_exit = new RegExp(l.exit + '\\s*$')
 
   # Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\))
   # and interpolations...
