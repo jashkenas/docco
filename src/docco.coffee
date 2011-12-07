@@ -166,8 +166,6 @@ languages =
     name: 'tex', symbol: '%'
   '.latex':
     name: 'tex', symbol: '%'
-  '.sty':
-    name: 'tex', symbol: '%'
 
 # Build out the appropriate matchers and delimiters for each language.
 for ext, l of languages
