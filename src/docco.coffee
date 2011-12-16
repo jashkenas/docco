@@ -20,7 +20,7 @@
 # from [its Mercurial repo](http://dev.pocoo.org/hg/pygments-main)), and
 # [CoffeeScript](http://coffeescript.org/). Then, with NPM:
 #
-#     sudo npm install docco
+#     sudo npm install -g docco
 #
 # Docco can be used to process CoffeeScript, JavaScript, Ruby, Python, or TeX files.
 # Only single-line comments are processed -- block comments are ignored.
