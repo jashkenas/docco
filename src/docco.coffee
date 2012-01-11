@@ -150,6 +150,25 @@ path     = require 'path'
 showdown = require('./../vendor/showdown').Showdown
 {spawn, exec} = require 'child_process'
 
+# Use **optimist** to parse the commandline.
+optimist = require('optimist')
+            .usage("docco -- the quick'n'dirty literate-programming style documenting system\n\nUsage: docco [options] file file ...")
+            .string('o')
+            .default('o', 'docs')
+            .alias('o', 'output-dir')
+            .describe('o', 'specifies the output directory')
+            .boolean('h')
+            .alias('h', 'help')
+            .describe('h', 'show this message')
+argv     = optimist.parse process.argv
+
+if argv.h
+  optimist.showHelp()
+  process.exit 0
+
+# the destination directory.
+dest_dir = argv.o
+
 # A list of the languages that Docco supports, mapping the file extension to
 # the name of the Pygments lexer and the symbol that indicates a comment. To
 # add another language to Docco's repertoire, add it here.
@@ -193,10 +212,18 @@ for ext, l of languages
 # Get the current language we're documenting, based on the extension.
 get_language = (source) -> languages[path.extname(source)]
 
+# Compute the destination *path* of the filename given.
+destination_path = (filename) ->
+  path.join(dest_dir, path.basename(filename))
+
+
 # Compute the destination HTML path for an input source file path. If the source
 # is `lib/example.coffee`, the HTML will be at `docs/example.html`
 destination = (filepath) ->
-  'docs/' + path.basename(filepath, path.extname(filepath)) + '.html'
+  console.log "filepath: #{filepath}"
+  dest = destination_path(path.basename(filepath, path.extname(filepath)) + '.html')
+  console.log "dest => #{dest}"
+  dest
 
 # Ensure that the destination directory exists.
 ensure_directory = (dir, callback) ->
@@ -230,11 +257,15 @@ highlight_start = '<div class="highlight"><pre>'
 highlight_end   = '</pre></div>'
 
 # Run the script.
+
+# report the destination dir to the user.
+console.info "using destination dir '#{dest_dir}'."
+
 # For each source file passed in as an argument, generate the documentation.
-sources = process.ARGV.sort()
+sources = argv._.sort()
 if sources.length
-  ensure_directory 'docs', ->
-    fs.writeFile 'docs/docco.css', docco_styles
+  ensure_directory dest_dir, ->
+    fs.writeFile destination_path('docco.css'), docco_styles
     files = sources.slice(0)
     next_file = -> generate_documentation files.shift(), next_file if files.length
     next_file()
