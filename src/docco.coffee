@@ -52,9 +52,14 @@
 
 #### Main Documentation Generation Functions
 
+# Version number
+
+VERSION = '0.3.0'
+
 # Generate the documentation for a source file by reading it in, splitting it
 # up into comment/code sections, highlighting them for the appropriate language,
 # and merging them into an HTML template.
+
 generate_documentation = (source, callback) ->
   fs.readFile source, "utf-8", (error, code) ->
     throw error if error
@@ -196,11 +201,11 @@ get_language = (source) -> languages[path.extname(source)]
 # Compute the destination HTML path for an input source file path. If the source
 # is `lib/example.coffee`, the HTML will be at `docs/example.html`
 destination = (filepath) ->
-  'docs/' + path.basename(filepath, path.extname(filepath)) + '.html'
+  path.join(parent, path.basename(filepath, path.extname(filepath)) + '.html')
 
 # Ensure that the destination directory exists.
 ensure_directory = (dir, callback) ->
-  exec "mkdir -p #{dir}", -> callback()
+  exec "mkdir -p #{dir.replace(' ', '\\ ')}", -> callback()
 
 # Micro-templating, originally by John Resig, borrowed by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
@@ -220,21 +225,48 @@ template = (str) ->
 # Create the template that we will use to generate the Docco HTML page.
 docco_template  = template fs.readFileSync(__dirname + '/../resources/docco.jst').toString()
 
-# The CSS styles we'd like to apply to the documentation.
-docco_styles    = fs.readFileSync(__dirname + '/../resources/docco.css').toString()
-
 # The start of each Pygments highlight block.
 highlight_start = '<div class="highlight"><pre>'
 
 # The end of each Pygments highlight block.
 highlight_end   = '</pre></div>'
 
+# Define an option parser for the command line utility
+path = require 'path'
+parser = new (require './optparse').OptionParser [
+    ['-o [output]', '--output [output]', 'set the directory for output documentation']
+    ['-S [styles]', '--styles [styles]', 'set the path to the stylesheet used for documentation']
+    ['-v', '--version', 'display docco version']
+    ['-h', '--help', 'display this help message']
+  ], "Usage: docco [options] path/to/scripts"
+
+# Parse the arguments
+options = parser.parse process.argv
+
+# Print usage if no arguments were provided or if "-h" option was given
+console.log parser.help() if options.help
+
+# Print version if "-v" was given
+console.log "Docco version #{VERSION}" if options.version or !options.arguments
+
+# The CSS styles we'd like to apply to the documentation.
+# First checks to see if a stylesheet was specified, falling back to default otherwise
+docco_styles = fs.readFileSync(
+  if options.styles 
+    path.resolve process.cwd(), options.styles
+  else 
+    __dirname + '/../resources/docco.css'
+).toString()
+
+# The path to the parent directory of all documentation
+parent = path.resolve process.cwd(), options.output ? "docs"
+
 # Run the script.
 # For each source file passed in as an argument, generate the documentation.
-sources = process.ARGV.sort()
+sources = options.arguments.sort()
 if sources.length
-  ensure_directory 'docs', ->
-    fs.writeFile 'docs/docco.css', docco_styles
+  ensure_directory parent, ->
+    fs.writeFile "#{parent}/docco.css", docco_styles
     files = sources.slice(0)
     next_file = -> generate_documentation files.shift(), next_file if files.length
     next_file()
