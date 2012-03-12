@@ -122,7 +122,7 @@ highlight = (source, sections, callback) ->
     fragments = output.split language.divider_html
     for section, i in sections
       section.code_html = highlight_start + fragments[i] + highlight_end
-      section.docs_html = showdown.makeHtml section.docs_text
+      section.docs_html = new showdown.converter().makeHtml section.docs_text
     callback()
     
   if pygments.stdin.writable
@@ -136,7 +136,7 @@ generate_html = (source, sections) ->
   title = path.basename source
   dest  = destination source
   html  = docco_template {
-    title: title, sections: sections, sources: sources, path: path, destination: destination
+    title: title, sections: sections, sources: options.args, path: path, destination: destination
   }
   console.log "docco: #{source} -> #{dest}"
   fs.writeFile dest, html
@@ -147,8 +147,9 @@ generate_html = (source, sections) ->
 # (the JavaScript implementation of Markdown).
 fs       = require 'fs'
 path     = require 'path'
-showdown = require('./../vendor/showdown').Showdown
+showdown = require('showdown').Showdown
 {spawn, exec} = require 'child_process'
+options = require 'commander'
 
 # A list of the languages that Docco supports, mapping the file extension to
 # the name of the Pygments lexer and the symbol that indicates a comment. To
@@ -194,9 +195,9 @@ for ext, l of languages
 get_language = (source) -> languages[path.extname(source)]
 
 # Compute the destination HTML path for an input source file path. If the source
-# is `lib/example.coffee`, the HTML will be at `docs/example.html`
+# is `lib/example.coffee`, the HTML will be at `[output_path]/example.html`
 destination = (filepath) ->
-  'docs/' + path.basename(filepath, path.extname(filepath)) + '.html'
+  options.output + path.basename(filepath, path.extname(filepath)) + '.html'
 
 # Ensure that the destination directory exists.
 ensure_directory = (dir, callback) ->
@@ -217,11 +218,24 @@ template = (str) ->
        .split('%>').join("p.push('") +
        "');}return p.join('');"
 
+# Extract the docco version from `package.json`
+version = JSON.parse(fs.readFileSync("#{__dirname}/../package.json")).version
+  
+# Configure [Commander JS](https://github.com/visionmedia/commander.js) options 
+# to parse out of the command line.
+options.version(version)
+  .usage("[options] <file_pattern ...>")
+  .option("-t, --template [file]","use a custom .jst template","#{__dirname}/../resources/docco.jst")
+  .option("-c, --css [file]","use a custom css file","#{__dirname}/../resources/docco.css")                                   
+  .option("-o, --output [path]","use a custom output path (defaults to 'docs/')","docs/")                                   
+  .parse(process.argv)
+  .name = "docco"
+
 # Create the template that we will use to generate the Docco HTML page.
-docco_template  = template fs.readFileSync(__dirname + '/../resources/docco.jst').toString()
+docco_template = template fs.readFileSync(options.template).toString()
 
 # The CSS styles we'd like to apply to the documentation.
-docco_styles    = fs.readFileSync(__dirname + '/../resources/docco.css').toString()
+docco_styles = fs.readFileSync(options.css).toString()
 
 # The start of each Pygments highlight block.
 highlight_start = '<div class="highlight"><pre>'
@@ -231,11 +245,13 @@ highlight_end   = '</pre></div>'
 
 # Run the script.
 # For each source file passed in as an argument, generate the documentation.
-sources = process.ARGV.sort()
-if sources.length
-  ensure_directory 'docs', ->
-    fs.writeFile 'docs/docco.css', docco_styles
-    files = sources.slice(0)
+# If no sources are specified, print the usage help and exit.
+if options.args.length
+  ensure_directory options.output, ->
+    fs.writeFile "#{options.output}docco.css", docco_styles
+    files = options.args.slice(0)
     next_file = -> generate_documentation files.shift(), next_file if files.length
     next_file()
+else
+  console.log options.helpInformation()
 
