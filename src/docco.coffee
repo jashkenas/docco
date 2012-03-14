@@ -55,12 +55,12 @@
 # Generate the documentation for a source file by reading it in, splitting it
 # up into comment/code sections, highlighting them for the appropriate language,
 # and merging them into an HTML template.
-generate_documentation = (source, callback) ->
+generate_documentation = (source, config, callback) ->
   fs.readFile source, "utf-8", (error, code) ->
     throw error if error
     sections = parse source, code
     highlight source, sections, ->
-      generate_html source, sections
+      generate_html source, sections, config
       callback()
 
 # Given a string of source code, parse out each comment and the code that
@@ -132,11 +132,20 @@ highlight = (source, sections, callback) ->
 # Once all of the code is finished highlighting, we can generate the HTML file
 # and write out the documentation. Pass the completed sections into the template
 # found in `resources/docco.jst`
-generate_html = (source, sections) ->
+generate_html = (source, sections, config) ->
+  # Compute the destination HTML path for an input source file path. If the source
+  # is `lib/example.coffee`, the HTML will be at `[config.output]/example.html`
+  destination = (filepath) ->
+    path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html')
+    
   title = path.basename source
   dest  = destination source
-  html  = docco_template {
-    title: title, sections: sections, sources: options.args, path: path, destination: destination
+  html  = config.docco_template {
+    title      : title, 
+    sections   : sections, 
+    sources    : config.sources, 
+    path       : path, 
+    destination: destination
   }
   console.log "docco: #{source} -> #{dest}"
   fs.writeFile dest, html
@@ -149,7 +158,7 @@ fs       = require 'fs'
 path     = require 'path'
 showdown = require('showdown').Showdown
 {spawn, exec} = require 'child_process'
-options = require 'commander'
+commander = require 'commander'
 
 # A list of the languages that Docco supports, mapping the file extension to
 # the name of the Pygments lexer and the symbol that indicates a comment. To
@@ -194,11 +203,6 @@ for ext, l of languages
 # Get the current language we're documenting, based on the extension.
 get_language = (source) -> languages[path.extname(source)]
 
-# Compute the destination HTML path for an input source file path. If the source
-# is `lib/example.coffee`, the HTML will be at `[output_path]/example.html`
-destination = (filepath) ->
-  options.output + path.basename(filepath, path.extname(filepath)) + '.html'
-
 # Ensure that the destination directory exists.
 ensure_directory = (dir, callback) ->
   exec "mkdir -p #{dir}", -> callback()
@@ -220,22 +224,12 @@ template = (str) ->
 
 # Extract the docco version from `package.json`
 version = JSON.parse(fs.readFileSync("#{__dirname}/../package.json")).version
-  
-# Configure [Commander JS](https://github.com/visionmedia/commander.js) options 
-# to parse out of the command line.
-options.version(version)
-  .usage("[options] <file_pattern ...>")
-  .option("-t, --template [file]","use a custom .jst template","#{__dirname}/../resources/docco.jst")
-  .option("-c, --css [file]","use a custom css file","#{__dirname}/../resources/docco.css")                                   
-  .option("-o, --output [path]","use a custom output path (defaults to 'docs/')","docs/")                                   
-  .parse(process.argv)
-  .name = "docco"
 
-# Create the template that we will use to generate the Docco HTML page.
-docco_template = template fs.readFileSync(options.template).toString()
-
-# The CSS styles we'd like to apply to the documentation.
-docco_styles = fs.readFileSync(options.css).toString()
+# Default configuration options.
+DEFAULTS = 
+  template: "#{__dirname}/../resources/docco.jst"
+  css     : "#{__dirname}/../resources/docco.css"
+  output  : "docs/"
 
 # The start of each Pygments highlight block.
 highlight_start = '<div class="highlight"><pre>'
@@ -243,15 +237,70 @@ highlight_start = '<div class="highlight"><pre>'
 # The end of each Pygments highlight block.
 highlight_end   = '</pre></div>'
 
-# Run the script.
-# For each source file passed in as an argument, generate the documentation.
-# If no sources are specified, print the usage help and exit.
-if options.args.length
-  ensure_directory options.output, ->
-    fs.writeFile "#{options.output}docco.css", docco_styles
-    files = options.args.slice(0)
-    next_file = -> generate_documentation files.shift(), next_file if files.length
+#### Public API
+
+# Resolve a wildcard source input to the files it matches.
+# Return an array of matched files, or `source` if it does
+# not contain any wildcards.
+exports.resolve_source = (source) ->
+  # If it is not a wildcard, just return the input.
+  return source if not source.match(/([\*\?])/)
+  
+  # Convert the wildcard match to a regular expression.
+  match_path = path.dirname(source)
+  match_string = path.basename(source)
+    .replace(/\./g, "\\$&")
+    .replace(/\*/,".*")
+    .replace(/\?/,".")
+  match_regex = new RegExp('(' + match_string + ')')
+  
+  # Look for files in the match path, and return the ones 
+  # that match the regex.
+  match_files = fs.readdirSync match_path
+  return (path.join(match_path,file) for file in match_files when file.match match_regex)
+
+# Run Docco from a set of command line arguments, defaulting to `process.argv`.
+exports.run = (args=process.argv) ->
+  # Parse command line options using [Commander JS](https://github.com/visionmedia/commander.js).
+  commander.version(version)
+    .usage("[options] <file_pattern ...>")
+    .option("-t, --template [file]","use a custom .jst template",DEFAULTS.template)
+    .option("-c, --css [file]","use a custom css file",DEFAULTS.css)
+    .option("-o, --output [path]","use a custom output path (defaults to 'docs/')",DEFAULTS.output)
+    .parse(args)
+    .name = "docco"
+
+  # Generate the documentation for provided source arguments.
+  # If no sources are specified, print the usage help and exit.
+  if commander.args.length
+    exports.document(commander.args.slice(),commander)
+  else
+    console.log commander.helpInformation()
+    
+# Run Docco with overs `sources` with the given `options`
+exports.document = (sources,options,callback) ->
+  # Construct the Docco config to use with this documentation pass
+  # by taking the `DEFAULTS` first, then merging in specified options
+  # from the passed `config` object.
+  config = {}
+  config[key] = DEFAULTS[key] for key,value of DEFAULTS
+  config[key] = value for key,value of options if key of DEFAULTS
+  config.sources = []
+  config.sources = config.sources.concat(exports.resolve_source(src)) for src in sources
+  
+  # Create the template that we will use to generate the Docco HTML page.
+  config.docco_template = template fs.readFileSync(config.template).toString()
+  
+  # The CSS styles we'd like to apply to the documentation.
+  docco_styles = fs.readFileSync(config.css).toString()
+ 
+  # Run the script.
+  # For each source file passed in, generate the documentation.
+  ensure_directory config.output, ->
+    fs.writeFile path.join(config.output,path.basename(config.css)), docco_styles
+    files = config.sources.slice()
+    next_file = -> 
+      callback() if callback? and not files.length
+      generate_documentation files.shift(), config, next_file if files.length
     next_file()
-else
-  console.log options.helpInformation()
 
