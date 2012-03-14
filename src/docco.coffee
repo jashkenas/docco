@@ -146,9 +146,10 @@ generate_html = (source, sections, config) ->
     sources    : config.sources, 
     path       : path, 
     destination: destination
+    css        : path.basename(config.css)
   }
   console.log "docco: #{source} -> #{dest}"
-  fs.writeFile dest, html
+  fs.writeFileSync dest, html
 
 #### Helpers & Setup
 
@@ -239,34 +240,35 @@ highlight_end   = '</pre></div>'
 
 #### Public API
 
-# Resolve a wildcard source input to the files it matches.
-# Return an array of matched files, or `source` if it does
-# not contain any wildcards.
-exports.resolve_source = (source) ->
-  # If it is not a wildcard, just return the input.
-  return source if not source.match(/([\*\?])/)
-  
-  # Convert the wildcard match to a regular expression.
-  match_path = path.dirname(source)
-  match_string = path.basename(source)
-    .replace(/\./g, "\\$&")
-    .replace(/\*/,".*")
-    .replace(/\?/,".")
-  match_regex = new RegExp('(' + match_string + ')')
-  
-  # Look for files in the match path, and return the ones 
-  # that match the regex.
-  match_files = fs.readdirSync match_path
-  return (path.join(match_path,file) for file in match_files when file.match match_regex)
+# Docco exports a basic public API for usage in other applications.
+# A simple usage might look like this
+#
+#     Docco = require('docco')
+#     
+#     sources = 
+#       "src/index.coffee"
+#       "src/plugins/*.coffee"
+#       "src/web/*.py"
+#     
+#     options = 
+#       template : "src/templates/docs/myproject.jst"
+#       output   : "web/docs"
+#       css      : "src/templates/docs/myproject.docs.css"
+#     
+#     Docco.document sources, options, ->
+#       console.log("Docco documentation complete.")
+#     
 
+# ### Run from Commandline
+  
 # Run Docco from a set of command line arguments, defaulting to `process.argv`.
 exports.run = (args=process.argv) ->
   # Parse command line options using [Commander JS](https://github.com/visionmedia/commander.js).
   commander.version(version)
     .usage("[options] <file_pattern ...>")
-    .option("-t, --template [file]","use a custom .jst template",DEFAULTS.template)
     .option("-c, --css [file]","use a custom css file",DEFAULTS.css)
-    .option("-o, --output [path]","use a custom output path (defaults to 'docs/')",DEFAULTS.output)
+    .option("-o, --output [path]","use a custom output path",DEFAULTS.output)
+    .option("-t, --template [file]","use a custom .jst template",DEFAULTS.template)
     .parse(args)
     .name = "docco"
 
@@ -276,26 +278,31 @@ exports.run = (args=process.argv) ->
     exports.document(commander.args.slice(),commander)
   else
     console.log commander.helpInformation()
-    
-# Run Docco with overs `sources` with the given `options`
-exports.document = (sources,options,callback) ->
+
+# ### Document Sources
+
+# Run Docco over a list of `sources` with the given `options`.
+exports.document = (sources,options={},callback=null) ->
   # Construct the Docco config to use with this documentation pass
   # by taking the `DEFAULTS` first, then merging in specified options
   # from the passed `config` object.
   config = {}
   config[key] = DEFAULTS[key] for key,value of DEFAULTS
   config[key] = value for key,value of options if key of DEFAULTS
-  config.sources = []
-  config.sources = config.sources.concat(exports.resolve_source(src)) for src in sources
   
-  # Create the template that we will use to generate the Docco HTML page.
+  # Generate the file list to iterate over and document.
+  files = []
+  files = files.concat(exports.resolve_source(src)) for src in sources
+  config.sources = files
+  
+  # Create the template that we will use to generate the Docco HTML page
+  # and load the CSS input.
   config.docco_template = template fs.readFileSync(config.template).toString()
-  
-  # The CSS styles we'd like to apply to the documentation.
   docco_styles = fs.readFileSync(config.css).toString()
- 
-  # Run the script.
-  # For each source file passed in, generate the documentation.
+
+  # Ensure the output path is created, write out the CSS style file, 
+  # document and output HTML for each source, and finally invoke the
+  # completion callback, if it is specified.
   ensure_directory config.output, ->
     fs.writeFile path.join(config.output,path.basename(config.css)), docco_styles
     files = config.sources.slice()
@@ -304,3 +311,25 @@ exports.document = (sources,options,callback) ->
       generate_documentation files.shift(), config, next_file if files.length
     next_file()
 
+# ### Resolve Wildcard Source Inputs
+
+# Resolve a wildcard source input to the files it matches.
+exports.resolve_source = (source) ->
+  # If the input contains no wildcard characters, just return it.
+  return source if not source.match(/([\*\?])/)
+
+  # Convert the wildcard match to a regular expression.
+  regex_str = path.basename(source)
+    .replace(/\./g, "\\$&")
+    .replace(/\*/,".*")
+    .replace(/\?/,".")
+  regex = new RegExp('(' + regex_str + ')')
+
+  # Get the files in the match path
+  file_path = path.dirname(source)
+  files = fs.readdirSync file_path
+  
+  # Return an array of files found in the path, that match
+  # the wildcard.
+  return (path.join(file_path,file) for file in files when file.match regex)
+     
