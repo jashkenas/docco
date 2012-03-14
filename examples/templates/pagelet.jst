@@ -1,0 +1,30 @@
+<div class="sources"
+  <% if (sources.length > 1) { %>
+  <ul class="file_list">
+    <% for (var i=0, l=sources.length; i<l; i++) { %>
+      <% var source = sources[i]; %>
+      <li>
+        <span class="name"><%= path.basename(source) %></span>
+        <%= path.basename(destination(source)) %>
+      </li>
+    <% } %>
+  </ul>
+  <% } %>
+</div>
+
+<div class="sections">
+  <% for (var i=0, l=sections.length; i<l; i++) { %>
+    <% var section = sections[i]; %>
+    <tr id="section-<%= i + 1 %>">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-<%= i + 1 %>">&#182;</a>
+        </div>
+        <%= section.docs_html %>
+      </td>
+      <td class="code">
+        <%= section.code_html %>
+      </td>
+    </tr>
+  <% } %>
+</div>
