@@ -66,11 +66,11 @@ test "documenting Docco", ->
 test "custom JST template file", ->
   test_docco_run "custom_jst", 
     ["#{test_path}/*.coffee"],
-    template: "#{resources_path}/pagelet/pagelet.jst"
+    template: "#{resources_path}/pagelet.jst"
 
 # Verify we can use a custom CSS file
 test "custom CSS file", ->
   test_docco_run "custom_css", 
     ["#{test_path}/*.coffee"],
-    css: "#{resources_path}/pagelet/pagelet.css"
+    css: "#{resources_path}/pagelet.css"
   
