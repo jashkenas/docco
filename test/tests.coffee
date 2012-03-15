@@ -1,14 +1,13 @@
-# ### Test Basic Docco Usages
 
 {spawn, exec} = require 'child_process'
 path          = require 'path'
 fs            = require 'fs'
 
-# Determine the testing data path, and make sure it's clean.
-test_path     = path.dirname(fs.realpathSync(__filename));
-examples_path = path.normalize(path.join(test_path,"/../examples"))
+# Determine the test and resources paths
+test_path      = path.dirname(fs.realpathSync(__filename));
+resources_path = path.normalize(path.join(test_path,"/../resources"));
 
-#### Helpers & Setup
+#### Docco Test Assertion Wrapper 
 
 # Run a Docco pass, and check that the number of output files
 # is equal to what is expected.  We assume there is one CSS file
@@ -46,30 +45,32 @@ test_docco_run = (test_name,sources,options=null,callback=null) ->
 # expected output.  This exercises the no options branches of
 # logic.  
 test "documenting Docco", ->
-  docs_path = path.normalize("#{test_path}/../docs/")
-  sources   = path.normalize("#{test_path}/../src/*.coffee")
+  docs_path = path.normalize("#{test_path}/../docs")
+  sources   = ["#{test_path}/../src/docco.coffee","#{test_path}/tests.coffee"]
 
   # We need to remove the docs/ directory to ensure it contains
   # no files.  If it contains files when this test is run, the 
   # assertion checks could be compromised, making the test itself
   # quite britle.
   exec "rm -rf #{docs_path}", ->
-    Docco.document [sources],null, ->
+    Docco.document sources,null, ->
       found       = fs.readdirSync(docs_path).length
-      expected    = Docco.resolve_source(sources).length + 1
+      files       = []
+      files       = files.concat(Docco.resolve_source(src)) for src in sources
+      expected    = files.length + 1
       eq found, expected, 'find docco expected output'
 
 #### Docco with non-default options
 
 # Verify we can use a custom jst template file
-test "custom jst template files", ->
+test "custom JST template file", ->
   test_docco_run "custom_jst", 
     ["#{test_path}/*.coffee"],
-    template: "#{examples_path}/pagelet/pagelet.jst"
+    template: "#{resources_path}/pagelet/pagelet.jst"
 
 # Verify we can use a custom CSS file
-test "custom css files", ->
+test "custom CSS file", ->
   test_docco_run "custom_css", 
     ["#{test_path}/*.coffee"],
-    css: "#{examples_path}/pagelet/pagelet.css"
+    css: "#{resources_path}/pagelet/pagelet.css"
   
