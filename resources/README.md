@@ -1,8 +1,7 @@
 #### Default Template
 
-**docco** is the default Docco template and CSS file that outputs a ready-to-go
-HTML page that you can upload and be done with.  It has an elegant page layout 
-that is optimized for desktop viewing.  
+`docco.jst` and `docco.css` comprise the default Docco template, which
+outputs ready-to-go HTML files for you to upload to you webserver.
 
 You can use the default template simply by invoking Docco
 
@@ -10,12 +9,10 @@ You can use the default template simply by invoking Docco
 
 #### Pagelet Template
 
-**pagelet** is a custom Docco template and CSS file that outputs a block of HTML
-can be loaded and incorporated into an existing website structure (e.g. using 
-jQuery.ajax calls for a specific doc page.)
+`pagelet.jst` and `pagelet.css` output HTML that can be incorporated 
+into an existing DOM.
 
-You can use the pagelet template by passing the correct options to Docco.  If 
-you are running from the docco directory
+If you are running from the docco directory
 
     docco src/*.coffee -t resources/pagelet.jst -c resources/pagelet.css
 
