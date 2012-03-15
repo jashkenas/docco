@@ -1,3 +1,7 @@
-# A simple coffee file to enable direct invocation of docco.coffee,
-# now that the file is not runnable.
-(new require './docco').run()
+### 
+A simple script to enable command line invocation docco.coffee,
+which is a library, and not directly runnable.
+###
+
+# Require and call run() on the [Docco](http://jashkenas.github.com/docco/) library.
+(require './docco').run()
