@@ -227,7 +227,7 @@ template = (str) ->
 version = JSON.parse(fs.readFileSync("#{__dirname}/../package.json")).version
 
 # Default configuration options.
-DEFAULTS = 
+defaults = 
   template: "#{__dirname}/../resources/docco.jst"
   css     : "#{__dirname}/../resources/docco.css"
   output  : "docs/"
@@ -266,9 +266,9 @@ exports.run = (args=process.argv) ->
   # Parse command line options using [Commander JS](https://github.com/visionmedia/commander.js).
   commander.version(version)
     .usage("[options] <file_pattern ...>")
-    .option("-c, --css [file]","use a custom css file",DEFAULTS.css)
-    .option("-o, --output [path]","use a custom output path",DEFAULTS.output)
-    .option("-t, --template [file]","use a custom .jst template",DEFAULTS.template)
+    .option("-c, --css [file]","use a custom css file",defaults.css)
+    .option("-o, --output [path]","use a custom output path",defaults.output)
+    .option("-t, --template [file]","use a custom .jst template",defaults.template)
     .parse(args)
     .name = "docco"
 
@@ -287,8 +287,8 @@ exports.document = (sources,options={},callback=null) ->
   # by taking the `DEFAULTS` first, then merging in specified options
   # from the passed `config` object.
   config = {}
-  config[key] = DEFAULTS[key] for key,value of DEFAULTS
-  config[key] = value for key,value of options if key of DEFAULTS
+  config[key] = defaults[key] for key,value of defaults
+  config[key] = value for key,value of options if key of defaults
   
   # Generate the file list to iterate over and document.
   files = []
@@ -323,7 +323,7 @@ exports.resolve_source = (source) ->
     .replace(/\./g, "\\$&")
     .replace(/\*/,".*")
     .replace(/\?/,".")
-  regex = new RegExp('(' + regex_str + ')')
+  regex = new RegExp('^(' + regex_str + ')$')
 
   # Get the files in the match path
   file_path = path.dirname(source)
