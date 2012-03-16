@@ -4,8 +4,9 @@ path          = require 'path'
 fs            = require 'fs'
 
 # Determine the test and resources paths
-test_path      = path.dirname(fs.realpathSync(__filename));
-resources_path = path.normalize(path.join(test_path,"/../resources"));
+test_path      = path.dirname fs.realpathSync(__filename)
+data_path      = path.join test_path, "data"
+resources_path = path.normalize path.join(test_path,"/../resources")
 
 #### Docco Test Assertion Wrapper 
 
@@ -14,7 +15,7 @@ resources_path = path.normalize(path.join(test_path,"/../resources"));
 # that is always copied to the output, so we check that the 
 # number of output files is (matched_sources + 1).
 test_docco_run = (test_name,sources,options=null,callback=null) ->
-  dest_path = path.join(test_path,test_name)
+  dest_path = path.join data_path, test_name
   # Remove the data directory for this test run, called before and
   # after a test.
   cleanup = (callback) -> exec "rm -rf #{dest_path}", callback
@@ -28,16 +29,12 @@ test_docco_run = (test_name,sources,options=null,callback=null) ->
       expected    = files.length + 1
       found       = fs.readdirSync(dest_path).length
            
-      # Make sure to invoke `cleanup()` before checking the result, so
-      # the the output path is cleaned, even if the assertion fails
-      # for the current test.
-      cleanup ->       
-        # Check the expected number of files against the number of
-        # files that were actually found.
-        eq found, expected, 'find expected output'
-        
-        # Trigger the completion callback if it's specified
-        callback() if callback?
+      # Check the expected number of files against the number of
+      # files that were actually found.
+      eq found, expected, 'find expected output'
+      
+      # Trigger the completion callback if it's specified
+      callback() if callback?
 
 #### Documenting Docco
 
@@ -73,4 +70,32 @@ test "custom CSS file", ->
   test_docco_run "custom_css", 
     ["#{test_path}/*.coffee"],
     css: "#{resources_path}/pagelet.css"
-  
+
+#### Docco Comment Parser
+
+# Verify we can parse expected comments from each supported language.
+test "single and block comment parsing", ->
+  comments_path = path.join test_path, "comments"
+  sources = []
+  options =
+    template: "#{comments_path}/comments.jst"
+    blocks  : true  
+
+  # Construct a list of sources from `Docco.languages`
+  for ext,l of Docco.languages
+    language_example = path.join comments_path, "#{l.name}#{ext}" 
+    sources.push language_example if path.existsSync language_example
+    
+  # Run them through docco with the custom `comments.jst` file that 
+  # outputs a newline character per doc section generated.  Each lanuage
+  # example contains two comments (a single and block comment, or two single 
+  # comments in the case of a language that does not support block comments.)
+  test_docco_run "comments_test", sources, options
+
+  # Iterate over the outputs, and ensure they all contain 2 entries
+  for ext,l of Docco.languages
+    language_output = path.join data_path, "comments_test/#{l.name}.html"
+    continue if not path.existsSync language_output
+    content = fs.readFileSync(language_output).toString().replace(/\n/,'')
+    comment_count = content.match /\s*<p>\s*(Comment)\s*<\/p>\s*/gi 
+    eq comment_count.length, 2, "find two comments"

@@ -58,7 +58,7 @@
 generate_documentation = (source, config, callback) ->
   fs.readFile source, "utf-8", (error, code) ->
     throw error if error
-    sections = parse source, code
+    sections = parse source, code, config
     highlight source, sections, ->
       generate_html source, sections, config
       callback()
@@ -74,28 +74,36 @@ generate_documentation = (source, config, callback) ->
 #       code_html: ...
 #     }
 #
-parse = (source, code) ->
+parse = (source, code, config) ->
   lines    = code.split '\n'
   sections = []
   language = get_language source
   has_code = docs_text = code_text = ''
+  in_block = false
 
   save = (docs, code) ->
     sections.push docs_text: docs, code_text: code
 
   for line in lines
-    if line.match(language.comment_matcher) and not line.match(language.comment_filter)
+    if not in_block and config.blocks and language.blocks and line.match(language.enter)
+      line = line.replace(language.enter, '')
+      in_block = true
+    if not line.match(language.comment_filter) and (in_block or line.match(language.comment_matcher))
       if has_code
         save docs_text, code_text
         has_code = docs_text = code_text = ''
-      docs_text += line.replace(language.comment_matcher, '') + '\n'
+      if config.blocks and language.blocks and line.match(language.exit)
+        in_block = false
+        line = line.replace(language.exit, '')
+      line = line.replace(language.comment_matcher, '')
+      docs_text += line + '\n'
     else
       has_code = yes
       code_text += line + '\n'
   save docs_text, code_text
   sections
 
-# Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
+# Highlights a single chunk of code, using **Pygments** over stdio,
 # and runs the text of its corresponding comment through **Markdown**, using
 # [Showdown.js](http://attacklab.net/showdown/).
 #
@@ -166,17 +174,17 @@ commander = require 'commander'
 # add another language to Docco's repertoire, add it here.
 languages =
   '.coffee':
-    name: 'coffee-script', symbol: '#'
+    name: 'coffee-script', symbol: '#', enter: /###/, exit: /###/
   '.js':
-    name: 'javascript', symbol: '//'
+    name: 'javascript', symbol: '//', enter: /\/\*\s*/, exit: /\s*\*\//
   '.rb':
-    name: 'ruby', symbol: '#'
+    name: 'ruby', symbol: '#', enter: /^=begin$/, exit: /^=end$/
   '.py':
-    name: 'python', symbol: '#'
+    name: 'python', symbol: '#', enter: /"""/, exit: /"""/
   '.tex':
-    name: 'tex', symbol: '%'
+    name: 'tex', symbol: '%', enter: /\\begin{comment}/, exit: /\\end{comment}/
   '.latex':
-    name: 'tex', symbol: '%'
+    name: 'tex', symbol: '%', enter: /\\begin{comment}/, exit: /\\end{comment}/
   '.c':
     name: 'c', symbol: '//'
   '.h':
@@ -187,6 +195,9 @@ for ext, l of languages
 
   # Does the line begin with a comment?
   l.comment_matcher = new RegExp('^\\s*' + l.symbol + '\\s?')
+
+  # Support block comment parsing?
+  l.blocks = (l.enter and l.exit)
 
   # Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\))
   # and interpolations...
@@ -231,6 +242,7 @@ defaults =
   template: "#{__dirname}/../resources/docco.jst"
   css     : "#{__dirname}/../resources/docco.css"
   output  : "docs/"
+  blocks  : false
 
 # The start of each Pygments highlight block.
 highlight_start = '<div class="highlight"><pre>'
@@ -238,37 +250,17 @@ highlight_start = '<div class="highlight"><pre>'
 # The end of each Pygments highlight block.
 highlight_end   = '</pre></div>'
 
-#### Public API
-
-# Docco exports a basic public API for usage in other applications.
-# A simple usage might look like this
-#
-#     Docco = require('docco')
-#     
-#     sources = 
-#       "src/index.coffee"
-#       "src/plugins/*.coffee"
-#       "src/web/*.py"
-#     
-#     options = 
-#       template : "src/templates/docs/myproject.jst"
-#       output   : "web/docs"
-#       css      : "src/templates/docs/myproject.docs.css"
-#     
-#     Docco.document sources, options, ->
-#       console.log("Docco documentation complete.")
-#     
-
 # ### Run from Commandline
   
 # Run Docco from a set of command line arguments, defaulting to `process.argv`.
-exports.run = (args=process.argv) ->
+run = (args=process.argv) ->
   # Parse command line options using [Commander JS](https://github.com/visionmedia/commander.js).
   commander.version(version)
     .usage("[options] <file_pattern ...>")
     .option("-c, --css [file]","use a custom css file",defaults.css)
     .option("-o, --output [path]","use a custom output path",defaults.output)
     .option("-t, --template [file]","use a custom .jst template",defaults.template)
+    .option("-b, --blocks","parse block comments where available",defaults.blocks)
     .parse(args)
     .name = "docco"
 
@@ -282,7 +274,7 @@ exports.run = (args=process.argv) ->
 # ### Document Sources
 
 # Run Docco over a list of `sources` with the given `options`.
-exports.document = (sources,options={},callback=null) ->
+document = (sources,options={},callback=null) ->
   # Construct the Docco config to use with this documentation pass
   # by taking the `DEFAULTS` first, then merging in specified options
   # from the passed `config` object.
@@ -314,7 +306,7 @@ exports.document = (sources,options={},callback=null) ->
 # ### Resolve Wildcard Source Inputs
 
 # Resolve a wildcard source input to the files it matches.
-exports.resolve_source = (source) ->
+resolve_source = (source) ->
   # If the input contains no wildcard characters, just return it.
   return source if not source.match(/([\*\?])/)
 
@@ -332,4 +324,33 @@ exports.resolve_source = (source) ->
   # Return an array of files found in the path, that match
   # the wildcard.
   return (path.join(file_path,file) for file in files when file.match regex)
-     
+
+#### Public API
+
+# Docco exports a basic public API for usage in other applications.
+# A simple usage might look like this
+#
+#     Docco = require('docco')
+#     
+#     sources = 
+#       "src/index.coffee"
+#       "src/plugins/*.coffee"
+#       "src/web/*.py"
+#     
+#     options = 
+#       template : "src/templates/docs/myproject.jst"
+#       output   : "web/docs"
+#       css      : "src/templates/docs/myproject.docs.css"
+#       blocks   : true
+#     
+#     Docco.document sources, options, ->
+#       console.log("Docco documentation complete.")
+#     
+exports[key] = value for key, value of {
+  run           : run
+  document      : document
+  resolve_source: resolve_source
+  version       : version
+  defaults      : defaults
+  languages     : languages
+}
