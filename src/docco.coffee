@@ -22,7 +22,8 @@
 #     sudo npm install -g docco
 #
 # Docco can be used to process CoffeeScript, JavaScript, Ruby, Python, or TeX files.
-# Only single-line comments are processed -- block comments are ignored.
+# By default only single-line comments are processed, block comments may be included
+# by passing the `-b` flag to Docco.
 #
 #### Partners in Crime:
 #
