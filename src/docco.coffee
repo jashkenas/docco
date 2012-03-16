@@ -57,6 +57,9 @@
 generate_documentation = (source, config, callback) ->
   fs.readFile source, "utf-8", (error, code) ->
     throw error if error
+    if not get_language source
+      console.error "error: skipping unknown file type -> #{source}"
+      return callback()
     sections = parse source, code, config
     highlight source, sections, ->
       generate_html source, sections, config
