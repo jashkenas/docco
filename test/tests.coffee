@@ -16,8 +16,7 @@ resources_path = path.normalize path.join(test_path,"/../resources")
 # number of output files is (matched_sources + 1).
 test_docco_run = (test_name,sources,options=null,callback=null) ->
   dest_path = path.join data_path, test_name
-  # Remove the data directory for this test run, called before and
-  # after a test.
+  # Remove the data directory for this test run
   cleanup = (callback) -> exec "rm -rf #{dest_path}", callback
   cleanup ->
     options?.output = dest_path
