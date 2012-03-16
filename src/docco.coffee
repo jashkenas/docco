@@ -17,8 +17,7 @@
 #
 # To install Docco, first make sure you have [Node.js](http://nodejs.org/),
 # [Pygments](http://pygments.org/) (install the latest dev version of Pygments
-# from [its Mercurial repo](http://dev.pocoo.org/hg/pygments-main)), and
-# [CoffeeScript](http://coffeescript.org/). Then, with NPM:
+# from [its Mercurial repo](http://dev.pocoo.org/hg/pygments-main)). Then, with NPM:
 #
 #     sudo npm install -g docco
 #
@@ -84,23 +83,44 @@ parse = (source, code, config) ->
   save = (docs, code) ->
     sections.push docs_text: docs, code_text: code
 
+  # Iterate over the source lines, and separate out single/block
+  # comments from code chunks.
   for line in lines
+    
+    # If we're not in a block comment, and find a match for the start 
+    # of one, eat the tokens, and note that we're now in a block.
     if not in_block and config.blocks and language.blocks and line.match(language.enter)
       line = line.replace(language.enter, '')
       in_block = true
-    if not line.match(language.comment_filter) and (in_block or line.match(language.comment_matcher))
+      
+    # Process the line, marking it as docs if we're in a block comment, 
+    # or we find a single-line comment marker.
+    single = line.match(language.comment_matcher)
+    if not line.match(language.comment_filter) and (in_block or single)
+      
+      # If we have code text, and we're entering a comment, store off
+      # the current docs and code, then start a new section.
       if has_code
         save docs_text, code_text
         has_code = docs_text = code_text = ''
-      if config.blocks and language.blocks and line.match(language.exit)
-        in_block = false
+
+      # If there's a single comment, and we're not in a block, eat the
+      # comment token.
+      line = line.replace(language.comment_matcher, '') if single and not in_block
+
+      # If we're in a block, and we find the end of it in the line, eat
+      # the end token, and note that we're no longer in the block.
+      if in_block and line.match(language.exit)
         line = line.replace(language.exit, '')
-      line = line.replace(language.comment_matcher, '')
+        in_block = false        
+      
       docs_text += line + '\n'
     else
       has_code = yes
       code_text += line + '\n'
-  save docs_text, code_text
+      
+  # Save the final section, if any, and return the sections array. 
+  save docs_text, code_text if code_text != '' and docs_text != ''
   sections
 
 # Highlights a single chunk of code, using **Pygments** over stdio,
@@ -296,7 +316,7 @@ document = (sources,options={},callback=null) ->
   # document and output HTML for each source, and finally invoke the
   # completion callback, if it is specified.
   ensure_directory config.output, ->
-    fs.writeFile path.join(config.output,path.basename(config.css)), docco_styles
+    fs.writeFileSync path.join(config.output,path.basename(config.css)), docco_styles
     files = config.sources.slice()
     next_file = -> 
       callback() if callback? and not files.length
