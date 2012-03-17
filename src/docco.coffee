@@ -61,7 +61,7 @@ generate_documentation = (source, config, callback) ->
     if not get_language source
       console.error "error: skipping unknown file type -> #{source}"
       return callback()
-    sections = parse source, code, config
+    sections = parse source, code, config.blocks
     highlight source, sections, ->
       generate_html source, sections, config
       callback()
@@ -77,7 +77,7 @@ generate_documentation = (source, config, callback) ->
 #       code_html: ...
 #     }
 #
-parse = (source, code, config) ->
+parse = (source, code, blocks=false) ->
   lines    = code.split '\n'
   sections = []
   language = get_language source
@@ -93,7 +93,7 @@ parse = (source, code, config) ->
     
     # If we're not in a block comment, and find a match for the start 
     # of one, eat the tokens, and note that we're now in a block.
-    if not in_block and config.blocks and language.blocks and line.match(language.enter)
+    if not in_block and blocks and language.blocks and line.match(language.enter)
       line = line.replace(language.enter, '')
       in_block = true
       
@@ -313,7 +313,7 @@ run = (args=process.argv) ->
     .parse(args)
     .name = "docco"
   if commander.args.length
-    exports.document(commander.args.slice(),commander)
+    document(commander.args.slice(),commander)
   else
     console.log commander.helpInformation()
 
@@ -372,6 +372,7 @@ resolve_source = (source) ->
 exports[key] = value for key, value of {
   run           : run
   document      : document
+  parse         : parse
   resolve_source: resolve_source
   version       : version
   defaults      : defaults

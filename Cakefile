@@ -1,4 +1,4 @@
-Docco         = require './src/docco'
+Docco         = require './lib/docco'
 CoffeeScript  = require 'coffee-script'
 {spawn, exec} = require 'child_process'
 fs            = require 'fs'
@@ -31,9 +31,38 @@ task 'doc', 'rebuild the Docco documentation', ->
     throw err if err
   )
 
+task 'weigh', 'display docco.coffee line count distribution', ->
+  # Parse out code/doc sections for `docco.cofeee`
+  docco_file = path.join __dirname, 'src/docco.coffee'
+  source = fs.readFileSync(docco_file, 'utf-8').toString()
+  sections = Docco.parse docco_file, source, false
+  file_lines = source.split '\n'
+
+  # Iterate over the sections and determine lines of code, 
+  # documentation, and whitespace.
+  docs_count = code_count = 0
+  for section in sections
+    code_count += 1 for l in section.code_text.split('\n') when l.trim() != ''
+    docs_count += 1 for l in section.docs_text.split('\n') when l.trim() != ''
+  blank_count = file_lines.length - docs_count - code_count
+  total_count = docs_count+code_count+blank_count
+  if total_count != file_lines.length
+    throw "Total line count mismatch between file and computed values" 
+
+  # Print summary information.
+  console.log [
+    "docco.coffee line counts:"
+    "------------------------"
+    " Documentation : #{docs_count}"
+    " Code          : #{code_count}"
+    " Whitespace    : #{blank_count}"
+    "------------------------"
+    " Total         : #{total_count}"
+  ].join('\n')
+
 task 'test', 'run the Docco test suite', ->
   runTests Docco
-  
+    
 # Simple test runner, borrowed from [CoffeeScript](http://coffeescript.org/).
 runTests = (Docco) ->
   startTime   = Date.now()
