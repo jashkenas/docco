@@ -1,4 +1,4 @@
-Docco         = require './src/docco'
+Docco         = require './lib/docco'
 CoffeeScript  = require 'coffee-script'
 {spawn, exec} = require 'child_process'
 fs            = require 'fs'
