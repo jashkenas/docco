@@ -100,7 +100,7 @@ parse = (source, code, blocks=false) ->
     # Process the line, marking it as docs if we're in a block comment, 
     # or we find a single-line comment marker.
     single = line.match(language.comment_matcher)
-    if not line.match(language.comment_filter) and (in_block or single)
+    if in_block or (not line.match(language.comment_filter) and single)
       
       # If we have code text, and we're entering a comment, store off
       # the current docs and code, then start a new section.
@@ -198,7 +198,7 @@ commander = require 'commander'
 # add another language to Docco's repertoire, add it here.
 languages =
   '.coffee':
-    name: 'coffee-script', symbol: '#', enter: /###/, exit: /###/
+    name: 'coffee-script', symbol: '#', enter: /^\s*#{3}(?!#)/, exit: /#{3}(?!#)\s*$/
   '.js':
     name: 'javascript', symbol: '//', enter: /\/\*\s*/, exit: /\s*\*\//
   '.rb':

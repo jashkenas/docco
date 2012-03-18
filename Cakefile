@@ -1,4 +1,4 @@
-Docco         = require './lib/docco'
+Docco         = require './src/docco'
 CoffeeScript  = require 'coffee-script'
 {spawn, exec} = require 'child_process'
 fs            = require 'fs'
@@ -33,11 +33,11 @@ task 'doc', 'rebuild the Docco documentation', ->
 
 task 'weigh', 'display docco.coffee line count distribution', ->
   # Parse out code/doc sections for `docco.cofeee`
-  docco_file = path.join __dirname, 'src/docco.coffee'
-  source = fs.readFileSync(docco_file, 'utf-8').toString()
-  sections = Docco.parse docco_file, source, false
-  file_lines = source.split '\n'
-
+  file_path     = path.join __dirname, 'src/docco.coffee'
+  file_contents = fs.readFileSync(file_path, 'utf-8').toString()
+  file_lines    = file_contents.split '\n'
+  sections      = Docco.parse file_path, file_contents, true
+  
   # Iterate over the sections and determine lines of code, 
   # documentation, and whitespace.
   docs_count = code_count = 0

@@ -1,8 +1,11 @@
-"""
+# Single:1 - Block:2
 
- Comment
 
-"""
-world = 'World!'
-# Comment
-print 'Hello %s' % world
+def main():
+    """
+    
+    Comment
+       
+    """
+    world = 'World!'
+    print 'Hello %s' % world

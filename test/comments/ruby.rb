@@ -1,8 +1,8 @@
+# Single:1 - Block:2
+world = "World!"
 =begin
 
  Comment
 
 =end
-world = "World!"
-# Comment
 puts 'Hello %s' % world

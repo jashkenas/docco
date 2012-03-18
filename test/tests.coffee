@@ -92,25 +92,39 @@ test "single and block comment parsing", ->
     ext = keys.shift()
     l = Docco.languages[ext]
 
-    # See if there's a test for this language.
     language_example = path.join comments_path, "#{l.name}#{ext}"
+    language_test    = "comments_test/#{l.name}"
+    language_path    = path.join data_path, language_test
+
+    # Skip over this language if there is no corresponding test.
     return test_next_language(keys, callback) if not path.existsSync language_example   
    
     # Run them through docco with the custom `comments.jst` file that 
-    # outputs a `COMMENT` marker per doc section generated.
-    test_docco_run "comments_test", [language_example], options, ->
+    # outputs a CSV list of doc blocks text.    
+    test_docco_run language_test, [language_example], options, ->
   
-      language_output = path.join data_path, "comments_test/#{l.name}.html"
-      eq true, path.existsSync(language_output), "#{language_output} -> created as expected"
-    
-      content = fs.readFileSync(language_output).toString().replace(/\n/,'')
-      comment_count = content.match /\s*<p>\s*(Comment)\s*<\/p>\s*/gi
-  
-      # Each lanuage example that supports block comments contains two 
-      # comments (a single-line, and a block).  Examples that don't 
-      # support block comments contain only one comment (a single-line).
-      expected = if l.blocks and options.blocks then 2 else 1
-      eq comment_count.length, expected, "#{language_output} -> find #{expected} comments"
+      # Be sure the expected output file exists
+      language_output = path.join language_path, "#{l.name}.html"
+      eq true, path.existsSync(language_output), "#{language_output} -> output file created properly"
+
+      # Read in the output file contents, split them into a list
+      # of comments.
+      content = fs.readFileSync(language_output).toString()
+      comments = (c.trim() for c in content.split(',') when c.trim() != '') 
+      eq true, comments.length >= 1, 'expect at least the descriptor comment'
+
+      # Parse the first comment (special case), to identify the expected 
+      # comment counts, based on whether we're matching block comments or not.
+      descriptor = comments[0].match(/^Single:([0-9]*) - Block:([0-9]*)$/)
+      expected = parseInt(if l.blocks and options.blocks then descriptor[2] else descriptor[1])    
+      eq comments.length, expected, [
+        ""
+        "#{path.basename(language_output)} comments"
+        "------------------------"
+        " blocks   : #{options.blocks}"
+        " expected : #{expected}"
+        " found    : #{comments.length}"
+      ].join '\n'
       
       # Invoke the next test
       test_next_language keys, callback
