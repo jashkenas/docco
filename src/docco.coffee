@@ -230,8 +230,8 @@ highlight_start = '<div class="highlight"><pre>'
 highlight_end   = '</pre></div>'
 
 # Run the script.
-# For each source file passed in as an argument, generate the documentation.
-sources = process.ARGV.sort()
+# For each recognized source file passed in as an argument, generate the documentation. Log sources of unknown types.
+sources = process.ARGV.filter((source) -> (get_language source) ? console.log "Unknown Type: #{source}").sort()
 if sources.length
   ensure_directory 'docs', ->
     fs.writeFile 'docs/docco.css', docco_styles
