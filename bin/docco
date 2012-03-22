@@ -5,4 +5,17 @@ var fs = require('fs');
 var lib = path.join(path.dirname(fs.realpathSync(__filename)), '../lib');
 
 process.ARGV = process.argv = process.argv.slice(2, process.argv.length);
+
+process.OPTS = {};
+
+// -c, --css   specify stylesheet link, default to 'docco.css'
+var pos = process.ARGV.indexOf('-c');
+if(pos == -1) pos = process.ARGV.indexOf('--css');
+if(pos != -1) process.OPTS.css = process.ARGV.splice(pos, 2)[1];
+
+// -o, --out   specify output location, default to 'docs'
+pos = process.ARGV.indexOf('-o');
+if(pos == -1) pos = process.ARGV.indexOf('--out');
+if(pos != -1) process.OPTS.out = process.ARGV.splice(pos, 2)[1];
+
 require(lib + '/docco.js');

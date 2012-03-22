@@ -136,7 +136,7 @@ generate_html = (source, sections) ->
   title = path.basename source
   dest  = destination source
   html  = docco_template {
-    title: title, sections: sections, sources: sources, path: path, destination: destination
+    title: title, sections: sections, sources: sources, path: path, destination: destination, opts: process.OPTS
   }
   console.log "docco: #{source} -> #{dest}"
   fs.writeFile dest, html
@@ -196,7 +196,7 @@ get_language = (source) -> languages[path.extname(source)]
 # Compute the destination HTML path for an input source file path. If the source
 # is `lib/example.coffee`, the HTML will be at `docs/example.html`
 destination = (filepath) ->
-  'docs/' + path.basename(filepath, path.extname(filepath)) + '.html'
+  (process.OPTS.out ? 'docs') + '/' + path.basename(filepath, path.extname(filepath)) + '.html'
 
 # Ensure that the destination directory exists.
 ensure_directory = (dir, callback) ->
@@ -230,11 +230,11 @@ highlight_start = '<div class="highlight"><pre>'
 highlight_end   = '</pre></div>'
 
 # Run the script.
-# For each source file passed in as an argument, generate the documentation.
-sources = process.ARGV.sort()
+# For each recognized source file passed in as an argument, generate the documentation. Log sources of unknown types.
+sources = process.ARGV.filter((source) -> (get_language source) ? console.log "Unknown Type: #{source}").sort()
 if sources.length
-  ensure_directory 'docs', ->
-    fs.writeFile 'docs/docco.css', docco_styles
+  ensure_directory process.OPTS.out ? 'docs', ->
+    fs.writeFile (process.OPTS.out ? 'docs') + '/docco.css', docco_styles if !process.OPTS.css
     files = sources.slice(0)
     next_file = -> generate_documentation files.shift(), next_file if files.length
     next_file()
