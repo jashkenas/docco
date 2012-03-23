@@ -58,9 +58,6 @@
 generate_documentation = (source, config, callback) ->
   fs.readFile source, "utf-8", (error, code) ->
     throw error if error
-    if not get_language source
-      console.error "error: skipping unknown file type -> #{source}"
-      return callback()
     sections = parse source, code, config.blocks
     highlight source, sections, ->
       generate_html source, sections, config
@@ -322,19 +319,19 @@ run = (args=process.argv) ->
 # Run Docco over a list of `sources` with the given `options`.
 #  
 # 1. Construct config to use by taking `defaults` first, then  merging in `options`
-# 2. Generate the source list to iterate over and document. 
+# 2. Generate the resolved source list, filtering out unknown types.
 # 3. Load the specified template and css files.
 # 4. Ensure the output path is created, write out the CSS style file, 
-# document and output HTML for each source, and finally invoke the
-# completion callback, if it is specified.
+# document each source, and invoke the completion callback, if it is specified.
 document = (sources,options={},callback=null) ->
   config = {}
   config[key] = defaults[key] for key,value of defaults
   config[key] = value for key,value of options if key of defaults
 
-  files = []
-  files = files.concat(exports.resolve_source(src)) for src in sources
-  config.sources = files
+  resolved = []
+  resolved = resolved.concat(resolve_source(src)) for src in sources
+  config.sources = resolved.filter((source) -> get_language source).sort()
+  console.log "docco: skipped unknown type (#{m})" for m in resolved when m not in config.sources  
   
   config.docco_template = template fs.readFileSync(config.template).toString()
   docco_styles = fs.readFileSync(config.css).toString()
@@ -368,7 +365,6 @@ resolve_source = (source) ->
 # ### Exports
 
 # Information about docco, and functions for programatic usage.
-
 exports[key] = value for key, value of {
   run           : run
   document      : document

@@ -1,4 +1,4 @@
-Docco         = require './lib/docco'
+Docco         = require './src/docco'
 CoffeeScript  = require 'coffee-script'
 {spawn, exec} = require 'child_process'
 fs            = require 'fs'
@@ -16,7 +16,7 @@ task 'install', 'install the `docco` command into /usr/local (or --prefix)', (op
   lib  = base + '/lib/docco'
   exec([
     'mkdir -p ' + lib
-    'cp -rf bin README resources vendor lib ' + lib
+    'cp -rf bin README resources lib ' + lib
     'ln -sf ' + lib + '/bin/docco ' + base + '/bin/docco'
   ].join(' && '), (err, stdout, stderr) ->
    if err then console.error stderr
@@ -30,35 +30,6 @@ task 'doc', 'rebuild the Docco documentation', ->
   ].join(' && '), (err) ->
     throw err if err
   )
-
-task 'weigh', 'display docco.coffee line count distribution', ->
-  # Parse out code/doc sections for `docco.cofeee`
-  file_path     = path.join __dirname, 'src/docco.coffee'
-  file_contents = fs.readFileSync(file_path, 'utf-8').toString()
-  file_lines    = file_contents.split '\n'
-  sections      = Docco.parse file_path, file_contents, true
-  
-  # Iterate over the sections and determine lines of code, 
-  # documentation, and whitespace.
-  docs_count = code_count = 0
-  for section in sections
-    code_count += 1 for l in section.code_text.split('\n') when l.trim() != ''
-    docs_count += 1 for l in section.docs_text.split('\n') when l.trim() != ''
-  blank_count = file_lines.length - docs_count - code_count
-  total_count = docs_count+code_count+blank_count
-  if total_count != file_lines.length
-    throw "Total line count mismatch between file and computed values" 
-
-  # Print summary information.
-  console.log [
-    "docco.coffee line counts:"
-    "------------------------"
-    " Documentation : #{docs_count}"
-    " Code          : #{code_count}"
-    " Whitespace    : #{blank_count}"
-    "------------------------"
-    " Total         : #{total_count}"
-  ].join('\n')
 
 task 'test', 'run the Docco test suite', ->
   runTests Docco

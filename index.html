@@ -52,9 +52,6 @@ up into comment/code sections, highlighting them for the appropriate language,
 and merging them into an HTML template.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">generate_documentation = </span><span class="nf">(source, config, callback) -&gt;</span>
   <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span> <span class="nx">source</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="nf">(error, code) -&gt;</span>
     <span class="k">throw</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span>
-    <span class="k">if</span> <span class="o">not</span> <span class="nx">get_language</span> <span class="nx">source</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">error</span> <span class="s2">&quot;error: skipping unknown file type -&gt; #{source}&quot;</span>
-      <span class="k">return</span> <span class="nx">callback</span><span class="p">()</span>
     <span class="nv">sections = </span><span class="nx">parse</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">code</span><span class="p">,</span> <span class="nx">config</span><span class="p">.</span><span class="nx">blocks</span>
     <span class="nx">highlight</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">sections</span><span class="p">,</span> <span class="o">-&gt;</span>
       <span class="nx">generate_html</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">sections</span><span class="p">,</span> <span class="nx">config</span>
@@ -231,19 +228,19 @@ Docco.document sources, options, -&gt;
 
 <ol>
 <li>Construct config to use by taking <code>defaults</code> first, then  merging in <code>options</code></li>
-<li>Generate the source list to iterate over and document. </li>
+<li>Generate the resolved source list, filtering out unknown types.</li>
 <li>Load the specified template and css files.</li>
 <li>Ensure the output path is created, write out the CSS style file, 
-document and output HTML for each source, and finally invoke the
-completion callback, if it is specified.</li>
+document each source, and invoke the completion callback, if it is specified.</li>
 </ol>             </td>             <td class="code">               <div class="highlight"><pre><span class="nb">document</span> <span class="o">=</span> <span class="nf">(sources,options={},callback=null) -&gt;</span>
   <span class="nv">config = </span><span class="p">{}</span>
   <span class="nx">config</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">defaults</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span><span class="nx">value</span> <span class="k">of</span> <span class="nx">defaults</span>
   <span class="nx">config</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span><span class="nx">value</span> <span class="k">of</span> <span class="nx">options</span> <span class="k">if</span> <span class="nx">key</span> <span class="k">of</span> <span class="nx">defaults</span>
 
-  <span class="nv">files = </span><span class="p">[]</span>
-  <span class="nv">files = </span><span class="nx">files</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">exports</span><span class="p">.</span><span class="nx">resolve_source</span><span class="p">(</span><span class="nx">src</span><span class="p">))</span> <span class="k">for</span> <span class="nx">src</span> <span class="k">in</span> <span class="nx">sources</span>
-  <span class="nv">config.sources = </span><span class="nx">files</span>
+  <span class="nv">resolved = </span><span class="p">[]</span>
+  <span class="nv">resolved = </span><span class="nx">resolved</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">resolve_source</span><span class="p">(</span><span class="nx">src</span><span class="p">))</span> <span class="k">for</span> <span class="nx">src</span> <span class="k">in</span> <span class="nx">sources</span>
+  <span class="nv">config.sources = </span><span class="nx">resolved</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nf">(source) -&gt;</span> <span class="nx">get_language</span> <span class="nx">source</span><span class="p">).</span><span class="nx">sort</span><span class="p">()</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s2">&quot;docco: skipped unknown type (#{m})&quot;</span> <span class="k">for</span> <span class="nx">m</span> <span class="k">in</span> <span class="nx">resolved</span> <span class="k">when</span> <span class="nx">m</span> <span class="o">not</span> <span class="k">in</span> <span class="nx">config</span><span class="p">.</span><span class="nx">sources</span>  
   
   <span class="nv">config.docco_template = </span><span class="nx">template</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">template</span><span class="p">).</span><span class="nx">toString</span><span class="p">()</span>
   <span class="nv">docco_styles = </span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">css</span><span class="p">).</span><span class="nx">toString</span><span class="p">()</span>
