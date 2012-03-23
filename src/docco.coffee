@@ -197,11 +197,11 @@ languages =
   '.coffee':
     name: 'coffee-script', symbol: '#', enter: /^\s*#{3}(?!#)/, exit: /#{3}(?!#)\s*$/
   '.js':
-    name: 'javascript', symbol: '//', enter: /\/\*\s*/, exit: /\s*\*\//
+    name: 'javascript', symbol: '//', enter: /^\s*\/\*\s*/, exit: /\s*\*\/\s*$/
   '.rb':
     name: 'ruby', symbol: '#', enter: /^=begin$/, exit: /^=end$/
   '.py':
-    name: 'python', symbol: '#', enter: /"""/, exit: /"""/
+    name: 'python', symbol: '#', enter: /^\s*"""/, exit: /"""\s*$/
   '.tex':
     name: 'tex', symbol: '%', enter: /\\begin{comment}/, exit: /\\end{comment}/
   '.latex':
