@@ -17,5 +17,8 @@
   "main" :        "./lib/docco",
   "bin": {
     "docco":      "./bin/docco"
+  },
+  "dependencies": {
+    "optimist": ">= 0.3"
   }
 }
