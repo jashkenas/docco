@@ -176,6 +176,10 @@ languages =
     name: 'yaml', symbol: '#'
   '.yml':
     name: 'yaml', symbol: '#'
+  '.php':
+    name: 'php', symbol: '//'
+  '.hs':
+    name: 'haskell', symbol: '--'
 
 # Build out the appropriate matchers and delimiters for each language.
 for ext, l of languages
