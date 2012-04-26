@@ -3,6 +3,23 @@
 var path = require('path');
 var fs = require('fs');
 var lib = path.join(path.dirname(fs.realpathSync(__filename)), '../lib');
+try {
+  var cmd = require('optimist')
+    .alias('template', 't')
+    .alias('style', 's')
+    .alias('help', 'h')
+    .describe('template', 'Docco template file [docco.jst]')
+    .describe('style', 'Docco CSS file [docco.css]');
+  } catch (e) {
+    process.ARGV = process.argv = process.argv.slice(2, process.argv.length);
+  }
 
-process.ARGV = process.argv = process.argv.slice(2, process.argv.length);
+if (cmd.argv.help) {
+  cmd.showHelp();
+  process.exit();
+} else {
+  process.ARGV = cmd.argv._;
+  process.CMD = cmd;
+}
+
 require(lib + '/docco.js');

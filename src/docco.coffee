@@ -9,7 +9,7 @@
 #
 #     docco src/*.coffee
 #
-# ...will generate an HTML documentation page for each of the named source files, 
+# ...will generate an HTML documentation page for each of the named source files,
 # with a menu linking to the other pages, saving it into a `docs` folder.
 #
 # The [source for Docco](http://github.com/jashkenas/docco) is available on GitHub,
@@ -27,27 +27,27 @@
 #
 #### Partners in Crime:
 #
-# * If **Node.js** doesn't run on your platform, or you'd prefer a more 
-# convenient package, get [Ryan Tomayko](http://github.com/rtomayko)'s 
-# [Rocco](http://rtomayko.github.com/rocco/rocco.html), the Ruby port that's 
-# available as a gem. 
-# 
+# * If **Node.js** doesn't run on your platform, or you'd prefer a more
+# convenient package, get [Ryan Tomayko](http://github.com/rtomayko)'s
+# [Rocco](http://rtomayko.github.com/rocco/rocco.html), the Ruby port that's
+# available as a gem.
+#
 # * If you're writing shell scripts, try
 # [Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell**,
 # also by Mr. Tomayko.
-# 
-# * If Python's more your speed, take a look at 
-# [Nick Fitzgerald](http://github.com/fitzgen)'s [Pycco](http://fitzgen.github.com/pycco/). 
 #
-# * For **Clojure** fans, [Fogus](http://blog.fogus.me/)'s 
-# [Marginalia](http://fogus.me/fun/marginalia/) is a bit of a departure from 
+# * If Python's more your speed, take a look at
+# [Nick Fitzgerald](http://github.com/fitzgen)'s [Pycco](http://fitzgen.github.com/pycco/).
+#
+# * For **Clojure** fans, [Fogus](http://blog.fogus.me/)'s
+# [Marginalia](http://fogus.me/fun/marginalia/) is a bit of a departure from
 # "quick-and-dirty", but it'll get the job done.
 #
-# * **Lua** enthusiasts can get their fix with 
+# * **Lua** enthusiasts can get their fix with
 # [Robert Gieseke](https://github.com/rgieseke)'s [Locco](http://rgieseke.github.com/locco/).
-# 
+#
 # * And if you happen to be a **.NET**
-# aficionado, check out [Don Wilson](https://github.com/dontangg)'s 
+# aficionado, check out [Don Wilson](https://github.com/dontangg)'s
 # [Nocco](http://dontangg.github.com/nocco/).
 
 #### Main Documentation Generation Functions
@@ -106,17 +106,17 @@ highlight = (source, sections, callback) ->
   language = get_language source
   pygments = spawn 'pygmentize', ['-l', language.name, '-f', 'html', '-O', 'encoding=utf-8,tabsize=2']
   output   = ''
-  
+
   pygments.stderr.addListener 'data',  (error)  ->
     console.error error.toString() if error
-    
+
   pygments.stdin.addListener 'error',  (error)  ->
     console.error "Could not use Pygments to highlight the source."
     process.exit 1
-    
+
   pygments.stdout.addListener 'data', (result) ->
     output += result if result
-    
+
   pygments.addListener 'exit', ->
     output = output.replace(highlight_start, '').replace(highlight_end, '')
     fragments = output.split language.divider_html
@@ -124,11 +124,11 @@ highlight = (source, sections, callback) ->
       section.code_html = highlight_start + fragments[i] + highlight_end
       section.docs_html = showdown.makeHtml section.docs_text
     callback()
-    
+
   if pygments.stdin.writable
     pygments.stdin.write((section.code_text for section in sections).join(language.divider_text))
     pygments.stdin.end()
-  
+
 # Once all of the code is finished highlighting, we can generate the HTML file
 # and write out the documentation. Pass the completed sections into the template
 # found in `resources/docco.jst`
@@ -156,6 +156,8 @@ showdown = require('./../vendor/showdown').Showdown
 languages =
   '.coffee':
     name: 'coffee-script', symbol: '#'
+  '.iced':
+    name: 'coffee-script', symbol: '#'
   '.js':
     name: 'javascript', symbol: '//'
   '.rb':
@@ -170,6 +172,10 @@ languages =
     name: 'c', symbol: '//'
   '.h':
     name: 'c', symbol: '//'
+  '.yaml':
+    name: 'yaml', symbol: '#'
+  '.yml':
+    name: 'yaml', symbol: '#'
 
 # Build out the appropriate matchers and delimiters for each language.
 for ext, l of languages
@@ -218,10 +224,10 @@ template = (str) ->
        "');}return p.join('');"
 
 # Create the template that we will use to generate the Docco HTML page.
-docco_template  = template fs.readFileSync(__dirname + '/../resources/docco.jst').toString()
+docco_template  = template fs.readFileSync(process?.CMD.argv.template || __dirname + '/../resources/docco.jst').toString()
 
 # The CSS styles we'd like to apply to the documentation.
-docco_styles    = fs.readFileSync(__dirname + '/../resources/docco.css').toString()
+docco_styles    = fs.readFileSync(process?.CMD.argv.style || __dirname + '/../resources/docco.css').toString()
 
 # The start of each Pygments highlight block.
 highlight_start = '<div class="highlight"><pre>'
