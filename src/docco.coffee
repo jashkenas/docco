@@ -156,8 +156,8 @@ showdown = require('./../vendor/showdown').Showdown
 languages =
   '.coffee':
     name: 'coffee-script', symbol: '#'
-  '.js':
-    name: 'javascript', symbol: '//'
+  '.feature':
+    name: 'gherkin', symbol: '#'
   '.rb':
     name: 'ruby', symbol: '#'
   '.py':
@@ -166,6 +166,8 @@ languages =
     name: 'tex', symbol: '%'
   '.latex':
     name: 'tex', symbol: '%'
+  '.js':
+    name: 'javascript', symbol: '//'
   '.c':
     name: 'c', symbol: '//'
   '.h':
