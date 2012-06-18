@@ -150,26 +150,10 @@ path     = require 'path'
 showdown = require('./../vendor/showdown').Showdown
 {spawn, exec} = require 'child_process'
 
-# A list of the languages that Docco supports, mapping the file extension to
-# the name of the Pygments lexer and the symbol that indicates a comment. To
-# add another language to Docco's repertoire, add it here.
-languages =
-  '.coffee':
-    name: 'coffee-script', symbol: '#'
-  '.js':
-    name: 'javascript', symbol: '//'
-  '.rb':
-    name: 'ruby', symbol: '#'
-  '.py':
-    name: 'python', symbol: '#'
-  '.tex':
-    name: 'tex', symbol: '%'
-  '.latex':
-    name: 'tex', symbol: '%'
-  '.c':
-    name: 'c', symbol: '//'
-  '.h':
-    name: 'c', symbol: '//'
+# Languages are stored in JSON format in the file `resources/languages.json`
+# Each item maps the file extension to the name of the Pygments lexer and the
+# symbol that indicates a comment. To add a new language, modify the file.
+languages = JSON.parse fs.readFileSync(__dirname + "/../resources/languages.json").toString()
 
 # Build out the appropriate matchers and delimiters for each language.
 for ext, l of languages
