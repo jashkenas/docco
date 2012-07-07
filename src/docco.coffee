@@ -17,7 +17,7 @@
 #
 # To install Docco, first make sure you have [Node.js](http://nodejs.org/),
 # [Pygments](http://pygments.org/) (install the latest dev version of Pygments
-# from [its Mercurial repo](http://dev.pocoo.org/hg/pygments-main)), and
+# from [its Mercurial repo](https://bitbucket.org/birkenfeld/pygments-main)), and
 # [CoffeeScript](http://coffeescript.org/). Then, with NPM:
 #
 #     sudo npm install -g docco
