@@ -47,14 +47,17 @@ h1, h2, h3, h4, h5, h6 {
 }
   #jump_wrapper {
     padding: 0;
-    display: none;
   }
-    #jump_to:hover #jump_wrapper {
-      display: block;
-    }
     #jump_page {
       padding: 5px 0 3px;
       margin: 0 0 25px 25px;
+    }
+    #jump_page.hidden {
+      position: absolute;
+      left: -9999px;
+    }
+    #jump_to:hover #jump_page {
+      position: static;
     }
       #jump_page .source {
         display: block;
@@ -62,6 +65,7 @@ h1, h2, h3, h4, h5, h6 {
         text-decoration: none;
         border-top: 1px solid #eee;
       }
+        #jump_page .source:focus,
         #jump_page .source:hover {
           background: #f5f5ff;
         }
@@ -103,6 +107,10 @@ table td {
         opacity: 0;
         -webkit-transition: opacity 0.2s linear;
       }
+        td.docs .pilcrow:focus {
+          opacity: 1;
+          -webkit-transition: none;
+        }
         td.docs:hover .pilcrow {
           opacity: 1;
         }
