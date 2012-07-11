@@ -207,6 +207,9 @@ docco_template  = template fs.readFileSync(__dirname + '/../resources/docco.jst'
 # The CSS styles we'd like to apply to the documentation.
 docco_styles    = fs.readFileSync(__dirname + '/../resources/docco.css').toString()
 
+# The Javascript we'd like to apply to the documentation.
+docco_scripts   = fs.readFileSync(__dirname + '/../resources/docco.js').toString()
+
 # The start of each Pygments highlight block.
 highlight_start = '<div class="highlight"><pre>'
 
@@ -219,6 +222,7 @@ sources = process.ARGV.sort()
 if sources.length
   ensure_directory 'docs', ->
     fs.writeFile 'docs/docco.css', docco_styles
+    fs.writeFile 'docs/docco.js', docco_scripts
     files = sources.slice(0)
     next_file = -> generate_documentation files.shift(), next_file if files.length
     next_file()

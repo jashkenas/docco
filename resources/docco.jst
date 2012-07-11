@@ -11,9 +11,12 @@
     <div id="background"></div>
     <% if (sources.length > 1) { %>
       <div id="jump_to">
-        Jump To &hellip;
+        <div id="jump_actions">
+          <input id="jump_filter" placeholder="Filter Jump To..."><span id="jump_filter_clear">x</span>
+          <div id="jump_tease">Jump To &hellip;</div>
+        </div>
         <div id="jump_wrapper">
-          <div id="jump_page">
+          <div id="jump_sources" class="jump_page">
             <% for (var i=0, l=sources.length; i<l; i++) { %>
               <% var source = sources[i]; %>
               <a class="source" href="<%= path.basename(destination(source)) %>">
@@ -21,6 +24,7 @@
               </a>
             <% } %>
           </div>
+          <div id="jump_results" class="jump_page"></div>
         </div>
       </div>
     <% } %>
@@ -54,5 +58,8 @@
       </tbody>
     </table>
   </div>
+  <% if (sources.length > 1) { %>
+    <script type="text/javascript" src="docco.js"></script>
+  <% } %>
 </body>
 </html>
