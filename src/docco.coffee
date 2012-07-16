@@ -184,7 +184,7 @@ destination = (filepath) ->
 
 # Ensure that the destination directory exists.
 ensure_directory = (dir, callback) ->
-  exec "mkdir -p #{dir}", -> callback()
+  fs.mkdir dir, -> callback()
 
 # Micro-templating, originally by John Resig, borrowed by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
