@@ -23,5 +23,9 @@
   ".php":
     {"name" : "php", "symbol" : "//"},
   ".hs":
-    {"name" : "haskell", "symbol" : "--"}
+    {"name" : "haskell", "symbol" : "--"},
+  ".erl":
+    {"name" : "erlang", "symbol" : "%"},
+  ".hrl":
+    {"name" : "erlang", "symbol" : "%"}
 }
