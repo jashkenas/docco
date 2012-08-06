@@ -9,23 +9,20 @@
 #
 #     docco src/*.coffee
 #
-# ...will generate an HTML documentation page for each of the
-# named source files, with a menu linking to the other pages,
-# saving it into a `docs` folder.
+# ...will generate an HTML documentation page for each of the named source files, 
+# with a menu linking to the other pages, saving it into a `docs` folder.
 #
-# The [source for Docco](http://github.com/jashkenas/docco)
-# is available on GitHub,
+# The [source for Docco](http://github.com/jashkenas/docco) is available on GitHub,
 # and released under the MIT license.
 #
 # To install Docco, first make sure you have [Node.js](http://nodejs.org/),
 # [Pygments](http://pygments.org/) (install the latest dev version of Pygments
-# from [its Mercurial repo](https://bitbucket.org/birkenfeld/pygments-main)),
-# and [CoffeeScript](http://coffeescript.org/). Then, with NPM:
+# from [its Mercurial repo](https://bitbucket.org/birkenfeld/pygments-main)), and
+# [CoffeeScript](http://coffeescript.org/). Then, with NPM:
 #
 #     sudo npm install -g docco
 #
-# Docco can be used to process
-# CoffeeScript, JavaScript, Ruby, Python, or TeX files.
+# Docco can be used to process CoffeeScript, JavaScript, Ruby, Python, or TeX files.
 # Only single-line comments are processed -- block comments are ignored.
 #
 #### Partners in Crime:
@@ -40,16 +37,14 @@
 # also by Mr. Tomayko.
 # 
 # * If Python's more your speed, take a look at 
-# [Nick Fitzgerald](http://github.com/fitzgen)'s
-# [Pycco](http://fitzgen.github.com/pycco/). 
+# [Nick Fitzgerald](http://github.com/fitzgen)'s [Pycco](http://fitzgen.github.com/pycco/). 
 #
 # * For **Clojure** fans, [Fogus](http://blog.fogus.me/)'s 
 # [Marginalia](http://fogus.me/fun/marginalia/) is a bit of a departure from 
 # "quick-and-dirty", but it'll get the job done.
 #
 # * **Lua** enthusiasts can get their fix with 
-# [Robert Gieseke](https://github.com/rgieseke)'s
-# [Locco](http://rgieseke.github.com/locco/).
+# [Robert Gieseke](https://github.com/rgieseke)'s [Locco](http://rgieseke.github.com/locco/).
 # 
 # * And if you happen to be a **.NET**
 # aficionado, check out [Don Wilson](https://github.com/dontangg)'s 
@@ -58,8 +53,8 @@
 #### Main Documentation Generation Functions
 
 # Generate the documentation for a source file by reading it in, splitting it
-# up into comment/code sections, highlighting them for
-# the appropriate language, and merging them into an HTML template.
+# up into comment/code sections, highlighting them for the appropriate language,
+# and merging them into an HTML template.
 generateDocumentation = (sources, source, callback) ->
   fs.readFile source, (error, buffer) ->
     throw error if error
@@ -105,10 +100,9 @@ parse = (source, code) ->
   save docsText, codeText
   sections
 
-# Highlights a single chunk of CoffeeScript code,
-# using **Pygments** over stdio, and runs the text of
-# its corresponding comment through **Markdown**,
-# using [Showdown.js](http://attacklab.net/showdown/).
+# Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
+# and runs the text of its corresponding comment through **Markdown**, using
+# [Showdown.js](http://attacklab.net/showdown/).
 #
 # We process the entire file in a single call to Pygments by inserting little
 # marker comments between each section and then splitting the result string
@@ -146,8 +140,8 @@ highlight = (source, sections, callback) ->
     pygments.stdin.end()
   
 # Once all of the code is finished highlighting, we can generate the HTML file
-# and write out the documentation. Pass the completed sections
-# into the template found in `resources/docco.jst`
+# and write out the documentation. Pass the completed sections into the template
+# found in `resources/docco.jst`
 generateHtml = (sources, source, sections) ->
   title = path.basename source
   dest  = destination source
@@ -196,9 +190,8 @@ for ext, l of languages
 # Get the current language we're documenting, based on the extension.
 getLanguage = (source) -> languages[path.extname(source)]
 
-# Compute the destination HTML path for an input source file path.
-# If the source is `lib/example.coffee`,
-# the HTML will be at `docs/example.html`
+# Compute the destination HTML path for an input source file path. If the source
+# is `lib/example.coffee`, the HTML will be at `docs/example.html`
 destination = (filepath) ->
   basename = path.basename filepath, path.extname filepath
   "docs/#{basename}.html"
