@@ -56,7 +56,7 @@
 # up into comment/code sections, highlighting them for the appropriate language,
 # and merging them into an HTML template.
 generate_documentation = (source, callback) ->
-  fs.readFile source, "utf-8", (error, code) ->
+  fs.readFile source, (error, code) ->
     throw error if error
     sections = parse source, code
     highlight source, sections, ->
@@ -135,9 +135,7 @@ highlight = (source, sections, callback) ->
 generate_html = (source, sections) ->
   title = path.basename source
   dest  = destination source
-  html  = docco_template {
-    title: title, sections: sections, sources: sources, path: path, destination: destination
-  }
+  html  = docco_template {title, sections, sources, path, destination}
   console.log "docco: #{source} -> #{dest}"
   fs.writeFile dest, html
 
@@ -153,26 +151,26 @@ showdown = require('./../vendor/showdown').Showdown
 # Languages are stored in JSON format in the file `resources/languages.json`
 # Each item maps the file extension to the name of the Pygments lexer and the
 # symbol that indicates a comment. To add a new language, modify the file.
-languages = JSON.parse fs.readFileSync(__dirname + "/../resources/languages.json").toString()
+languages = JSON.parse fs.readFileSync(__dirname + '/../resources/languages.json').toString()
 
 # Build out the appropriate matchers and delimiters for each language.
 for ext, l of languages
 
   # Does the line begin with a comment?
-  l.comment_matcher = new RegExp('^\\s*' + l.symbol + '\\s?')
+  l.comment_matcher = ///^\s*#{l.symbol}\s?///
 
   # Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\))
   # and interpolations...
-  l.comment_filter = new RegExp('(^#![/]|^\\s*#\\{)')
+  l.comment_filter = /(^#![/]|^\s*#\{)/
 
   # The dividing token we feed into Pygments, to delimit the boundaries between
   # sections.
-  l.divider_text = '\n' + l.symbol + 'DIVIDER\n'
+  l.divider_text = ///\n#{l.symbol}DIVIDER\n///
 
   # The mirror of `divider_text` that we expect Pygments to return. We can split
   # on this to recover the original sections.
   # Note: the class is "c" for Python and "c1" for the other languages
-  l.divider_html = new RegExp('\\n*<span class="c1?">' + l.symbol + 'DIVIDER<\\/span>\\n*')
+  l.divider_html = ///\n*<span class="c1?">#{l.symbol}DIVIDER<\/span>\n*///
 
 # Get the current language we're documenting, based on the extension.
 get_language = (source) -> languages[path.extname(source)]
@@ -180,7 +178,8 @@ get_language = (source) -> languages[path.extname(source)]
 # Compute the destination HTML path for an input source file path. If the source
 # is `lib/example.coffee`, the HTML will be at `docs/example.html`
 destination = (filepath) ->
-  'docs/' + path.basename(filepath, path.extname(filepath)) + '.html'
+  basename = path.basename filepath, path.extname filepath
+  "docs/#{basename}.html"
 
 # Ensure that the destination directory exists.
 ensure_directory = (dir, callback) ->
@@ -222,4 +221,3 @@ if sources.length
     files = sources.slice(0)
     next_file = -> generate_documentation files.shift(), next_file if files.length
     next_file()
-
