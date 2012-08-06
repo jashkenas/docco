@@ -215,7 +215,7 @@ highlight_end   = '</pre></div>'
 
 # Run the script.
 # For each source file passed in as an argument, generate the documentation.
-sources = process.argv.sort()
+sources = process.argv.slice(1).sort()
 if sources.length
   ensure_directory 'docs', ->
     fs.writeFile 'docs/docco.css', docco_styles
