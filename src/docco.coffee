@@ -79,7 +79,7 @@ parse = (source, code) ->
   lines    = code.split '\n'
   sections = []
   language = getLanguage source
-  hasCode = docsText = codeText = ''
+  hasCode  = docsText = codeText = ''
 
   save = (docsText, codeText) ->
     sections.push {docsText, codeText}
@@ -112,17 +112,17 @@ highlight = (source, sections, callback) ->
   ]
   output   = ''
   
-  pygments.stderr.addListener 'data',  (error)  ->
+  pygments.stderr.on 'data',  (error)  ->
     console.error error.toString() if error
     
-  pygments.stdin.addListener 'error',  (error)  ->
-    console.error "Could not use Pygments to highlight the source."
+  pygments.stdin.on 'error',  (error)  ->
+    console.error 'Could not use Pygments to highlight the source.'
     process.exit 1
     
-  pygments.stdout.addListener 'data', (result) ->
+  pygments.stdout.on 'data', (result) ->
     output += result if result
     
-  pygments.addListener 'exit', ->
+  pygments.on 'exit', ->
     output = output.replace(highlightStart, '').replace(highlightEnd, '')
     fragments = output.split language.dividerHtml
     for section, i in sections
@@ -132,7 +132,7 @@ highlight = (source, sections, callback) ->
     
   if pygments.stdin.writable
     text = (section.codeText for section in sections)
-    pygments.stdin.write(text.join(language.dividerText))
+    pygments.stdin.write text.join language.dividerText
     pygments.stdin.end()
   
 # Once all of the code is finished highlighting, we can generate the HTML file
