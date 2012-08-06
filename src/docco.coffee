@@ -84,12 +84,8 @@ parse = (source, code) ->
   save = (docsText, codeText) ->
     sections.push {docsText, codeText}
 
-  isComment = (line) ->
-    line.match(language.commentMatcher) and
-    not line.match(language.commentFilter)
-
   for line in lines
-    if isComment line
+    if line.match(language.commentMatcher) and not line.match(language.commentFilter)
       if hasCode
         save docsText, codeText
         hasCode = docsText = codeText = ''
