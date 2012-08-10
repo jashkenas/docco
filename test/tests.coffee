@@ -77,7 +77,6 @@ test "single and block comment parsing", ->
   comments_path = path.join test_path, "comments"
   options =
     template: "#{comments_path}/comments.jst"
-    blocks  : true  
 
   # Construct a list of languages to test asynchronously.  It's important
   # that these be tested one at a time, to avoid conflicts between multiple
@@ -113,15 +112,12 @@ test "single and block comment parsing", ->
       comments = (c.trim() for c in content.split(',') when c.trim() != '') 
       eq true, comments.length >= 1, 'expect at least the descriptor comment'
 
-      # Parse the first comment (special case), to identify the expected 
-      # comment counts, based on whether we're matching block comments or not.
-      descriptor = comments[0].match(/^Single:([0-9]*) - Block:([0-9]*)$/)
-      expected = parseInt(if l.blocks and options.blocks then descriptor[2] else descriptor[1])    
+      # Parse the first comment (special case), to identify the expected comment count
+      expected = parseInt(comments[0])    
       eq comments.length, expected, [
         ""
         "#{path.basename(language_output)} comments"
         "------------------------"
-        " blocks   : #{options.blocks}"
         " expected : #{expected}"
         " found    : #{comments.length}"
       ].join '\n'

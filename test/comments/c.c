@@ -1,4 +1,4 @@
-// Single:1 - Block:1
+// 1
 #include <stdio.h>
 int main()
 {
