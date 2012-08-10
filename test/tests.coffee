@@ -24,7 +24,7 @@ test_docco_run = (test_name,sources,options=null,callback=null) ->
       # Calculate the number of expected files in the output, and 
       # then the number of files actually found in the output path.
       files       = []
-      files       = files.concat(Docco.resolve_source(src)) for src in sources
+      files       = files.concat(Docco.resolveSource(src)) for src in sources
       expected    = files.length + 1
       found       = fs.readdirSync(dest_path).length
            
@@ -52,7 +52,7 @@ test "documenting Docco", ->
     Docco.document sources,null, ->
       found       = fs.readdirSync(docs_path).length
       files       = []
-      files       = files.concat(Docco.resolve_source(src)) for src in sources
+      files       = files.concat(Docco.resolveSource(src)) for src in sources
       expected    = files.length + 1
       eq found, expected, 'find docco expected output'
 

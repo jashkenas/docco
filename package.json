@@ -15,7 +15,6 @@
     "lib" :       "./lib"
   },
   "dependencies": {
-    "showdown"      : ">=0.0.1",
     "commander"     : ">=0.5.2",
     "coffee-script" : ">=1.0.0"
   },
