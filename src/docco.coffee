@@ -135,15 +135,12 @@ highlight = (source, sections, callback) ->
     pygments.stdin.write text.join language.dividerText
     pygments.stdin.end()
   
-# Once all of the code is finished highlighting, we can generate the HTML file
-# and write out the documentation. Pass the completed sections into the template
-# found in `resources/docco.jst`
+# Once all of the code is finished highlighting, we can generate the HTML file by
+# passing the completed sections into the template, and then writing the file to 
+# the specified output path.
 generateHtml = (source, sections, config) ->
-  # Compute the destination HTML path for an input source file path. If the source
-  # is `lib/example.coffee`, the HTML will be at `docs/example.html`
   destination = (filepath) ->
-    path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html')
-    
+    path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html')   
   title = path.basename source
   dest  = destination source
   html  = config.doccoTemplate {
@@ -260,8 +257,8 @@ run = (args=process.argv) ->
 # 1. Construct config to use by taking `defaults` first, then  merging in `options`
 # 2. Generate the resolved source list, filtering out unknown types.
 # 3. Load the specified template and css files.
-# 4. Ensure the output path is created, write out the CSS style file, 
-# document each source, and invoke the completion callback, if it is specified.
+# 4. Ensure the output path is created, write out the CSS file, 
+# document each source, and invoke the completion callback if it is specified.
 document = (sources,options={},callback=null) ->
   config = {}
   config[key] = defaults[key] for key,value of defaults

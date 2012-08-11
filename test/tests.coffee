@@ -73,7 +73,7 @@ test "custom CSS file", ->
 #### Docco Comment Parser
 
 # Verify we can parse expected comments from each supported language.
-test "single and block comment parsing", ->
+test "single line comment parsing", ->
   comments_path = path.join test_path, "comments"
   options =
     template: "#{comments_path}/comments.jst"
