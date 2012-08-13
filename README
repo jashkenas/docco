@@ -1,39 +1,3 @@
-This fork adds some flexibility and power to Docco, without modifying how 
-it functions.  There is an open pull request on the official Docco project
-that you may comment in support of, if you think these changes are great.
-
-Changes
-
-  * Install CoffeeScript, Showdown.js, and Commander.js via NPM package dependencies.
-  * Add public API so that docco can be require'd and used programatically.
-  * Add options for block comment support, output path, jst template, and css file to use.
-  * Add simple test runner (borrowed from CoffeeScript), and tests for new (and old) functionality.
-  * Add a `README.md` to the `resources` directory, explaining the templates it contains. (https://github.com/justindujardin/docco/tree/master/resources)
-  * Add `pagelet.jst` and `pagelet.css` to the `resources` directory, which output inline HTML for use in an existing DOM page.
-  * Add `cmd.coffee` for development use (to invoke docco.coffee from the command line.)
-  * Update binaries and documentation.
-
-Usage Help
-
-By using commander.js for command line option parsing, docco gets automatically generated usage information:
-
-     
-     $ docco
-     
-       Usage: docco [options] <file_pattern ...>
-     
-       Options:
-     
-         -h, --help             output usage information
-         -V, --version          output the version number
-         -c, --css [file]       use a custom css file
-         -o, --output [path]    use a custom output path
-         -t, --template [file]  use a custom .jst template
-         -b, --blocks           parse block comments where available
-
-
-https://github.com/jashkenas/docco/pull/83
-
 ____                                                      
 /\  _`\                                                    
 \ \ \/\ \        ___         ___         ___         ___   
@@ -47,3 +11,15 @@ Docco is a quick-and-dirty, hundred-line-long, literate-programming-style
 documentation generator. For more information, see:
 
 http://jashkenas.github.com/docco/
+
+$ docco 
+
+ Usage: docco [options] <filePattern ...>
+
+  Options:
+
+    -h, --help             output usage information
+    -V, --version          output the version number
+    -c, --css [file]       use a custom css file
+    -o, --output [path]    use a custom output path
+    -t, --template [file]  use a custom .jst template
