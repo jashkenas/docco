@@ -99,7 +99,7 @@ body .vi { color: #19469D }                     /* Name.Variable.Instance */
 body .il { color: #666666 }                     /* Literal.Number.Integer.Long */
 
 
-/*320px __________________________________________________________________________________________________________ */
+/*320px */
 ul.sections {
   list-style: none;
   padding:0;
@@ -112,8 +112,8 @@ ul.sections > li > span {
 }
 
 /* 
-  Force border-box on inputs so that % widths fit the parent
-  search container without overlap because of margin/padding.
+  Force border-box so that % widths fit the parent
+  container without overlap because of margin/padding.
   
   More Info : http://www.quirksmode.org/css/box.html
 */
@@ -143,7 +143,7 @@ ul.sections > li > span.code {
 
 /*/mediaquery*/
 
-/*1025px __________________________________________________________________________________________________________ */
+/*1025px */
 @media only screen and (min-width: 1025px) {
 
   /*--------------------- Layout and Typography ----------------------------*/
