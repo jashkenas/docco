@@ -1,36 +1,36 @@
 /*--------------------- Layout and Typography ----------------------------*/
 body {
-    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
-    font-size: 15px;
-    line-height: 22px;
-    color: #252519;
-    margin: 0; padding: 0;
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+  font-size: 15px;
+  line-height: 22px;
+  color: #252519;
+  margin: 0; padding: 0;
 }
 
 a {
-    color: #261a3b;
+  color: #261a3b;
 }
 
 a:visited {
-    color: #261a3b;
+  color: #261a3b;
 }
 
 
 h1 {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 hr {
-    border: 0 none;
-    border-top: 1px solid #e5e5ee;
-    height: 1px;
-    margin: 20px 0;
+  border: 0 none;
+  border-top: 1px solid #e5e5ee;
+  height: 1px;
+  margin: 20px 0;
 }
 
 pre, tt, code {
-    font-size: 12px; line-height: 18px;
-    font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
-    margin: 0; padding: 0;
+  font-size: 12px; line-height: 18px;
+  font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
+  margin: 0; padding: 0;
 }
 
 /*---------------------- Syntax Highlighting -----------------------------*/
@@ -112,8 +112,20 @@ ul.sections > li > span {
   display: block;
   width:100%;
 }
+
+/* 
+  Force border-box on inputs so that % widths fit the parent
+  search container without overlap because of margin/padding.
+  
+  More Info : http://www.quirksmode.org/css/box.html
+*/
 ul.sections > li > span {
-    padding:5px 10px 5px 10px;
+  -moz-box-sizing: border-box;    /* firefox */
+  -ms-box-sizing: border-box;     /* ie */
+  -webkit-box-sizing: border-box; /* webkit */
+  -khtml-box-sizing: border-box;  /* konqueror */
+  box-sizing: border-box;         /* css3 */  
+  padding:5px 10px 5px 10px;
 }
 
 
@@ -126,105 +138,103 @@ ul.sections > li > span.code {
   background: #f5f5ff;
   overflow-x:auto;
   border-bottom: 1px dashed #CACACA;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4),0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#container { overflow-x:hidden;}
 #jump_to { display: none; }
 .pilwrap { display: none; }
 
 /*/mediaquery*/
 
-/*992px __________________________________________________________________________________________________________ */
-@media only screen and (min-width: 992px) {
+/*1024px __________________________________________________________________________________________________________ */
+@media only screen and (min-width: 1024px) {
 
   p {
-      margin: 0 0 15px 0;
+    margin: 0 0 15px 0;
   }
 
   h1, h2, h3, h4, h5, h6 {
-      margin: 0px 0 15px 0;
+    margin: 0 0 15px 0;
   }
 
 
   #container {
-      position: relative;
+    position: relative;
   }
 
   #background {
-      position: fixed;
-      top: 0; left: 525px; right: 0; bottom: 0;
-      background: #f5f5ff;
-      border-left: 1px solid #e5e5ee;
-      z-index: -1;
+    position: fixed;
+    top: 0; left: 525px; right: 0; bottom: 0;
+    background: #f5f5ff;
+    border-left: 1px solid #e5e5ee;
+    z-index: -1;
   }
 
 
   /*---------------------- Jump Page -----------------------------*/
 
   #jump_to, #jump_page {
-      background: white;
-      -webkit-box-shadow: 0 0 25px #777; -moz-box-shadow: 0 0 25px #777;
-      -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px;
-      font: 10px Arial;
-      text-transform: uppercase;
-      cursor: pointer;
-      text-align: right;
+    background: white;
+    -webkit-box-shadow: 0 0 25px #777; -moz-box-shadow: 0 0 25px #777;
+    -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px;
+    font: 10px Arial;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: right;
   }
 
   #jump_to, #jump_wrapper {
-      position: fixed;
-      right: 0; top: 0;
-      padding: 5px 10px;
+    position: fixed;
+    right: 0; top: 0;
+    padding: 5px 10px;
   }
 
   #jump_wrapper {
-      padding: 0;
-      display: none;
+    padding: 0;
+    display: none;
   }
 
   #jump_to:hover #jump_wrapper {
-      display: block;
+    display: block;
   }
 
   #jump_page {
-      padding: 5px 0 3px;
-      margin: 0 0 25px 25px;
+    padding: 5px 0 3px;
+    margin: 0 0 25px 25px;
   }
 
   #jump_page .source {
-      display: block;
-      padding: 5px 10px;
-      text-decoration: none;
-      border-top: 1px solid #eee;
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-top: 1px solid #eee;
   }
 
   #jump_page .source:hover {
-      background: #f5f5ff;
+    background: #f5f5ff;
   }
 
   #jump_page .source:first-child {
   }
 
   ul.sections > li {
-      overflow: hidden;
-      white-space: nowrap;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
 
   ul.sections > li > span {
-      display: inline-block;
+    display: inline-block;
   }
 
   ul.sections > li > span.docs {
-      max-width: 450px;
-      min-width: 450px;
-      min-height: 5px;
-      padding: 10px 25px 1px 50px;
-      overflow-x: hidden;
-      white-space: normal;
-      vertical-align: top;
-      text-align: left;
+    max-width: 525px;
+    min-width: 525px;
+    min-height: 5px;
+    padding: 10px 25px 1px 50px;
+    overflow-x: hidden;
+    white-space: normal;
+    vertical-align: top;
+    text-align: left;
   }
 
   ul.sections > li > span.code {
@@ -233,40 +243,40 @@ ul.sections > li > span.code {
   }
 
   ul.sections > li > span.docs pre {
-      margin: 15px 0 15px;
-      padding-left: 15px;
+    margin: 15px 0 15px;
+    padding-left: 15px;
   }
 
   ul.sections > li > span.docs p tt, .docs p code {
-      background: #f8f8ff;
-      border: 1px solid #dedede;
-      font-size: 12px;
-      padding: 0 0.2em;
+    background: #f8f8ff;
+    border: 1px solid #dedede;
+    font-size: 12px;
+    padding: 0 0.2em;
   }
 
   .pilwrap {
-      position: relative;
+    position: relative;
   }
 
   .pilcrow {
-      font: 12px Arial;
-      text-decoration: none;
-      color: #454545;
-      position: absolute;
-      top: 3px; left: -20px;
-      padding: 1px 2px;
-      opacity: 0;
-      -webkit-transition: opacity 0.2s linear;
+    font: 12px Arial;
+    text-decoration: none;
+    color: #454545;
+    position: absolute;
+    top: 3px; left: -20px;
+    padding: 1px 2px;
+    opacity: 0;
+    -webkit-transition: opacity 0.2s linear;
   }
 
   ul.sections > li > span.docs:hover .pilcrow {
-      opacity: 1;
+    opacity: 1;
   }
 
   ul.sections > li > span.code {
-      padding: 14px 15px 16px 25px;
-      vertical-align: top;
-      background: #f5f5ff;
+    padding: 14px 15px 16px 25px;
+    vertical-align: top;
+    background: #f5f5ff;
   }
 
 }
