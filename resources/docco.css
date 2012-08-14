@@ -100,9 +100,64 @@ body .il { color: #666666 }                     /* Literal.Number.Integer.Long *
 
 
 /*320px __________________________________________________________________________________________________________ */
+ul.sections {
+  list-style: none;
+  padding:0;
+  margin:0;
+}
 
+ul.sections > li > span {
+  display: block;
+  width:100%;
+}
+
+/* 
+  Force border-box on inputs so that % widths fit the parent
+  search container without overlap because of margin/padding.
+  
+  More Info : http://www.quirksmode.org/css/box.html
+*/
+ul.sections > li > span {
+  -moz-box-sizing: border-box;    /* firefox */
+  -ms-box-sizing: border-box;     /* ie */
+  -webkit-box-sizing: border-box; /* webkit */
+  -khtml-box-sizing: border-box;  /* konqueror */
+  box-sizing: border-box;         /* css3 */  
+  padding:5px 10px 5px 10px;
+}
+
+
+ul.sections > li > span.docs {
+  background: #fff;
+  width:98%;
+}
+
+ul.sections > li > span.code {
+  background: #f5f5ff;
+  overflow-x:auto;
+  border-bottom: 1px inset #CACACA;
+}
+
+.pilwrap { display: none; }
+#jump_to { display: none; }
+
+/*/mediaquery*/
+
+/*1025px __________________________________________________________________________________________________________ */
+@media only screen and (min-width: 1025px) {
+
+  /*--------------------- Layout and Typography ----------------------------*/
+  p {
+    margin: 0 0 15px 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 15px 0;
+  }
 
   /*---------------------- Jump Page -----------------------------*/
+
+  #jump_to { display: block; }
 
   #jump_to, #jump_page {
     background: white;
@@ -147,62 +202,6 @@ body .il { color: #666666 }                     /* Literal.Number.Integer.Long *
 
   #jump_page .source:first-child {
   }
-
-
-
-ul.sections {
-  list-style: none;
-  padding:0;
-  margin:0;
-}
-
-ul.sections > li > span {
-  display: block;
-  width:100%;
-}
-
-/* 
-  Force border-box on inputs so that % widths fit the parent
-  search container without overlap because of margin/padding.
-  
-  More Info : http://www.quirksmode.org/css/box.html
-*/
-ul.sections > li > span {
-  -moz-box-sizing: border-box;    /* firefox */
-  -ms-box-sizing: border-box;     /* ie */
-  -webkit-box-sizing: border-box; /* webkit */
-  -khtml-box-sizing: border-box;  /* konqueror */
-  box-sizing: border-box;         /* css3 */  
-  padding:5px 10px 5px 10px;
-}
-
-
-ul.sections > li > span.docs {
-  background: #fff;
-  width:98%;
-}
-
-ul.sections > li > span.code {
-  background: #f5f5ff;
-  overflow-x:auto;
-  border-bottom: 1px dashed #CACACA;
-}
-
-.pilwrap { display: none; }
-
-/*/mediaquery*/
-
-/*1024px __________________________________________________________________________________________________________ */
-@media only screen and (min-width: 1024px) {
-
-  p {
-    margin: 0 0 15px 0;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    margin: 0 0 15px 0;
-  }
-
 
   #container {
     position: relative;
