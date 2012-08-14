@@ -82,6 +82,7 @@ parse = (source, code) ->
   hasCode  = docsText = codeText = ''
 
   save = (docsText, codeText) ->
+    codeText = '' if codeText.replace(/\s/gm, '') == ''
     sections.push {docsText, codeText}
 
   for line in lines
