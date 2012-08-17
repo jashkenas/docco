@@ -20,15 +20,16 @@ a:visited {
 }
 
 p {
-  margin: 0 0 15px 0;
+  margin: 5px 0 5px 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  margin: 0 0 15px 0;
+  margin: 15px 0 0 0;
 }
 
 h1 {
   margin-top: 40px;
+  margin-bottom: 15px;
 }
 
 hr {
@@ -66,10 +67,6 @@ ul.sections > li > span {
 
 /*---------------------- Low resolutions (> 320px) ---------------------*/
 @media only screen and (min-width: 320px) {
-  p {
-    margin: 5px 0 5px 0;
-  }
-
   #jump_to { display: none; }
   .pilwrap { display: none; }
 
@@ -99,6 +96,12 @@ ul.sections > li > span {
   p {
     margin: 0 0 15px 0;
   }
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 15px 0;
+  }
+  h1 {
+    margin-top: 40px;
+  }  
 
   #background {
     position: absolute;
