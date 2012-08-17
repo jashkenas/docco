@@ -8,8 +8,8 @@
   <link rel="stylesheet" media="all" href="<%= css %>" />
 </head>
 <body>
-  <div id="background"></div>
   <div id="container">
+    <div id="background"></div>
     <% if (sources.length > 1) { %>
     <div id="jump_to">
       Jump To &hellip;
@@ -25,8 +25,6 @@
       </div>
     </div>
     <% } %>
-
-    <!-- Docco [section list] -->
     <ul class="sections">  
         <li id="title">
             <span class="docs">
@@ -35,14 +33,14 @@
         </li>
         <% for (var i=0, l=sections.length; i<l; i++) { %>
         <% var section = sections[i]; %>   
-        <li id="section-<%= i %>">
+        <li id="section-<%= i + 1 %>">
             <span class="docs">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-<%= i %>">&#182;</a>
+                <a class="pilcrow" href="#section-<%= i + 1 %>">&#182;</a>
               </div>            
               <%= section.docsHtml %>
             </span>
-            <% if (section.codeText.length > 0) { %>
+            <% if (section.codeText != '') { %>
             <span class="code"><%= section.codeHtml %></span>
             <% } %>
         </li>

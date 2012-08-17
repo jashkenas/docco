@@ -1,11 +1,15 @@
 /*--------------------- Layout and Typography ----------------------------*/
+html { height: 100%; }
 body {
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
   font-size: 15px;
   line-height: 22px;
   color: #252519;
   margin: 0; padding: 0;
+  background-color: #F5F5FF;
+  height:100%;
 }
+#container { min-height: 100%; }
 
 a {
   color: #261a3b;
@@ -15,6 +19,13 @@ a:visited {
   color: #261a3b;
 }
 
+p {
+  margin: 0 0 15px 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 15px 0;
+}
 
 h1 {
   margin-top: 40px;
@@ -32,6 +43,182 @@ pre, tt, code {
   font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
   margin: 0; padding: 0;
 }
+
+ul.sections {
+  list-style: none;
+  padding:0;
+  margin:0;
+}
+
+/* 
+  Force border-box so that % widths fit the parent
+  container without overlap because of margin/padding.
+  
+  More Info : http://www.quirksmode.org/css/box.html
+*/
+ul.sections > li > span {
+  -moz-box-sizing: border-box;    /* firefox */
+  -ms-box-sizing: border-box;     /* ie */
+  -webkit-box-sizing: border-box; /* webkit */
+  -khtml-box-sizing: border-box;  /* konqueror */
+  box-sizing: border-box;         /* css3 */
+}
+
+/*---------------------- Low resolutions (> 320px) ---------------------*/
+@media only screen and (min-width: 320px) {
+  p {
+    margin: 5px 0 5px 0;
+  }
+
+  #jump_to { display: none; }
+  .pilwrap { display: none; }
+
+  ul.sections > li > span {
+    display: block;
+    padding:5px 10px 5px 10px;
+  }
+
+  ul.sections > li > span.docs {
+    background: #fff;
+  }
+
+  ul.sections > li > span.code {
+    background: #f5f5ff;
+    overflow-x:auto;
+    border-bottom: 1px inset #CACACA;
+  }
+
+}
+
+/*---------------------- High resolutions (> 1025px) ---------------------*/
+@media only screen and (min-width: 1025px) {
+  #container {
+    position: relative;
+  }
+
+  p {
+    margin: 0 0 15px 0;
+  }
+
+  #background {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 525px;
+    background: #ffffff;
+    border-right: 1px solid #e5e5ee;
+    z-index: -1;
+  }
+
+  ul.sections > li {
+    white-space: nowrap;
+  }
+
+  ul.sections > li > span {
+    display: inline-block;
+  }
+
+  ul.sections > li > span.docs {
+    max-width: 525px;
+    min-width: 525px;
+    min-height: 5px;
+    padding: 10px 25px 1px 50px;
+    overflow-x: hidden;
+    white-space: normal;
+    vertical-align: top;
+    text-align: left;
+  }
+
+  ul.sections > li > span.code {
+    border: none;
+  }
+
+  ul.sections > li > span.docs pre {
+    margin: 15px 0 15px;
+    padding-left: 15px;
+  }
+
+  ul.sections > li > span.docs p tt, .docs p code {
+    background: #f8f8ff;
+    border: 1px solid #dedede;
+    font-size: 12px;
+    padding: 0 0.2em;
+  }
+
+  .pilwrap {
+    position: relative;
+    display: inline;
+  }
+
+  .pilcrow {
+    font: 12px Arial;
+    text-decoration: none;
+    color: #454545;
+    position: absolute;
+    top: 3px; left: -20px;
+    padding: 1px 2px;
+    opacity: 0;
+    -webkit-transition: opacity 0.2s linear;
+  }
+
+  ul.sections > li > span.docs:hover .pilcrow {
+    opacity: 1;
+  }
+
+  ul.sections > li > span.code {
+    padding: 14px 15px 16px 25px;
+    vertical-align: top;
+    background: #f5f5ff;
+  }
+
+  /*---------------------- Jump Page -----------------------------*/
+  #jump_to { display: block; }
+  #jump_to, #jump_page {
+    background: white;
+    -webkit-box-shadow: 0 0 25px #777; -moz-box-shadow: 0 0 25px #777;
+    -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px;
+    font: 10px Arial;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: right;
+  }
+
+  #jump_to, #jump_wrapper {
+    position: fixed;
+    right: 0; top: 0;
+    padding: 5px 10px;
+  }
+
+  #jump_wrapper {
+    padding: 0;
+    display: none;
+  }
+
+  #jump_to:hover #jump_wrapper {
+    display: block;
+  }
+
+  #jump_page {
+    padding: 5px 0 3px;
+    margin: 0 0 25px 25px;
+  }
+
+  #jump_page .source {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-top: 1px solid #eee;
+  }
+
+  #jump_page .source:hover {
+    background: #f5f5ff;
+  }
+
+  #jump_page .source:first-child {
+  }
+
+}
+
+/*/mediaquery*/
 
 /*---------------------- Syntax Highlighting -----------------------------*/
 td.linenos { background-color: #f0f0f0; padding-right: 10px; }
@@ -97,189 +284,3 @@ body .vc { color: #19469D }                     /* Name.Variable.Class */
 body .vg { color: #19469D }                     /* Name.Variable.Global */
 body .vi { color: #19469D }                     /* Name.Variable.Instance */
 body .il { color: #666666 }                     /* Literal.Number.Integer.Long */
-
-
-/*320px */
-ul.sections {
-  list-style: none;
-  padding:0;
-  margin:0;
-}
-
-ul.sections > li > span {
-  display: block;
-  width:100%;
-}
-
-/* 
-  Force border-box so that % widths fit the parent
-  container without overlap because of margin/padding.
-  
-  More Info : http://www.quirksmode.org/css/box.html
-*/
-ul.sections > li > span {
-  -moz-box-sizing: border-box;    /* firefox */
-  -ms-box-sizing: border-box;     /* ie */
-  -webkit-box-sizing: border-box; /* webkit */
-  -khtml-box-sizing: border-box;  /* konqueror */
-  box-sizing: border-box;         /* css3 */  
-  padding:5px 10px 5px 10px;
-}
-
-
-ul.sections > li > span.docs {
-  background: #fff;
-  width:98%;
-}
-
-ul.sections > li > span.code {
-  background: #f5f5ff;
-  overflow-x:auto;
-  border-bottom: 1px inset #CACACA;
-}
-
-.pilwrap { display: none; }
-#jump_to { display: none; }
-
-/*/mediaquery*/
-
-/*1025px */
-@media only screen and (min-width: 1025px) {
-
-  /*--------------------- Layout and Typography ----------------------------*/
-  p {
-    margin: 0 0 15px 0;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    margin: 0 0 15px 0;
-  }
-
-  /*---------------------- Jump Page -----------------------------*/
-
-  #jump_to { display: block; }
-
-  #jump_to, #jump_page {
-    background: white;
-    -webkit-box-shadow: 0 0 25px #777; -moz-box-shadow: 0 0 25px #777;
-    -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px;
-    font: 10px Arial;
-    text-transform: uppercase;
-    cursor: pointer;
-    text-align: right;
-  }
-
-  #jump_to, #jump_wrapper {
-    position: fixed;
-    right: 0; top: 0;
-    padding: 5px 10px;
-  }
-
-  #jump_wrapper {
-    padding: 0;
-    display: none;
-  }
-
-  #jump_to:hover #jump_wrapper {
-    display: block;
-  }
-
-  #jump_page {
-    padding: 5px 0 3px;
-    margin: 0 0 25px 25px;
-  }
-
-  #jump_page .source {
-    display: block;
-    padding: 5px 10px;
-    text-decoration: none;
-    border-top: 1px solid #eee;
-  }
-
-  #jump_page .source:hover {
-    background: #f5f5ff;
-  }
-
-  #jump_page .source:first-child {
-  }
-
-  #container {
-    position: relative;
-  }
-
-  #background {
-    position: fixed;
-    top: 0; left: 525px; right: 0; bottom: 0;
-    background: #f5f5ff;
-    border-left: 1px solid #e5e5ee;
-    z-index: -1;
-  }
-
-  ul.sections > li {
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
-
-  ul.sections > li > span {
-    display: inline-block;
-  }
-
-  ul.sections > li > span.docs {
-    max-width: 525px;
-    min-width: 525px;
-    min-height: 5px;
-    padding: 10px 25px 1px 50px;
-    overflow-x: hidden;
-    white-space: normal;
-    vertical-align: top;
-    text-align: left;
-  }
-
-  ul.sections > li > span.code {
-    overflow: hidden;
-    border:none;
-  }
-
-  ul.sections > li > span.docs pre {
-    margin: 15px 0 15px;
-    padding-left: 15px;
-  }
-
-  ul.sections > li > span.docs p tt, .docs p code {
-    background: #f8f8ff;
-    border: 1px solid #dedede;
-    font-size: 12px;
-    padding: 0 0.2em;
-  }
-
-  .pilwrap {
-    position: relative;
-    display: inline;
-  }
-
-  .pilcrow {
-    font: 12px Arial;
-    text-decoration: none;
-    color: #454545;
-    position: absolute;
-    top: 3px; left: -20px;
-    padding: 1px 2px;
-    opacity: 0;
-    -webkit-transition: opacity 0.2s linear;
-  }
-
-  ul.sections > li > span.docs:hover .pilcrow {
-    opacity: 1;
-  }
-
-  ul.sections > li > span.code {
-    padding: 14px 15px 16px 25px;
-    vertical-align: top;
-    background: #f5f5ff;
-  }
-
-}
-
-/*/mediaquery*/
-
