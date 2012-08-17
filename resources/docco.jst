@@ -40,7 +40,7 @@
               </div>            
               <%= section.docsHtml %>
             </span>
-            <% if (section.codeText != '') { %>
+            <% if (section.codeText.replace(/\s/gm, '') != '') { %>
             <span class="code"><%= section.codeHtml %></span>
             <% } %>
         </li>
