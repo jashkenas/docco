@@ -11,9 +11,9 @@
   <div id="container">
     <div id="background"></div>
     <% if (sources.length > 1) { %>
-      <div id="jump_to">
-        Jump To &hellip;
-        <div id="jump_wrapper">
+      <ul id="jump_to">
+        <li><a href="#">Jump To &hellip;</a>
+          <div id="jump_wrapper">
           <div id="jump_page">
             <% for (var i=0, l=sources.length; i<l; i++) { %>
               <% var source = sources[i]; %>
@@ -22,8 +22,8 @@
               </a>
             <% } %>
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
     <% } %>
     <ul class="sections">  
         <li id="title">

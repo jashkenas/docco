@@ -65,9 +65,60 @@ ul.sections > li > span {
   box-sizing: border-box;         /* css3 */
 }
 
+
+/*---------------------- Jump Page -----------------------------*/
+#jump_to, #jump_page {
+  background: white;
+  -webkit-box-shadow: 0 0 25px #777; -moz-box-shadow: 0 0 25px #777;
+  -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px;
+  font: 10px Arial;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: right;
+  list-style: none;
+}
+
+#jump_to a {
+  text-decoration: none;
+}
+
+#jump_to, #jump_wrapper {
+  position: fixed;
+  right: 0; top: 0;
+  padding: 5px 10px;
+  margin:0;
+}
+
+#jump_wrapper {
+  padding: 0;
+  display: none;
+}
+
+#jump_to:hover #jump_wrapper {
+  display: block;
+}
+
+#jump_page {
+  padding: 5px 0 3px;
+  margin: 0 0 25px 25px;
+}
+
+#jump_page .source {
+  display: block;
+  padding: 5px 10px;
+  text-decoration: none;
+  border-top: 1px solid #eee;
+}
+
+#jump_page .source:hover {
+  background: #f5f5ff;
+}
+
+#jump_page .source:first-child {
+}
+
 /*---------------------- Low resolutions (> 320px) ---------------------*/
 @media only screen and (min-width: 320px) {
-  #jump_to { display: none; }
   .pilwrap { display: none; }
 
   ul.sections > li > span {
@@ -172,53 +223,6 @@ ul.sections > li > span {
     vertical-align: top;
     background: #f5f5ff;
   }
-
-  /*---------------------- Jump Page -----------------------------*/
-  #jump_to { display: block; }
-  #jump_to, #jump_page {
-    background: white;
-    -webkit-box-shadow: 0 0 25px #777; -moz-box-shadow: 0 0 25px #777;
-    -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px;
-    font: 10px Arial;
-    text-transform: uppercase;
-    cursor: pointer;
-    text-align: right;
-  }
-
-  #jump_to, #jump_wrapper {
-    position: fixed;
-    right: 0; top: 0;
-    padding: 5px 10px;
-  }
-
-  #jump_wrapper {
-    padding: 0;
-    display: none;
-  }
-
-  #jump_to:hover #jump_wrapper {
-    display: block;
-  }
-
-  #jump_page {
-    padding: 5px 0 3px;
-    margin: 0 0 25px 25px;
-  }
-
-  #jump_page .source {
-    display: block;
-    padding: 5px 10px;
-    text-decoration: none;
-    border-top: 1px solid #eee;
-  }
-
-  #jump_page .source:hover {
-    background: #f5f5ff;
-  }
-
-  #jump_page .source:first-child {
-  }
-
 }
 
 /*/mediaquery*/
