@@ -72,22 +72,22 @@ test "custom CSS file", ->
 
 # Issue 100: Verify that URL references work across doc and code sections.
 test "url references", ->
-  sourceFile = "#{testPath}/data/_urlref.coffee"
-  fs.writeFileSync sourceFile, """
-  # Look at this link to [Google][]! 
-  console.log 'This must be Thursday.'
-  # And this link to [Google][] as well.
-  console.log 'I never could get the hang of Thursdays.'
-  # [google]: http://www.google.com
-  """
-  outPath = "#{testPath}/data/_urlreferences"
-  outFile = "#{outPath}/_urlref.html"
-  exec "rm -rf #{outPath}", ->
-    Docco.document [sourceFile], output: outPath, ->
-      contents = fs.readFileSync(outFile).toString()
-      count = contents.match ///<a\shref="http://www.google.com">Google</a>///g
-      eq count.length, 2, "find expected (2) resolved url references"
-
+  exec "mkdir -p #{dataPath}", ->
+    sourceFile = "#{testPath}/data/_urlref.coffee"
+    fs.writeFileSync sourceFile, """
+    # Look at this link to [Google][]! 
+    console.log 'This must be Thursday.'
+    # And this link to [Google][] as well.
+    console.log 'I never could get the hang of Thursdays.'
+    # [google]: http://www.google.com
+    """
+    outPath = "#{testPath}/data/_urlreferences"
+    outFile = "#{outPath}/_urlref.html"
+    exec "rm -rf #{outPath}", ->
+      Docco.document [sourceFile], output: outPath, ->
+        contents = fs.readFileSync(outFile).toString()
+        count = contents.match ///<a\shref="http://www.google.com">Google</a>///g
+        eq count.length, 2, "find expected (2) resolved url references"
 
 #### Docco Comment Parser
 
