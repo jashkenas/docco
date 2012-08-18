@@ -100,8 +100,8 @@ parse = (source, code) ->
 # and runs the text of its corresponding comment through **Markdown**, using
 # [Showdown.js](http://attacklab.net/showdown/).
 #
-# We process the entire file in a single call to Pygments by inserting little
-# marker comments between each section and then splitting the result string
+# We process the entire file in single calls to Pygments and Showdown by inserting 
+# little marker comments between each section and then splitting the result string
 # wherever our markers occur.
 highlight = (source, sections, callback) ->
   language = getLanguage source
@@ -110,29 +110,34 @@ highlight = (source, sections, callback) ->
     '-f', 'html',
     '-O', 'encoding=utf-8,tabsize=2'
   ]
-  output   = ''
+  code = (section.codeText for section in sections).join language.codeSplitText
+  codeOutput = ''
+
+  docs = (section.docsText for section in sections).join language.docsSplitText
+  docsOutput = showdown.makeHtml(docs)
   
   pygments.stderr.on 'data',  (error)  ->
     console.error error.toString() if error
-    
+   
   pygments.stdin.on 'error',  (error)  ->
     console.error 'Could not use Pygments to highlight the source.'
     process.exit 1
     
   pygments.stdout.on 'data', (result) ->
-    output += result if result
+    codeOutput += result if result
     
   pygments.on 'exit', ->
-    output = output.replace(highlightStart, '').replace(highlightEnd, '')
-    fragments = output.split language.dividerHtml
+    codeOutput = codeOutput.replace(highlightStart, '').replace(highlightEnd, '')
+    codeFragments = codeOutput.split language.codeSplitHtml
+    docsFragments = docsOutput.split language.docsSplitHtml
+    
     for section, i in sections
-      section.codeHtml = highlightStart + fragments[i] + highlightEnd
-      section.docsHtml = showdown.makeHtml section.docsText
+      section.codeHtml = highlightStart + codeFragments[i] + highlightEnd
+      section.docsHtml = docsFragments[i]
     callback()
     
   if pygments.stdin.writable
-    text = (section.codeText for section in sections)
-    pygments.stdin.write text.join language.dividerText
+    pygments.stdin.write code
     pygments.stdin.end()
   
 # Once all of the code is finished highlighting, we can generate the HTML file by
@@ -186,12 +191,20 @@ for ext, l of languages
 
   # The dividing token we feed into Pygments, to delimit the boundaries between
   # sections.
-  l.dividerText = "\n#{l.symbol}DIVIDER\n"
+  l.codeSplitText = "\n#{l.symbol}DIVIDER\n"
 
-  # The mirror of `dividerText` that we expect Pygments to return. We can split
+  # The mirror of `codeSplitText` that we expect Pygments to return. We can split
   # on this to recover the original sections.
   # Note: the class is "c" for Python and "c1" for the other languages
-  l.dividerHtml = ///\n*<span\sclass="c1?">#{l.symbol}DIVIDER<\/span>\n*///
+  l.codeSplitHtml = ///\n*<span\sclass="c1?">#{l.symbol}DIVIDER<\/span>\n*///
+  
+  # The dividing token we feed into Showdown, to delimit the boundaries between
+  # sections.
+  l.docsSplitText = "\n##{l.name}DOCDIVIDER\n"
+
+  # The mirror of `docsSplitText` that we expect Showdown to return. We can split
+  # on this to recover the original sections.
+  l.docsSplitHtml = ///<h1>#{l.name}DOCDIVIDER</h1>///
 
 # Get the current language we're documenting, based on the extension.
 getLanguage = (source) -> languages[path.extname(source)]
