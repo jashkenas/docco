@@ -82,5 +82,5 @@ test "single line comment parsing", ->
       testNextLanguage keys, callback
       
   # *Kick off the first language test*
-    testNextLanguage languageKeys.slice()
-    
+  testNextLanguage languageKeys.slice()
+     
