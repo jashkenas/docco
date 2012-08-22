@@ -191,7 +191,7 @@ Note: the class is "c" for Python and "c1" for the other languages</p>          
 <li>Load the specified template and css files.</li>
 <li>Ensure the output path is created, write out the CSS file, 
 document each source, and invoke the completion callback if it is specified.</li>
-</ol>             </span>                          <span class="code"><div class="highlight"><pre><span class="nb">document</span> <span class="o">=</span> <span class="nf">(sources,options={},callback=null) -&gt;</span>
+</ol>             </span>                          <span class="code"><div class="highlight"><pre><span class="nb">document</span> <span class="o">=</span> <span class="nf">(sources, options = {}, callback = null) -&gt;</span>
   <span class="nv">config = </span><span class="p">{}</span>
   <span class="nx">config</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">defaults</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span><span class="nx">value</span> <span class="k">of</span> <span class="nx">defaults</span>
   <span class="nx">config</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span><span class="nx">value</span> <span class="k">of</span> <span class="nx">options</span> <span class="k">if</span> <span class="nx">key</span> <span class="k">of</span> <span class="nx">defaults</span>
