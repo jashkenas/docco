@@ -259,7 +259,7 @@ run = (args=process.argv) ->
 # 3. Load the specified template and css files.
 # 4. Ensure the output path is created, write out the CSS file, 
 # document each source, and invoke the completion callback if it is specified.
-document = (sources,options={},callback=null) ->
+document = (sources, options = {}, callback = null) ->
   config = {}
   config[key] = defaults[key] for key,value of defaults
   config[key] = value for key,value of options if key of defaults
