@@ -15,8 +15,7 @@
     "lib" :       "./lib"
   },
   "dependencies": {
-    "commander"     : ">=0.5.2",
-    "coffee-script" : ">=1.0.0"
+    "commander"     : ">=0.5.2"
   },
   "main" :        "./lib/docco",
   "bin": {
