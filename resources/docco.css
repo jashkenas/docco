@@ -138,8 +138,8 @@ ul.sections > li > span {
 
 }
 
-/*---------------------- High resolutions (> 1025px) ---------------------*/
-@media only screen and (min-width: 1025px) {
+/*---------------------- High resolutions (> 641px) ---------------------*/
+@media only screen and (min-width: 641px) {
   #container {
     position: relative;
   }
@@ -157,7 +157,7 @@ ul.sections > li > span {
   #background {
     position: absolute;
     top: 0; bottom: 0;
-    width: 525px;
+    width: 350px;
     background: #ffffff;
     border-right: 1px solid #e5e5ee;
     z-index: -1;
@@ -172,23 +172,25 @@ ul.sections > li > span {
   }
 
   ul.sections > li > span.docs {
-    max-width: 525px;
-    min-width: 525px;
+    max-width: 350px;
+    min-width: 350px;
     min-height: 5px;
-    padding: 10px 25px 1px 50px;
+    padding: 13px;
     overflow-x: hidden;
     white-space: normal;
     vertical-align: top;
     text-align: left;
   }
-
-  ul.sections > li > span.code {
-    border: none;
-  }
-
   ul.sections > li > span.docs pre {
     margin: 15px 0 15px;
     padding-left: 15px;
+  }
+
+  ul.sections > li > span.code {
+    padding: 13px;
+    vertical-align: top;
+    background: #f5f5ff;
+    border: none;
   }
 
   ul.sections > li > span.docs p tt, .docs p code {
@@ -217,15 +219,23 @@ ul.sections > li > span {
   ul.sections > li > span.docs:hover .pilcrow {
     opacity: 1;
   }
-
-  ul.sections > li > span.code {
-    padding: 14px 15px 16px 25px;
-    vertical-align: top;
-    background: #f5f5ff;
-  }
 }
 
-/*/mediaquery*/
+/*---------------------- High resolutions (> 1025px) ---------------------*/
+@media only screen and (min-width: 1025px) {
+
+  #background {
+    width: 525px;
+  }
+  ul.sections > li > span.docs {
+    max-width: 525px;
+    min-width: 525px;
+    padding: 10px 25px 1px 50px;
+  }
+  ul.sections > li > span.code {
+    padding: 14px 15px 16px 25px;
+  }
+}
 
 /*---------------------- Syntax Highlighting -----------------------------*/
 td.linenos { background-color: #f0f0f0; padding-right: 10px; }
