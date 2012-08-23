@@ -110,11 +110,9 @@ highlight = (source, sections, callback) ->
     '-f', 'html',
     '-O', 'encoding=utf-8,tabsize=2'
   ]
+  output = ''
   code = (section.codeText for section in sections).join language.codeSplitText
-  codeOutput = ''
-
   docs = (section.docsText for section in sections).join language.docsSplitText
-  docsOutput = showdown.makeHtml(docs)
   
   pygments.stderr.on 'data',  (error)  ->
     console.error error.toString() if error
@@ -124,12 +122,12 @@ highlight = (source, sections, callback) ->
     process.exit 1
     
   pygments.stdout.on 'data', (result) ->
-    codeOutput += result if result
+    output += result if result
     
   pygments.on 'exit', ->
-    codeOutput = codeOutput.replace(highlightStart, '').replace(highlightEnd, '')
-    codeFragments = codeOutput.split language.codeSplitHtml
-    docsFragments = docsOutput.split language.docsSplitHtml
+    output = output.replace(highlightStart, '').replace(highlightEnd, '')
+    codeFragments = output.split language.codeSplitHtml
+    docsFragments = showdown.makeHtml(docs).split language.docsSplitHtml
     
     for section, i in sections
       section.codeHtml = highlightStart + codeFragments[i] + highlightEnd
@@ -197,7 +195,7 @@ for ext, l of languages
   # on this to recover the original sections.
   # Note: the class is "c" for Python and "c1" for the other languages
   l.codeSplitHtml = ///\n*<span\sclass="c1?">#{l.symbol}DIVIDER<\/span>\n*///
-  
+
   # The dividing token we feed into Showdown, to delimit the boundaries between
   # sections.
   l.docsSplitText = "\n##{l.name}DOCDIVIDER\n"
