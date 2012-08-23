@@ -134,8 +134,7 @@ ul.sections > li > span {
     overflow-x:auto;
     -webkit-box-shadow: inset 0 0 5px #e5e5ee;
     box-shadow: inset 0 0 5px #e5e5ee;
-    border: 1px solid #e5e5ee;
-    border-bottom: none;
+    border: 1px solid #dedede;
     margin:5px 10px 5px 10px;
     padding-bottom: 5px;
   }
