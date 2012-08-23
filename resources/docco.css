@@ -2,8 +2,8 @@
 html { height: 100%; }
 body {
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
-  font-size: 15px;
-  line-height: 22px;
+  font-size: 14px;
+  line-height: 16px;
   color: #252519;
   margin: 0; padding: 0;
   height:100%;
@@ -19,7 +19,7 @@ a:visited {
 }
 
 p {
-  margin: 5px 0 5px 0;
+  margin: 10px 0 10px 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -39,7 +39,7 @@ hr {
 }
 
 pre, tt, code {
-  font-size: 12px; line-height: 18px;
+  font-size: 12px; line-height: 16px;
   font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
   margin: 0; padding: 0;
 }
@@ -129,6 +129,10 @@ ul.sections > li > span {
     background: #fff;
   }
 
+  ul.sections > li > span.docs ul, ul.sections > li > span.docs ol {
+    padding-left: 30px;
+  }
+
   ul.sections > li > span.code {
     background: #f5f5ff;
     overflow-x:auto;
@@ -140,11 +144,16 @@ ul.sections > li > span {
   }
 
   ul.sections > li > span.docs pre {
-    margin: 15px 0 15px;
+    margin: 7px 0 7px;
     padding-left: 15px;
   }
 
-
+  ul.sections > li > span.docs p tt, .docs p code {
+    background: #f8f8ff;
+    border: 1px solid #dedede;
+    font-size: 12px;
+    padding: 0 0.2em;
+  }
 }
 
 /*----------------------  (> 481px) ---------------------*/
@@ -154,6 +163,8 @@ ul.sections > li > span {
   }
   body { 
     background-color: #F5F5FF;
+    font-size: 15px;
+    line-height: 22px;    
   }
   p {
     margin: 0 0 15px 0;
@@ -164,6 +175,10 @@ ul.sections > li > span {
   h1 {
     margin-top: 40px;
   }  
+  pre, tt, code {
+    line-height: 18px;
+  }
+
 
   #background {
     position: absolute;
@@ -172,6 +187,10 @@ ul.sections > li > span {
     background: #ffffff;
     border-right: 1px solid #e5e5ee;
     z-index: -1;
+  }
+
+  ul.sections > li > span.docs ul, ul.sections > li > span.docs ol {
+    padding-left: 40px;
   }
 
   ul.sections > li {
@@ -204,13 +223,6 @@ ul.sections > li > span {
     border: none;
     -webkit-box-shadow: none;
     box-shadow: none;
-  }
-
-  ul.sections > li > span.docs p tt, .docs p code {
-    background: #f8f8ff;
-    border: 1px solid #dedede;
-    font-size: 12px;
-    padding: 0 0.2em;
   }
 
   .pilwrap {
