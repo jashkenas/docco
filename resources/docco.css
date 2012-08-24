@@ -71,7 +71,6 @@ ul.sections > li > span {
   -webkit-box-shadow: 0 0 25px #777; -moz-box-shadow: 0 0 25px #777;
   -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px;
   font: 16px Arial;
-  text-transform: uppercase;
   cursor: pointer;
   text-align: right;
   list-style: none;
@@ -113,7 +112,7 @@ ul.sections > li > span {
 
 #jump_page .source {
   display: block;
-  padding: 15px 10px;
+  padding: 15px;
   text-decoration: none;
   border-top: 1px solid #eee;
 }
@@ -196,6 +195,7 @@ ul.sections > li > span {
   }
   #jump_to, #jump_page {
     font: 10px Arial;
+    text-transform: uppercase;
   }
   #jump_page .source {
     padding: 5px 10px;
