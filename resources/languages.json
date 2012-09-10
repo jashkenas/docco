@@ -14,6 +14,10 @@
     {"name" : "tex", "symbol" : "%"},
   ".js":
     {"name" : "javascript", "symbol" : "//"},
+  ".sass":
+    {"name" : "sass", "symbol" : "//"},
+  ".scss":
+    {"name" : "sass", "symbol" : "//"},
   ".c":
     {"name" : "c", "symbol" : "//"},
   ".h":
@@ -27,5 +31,9 @@
   ".erl":
     {"name" : "erlang", "symbol" : "%"},
   ".hrl":
-    {"name" : "erlang", "symbol" : "%"}
+    {"name" : "erlang", "symbol" : "%"},
+  ".md":
+    {"name" : "markdown", "symbol" : ""},
+  ".markdown":
+    {"name" : "markdown", "symbol" : ""}
 }
