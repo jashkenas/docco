@@ -17,7 +17,7 @@
   ".sass":
     {"name" : "sass", "symbol" : "//"},
   ".scss":
-    {"name" : "sass", "symbol" : "//"},
+    {"name" : "scss", "symbol" : "//"},
   ".c":
     {"name" : "c", "symbol" : "//"},
   ".h":
@@ -33,7 +33,7 @@
   ".hrl":
     {"name" : "erlang", "symbol" : "%"},
   ".md":
-    {"name" : "markdown", "symbol" : ""},
+    {"name" : "text", "symbol" : ""},
   ".markdown":
-    {"name" : "markdown", "symbol" : ""}
+    {"name" : "text", "symbol" : ""}
 }
