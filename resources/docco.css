@@ -133,15 +133,15 @@ ul.sections > li > span {
     padding:5px 10px 0 10px;
   }
 
-  ul.sections > li > span.docs {
+  ul.sections > li > span.annotation {
     background: #fff;
   }
 
-  ul.sections > li > span.docs ul, ul.sections > li > span.docs ol {
+  ul.sections > li > span.annotation ul, ul.sections > li > span.annotation ol {
     padding-left: 30px;
   }
 
-  ul.sections > li > span.code {
+  ul.sections > li > span.content {
     background: #f5f5ff;
     overflow-x:auto;
     -webkit-box-shadow: inset 0 0 5px #e5e5ee;
@@ -151,12 +151,12 @@ ul.sections > li > span {
     padding-bottom: 5px;
   }
 
-  ul.sections > li > span.docs pre {
+  ul.sections > li > span.annotation pre {
     margin: 7px 0 7px;
     padding-left: 15px;
   }
 
-  ul.sections > li > span.docs p tt, .docs p code {
+  ul.sections > li > span.annotation p tt, .annotation p code {
     background: #f8f8ff;
     border: 1px solid #dedede;
     font-size: 12px;
@@ -218,7 +218,7 @@ ul.sections > li > span {
     z-index: -1;
   }
 
-  ul.sections > li > span.docs ul, ul.sections > li > span.docs ol {
+  ul.sections > li > span.annotation ul, ul.sections > li > span.annotation ol {
     padding-left: 40px;
   }
 
@@ -230,7 +230,7 @@ ul.sections > li > span {
     display: inline-block;
   }
 
-  ul.sections > li > span.docs {
+  ul.sections > li > span.annotation {
     max-width: 350px;
     min-width: 350px;
     min-height: 5px;
@@ -240,12 +240,12 @@ ul.sections > li > span {
     vertical-align: top;
     text-align: left;
   }
-  ul.sections > li > span.docs pre {
+  ul.sections > li > span.annotation pre {
     margin: 15px 0 15px;
     padding-left: 15px;
   }
 
-  ul.sections > li > span.code {
+  ul.sections > li > span.content {
     padding: 13px;
     vertical-align: top;
     background: #f5f5ff;
@@ -270,7 +270,7 @@ ul.sections > li > span {
     -webkit-transition: opacity 0.2s linear;
   }
 
-  ul.sections > li > span.docs:hover .pilcrow {
+  ul.sections > li > span.annotation:hover .pilcrow {
     opacity: 1;
   }
 }
@@ -281,12 +281,12 @@ ul.sections > li > span {
   #background {
     width: 525px;
   }
-  ul.sections > li > span.docs {
+  ul.sections > li > span.annotation {
     max-width: 525px;
     min-width: 525px;
     padding: 10px 25px 1px 50px;
   }
-  ul.sections > li > span.code {
+  ul.sections > li > span.content {
     padding: 14px 15px 16px 25px;
   }
 }
