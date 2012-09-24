@@ -29,21 +29,21 @@
     <% } %>
     <ul class="sections">  
         <li id="title">
-            <span class="annotation">
+            <div class="annotation">
                 <h1><%= title %></h1>
-            </span>
+            </div>
         </li>
         <% for (var i=0, l=sections.length; i<l; i++) { %>
         <% var section = sections[i]; %>   
         <li id="section-<%= i + 1 %>">
-            <span class="annotation">
+            <div class="annotation">
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-<%= i + 1 %>">&#182;</a>
               </div>            
               <%= section.docsHtml %>
-            </span>
+            </div>
             <% if (section.codeText.replace(/\s/gm, '') != '') { %>
-            <span class="content"><%= section.codeHtml %></span>
+            <div class="content"><%= section.codeHtml %></div>
             <% } %>
         </li>
         <% } %>
