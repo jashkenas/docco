@@ -4,15 +4,18 @@
 <head>
   <title><%= title %></title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="<%= css %>" />
 </head>
 <body>
   <div id="container">
     <div id="background"></div>
     <% if (sources.length > 1) { %>
-      <div id="jump_to">
-        Jump To &hellip;
-        <div id="jump_wrapper">
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
           <div id="jump_page">
             <% for (var i=0, l=sources.length; i<l; i++) { %>
               <% var source = sources[i]; %>
@@ -21,38 +24,30 @@
               </a>
             <% } %>
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
     <% } %>
-    <table cellpadding="0" cellspacing="0">
-      <thead>
-        <tr>
-          <th class="docs">
-            <h1>
-              <%= title %>
-            </h1>
-          </th>
-          <th class="code">
-          </th>
-        </tr>
-      </thead>
-      <tbody>
+    <ul class="sections">  
+        <li id="title">
+            <div class="annotation">
+                <h1><%= title %></h1>
+            </div>
+        </li>
         <% for (var i=0, l=sections.length; i<l; i++) { %>
-          <% var section = sections[i]; %>
-          <tr id="section-<%= i + 1 %>">
-            <td class="docs">
+        <% var section = sections[i]; %>   
+        <li id="section-<%= i + 1 %>">
+            <div class="annotation">
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-<%= i + 1 %>">&#182;</a>
-              </div>
+              </div>            
               <%= section.docsHtml %>
-            </td>
-            <td class="code">
-              <%= section.codeHtml %>
-            </td>
-          </tr>
+            </div>
+            <% if (section.codeText.replace(/\s/gm, '') != '') { %>
+            <div class="content"><%= section.codeHtml %></div>
+            <% } %>
+        </li>
         <% } %>
-      </tbody>
-    </table>
+    </ul> 
   </div>
 </body>
 </html>
