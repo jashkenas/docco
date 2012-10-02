@@ -15,7 +15,8 @@
     "lib" :       "./lib"
   },
   "dependencies": {
-    "commander"     : ">=0.5.2"
+    "commander"     : ">=0.5.2",
+    "highlight"     : "*"
   },
   "main" :        "./lib/docco",
   "bin": {

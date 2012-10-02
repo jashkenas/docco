@@ -104,36 +104,17 @@ parse = (source, code) ->
 # marker comments between each section and then splitting the result string
 # wherever our markers occur.
 highlight = (source, sections, callback) ->
+  hl = require("highlight").Highlight;
   language = getLanguage source
-  pygments = spawn 'pygmentize', [
-    '-l', language.name,
-    '-f', 'html',
-    '-O', 'encoding=utf-8,tabsize=2'
-  ]
-  output   = ''
+  output = ""
   
-  pygments.stderr.on 'data',  (error)  ->
-    console.error error.toString() if error
-    
-  pygments.stdin.on 'error',  (error)  ->
-    console.error 'Could not use Pygments to highlight the source.'
-    process.exit 1
-    
-  pygments.stdout.on 'data', (result) ->
-    output += result if result
-    
-  pygments.on 'exit', ->
-    output = output.replace(highlightStart, '').replace(highlightEnd, '')
-    fragments = output.split language.dividerHtml
-    for section, i in sections
-      section.codeHtml = highlightStart + fragments[i] + highlightEnd
-      section.docsHtml = showdown.makeHtml section.docsText
-    callback()
-    
-  if pygments.stdin.writable
-    text = (section.codeText for section in sections)
-    pygments.stdin.write text.join language.dividerText
-    pygments.stdin.end()
+  text = (hl(section.codeText) for section in sections)
+  
+  output = output.replace(highlightStart, "").replace(highlightEnd, "")
+  for section, i in sections
+    section.codeHtml = highlightStart + text[i] + highlightEnd
+    section.docsHtml = showdown.makeHtml(section.docsText)
+  callback()
   
 # Once all of the code is finished highlighting, we can generate the HTML file by
 # passing the completed sections into the template, and then writing the file to 
