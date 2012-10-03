@@ -1,4 +1,6 @@
- ____                                                      
+This fork removes the dependency on Pygments and replaces it with the [highlight.js node_module](https://github.com/isagalaev/highlight.js)
+
+____                                                      
 /\  _`\                                                    
 \ \ \/\ \        ___         ___         ___         ___   
  \ \ \ \ \      / __`\      /'___\      /'___\      / __`\ 
