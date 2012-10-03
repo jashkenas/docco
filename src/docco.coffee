@@ -104,11 +104,11 @@ parse = (source, code) ->
 # marker comments between each section and then splitting the result string
 # wherever our markers occur.
 highlight = (source, sections, callback) ->
-  hl = require("highlight").Highlight;
+  hl = require("highlight.js").highlightAuto;
   language = getLanguage source
   output = ""
   
-  text = (hl(section.codeText) for section in sections)
+  text = (hl(section.codeText).value for section in sections)
   
   output = output.replace(highlightStart, "").replace(highlightEnd, "")
   for section, i in sections

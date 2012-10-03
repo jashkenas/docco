@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "commander"     : ">=0.5.2",
-    "highlight"     : "*"
+    "highlight.js"  : "*"
   },
   "main" :        "./lib/docco",
   "bin": {
