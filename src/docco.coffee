@@ -60,9 +60,13 @@ generateDocumentation = (source, config, callback) ->
     throw error if error
     code = buffer.toString()
     sections = parse source, code
-    highlight source, sections, ->
-      generateHtml source, sections, config
-      callback()
+
+    hasProgram "pygmentize", (pygmentsInstalled) ->
+      highlight = if pygmentsInstalled and config.highlight is "pygments" then pygmentsHighlight else highlightJsHighlight
+      highlight source, sections, ->
+        generateHtml source, sections, config
+        callback()
+
 
 # Given a string of source code, parse out each comment and the code that
 # follows it, and create an individual **section** for it.
@@ -103,7 +107,7 @@ parse = (source, code) ->
 # We process the entire file in a single call to Pygments by inserting little
 # marker comments between each section and then splitting the result string
 # wherever our markers occur.
-highlight = (source, sections, callback) ->
+pygmentsHighlight = (source, sections, callback) ->
   language = getLanguage source
   pygments = spawn 'pygmentize', [
     '-l', language.name,
@@ -134,6 +138,25 @@ highlight = (source, sections, callback) ->
     text = (section.codeText for section in sections)
     pygments.stdin.write text.join language.dividerText
     pygments.stdin.end()
+    
+# Highlights a single chunk of code, using **Highlight.js**,
+# and runs the text of its corresponding comment through **Markdown**, using
+# [Showdown.js](http://attacklab.net/showdown/).
+#
+# If hasPygments() returns false, this is used instead
+highlightJsHighlight = (source, sections, callback) ->
+  hljs = require("highlight.js")
+  hljs.LANGUAGES['coffee-script'] = hljs.LANGUAGES['coffeescript'] # Compatibility with highlightJS naming scheme
+  language = getLanguage source
+  output = ""
+  
+  text = (hljs.highlight(language.name, section.codeText).value.trim() for section in sections)
+  
+  output = output.replace(highlightStart, "").replace(highlightEnd, "")
+  for section, i in sections
+    section.codeHtml = highlightStart + text[i] + highlightEnd
+    section.docsHtml = showdown.makeHtml(section.docsText)
+  callback()
   
 # Once all of the code is finished highlighting, we can generate the HTML file by
 # passing the completed sections into the template, and then writing the file to 
@@ -200,6 +223,12 @@ getLanguage = (source) -> languages[path.extname(source)]
 ensureDirectory = (dir, callback) ->
   exec "mkdir -p #{dir}", -> callback()
 
+# Checks to see if the system has **Pygments** available so that we can
+# fall back on hightlightJS if we need to
+hasProgram = (program, callback) ->
+  exec "command -v " + program + " >/dev/null 2>&1 || { echo >&2 exit 1; }", (error, stdout, stderr) -> 
+    callback(!stderr)
+
 # Micro-templating, originally by John Resig, borrowed by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
 template = (str) ->
@@ -226,9 +255,10 @@ version = JSON.parse(fs.readFileSync("#{__dirname}/../package.json")).version
 
 # Default configuration options.
 defaults =
-  template: "#{__dirname}/../resources/docco.jst"
-  css     : "#{__dirname}/../resources/docco.css"
-  output  : "docs/"
+  highlight: "pygments"
+  template : "#{__dirname}/../resources/docco.jst"
+  css      : "#{__dirname}/../resources/docco.css"
+  output   : "docs/"
 
 
 # ### Run from Commandline
@@ -243,6 +273,7 @@ run = (args=process.argv) ->
     .option("-c, --css [file]","use a custom css file",defaults.css)
     .option("-o, --output [path]","use a custom output path",defaults.output)
     .option("-t, --template [file]","use a custom .jst template",defaults.template)
+    .option("-h, --highlight [highlighter]","choose between \"pygments\" or \"highlightjs\"",defaults.highlight)
     .parse(args)
     .name = "docco"
   if commander.args.length
