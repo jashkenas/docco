@@ -61,8 +61,8 @@ generateDocumentation = (source, config, callback) ->
     code = buffer.toString()
     sections = parse source, code
 
-    hasProgram "pygmentize", (has) ->
-      highlight = if has then pygmentsHighlight else highlightJsHighlight
+    hasProgram "pygmentize", (pygmentsInstalled) ->
+      highlight = if pygmentsInstalled and config.highlight is "pygments" then pygmentsHighlight else highlightJsHighlight
       highlight source, sections, ->
         generateHtml source, sections, config
         callback()
@@ -255,10 +255,10 @@ version = JSON.parse(fs.readFileSync("#{__dirname}/../package.json")).version
 
 # Default configuration options.
 defaults =
-  template: "#{__dirname}/../resources/docco.jst"
-  css     : "#{__dirname}/../resources/docco.css"
-  # css     : hasPygments() ? "#{__dirname}/../resources/docco.css" : "#{__dirname}/../resources/highlightJS.css" 
-  output  : "docs/"
+  highlight: "pygments"
+  template : "#{__dirname}/../resources/docco.jst"
+  css      : "#{__dirname}/../resources/docco.css"
+  output   : "docs/"
 
 
 # ### Run from Commandline
@@ -273,6 +273,7 @@ run = (args=process.argv) ->
     .option("-c, --css [file]","use a custom css file",defaults.css)
     .option("-o, --output [path]","use a custom output path",defaults.output)
     .option("-t, --template [file]","use a custom .jst template",defaults.template)
+    .option("-h, --highlight [highlighter]","choose between \"pygments\" or \"highlightjs\"",defaults.highlight)
     .parse(args)
     .name = "docco"
   if commander.args.length
