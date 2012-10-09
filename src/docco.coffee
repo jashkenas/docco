@@ -163,7 +163,7 @@ highlightJsHighlight = (source, sections, callback) ->
 # the specified output path.
 generateHtml = (source, sections, config) ->
   destination = (filepath) ->
-    path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html')   
+    path.join(config.output, path.dirname(filepath).replace(/\//, '_') + '_' + path.basename(filepath, path.extname(filepath)) + '.html')
   title = path.basename source
   dest  = destination source
   html  = config.doccoTemplate {
