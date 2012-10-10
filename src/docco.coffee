@@ -277,7 +277,7 @@ run = (args=process.argv) ->
     .option("-o, --output [path]","use a custom output path",defaults.output)
     .option("-t, --template [file]","use a custom .jst template",defaults.template)
     .option("-h, --highlight [highlighter]","choose between \"pygments\" or \"highlightjs\"",defaults.highlight)
-    .option("-p, --pretty-name","use pretty-name")
+    .option("-p, --prettyname","use pretty-name")
     .parse(args)
     .name = "docco"
   if commander.args.length
