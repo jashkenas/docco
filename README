@@ -24,3 +24,5 @@ $ docco
     -o, --output [path]            use a custom output path
     -t, --template [file]          use a custom .jst template
     -h, --highlight [highlighter]  choose between "pygments" or "highlightjs"
+    -p, --prettyname               prepend the "underscored path" to file names,
+                                   e.g. app/src/foo.js => docs/app_src_foo.html
