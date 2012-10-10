@@ -163,7 +163,10 @@ highlightJsHighlight = (source, sections, callback) ->
 # the specified output path.
 generateHtml = (source, sections, config) ->
   destination = (filepath) ->
-    path.join(config.output, path.dirname(filepath).replace(/\//, '_') + '_' + path.basename(filepath, path.extname(filepath)) + '.html')
+    if config.prettyname
+      path.join(config.output, path.dirname(filepath).replace(/\//g, '_') + '_' + path.basename(filepath, path.extname(filepath)) + '.html')
+    else
+      path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html') 
   title = path.basename source
   dest  = destination source
   html  = config.doccoTemplate {
@@ -255,10 +258,10 @@ version = JSON.parse(fs.readFileSync("#{__dirname}/../package.json")).version
 
 # Default configuration options.
 defaults =
-  highlight: "pygments"
-  template : "#{__dirname}/../resources/docco.jst"
-  css      : "#{__dirname}/../resources/docco.css"
-  output   : "docs/"
+  highlight  : "pygments"
+  template   : "#{__dirname}/../resources/docco.jst"
+  css        : "#{__dirname}/../resources/docco.css"
+  output     : "docs/"
 
 
 # ### Run from Commandline
@@ -274,6 +277,7 @@ run = (args=process.argv) ->
     .option("-o, --output [path]","use a custom output path",defaults.output)
     .option("-t, --template [file]","use a custom .jst template",defaults.template)
     .option("-h, --highlight [highlighter]","choose between \"pygments\" or \"highlightjs\"",defaults.highlight)
+    .option("-p, --pretty-name","use pretty-name")
     .parse(args)
     .name = "docco"
   if commander.args.length
