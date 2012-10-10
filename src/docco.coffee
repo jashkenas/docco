@@ -163,7 +163,7 @@ highlightJsHighlight = (source, sections, callback) ->
 # the specified output path.
 generateHtml = (source, sections, config) ->
   destination = (filepath) ->
-    if config.prettyname
+    if config.prettyname and path.dirname(filepath) isnt '.'
       path.join(config.output, path.dirname(filepath).replace(/\//g, '_') + '_' + path.basename(filepath, path.extname(filepath)) + '.html')
     else
       path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html') 
