@@ -7,10 +7,11 @@ rimraf        = require 'rimraf'
 testPath      = path.dirname fs.realpathSync(__filename)
 dataPath      = path.join testPath, "data"
 resourcesPath = path.normalize path.join(testPath,"/../resources")
+doccoPath     = path.normalize path.join(testPath,"/..")
 
 # Run a Docco pass and check that the number of output files
 # is equal to what is expected.
-testDoccoRun = (testName,sources,options=null,callback=null) ->
+testDoccoRun = (testName,sources,options={},callback=null) ->
   destPath = path.join dataPath, testName
   cleanup = (callback) -> rimraf destPath, callback
   cleanup (error) ->
@@ -35,6 +36,15 @@ test "custom CSS file", ->
   testDoccoRun "custom_css", 
     ["#{testPath}/*.coffee"],
     css: "#{resourcesPath}/pagelet.css"
+
+# **Language specific special files should be supported**
+#  
+# Some languages have special file names associated with them that may not match 
+# the same extension as normal files of that language.  Docco should support
+# documenting files of this type.
+test "language-specific special file names", ->
+  testDoccoRun "language_special_files", ["#{doccoPath}/Cakefile"]
+ 
 
 # **Comments should be parsed properly**
 #  

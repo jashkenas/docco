@@ -212,8 +212,14 @@ for ext, l of languages
   # on this to recover the original sections.
   l.docsSplitHtml = ///<h1>#{l.name}DOCDIVIDER</h1>///
 
-# Get the current language we're documenting, based on the extension.
-getLanguage = (source) -> languages[path.extname(source)]
+# Get the current language we're documenting, based on the extension.  If there is 
+# no extension, or the extension is unknown, check each language to see if the 
+# source matches a language-specific special file name.
+getLanguage = (source) -> 
+  extension = path.extname source
+  return languages[extension] if languages[extension]
+  for ext,l of languages when l.specialFiles
+    return l if s == source for s in l.specialFiles
 
 # Ensure that the destination directory exists.
 ensureDirectory = (dir, cb, made=null) ->
