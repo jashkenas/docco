@@ -1,0 +1,3 @@
+# A simple coffeescript Cakefile.  There are no tasks, it's just for
+# testing to be sure Docco can identify Cakefile's as CoffeeScript.
+console.log c for c in "Hello World!"

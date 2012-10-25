@@ -218,8 +218,10 @@ for ext, l of languages
 getLanguage = (source) -> 
   extension = path.extname source
   return languages[extension] if languages[extension]
+  source = path.basename source
   for ext,l of languages when l.specialFiles
-    return l if s == source for s in l.specialFiles
+    for s in l.specialFiles
+      return l if s == source
 
 # Ensure that the destination directory exists.
 ensureDirectory = (dir, cb, made=null) ->
