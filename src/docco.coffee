@@ -118,15 +118,17 @@ highlight = (source, sections, callback) ->
     console.error error.toString() if error
    
   pygments.stdin.on 'error',  (error)  ->
-    console.error 'Could not use Pygments to highlight the source.'
-    process.exit 1
+    console.error 'Could not highlight code, using plaintext'
     
   pygments.stdout.on 'data', (result) ->
     output += result if result
     
   pygments.on 'exit', ->
     output = output.replace(highlightStart, '').replace(highlightEnd, '')
-    codeFragments = output.split language.codeSplitHtml
+    if output is ''
+      codeFragments = (htmlEscape section.codeText for section in sections)
+    else
+      codeFragments = output.split language.codeSplitHtml
     docsFragments = showdown.makeHtml(docs).split language.docsSplitHtml
     
     for section, i in sections
@@ -138,6 +140,16 @@ highlight = (source, sections, callback) ->
     pygments.stdin.write code
     pygments.stdin.end()
   
+# Escape an html string, to produce valid non-highlighted output when pygments 
+# is not present on the system.
+htmlEscape = (string) -> 
+  string.replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g,'&#x2F;')
+
 # Once all of the code is finished highlighting, we can generate the HTML file by
 # passing the completed sections into the template, and then writing the file to 
 # the specified output path.
