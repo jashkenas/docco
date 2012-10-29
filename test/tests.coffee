@@ -108,9 +108,10 @@ test "url references", ->
 #  
 # ensureDirectory should properly create complex output paths.
 test "create complex paths that do not exist", ->
+  exist = fs.existsSync or path.existsSync
   outputPath = path.join dataPath, 'complex/path/that/doesnt/exist'
   exec "rm -rf #{outputPath}", ->
     Docco.ensureDirectory outputPath, ->
-      equal fs.existsSync(outputPath), true, 'created output path'
+      equal exist(outputPath), true, 'created output path'
       stat = fs.statSync outputPath
       equal stat.isDirectory(), true, "target is directory"
