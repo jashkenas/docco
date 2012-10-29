@@ -84,7 +84,7 @@ test "single line comment parsing", ->
       
   # *Kick off the first language test*
   testNextLanguage languageKeys.slice()
-     
+    
 # **URL references should resolve across sections**
 #  
 # Resolves [Issue 100](https://github.com/jashkenas/docco/issues/100)
@@ -101,11 +101,12 @@ test "url references", ->
     outPath = path.join dataPath, "_urlreferences"
     outFile = "#{outPath}/_urlref.html"
     rimraf outPath, (error) ->
-      eq not error, true
+      equal not error, true
       Docco.document [sourceFile], output: outPath, ->
         contents = fs.readFileSync(outFile).toString()
         count = contents.match ///<a\shref="http://www.google.com">Google</a>///g
-        eq count.length, 2, "find expected (2) resolved url references"
+        equal count.length, 2, "find expected (2) resolved url references"
+
 # **Paths should be recursively created if needed**
 #  
 # ensureDirectory should properly create complex output paths.
@@ -113,7 +114,7 @@ test "create complex paths that do not exist", ->
   exist = fs.existsSync or path.existsSync
   outputPath = path.join dataPath, 'complex/path/that/doesnt/exist'
   rimraf outputPath, (error) ->
-    eq not error, true
+    equal not error, true
     Docco.ensureDirectory outputPath, ->
       equal exist(outputPath), true, 'created output path'
       stat = fs.statSync outputPath
