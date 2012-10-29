@@ -150,7 +150,7 @@ highlightJsHighlight = (source, sections, callback) ->
   language = getLanguage source
   output = ""
   
-  text = (hljs.highlight(language.name, section.codeText).value.trim() for section in sections)
+  text = (hljs.highlight(language.name, section.codeText).value for section in sections)
   
   output = output.replace(highlightStart, "").replace(highlightEnd, "")
   for section, i in sections
