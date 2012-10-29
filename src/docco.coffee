@@ -163,6 +163,7 @@ generateHtml = (source, sections, config) ->
 # (the JavaScript implementation of Markdown).
 fs       = require 'fs'
 path     = require 'path'
+mkdirp   = require 'mkdirp'
 showdown = require('./../vendor/showdown').Showdown
 {spawn, exec} = require 'child_process'
 commander = require 'commander'
@@ -209,7 +210,9 @@ getLanguage = (source) -> languages[path.extname(source)]
 
 # Ensure that the destination directory exists.
 ensureDirectory = (dir, callback) ->
-  exec "mkdir -p #{dir}", -> callback()
+  mkdirp dir, (err) ->
+    console.error err if err
+    callback()
 
 # Micro-templating, originally by John Resig, borrowed by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
