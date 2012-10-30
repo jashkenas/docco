@@ -120,12 +120,8 @@ wherever our markers occur.</p>
   <span class="nv">code = </span><span class="p">(</span><span class="nx">section</span><span class="p">.</span><span class="nx">codeText</span> <span class="k">for</span> <span class="nx">section</span> <span class="k">in</span> <span class="nx">sections</span><span class="p">).</span><span class="nx">join</span> <span class="nx">language</span><span class="p">.</span><span class="nx">codeSplitText</span>
   <span class="nv">docs = </span><span class="p">(</span><span class="nx">section</span><span class="p">.</span><span class="nx">docsText</span> <span class="k">for</span> <span class="nx">section</span> <span class="k">in</span> <span class="nx">sections</span><span class="p">).</span><span class="nx">join</span> <span class="nx">language</span><span class="p">.</span><span class="nx">docsSplitText</span>
   
-  <span class="nx">pygments</span><span class="p">.</span><span class="nx">stderr</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;data&#39;</span><span class="p">,</span>  <span class="nf">(error)  -&gt;</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span> <span class="nx">error</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span> <span class="k">if</span> <span class="nx">error</span>
-   
-  <span class="nx">pygments</span><span class="p">.</span><span class="nx">stdin</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;error&#39;</span><span class="p">,</span>  <span class="nf">(error)  -&gt;</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span> <span class="s">&#39;Could not highlight code, using plaintext&#39;</span>
-    
+  <span class="nx">pygments</span><span class="p">.</span><span class="nx">stderr</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  <span class="nx">pygments</span><span class="p">.</span><span class="nx">stdin</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;error&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
   <span class="nx">pygments</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="nf">(result) -&gt;</span>
     <span class="nx">output</span> <span class="o">+=</span> <span class="nx">result</span> <span class="k">if</span> <span class="nx">result</span>
     
