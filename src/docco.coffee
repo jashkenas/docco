@@ -124,7 +124,7 @@ highlight = (source, sections, callback) ->
     if output is ''
       codeFragments = (htmlEscape section.codeText for section in sections)
     else
-    codeFragments = output.split language.codeSplitHtml
+      codeFragments = output.split language.codeSplitHtml
     docsFragments = showdown.makeHtml(docs).split language.docsSplitHtml
     
     for section, i in sections
