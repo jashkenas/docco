@@ -15,7 +15,11 @@
     "lib" :       "./lib"
   },
   "dependencies": {
-    "commander"     : ">=0.5.2"
+    "commander": ">=0.5.2"
+  },
+  "devDependencies": {
+    "coffee-script": "1.1.3",
+    "rimraf"       :">=2.0.2"
   },
   "main" :        "./lib/docco",
   "bin": {
