@@ -114,12 +114,8 @@ highlight = (source, sections, callback) ->
   code = (section.codeText for section in sections).join language.codeSplitText
   docs = (section.docsText for section in sections).join language.docsSplitText
   
-  pygments.stderr.on 'data',  (error)  ->
-    console.error error.toString() if error
-   
-  pygments.stdin.on 'error',  (error)  ->
-    console.error 'Could not highlight code, using plaintext'
-    
+  pygments.stderr.on 'data', ->
+  pygments.stdin.on 'error', ->
   pygments.stdout.on 'data', (result) ->
     output += result if result
     
