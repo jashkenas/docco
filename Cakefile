@@ -45,6 +45,7 @@ runTests = () ->
   passedAssert  = 0
   failedAssert  = 0
   failures      = []
+  done          = false
 
   # Wrap each assert function in a try/catch block to report passed/failed assertions.
   wrapAssert = (func,name) ->
@@ -82,6 +83,8 @@ runTests = () ->
   # When all the tests have run, collect and print errors.
   # If a stacktrace is available, output the compiled function source.
   process.on 'exit', ->
+    return if done
+    done = true
     time = ((Date.now() - startTime) / 1000).toFixed(2)
     for fail in failures
       {error, filename}  = fail
@@ -100,7 +103,7 @@ runTests = () ->
     console.log "  #{passedTests} tests passed, #{failures.length} failed"
     console.log "  #{passedAssert} asserts passed, #{failedAssert} failed"
     console.log "--------------------------------------------------------"
-    return if failures.length > 0 then 1 else 0
+    process.exit if failures.length > 0 then 1 else 0
 
   # Run every test in the `test` folder, recording failures.
   files = fs.readdirSync 'test'
