@@ -2,7 +2,8 @@
 # documentation generator. It produces HTML
 # that displays your comments alongside your code. Comments are passed through
 # [Markdown](http://daringfireball.net/projects/markdown/syntax), and code is
-# passed through [Pygments](http://pygments.org/) syntax highlighting.
+# passed through [Pygments](http://pygments.org/) syntax highlighting, if it
+# is present on the system. 
 # This page is the result of running Docco against its own source file.
 #
 # If you install Docco, you can run it from the command-line:
@@ -96,13 +97,15 @@ parse = (source, code) ->
   save docsText, codeText
   sections
 
-# Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
-# and runs the text of its corresponding comment through **Markdown**, using
-# [Showdown.js](http://attacklab.net/showdown/).
+# Highlights parsed sections of code, using **Pygments** over stdio,
+# and runs the text of their corresponding comments through **Markdown**, using
+# [Showdown.js](http://attacklab.net/showdown/).  If Pygments is not present
+# on the system, output the code in plain text.
 #
-# We process the entire file in single calls to Pygments and Showdown by inserting 
-# little marker comments between each section and then splitting the result string
-# wherever our markers occur.
+#
+# We process all sections with single calls to Pygments and Showdown, by 
+# inserting marker comments between each section and then splitting the result
+# string wherever the marker occurs.
 highlight = (source, sections, callback) ->
   language = getLanguage source
   pygments = spawn 'pygmentize', [
