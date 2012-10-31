@@ -104,7 +104,7 @@ parse = (source, code) ->
 #
 #
 # We process all sections with single calls to Pygments and Showdown, by 
-# inserting marker comments between each section and then splitting the result
+# inserting marker comments between them, and then splitting the result
 # string wherever the marker occurs.
 highlight = (source, sections, callback) ->
   language = getLanguage source
