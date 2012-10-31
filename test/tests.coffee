@@ -14,7 +14,7 @@ testDoccoRun = (testName,sources,options=null,callback=null) ->
   destPath = path.join dataPath, testName
   cleanup = (callback) -> rimraf destPath, callback
   cleanup (error) ->
-    eq not error, true, "path cleaned up properly"
+    equal not error, true, "path cleaned up properly"
     options?.output = destPath
     Docco.document sources, options, ->
       files       = []
