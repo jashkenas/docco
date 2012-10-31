@@ -1,7 +1,7 @@
 
-{spawn, exec} = require 'child_process'
 path          = require 'path'
 fs            = require 'fs'
+rimraf        = require 'rimraf'
 
 # Determine the test and resources paths
 testPath      = path.dirname fs.realpathSync(__filename)
@@ -12,8 +12,9 @@ resourcesPath = path.normalize path.join(testPath,"/../resources")
 # is equal to what is expected.
 testDoccoRun = (testName,sources,options=null,callback=null) ->
   destPath = path.join dataPath, testName
-  cleanup = (callback) -> exec "rm -rf #{destPath}", callback
-  cleanup ->
+  cleanup = (callback) -> rimraf destPath, callback
+  cleanup (error) ->
+    eq not error, true, "path cleaned up properly"
     options?.output = destPath
     Docco.document sources, options, ->
       files       = []
@@ -83,12 +84,12 @@ test "single line comment parsing", ->
       
   # *Kick off the first language test*
   testNextLanguage languageKeys.slice()
-    
+     
 # **URL references should resolve across sections**
 #  
 # Resolves [Issue 100](https://github.com/jashkenas/docco/issues/100)
 test "url references", ->
-  exec "mkdir -p #{dataPath}", ->
+  Docco.ensureDirectory dataPath, ->
     sourceFile = "#{dataPath}/_urlref.coffee"
     fs.writeFileSync sourceFile, [
       "# Look at this link to [Google][]!",
@@ -99,8 +100,21 @@ test "url references", ->
     ].join('\n')
     outPath = path.join dataPath, "_urlreferences"
     outFile = "#{outPath}/_urlref.html"
-    exec "rm -rf #{outPath}", ->
+    rimraf outPath, (error) ->
+      eq not error, true
       Docco.document [sourceFile], output: outPath, ->
         contents = fs.readFileSync(outFile).toString()
         count = contents.match ///<a\shref="http://www.google.com">Google</a>///g
         eq count.length, 2, "find expected (2) resolved url references"
+# **Paths should be recursively created if needed**
+#  
+# ensureDirectory should properly create complex output paths.
+test "create complex paths that do not exist", ->
+  exist = fs.existsSync or path.existsSync
+  outputPath = path.join dataPath, 'complex/path/that/doesnt/exist'
+  rimraf outputPath, (error) ->
+    eq not error, true
+    Docco.ensureDirectory outputPath, ->
+      equal exist(outputPath), true, 'created output path'
+      stat = fs.statSync outputPath
+      equal stat.isDirectory(), true, "target is directory"

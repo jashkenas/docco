@@ -216,8 +216,14 @@ for ext, l of languages
 getLanguage = (source) -> languages[path.extname(source)]
 
 # Ensure that the destination directory exists.
-ensureDirectory = (dir, callback) ->
-  exec "mkdir -p #{dir}", -> callback()
+ensureDirectory = (dir, cb, made=null) ->
+  mode = parseInt '0777', 8
+  fs.mkdir dir, mode, (er) ->
+    return cb null, made || dir if not er
+    if er.code == 'ENOENT'
+      return ensureDirectory path.dirname(dir), (er, made) ->
+        if er then cb er, made else ensureDirectory dir, cb, made
+    cb er, made
 
 # Micro-templating, originally by John Resig, borrowed by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
@@ -328,4 +334,5 @@ exports[key] = value for key, value of {
   version       : version
   defaults      : defaults
   languages     : languages
+  ensureDirectory: ensureDirectory
 }
