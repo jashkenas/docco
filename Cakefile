@@ -33,68 +33,77 @@ task 'doc', 'rebuild the Docco documentation', ->
   )
 
 task 'test', 'run the Docco test suite', ->
-  runTests Docco
+  runTests()
     
-# Simple test runner, borrowed from [CoffeeScript](http://coffeescript.org/).
-runTests = (Docco) ->
-  startTime   = Date.now()
-  currentFile = null
-  passedTests = 0
-  failures    = []
+# Simple test runner, adapted from [CoffeeScript](http://coffeescript.org/).
+runTests = () ->
+  startTime     = Date.now()
+  currentFile   = null
+  currentTest   = null
+  currentSource = null
+  passedTests   = 0
+  passedAssert  = 0
+  failedAssert  = 0
+  failures      = []
+  done          = false
 
-  global[name] = func for name, func of require 'assert'
+  # Wrap each assert function in a try/catch block to report passed/failed assertions.
+  wrapAssert = (func,name) ->
+    return () -> 
+      try
+        result = func.apply this, arguments
+        ++passedAssert
+      catch e
+        ++failedAssert
+        e.description = arguments[2] if arguments.length == 3
+        e.source      = currentSource
+        e.testName    = currentTest
+        failures.push 
+          filename: currentFile
+          error: e 
+      result
 
-  # Convenience alias.
+  global[name] = wrapAssert(func,name) for name, func of require 'assert'    
   global.Docco = Docco
 
   # Our test helper function for delimiting different test cases.
   global.test = (description, fn) ->
     try
       fn.test = {description, currentFile}
+      currentTest = description
+      currentSource = fn.toString() if fn.toString?
       fn.call(fn)
       ++passedTests
     catch e
+      e.testName    = currentTest
       e.description = description if description?
       e.source      = fn.toString() if fn.toString?
       failures.push filename: currentFile, error: e 
-      
-  # See http://wiki.ecmascript.org/doku.php?id=harmony:egal
-  egal = (a, b) ->
-    if a is b
-      a isnt 0 or 1/a is 1/b
-    else
-      a isnt a and b isnt b
-
-  # A recursive functional equivalence helper; uses egal for testing equivalence.
-  arrayEgal = (a, b) ->
-    if egal a, b then yes
-    else if a instanceof Array and b instanceof Array
-      return no unless a.length is b.length
-      return no for el, idx in a when not arrayEgal el, b[idx]
-      yes
-
-  global.eq      = (a, b, msg) -> ok egal(a, b), msg
-  global.arrayEq = (a, b, msg) -> ok arrayEgal(a,b), msg
 
   # When all the tests have run, collect and print errors.
   # If a stacktrace is available, output the compiled function source.
   process.on 'exit', ->
+    return if done
+    done = true
     time = ((Date.now() - startTime) / 1000).toFixed(2)
-    message = "passed #{passedTests} tests in #{time} seconds"
-    return console.log(message) unless failures.length
-    console.log "failed #{failures.length} and #{message}"
     for fail in failures
       {error, filename}  = fail
       jsFilename         = filename.replace(/\.coffee$/,'.js')
-      match              = error.stack?.match(new RegExp(fail.file+":(\\d+):(\\d+)"))
+      match              = error.stack?.match(new RegExp(fail.filename+":(\\d+):(\\d+)"))
       match              = error.stack?.match(/on line (\d+):/) unless match
       [match, line, col] = match if match
-      console.log ''
-      console.log "  #{error.description}"
-      console.log "  #{error.stack}"
-      console.log "  #{jsFilename}: line #{line ? 'unknown'}, column #{col ? 'unknown'}"
-      console.log "  #{error.source}" if error.source
-    return
+      console.log "\n--------------------------------------------------------"
+      console.log "  FAILED: #{error.testName}\n" if error.testName
+      console.log "  FILE  :#{jsFilename}: line #{line ? 'unknown'}, column #{col ? 'unknown'}"
+      console.log "  ERROR : #{error.description}" if error.description
+      console.log "  STACK : #{error.stack}" if error.stack
+      console.log "  SOURCE: #{error.source}" if error.source
+    console.log "--------------------------------------------------------"
+    console.log "Testing completed in #{time} seconds"
+    console.log "  #{passedTests} tests passed, #{failures.length} failed"
+    console.log "  #{passedAssert} asserts passed, #{failedAssert} failed"
+    console.log "--------------------------------------------------------"
+    process.exit if failures.length > 0 then 1 else 0
 
   # Run every test in the `test` folder, recording failures.
   files = fs.readdirSync 'test'
@@ -104,5 +113,6 @@ runTests = (Docco) ->
     try
       CoffeeScript.run code.toString(), {filename}
     catch error
+      error.description = currentTest
       failures.push {filename, error}
   return !failures.length
