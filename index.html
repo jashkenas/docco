@@ -239,8 +239,14 @@ on this to recover the original sections.</p>
 
 <p>Ensure that the destination directory exists.</p>
 
-             </div>                          <div class="content"><div class="highlight"><pre><span class="nv">ensureDirectory = </span><span class="nf">(dir, callback) -&gt;</span>
-  <span class="nx">exec</span> <span class="s">&quot;mkdir -p </span><span class="si">#{</span><span class="nx">dir</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="nx">callback</span><span class="p">()</span></pre></div></div>                      </li>                              <li id="section-21">             <div class="annotation">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>                           
+             </div>                          <div class="content"><div class="highlight"><pre><span class="nv">ensureDirectory = </span><span class="nf">(dir, cb, made=null) -&gt;</span>
+  <span class="nv">mode = </span><span class="nb">parseInt</span> <span class="s">&#39;0777&#39;</span><span class="p">,</span> <span class="mi">8</span>
+  <span class="nx">fs</span><span class="p">.</span><span class="nx">mkdir</span> <span class="nx">dir</span><span class="p">,</span> <span class="nx">mode</span><span class="p">,</span> <span class="nf">(er) -&gt;</span>
+    <span class="k">return</span> <span class="nx">cb</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">made</span> <span class="o">||</span> <span class="nx">dir</span> <span class="k">if</span> <span class="o">not</span> <span class="nx">er</span>
+    <span class="k">if</span> <span class="nx">er</span><span class="p">.</span><span class="nx">code</span> <span class="o">==</span> <span class="s">&#39;ENOENT&#39;</span>
+      <span class="k">return</span> <span class="nx">ensureDirectory</span> <span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="nx">dir</span><span class="p">),</span> <span class="nf">(er, made) -&gt;</span>
+        <span class="k">if</span> <span class="nx">er</span> <span class="k">then</span> <span class="nx">cb</span> <span class="nx">er</span><span class="p">,</span> <span class="nx">made</span> <span class="k">else</span> <span class="nx">ensureDirectory</span> <span class="nx">dir</span><span class="p">,</span> <span class="nx">cb</span><span class="p">,</span> <span class="nx">made</span>
+    <span class="nx">cb</span> <span class="nx">er</span><span class="p">,</span> <span class="nx">made</span></pre></div></div>                      </li>                              <li id="section-21">             <div class="annotation">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>                           
 
 <p>Micro-templating, originally by John Resig, borrowed by way of
 <a href="http://documentcloud.github.com/underscore/">Underscore.js</a>.</p>
@@ -371,6 +377,7 @@ an array of files in the path that match it.</li>
   <span class="nv">version       : </span><span class="nx">version</span>
   <span class="nv">defaults      : </span><span class="nx">defaults</span>
   <span class="nv">languages     : </span><span class="nx">languages</span>
+  <span class="nv">ensureDirectory: </span><span class="nx">ensureDirectory</span>
 <span class="p">}</span>
 
 </pre></div></div>                      </li>              </ul>    </div> </body> </html> 
