@@ -14,14 +14,14 @@ testDoccoRun = (testName,sources,options=null,callback=null) ->
   destPath = path.join dataPath, testName
   cleanup = (callback) -> rimraf destPath, callback
   cleanup (error) ->
-    eq not error, true, "path cleaned up properly"
+    equal not error, true, "path cleaned up properly"
     options?.output = destPath
     Docco.document sources, options, ->
       files       = []
       files       = files.concat(Docco.resolveSource(src)) for src in sources
       expected    = files.length + 1
       found       = fs.readdirSync(destPath).length
-      eq found, expected, "find expected output (#{expected} files) - (#{found})"
+      equal found, expected, "find expected output (#{expected} files) - (#{found})"
       callback() if callback?
 
 # **Custom jst template files should be supported**
@@ -63,16 +63,16 @@ test "single line comment parsing", ->
     return testNextLanguage(keys, callback) if not path.existsSync languageExample   
    
     testDoccoRun languageTest, [languageExample], options, ->
-      eq true, path.existsSync(languageOutput), "#{languageOutput} -> output file created properly"
+      equal true, path.existsSync(languageOutput), "#{languageOutput} -> output file created properly"
 
       content = fs.readFileSync(languageOutput).toString()
       comments = (c.trim() for c in content.split(',') when c.trim() != '') 
 
-      eq true, comments.length >= 1, 'expect at least the descriptor comment'
+      equal true, comments.length >= 1, 'expect at least the descriptor comment'
 
       expected = parseInt(comments[0])    
       
-      eq comments.length, expected, [
+      equal comments.length, expected, [
         ""
         "#{path.basename(languageOutput)} comments"
         "------------------------"
@@ -84,7 +84,7 @@ test "single line comment parsing", ->
       
   # *Kick off the first language test*
   testNextLanguage languageKeys.slice()
-     
+    
 # **URL references should resolve across sections**
 #  
 # Resolves [Issue 100](https://github.com/jashkenas/docco/issues/100)
@@ -101,11 +101,12 @@ test "url references", ->
     outPath = path.join dataPath, "_urlreferences"
     outFile = "#{outPath}/_urlref.html"
     rimraf outPath, (error) ->
-      eq not error, true
+      equal not error, true
       Docco.document [sourceFile], output: outPath, ->
         contents = fs.readFileSync(outFile).toString()
         count = contents.match ///<a\shref="http://www.google.com">Google</a>///g
-        eq count.length, 2, "find expected (2) resolved url references"
+        equal count.length, 2, "find expected (2) resolved url references"
+
 # **Paths should be recursively created if needed**
 #  
 # ensureDirectory should properly create complex output paths.
@@ -113,7 +114,7 @@ test "create complex paths that do not exist", ->
   exist = fs.existsSync or path.existsSync
   outputPath = path.join dataPath, 'complex/path/that/doesnt/exist'
   rimraf outputPath, (error) ->
-    eq not error, true
+    equal not error, true
     Docco.ensureDirectory outputPath, ->
       equal exist(outputPath), true, 'created output path'
       stat = fs.statSync outputPath
