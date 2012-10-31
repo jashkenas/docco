@@ -2,7 +2,8 @@
 documentation generator. It produces HTML
 that displays your comments alongside your code. Comments are passed through
 <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>, and code is
-passed through <a href="http://pygments.org/">Pygments</a> syntax highlighting.
+passed through <a href="http://pygments.org/">Pygments</a> syntax highlighting, if it
+is present on the system. 
 This page is the result of running Docco against its own source file.</p>
 
 <p>If you install Docco, you can run it from the command-line:</p>
@@ -101,13 +102,14 @@ Sections take the form:</p>
   <span class="nx">save</span> <span class="nx">docsText</span><span class="p">,</span> <span class="nx">codeText</span>
   <span class="nx">sections</span></pre></div></div>                      </li>                              <li id="section-5">             <div class="annotation">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>                           
 
-<p>Highlights a single chunk of CoffeeScript code, using <strong>Pygments</strong> over stdio,
-and runs the text of its corresponding comment through <strong>Markdown</strong>, using
-<a href="http://attacklab.net/showdown/">Showdown.js</a>.</p>
+<p>Highlights parsed sections of code, using <strong>Pygments</strong> over stdio,
+and runs the text of their corresponding comments through <strong>Markdown</strong>, using
+<a href="http://attacklab.net/showdown/">Showdown.js</a>.  If Pygments is not present
+on the system, output the code in plain text.</p>
 
-<p>We process the entire file in single calls to Pygments and Showdown by inserting 
-little marker comments between each section and then splitting the result string
-wherever our markers occur.</p>
+<p>We process all sections with single calls to Pygments and Showdown, by 
+inserting marker comments between them, and then splitting the result
+string wherever the marker occurs.</p>
 
              </div>                          <div class="content"><div class="highlight"><pre><span class="nv">highlight = </span><span class="nf">(source, sections, callback) -&gt;</span>
   <span class="nv">language = </span><span class="nx">getLanguage</span> <span class="nx">source</span>
