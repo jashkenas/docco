@@ -165,8 +165,14 @@ generateHtml = (source, sections, config) ->
     destination: destination
     css        : path.basename(config.css)
   }
-  console.log "docco: #{source} -> #{dest}"
-  fs.writeFileSync dest, html
+  # Ouput to stdout or stderr if defined in -o, or file otherwise
+  if config.output == 'stdout'
+    console.log html
+  else if config.output == 'stderr'
+    console.error html
+  else
+    console.log "docco: #{source} -> #{dest}"
+    fs.writeFileSync dest, html
 
 #### Helpers & Setup
 
