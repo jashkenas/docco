@@ -165,8 +165,14 @@ generateHtml = (source, sections, config) ->
     destination: destination
     css        : path.basename(config.css)
   }
-  console.log "docco: #{source} -> #{dest}"
-  fs.writeFileSync dest, html
+  # Ouput to stdout or stderr if defined in -o, or file otherwise
+  if config.output is 'stdout'
+    console.log html
+  else if config.output is 'stderr'
+    console.error html
+  else
+    console.log "docco: #{source} -> #{dest}"
+    fs.writeFileSync dest, html
 
 #### Helpers & Setup
 
@@ -269,7 +275,7 @@ run = (args=process.argv) ->
   commander.version(version)
     .usage("[options] <filePattern ...>")
     .option("-c, --css [file]","use a custom css file",defaults.css)
-    .option("-o, --output [path]","use a custom output path",defaults.output)
+    .option("-o, --output [stdout|stderr|path]","use a custom output to stdout, stderror or a path",defaults.output)
     .option("-t, --template [file]","use a custom .jst template",defaults.template)
     .parse(args)
     .name = "docco"
