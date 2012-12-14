@@ -12,7 +12,7 @@ documentation generator. For more information, see:
 
 http://jashkenas.github.com/docco/
 
-Usage: docco [options] <filePattern ...>
+Usage: docco [options] <stdin|filePattern ...>
 
   Options:
 
