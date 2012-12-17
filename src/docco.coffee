@@ -179,7 +179,7 @@ generateHtml = (title, source, dest, sections, config) ->
     destination: getDestination
     css        : path.basename(config.css)
   }
-  # Ouput to stdout or stderr if defined in -o, or file otherwise
+  # Output to stdout or stderr if defined in -o, or file otherwise
   if config.output is 'stdout'
     console.log html
   else if config.output is 'stderr'
@@ -250,8 +250,7 @@ ensureDirectory = (dir, cb, made=null) ->
 
 # Create a destination given an output and filepath.
 getDestination = (output, filepath) ->
-  console.log(path.join(getDir(output), path.basename(filepath, path.extname(filepath)) + '.html')  )
-  path.join(getDir(output), path.basename(filepath, path.extname(filepath)) + '.html')  
+  path.join(getDir(output), path.basename(filepath, path.extname(filepath)) + '.html')
 
 # Create a title given an output
 getTitle = (output) ->
@@ -266,7 +265,6 @@ getDir = (output) ->
     path.dirname output
   else
     output
-
 
 # Micro-templating, originally by John Resig, borrowed by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
@@ -337,10 +335,10 @@ document = (sources, options = {}, callback = null) ->
   
   doccoStyles = fs.readFileSync(config.css).toString()
   
-  if sources.length is 1 and sources[0] is 'stdin' 
+  if sources.length is 1 and sources[0] is "stdin" 
     config.sources = sources
     ensureDirectory getDir(config.output), ->
-        if config.output isnt 'stdout' and config.output isnt 'stderr'
+        if config.output isnt "stdout" and config.output isnt "stderr"
           fs.writeFileSync path.join(getDir(config.output), path.basename(config.css)), doccoStyles
         generateDocumentationFromStdin config, ->
             callback() if callback?
