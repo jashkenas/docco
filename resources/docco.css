@@ -156,7 +156,7 @@ ul.sections > li > div {
     padding-left: 15px;
   }
 
-  ul.sections > li > div.annotation p tt, .annotation p code {
+  ul.sections > li > div.annotation p tt, .annotation code {
     background: #f8f8ff;
     border: 1px solid #dedede;
     font-size: 12px;
