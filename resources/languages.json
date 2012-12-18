@@ -1,7 +1,15 @@
 { ".coffee" :
-    {"name" : "coffee-script", "symbol" : "#"},
+    {
+      "name" : "coffee-script", 
+      "symbol" : "#",
+      "specialFiles": [ "Cakefile" ]
+    },
   ".rb":
-    {"name" : "ruby", "symbol" : "#"},
+    {
+      "name" : "ruby", 
+      "symbol" : "#",
+      "specialFiles": [ "Rakefile" ]
+    },
   ".py":
     {"name": "python", "symbol" : "#"},
   ".feature":

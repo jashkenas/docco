@@ -235,9 +235,17 @@ on this to recover the original sections.</p>
 
              </div>                          <div class="content"><div class="highlight"><pre>  <span class="nv">l.docsSplitHtml = </span><span class="sr">///&lt;h1&gt;</span><span class="si">#{</span><span class="nx">l</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sr">DOCDIVIDER&lt;/h1&gt;///</span></pre></div></div>                      </li>                              <li id="section-19">             <div class="annotation">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>                           
 
-<p>Get the current language we're documenting, based on the extension.</p>
+<p>Get the current language we're documenting, based on the extension.  If there is 
+no extension, or the extension is unknown, check each language to see if the 
+source matches a language-specific special file name.</p>
 
-             </div>                          <div class="content"><div class="highlight"><pre><span class="nv">getLanguage = </span><span class="nf">(source) -&gt;</span> <span class="nx">languages</span><span class="p">[</span><span class="nx">path</span><span class="p">.</span><span class="nx">extname</span><span class="p">(</span><span class="nx">source</span><span class="p">)]</span></pre></div></div>                      </li>                              <li id="section-20">             <div class="annotation">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>                           
+             </div>                          <div class="content"><div class="highlight"><pre><span class="nv">getLanguage = </span><span class="nf">(source) -&gt;</span> 
+  <span class="nv">extension = </span><span class="nx">path</span><span class="p">.</span><span class="nx">extname</span> <span class="nx">source</span>
+  <span class="k">return</span> <span class="nx">languages</span><span class="p">[</span><span class="nx">extension</span><span class="p">]</span> <span class="k">if</span> <span class="nx">languages</span><span class="p">[</span><span class="nx">extension</span><span class="p">]</span>
+  <span class="nv">source = </span><span class="nx">path</span><span class="p">.</span><span class="nx">basename</span> <span class="nx">source</span>
+  <span class="k">for</span> <span class="nx">ext</span><span class="p">,</span><span class="nx">l</span> <span class="k">of</span> <span class="nx">languages</span> <span class="k">when</span> <span class="nx">l</span><span class="p">.</span><span class="nx">specialFiles</span>
+    <span class="k">for</span> <span class="nx">s</span> <span class="k">in</span> <span class="nx">l</span><span class="p">.</span><span class="nx">specialFiles</span>
+      <span class="k">return</span> <span class="nx">l</span> <span class="k">if</span> <span class="nx">s</span> <span class="o">==</span> <span class="nx">source</span></pre></div></div>                      </li>                              <li id="section-20">             <div class="annotation">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>                           
 
 <p>Ensure that the destination directory exists.</p>
 
