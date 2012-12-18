@@ -99,7 +99,7 @@ parse = (source, code) ->
 
 # Highlights parsed sections of code, using **Pygments** over stdio,
 # and runs the text of their corresponding comments through **Markdown**, using
-# [Showdown.js](http://attacklab.net/showdown/).  If Pygments is not present
+# [Showdown.js](https://github.com/coreyti/showdown).  If Pygments is not present
 # on the system, output the code in plain text.
 #
 #
