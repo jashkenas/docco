@@ -53,17 +53,37 @@
 
 #### Main Documentation Generation Functions
 
-# Generate the documentation for a source file by reading it in, splitting it
-# up into comment/code sections, highlighting them for the appropriate language,
-# and merging them into an HTML template.
-generateDocumentation = (source, config, callback) ->
+# Generate the documentation for the stdin by reading it in and calling `generateDocumentation`
+generateDocumentationFromStdin = (config, callback) ->
+  process.stdin.resume()
+  process.stdin.setEncoding('utf8')
+  process.stdin.on 'error', (error) ->
+    throw error
+  process.stdin.on 'data', (buffer) ->
+    process.stdin.pause()
+    language = languages['.' + if config.language.length then config.language else "coffee"]
+    title = getTitle config.output
+    dest = getDestination config.output, title
+    generateDocumentation language, title, "stdin", dest, buffer, config, callback
+
+# Generate the documentation for a source file by reading it in and calling `generateDocumentation`
+generateDocumentationFromFile = (source, config, callback) ->
   fs.readFile source, (error, buffer) ->
     throw error if error
-    code = buffer.toString()
-    sections = parse source, code
-    highlight source, sections, ->
-      generateHtml source, sections, config
-      callback()
+    language = if config.language && languages['.' + config.language] then languages['.' + config.language] else getLanguage(source)
+    title = path.basename source
+    dest  = getDestination config.output, source
+    generateDocumentation language, title, source, dest, buffer, config, callback
+
+# Generate the documentation for the buffer by splitting it
+# up into comment/code sections, highlighting them for the appropriate language,
+# and merging them into an HTML template.  
+generateDocumentation = (language, title, source, dest, buffer, config, callback) ->
+  code = buffer.toString()
+  sections = parse language, code
+  highlight language, sections, ->
+    generateHtml title, source, dest, sections, config
+    callback()
 
 # Given a string of source code, parse out each comment and the code that
 # follows it, and create an individual **section** for it.
@@ -76,10 +96,9 @@ generateDocumentation = (source, config, callback) ->
 #       codeHtml: ...
 #     }
 #
-parse = (source, code) ->
+parse = (language, code) ->
   lines    = code.split '\n'
   sections = []
-  language = getLanguage source
   hasCode  = docsText = codeText = ''
 
   save = (docsText, codeText) ->
@@ -106,8 +125,7 @@ parse = (source, code) ->
 # We process all sections with single calls to Pygments and Showdown, by 
 # inserting marker comments between them, and then splitting the result
 # string wherever the marker occurs.
-highlight = (source, sections, callback) ->
-  language = getLanguage source
+highlight = (language, sections, callback) ->
   pygments = spawn 'pygmentize', [
     '-l', language.name,
     '-f', 'html',
@@ -152,21 +170,23 @@ htmlEscape = (string) ->
 # Once all of the code is finished highlighting, we can generate the HTML file by
 # passing the completed sections into the template, and then writing the file to 
 # the specified output path.
-generateHtml = (source, sections, config) ->
-  destination = (filepath) ->
-    path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html')   
-  title = path.basename source
-  dest  = destination source
+generateHtml = (title, source, dest, sections, config) -> 
   html  = config.doccoTemplate {
     title      : title, 
     sections   : sections, 
     sources    : config.sources, 
     path       : path, 
-    destination: destination
+    destination: getDestination
     css        : path.basename(config.css)
   }
-  console.log "docco: #{source} -> #{dest}"
-  fs.writeFileSync dest, html
+  # Output to stdout or stderr if defined in -o, or file otherwise
+  if config.output is 'stdout'
+    console.log html
+  else if config.output is 'stderr'
+    console.error html
+  else
+    console.log "docco: #{source} -> #{dest}"
+    fs.writeFileSync dest, html
 
 #### Helpers & Setup
 
@@ -228,6 +248,24 @@ ensureDirectory = (dir, cb, made=null) ->
         if er then cb er, made else ensureDirectory dir, cb, made
     cb er, made
 
+# Create a destination given an output and filepath.
+getDestination = (output, filepath) ->
+  path.join(getDir(output), path.basename(filepath, path.extname(filepath)) + '.html')
+
+# Create a title given an output
+getTitle = (output) ->
+  if (path.extname output)
+    path.basename output
+  else
+    "stdin"
+
+# Get the directory of a path
+getDir = (output) ->
+  if (path.extname output)
+    path.dirname output
+  else
+    output
+
 # Micro-templating, originally by John Resig, borrowed by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
 template = (str) ->
@@ -257,7 +295,7 @@ defaults =
   template: "#{__dirname}/../resources/docco.jst"
   css     : "#{__dirname}/../resources/docco.css"
   output  : "docs/"
-
+  language: ""
 
 # ### Run from Commandline
   
@@ -269,8 +307,9 @@ run = (args=process.argv) ->
   commander.version(version)
     .usage("[options] <filePattern ...>")
     .option("-c, --css [file]","use a custom css file",defaults.css)
-    .option("-o, --output [path]","use a custom output path",defaults.output)
+    .option("-o, --output [stdout|stderr|path]","use a custom output to stdout, stderror or a path",defaults.output)
     .option("-t, --template [file]","use a custom .jst template",defaults.template)
+    .option("-l, --language [language]","use a custom language, required if reading from the stdin",defaults.language)
     .parse(args)
     .name = "docco"
   if commander.args.length
@@ -292,21 +331,30 @@ document = (sources, options = {}, callback = null) ->
   config[key] = defaults[key] for key,value of defaults
   config[key] = value for key,value of options if key of defaults
 
-  resolved = []
-  resolved = resolved.concat(resolveSource(src)) for src in sources
-  config.sources = resolved.filter((source) -> getLanguage source).sort()
-  console.log "docco: skipped unknown type (#{m})" for m in resolved when m not in config.sources  
-  
   config.doccoTemplate = template fs.readFileSync(config.template).toString()
+  
   doccoStyles = fs.readFileSync(config.css).toString()
-
-  ensureDirectory config.output, ->
-    fs.writeFileSync path.join(config.output,path.basename(config.css)), doccoStyles
-    files = config.sources.slice()
-    nextFile = -> 
-      callback() if callback? and not files.length
-      generateDocumentation files.shift(), config, nextFile if files.length
-    nextFile()
+  
+  if sources.length is 1 and sources[0] is "stdin" 
+    config.sources = sources
+    ensureDirectory getDir(config.output), ->
+        if config.output isnt "stdout" and config.output isnt "stderr"
+          fs.writeFileSync path.join(getDir(config.output), path.basename(config.css)), doccoStyles
+        generateDocumentationFromStdin config, ->
+            callback() if callback?
+  else
+    resolved = []
+    resolved = resolved.concat(resolveSource(src)) for src in sources
+    config.sources = resolved.filter((source) -> getLanguage source).sort()
+    console.log "docco: skipped unknown type (#{m})" for m in resolved when m not in config.sources  
+  
+    ensureDirectory getDir(config.output), ->
+      fs.writeFileSync path.join(getDir(config.output), path.basename(config.css)), doccoStyles
+      files = config.sources.slice()
+      nextFile = -> 
+        callback() if callback? and not files.length
+        generateDocumentationFromFile files.shift(), config, nextFile if files.length
+      nextFile()
 
 # ### Resolve Wildcard Source Inputs
 

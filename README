@@ -12,15 +12,15 @@ documentation generator. For more information, see:
 
 http://jashkenas.github.com/docco/
 
-Usage: docco [options] <filePattern ...>
+Usage: docco [options] <stdin|filePattern ...>
 
   Options:
 
-    -h, --help             output usage information
-    -V, --version          output the version number
-    -c, --css [file]       use a custom css file
-    -o, --output [path]    use a custom output path
-    -t, --template [file]  use a custom .jst template
+    -h, --help                         output usage information
+    -V, --version                      output the version number
+    -c, --css [file]                   use a custom css file
+    -o, --output [stdout|stderr|path]  use a custom output to stdout, stderror or a path
+    -t, --template [file]              use a custom .jst template
 
 Building and Testing:
 
