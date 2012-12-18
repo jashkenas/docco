@@ -234,7 +234,7 @@ template = (str) ->
   new Function 'obj',
     'var p=[],print=function(){p.push.apply(p,arguments);};' +
     'with(obj){p.push(\'' +
-    str.replace(/[\r\t\n]/g, " ")
+    str.replace(/[\r\t\n]/g, "\\n")
        .replace(/'(?=[^<]*%>)/g,"\t")
        .split("'").join("\\'")
        .split("\t").join("'")
