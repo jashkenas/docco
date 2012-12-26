@@ -35,5 +35,7 @@
   ".md":
     {"name" : "text", "symbol" : ""},
   ".markdown":
-    {"name" : "text", "symbol" : ""}
+    {"name" : "text", "symbol" : ""},
+  ".less":
+    {"name" : "scss", "symbol": "//"}
 }
