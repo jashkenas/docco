@@ -1,5 +1,7 @@
 { ".coffee" :
     {"name" : "coffee-script", "symbol" : "#"},
+  ".ls":
+    {"name": "livescript", "symbol": "#"},
   ".rb":
     {"name" : "ruby", "symbol" : "#"},
   ".py":
