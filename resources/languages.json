@@ -39,5 +39,7 @@
   ".markdown":
     {"name" : "text", "symbol" : ""},
   ".less":
-    {"name" : "scss", "symbol": "//"}
+    {"name" : "scss", "symbol": "//"},
+  ".m":
+    {"name" : "objc", "symbol": "//"}
 }
