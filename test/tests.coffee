@@ -19,10 +19,16 @@ testDoccoRun = (testName,sources,options=null,callback=null) ->
     Docco.document sources, options, ->
       files       = []
       files       = files.concat(Docco.resolveSource(src)) for src in sources
-      expected    = files.length + 1
+      expected    = files.length + if options?.markdown then 2 else 1
       found       = fs.readdirSync(destPath).length
       equal found, expected, "find expected output (#{expected} files) - (#{found})"
       callback() if callback?
+
+# **Optional markdown output should be supported**
+test "markdown from docco", ->
+  testDoccoRun "markdown_output", 
+    ["#{testPath}/*.coffee"],
+    markdown: true
 
 # **Custom jst template files should be supported**
 test "custom JST template file", ->
