@@ -41,5 +41,7 @@
   ".less":
     {"name" : "scss", "symbol": "//"},
   ".m":
-    {"name" : "objc", "symbol": "//"}
+    {"name" : "objc", "symbol": "//"},
+  ".scala":
+    {"name" : "scala", "symbol": "//"}
 }
