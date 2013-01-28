@@ -16,6 +16,8 @@
     {"name" : "tex", "symbol" : "%"},
   ".js":
     {"name" : "javascript", "symbol" : "//"},
+  ".java":
+    {"name" : "java", "symbol" : "//"},
   ".sass":
     {"name" : "sass", "symbol" : "//"},
   ".scss":
