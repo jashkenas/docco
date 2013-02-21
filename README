@@ -21,6 +21,7 @@ Usage: docco [options] <filePattern ...>
     -c, --css [file]       use a custom css file
     -o, --output [path]    use a custom output path
     -t, --template [file]  use a custom .jst template
+    --force-ext <ext>      treat the target files as if they have a specific extension
 
 Building and Testing:
 
