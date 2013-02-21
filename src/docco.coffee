@@ -164,6 +164,7 @@ generateHtml = (source, sections, config) ->
     path       : path, 
     destination: destination
     css        : path.basename(config.css)
+    js         : path.basename(config.js)
   }
   console.log "docco: #{source} -> #{dest}"
   fs.writeFileSync dest, html
@@ -256,6 +257,7 @@ version = JSON.parse(fs.readFileSync("#{__dirname}/../package.json")).version
 defaults =
   template: "#{__dirname}/../resources/docco.jst"
   css     : "#{__dirname}/../resources/docco.css"
+  js      : "#{__dirname}/../resources/docco.js"
   output  : "docs/"
 
 
@@ -299,9 +301,11 @@ document = (sources, options = {}, callback = null) ->
   
   config.doccoTemplate = template fs.readFileSync(config.template).toString()
   doccoStyles = fs.readFileSync(config.css).toString()
+  doccoScripts = fs.readFileSync(config.js).toString()
 
   ensureDirectory config.output, ->
     fs.writeFileSync path.join(config.output,path.basename(config.css)), doccoStyles
+    fs.writeFileSync path.join(config.output,path.basename(config.js)), doccoScripts
     files = config.sources.slice()
     nextFile = -> 
       callback() if callback? and not files.length

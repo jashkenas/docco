@@ -26,7 +26,7 @@ task 'install', 'install the `docco` command into /usr/local (or --prefix)', (op
 task 'doc', 'rebuild the Docco documentation', ->
   exec([
     'bin/docco src/docco.coffee'
-    'sed "s/docco.css/resources\\/docco.css/" < docs/docco.html > index.html'
+    'sed "s/docco.css/resources\\/docco.css/" < docs/docco.html | sed "s/jump.js/resources\\/jump.js/" > index.html'
     'rm -r docs'
   ].join(' && '), (err) ->
     throw err if err
