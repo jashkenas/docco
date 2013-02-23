@@ -216,11 +216,7 @@ for ext, l of languages
   l.docsSplitHtml = ///<h1>#{l.name}DOCDIVIDER</h1>///
 
 # Get the current language we're documenting, based on the extension.
-getLanguage = (source, config) ->
-  if config?.forceExt?
-    languages[config.forceExt]
-  else
-    languages[path.extname(source)]
+getLanguage = (source, config) -> languages[config.extension or path.extname(source)]
 
 # Ensure that the destination directory exists.
 ensureDirectory = (dir, cb, made=null) ->
@@ -258,10 +254,10 @@ version = JSON.parse(fs.readFileSync("#{__dirname}/../package.json")).version
 
 # Default configuration options.
 defaults =
-  template: "#{__dirname}/../resources/docco.jst"
-  css     : "#{__dirname}/../resources/docco.css"
-  output  : "docs/"
-  forceExt: null
+  template : "#{__dirname}/../resources/docco.jst"
+  css      : "#{__dirname}/../resources/docco.css"
+  output   : "docs/"
+  extension: null
 
 
 # ### Run from Commandline
@@ -276,7 +272,7 @@ run = (args=process.argv) ->
     .option("-c, --css [file]","use a custom css file",defaults.css)
     .option("-o, --output [path]","use a custom output path",defaults.output)
     .option("-t, --template [file]","use a custom .jst template",defaults.template)
-    .option("--force-ext <ext>","treat the target files as if they have a specific extension",defaults.forceExt)
+    .option("-e, --extension <ext>","use the given file extension for all inputs",defaults.extension)
     .parse(args)
     .name = "docco"
   if commander.args.length

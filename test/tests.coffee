@@ -40,7 +40,7 @@ test "custom CSS file", ->
 test "specify an extension", ->
   testDoccoRun "specify_extension",
     ["#{testPath}/comments/noextension"],
-    forceExt: ".coffee"
+    extension: ".coffee"
 
 # **Comments should be parsed properly**
 #  

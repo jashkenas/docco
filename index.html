@@ -64,8 +64,8 @@ and merging them into an HTML template.</p>
   <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span> <span class="nx">source</span><span class="p">,</span> <span class="nf">(error, buffer) -&gt;</span>
     <span class="k">throw</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span>
     <span class="nv">code = </span><span class="nx">buffer</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
-    <span class="nv">sections = </span><span class="nx">parse</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">code</span>
-    <span class="nx">highlight</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">sections</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    <span class="nv">sections = </span><span class="nx">parse</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">code</span><span class="p">,</span> <span class="nx">config</span>
+    <span class="nx">highlight</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">sections</span><span class="p">,</span> <span class="nx">config</span><span class="p">,</span> <span class="nf">-&gt;</span>
       <span class="nx">generateHtml</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">sections</span><span class="p">,</span> <span class="nx">config</span>
       <span class="nx">callback</span><span class="p">()</span></pre></div></div>                      </li>                              <li id="section-4">             <div class="annotation">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>                           
 
@@ -81,10 +81,10 @@ Sections take the form:</p>
 }
 </code></pre>
 
-             </div>                          <div class="content"><div class="highlight"><pre><span class="nv">parse = </span><span class="nf">(source, code) -&gt;</span>
+             </div>                          <div class="content"><div class="highlight"><pre><span class="nv">parse = </span><span class="nf">(source, code, config) -&gt;</span>
   <span class="nv">lines    = </span><span class="nx">code</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39;\n&#39;</span>
   <span class="nv">sections = </span><span class="p">[]</span>
-  <span class="nv">language = </span><span class="nx">getLanguage</span> <span class="nx">source</span>
+  <span class="nv">language = </span><span class="nx">getLanguage</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">config</span>
   <span class="nv">hasCode  = docsText = codeText = </span><span class="s">&#39;&#39;</span>
 
   <span class="nv">save = </span><span class="nf">(docsText, codeText) -&gt;</span>
@@ -111,8 +111,8 @@ on the system, output the code in plain text.</p>
 inserting marker comments between them, and then splitting the result
 string wherever the marker occurs.</p>
 
-             </div>                          <div class="content"><div class="highlight"><pre><span class="nv">highlight = </span><span class="nf">(source, sections, callback) -&gt;</span>
-  <span class="nv">language = </span><span class="nx">getLanguage</span> <span class="nx">source</span>
+             </div>                          <div class="content"><div class="highlight"><pre><span class="nv">highlight = </span><span class="nf">(source, sections, config, callback) -&gt;</span>
+  <span class="nv">language = </span><span class="nx">getLanguage</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">config</span>
   <span class="nv">pygments = </span><span class="nx">spawn</span> <span class="s">&#39;pygmentize&#39;</span><span class="p">,</span> <span class="p">[</span>
     <span class="s">&#39;-l&#39;</span><span class="p">,</span> <span class="nx">language</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span>
     <span class="s">&#39;-f&#39;</span><span class="p">,</span> <span class="s">&#39;html&#39;</span><span class="p">,</span>
@@ -237,7 +237,7 @@ on this to recover the original sections.</p>
 
 <p>Get the current language we're documenting, based on the extension.</p>
 
-             </div>                          <div class="content"><div class="highlight"><pre><span class="nv">getLanguage = </span><span class="nf">(source) -&gt;</span> <span class="nx">languages</span><span class="p">[</span><span class="nx">path</span><span class="p">.</span><span class="nx">extname</span><span class="p">(</span><span class="nx">source</span><span class="p">)]</span></pre></div></div>                      </li>                              <li id="section-20">             <div class="annotation">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>                           
+             </div>                          <div class="content"><div class="highlight"><pre><span class="nv">getLanguage = </span><span class="nf">(source, config) -&gt;</span> <span class="nx">languages</span><span class="p">[</span><span class="nx">config</span><span class="p">.</span><span class="nx">extension</span> <span class="o">or</span> <span class="nx">path</span><span class="p">.</span><span class="nx">extname</span><span class="p">(</span><span class="nx">source</span><span class="p">)]</span></pre></div></div>                      </li>                              <li id="section-20">             <div class="annotation">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>                           
 
 <p>Ensure that the destination directory exists.</p>
 
@@ -281,9 +281,10 @@ on this to recover the original sections.</p>
 <p>Default configuration options.</p>
 
              </div>                          <div class="content"><div class="highlight"><pre><span class="nv">defaults =</span>
-  <span class="nv">template: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/../resources/docco.jst&quot;</span>
-  <span class="nv">css     : </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/../resources/resources/docco.css&quot;</span>
-  <span class="nv">output  : </span><span class="s">&quot;docs/&quot;</span></pre></div></div>                      </li>                              <li id="section-26">             <div class="annotation">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>                           
+  <span class="nv">template : </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/../resources/docco.jst&quot;</span>
+  <span class="nv">css      : </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/../resources/resources/docco.css&quot;</span>
+  <span class="nv">output   : </span><span class="s">&quot;docs/&quot;</span>
+  <span class="nv">extension: </span><span class="kc">null</span></pre></div></div>                      </li>                              <li id="section-26">             <div class="annotation">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>                           
 
 <h3>Run from Commandline</h3>
 
@@ -302,6 +303,7 @@ on this to recover the original sections.</p>
     <span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="s">&quot;-c, --css [file]&quot;</span><span class="p">,</span><span class="s">&quot;use a custom css file&quot;</span><span class="p">,</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">css</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="s">&quot;-o, --output [path]&quot;</span><span class="p">,</span><span class="s">&quot;use a custom output path&quot;</span><span class="p">,</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">output</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="s">&quot;-t, --template [file]&quot;</span><span class="p">,</span><span class="s">&quot;use a custom .jst template&quot;</span><span class="p">,</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">template</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="s">&quot;-e, --extension &lt;ext&gt;&quot;</span><span class="p">,</span><span class="s">&quot;use the given file extension for all inputs&quot;</span><span class="p">,</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">extension</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span>
     <span class="p">.</span><span class="nv">name = </span><span class="s">&quot;docco&quot;</span>
   <span class="k">if</span> <span class="nx">commander</span><span class="p">.</span><span class="nx">args</span><span class="p">.</span><span class="nx">length</span>
@@ -330,7 +332,7 @@ document each source, and invoke the completion callback if it is specified.</li
 
   <span class="nv">resolved = </span><span class="p">[]</span>
   <span class="nv">resolved = </span><span class="nx">resolved</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">resolveSource</span><span class="p">(</span><span class="nx">src</span><span class="p">))</span> <span class="k">for</span> <span class="nx">src</span> <span class="k">in</span> <span class="nx">sources</span>
-  <span class="nv">config.sources = </span><span class="nx">resolved</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nf">(source) -&gt;</span> <span class="nx">getLanguage</span> <span class="nx">source</span><span class="p">).</span><span class="nx">sort</span><span class="p">()</span>
+  <span class="nv">config.sources = </span><span class="nx">resolved</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nf">(source) -&gt;</span> <span class="nx">getLanguage</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">config</span><span class="p">).</span><span class="nx">sort</span><span class="p">()</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&quot;docco: skipped unknown type (</span><span class="si">#{</span><span class="nx">m</span><span class="si">}</span><span class="s">)&quot;</span> <span class="k">for</span> <span class="nx">m</span> <span class="k">in</span> <span class="nx">resolved</span> <span class="k">when</span> <span class="nx">m</span> <span class="o">not</span> <span class="k">in</span> <span class="nx">config</span><span class="p">.</span><span class="nx">sources</span>  
   
   <span class="nv">config.doccoTemplate = </span><span class="nx">template</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">template</span><span class="p">).</span><span class="nx">toString</span><span class="p">()</span>
