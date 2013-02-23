@@ -36,6 +36,12 @@ test "custom CSS file", ->
     ["#{testPath}/*.coffee"],
     css: "#{resourcesPath}/pagelet.css"
 
+# **Specifying a filetype independent of extension should be supported** 
+test "specify an extension", ->
+  testDoccoRun "specify_extension",
+    ["#{testPath}/comments/noextension"],
+    forceExt: ".coffee"
+
 # **Comments should be parsed properly**
 #  
 # There are special data files located in `test/comments` for each supported 
