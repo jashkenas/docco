@@ -60,8 +60,8 @@ generateDocumentation = (source, config, callback) ->
   fs.readFile source, (error, buffer) ->
     throw error if error
     code = buffer.toString()
-    sections = parse source, code
-    highlight source, sections, ->
+    sections = parse source, code, config
+    highlight source, sections, config, ->
       generateHtml source, sections, config
       callback()
 
@@ -76,10 +76,10 @@ generateDocumentation = (source, config, callback) ->
 #       codeHtml: ...
 #     }
 #
-parse = (source, code) ->
+parse = (source, code, config) ->
   lines    = code.split '\n'
   sections = []
-  language = getLanguage source
+  language = getLanguage source, config
   hasCode  = docsText = codeText = ''
 
   save = (docsText, codeText) ->
@@ -106,8 +106,8 @@ parse = (source, code) ->
 # We process all sections with single calls to Pygments and Showdown, by 
 # inserting marker comments between them, and then splitting the result
 # string wherever the marker occurs.
-highlight = (source, sections, callback) ->
-  language = getLanguage source
+highlight = (source, sections, config, callback) ->
+  language = getLanguage source, config
   pygments = spawn 'pygmentize', [
     '-l', language.name,
     '-f', 'html',
@@ -216,7 +216,7 @@ for ext, l of languages
   l.docsSplitHtml = ///<h1>#{l.name}DOCDIVIDER</h1>///
 
 # Get the current language we're documenting, based on the extension.
-getLanguage = (source) -> languages[path.extname(source)]
+getLanguage = (source, config) -> languages[config.extension or path.extname(source)]
 
 # Ensure that the destination directory exists.
 ensureDirectory = (dir, cb, made=null) ->
@@ -254,9 +254,10 @@ version = JSON.parse(fs.readFileSync("#{__dirname}/../package.json")).version
 
 # Default configuration options.
 defaults =
-  template: "#{__dirname}/../resources/docco.jst"
-  css     : "#{__dirname}/../resources/docco.css"
-  output  : "docs/"
+  template : "#{__dirname}/../resources/docco.jst"
+  css      : "#{__dirname}/../resources/docco.css"
+  output   : "docs/"
+  extension: null
 
 
 # ### Run from Commandline
@@ -271,6 +272,7 @@ run = (args=process.argv) ->
     .option("-c, --css [file]","use a custom css file",defaults.css)
     .option("-o, --output [path]","use a custom output path",defaults.output)
     .option("-t, --template [file]","use a custom .jst template",defaults.template)
+    .option("-e, --extension <ext>","use the given file extension for all inputs",defaults.extension)
     .parse(args)
     .name = "docco"
   if commander.args.length
@@ -294,7 +296,7 @@ document = (sources, options = {}, callback = null) ->
 
   resolved = []
   resolved = resolved.concat(resolveSource(src)) for src in sources
-  config.sources = resolved.filter((source) -> getLanguage source).sort()
+  config.sources = resolved.filter((source) -> getLanguage source, config).sort()
   console.log "docco: skipped unknown type (#{m})" for m in resolved when m not in config.sources  
   
   config.doccoTemplate = template fs.readFileSync(config.template).toString()

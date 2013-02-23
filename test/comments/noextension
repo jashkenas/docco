@@ -1,0 +1,2 @@
+# With no extension, the only way this can be correctly processed is by specifying `--extension .coffee`. 
+console.log "I'm really coffeescript!"
