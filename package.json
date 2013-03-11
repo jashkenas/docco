@@ -1,7 +1,7 @@
 {
   "name":         "docco",
   "description":  "The Quick and Dirty Literate Programming Documentation Generator",
-  "keywords":     ["documentation", "docs", "generator", "coffeescript"],
+  "keywords":     ["documentation", "docs", "generator", "literate", "coffeescript"],
   "author":       "Jeremy Ashkenas",
   "version":      "0.5.0",
   "licenses": [{
@@ -10,9 +10,6 @@
   }],
   "engines": {
     "node":       ">=0.2.0"
-  },
-  "directories": {
-    "lib" :       "./lib"
   },
   "dependencies": {
     "commander": ">= 0.5.2",
