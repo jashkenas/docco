@@ -51,6 +51,7 @@ also by Mr. Tomayko.
 aficionado, check out [Don Wilson](https://github.com/dontangg)'s
 [Nocco](http://dontangg.github.com/nocco/).
 
+
 Main Documentation Generation Functions
 ---------------------------------------
 
@@ -67,6 +68,25 @@ and merging them into an HTML template.
           generateHtml source, sections, config
           callback()
 
+    document = (sources, options = {}, callback = null) ->
+      config = {}
+      config[key] = defaults[key] for key,value of defaults
+      config[key] = value for key,value of options if key of defaults
+
+      config.sources = sources.filter((source) -> getLanguage source, config).sort()
+      console.log "docco: skipped unknown type (#{m})" for m in sources when m not in config.sources
+
+      config.doccoTemplate = _.template fs.readFileSync(config.template).toString()
+      doccoStyles = fs.readFileSync(config.css).toString()
+
+      ensureDirectory config.output, ->
+        fs.writeFileSync path.join(config.output,path.basename(config.css)), doccoStyles
+        files = config.sources.slice()
+        nextFile = ->
+          callback() if callback? and not files.length
+          generateDocumentation files.shift(), config, nextFile if files.length
+        nextFile()
+
 Given a string of source code, parse out each comment and the code that
 follows it, and create an individual **section** for it.
 
@@ -81,20 +101,24 @@ follows it, and create an individual **section** for it.
 
       if language.literate
         for line, i in lines
-          lines[i] = if match = (/^([ ]{4}|\t)/).exec line
+          lines[i] = if blank line
+            ''
+          else if match = (/^([ ]{4}|\t)/).exec line
             line[match[0].length..]
           else
             '# ' + line
 
       for line in lines
-        if line.match(language.commentMatcher) and not line.match(language.commentFilter)
+        if (not line and prev is 'text') or (line.match(language.commentMatcher) and not line.match(language.commentFilter))
           if hasCode
             save docsText, codeText
             hasCode = docsText = codeText = ''
           docsText += line.replace(language.commentMatcher, '') + '\n'
+          prev = 'text'
         else
           hasCode = yes
           codeText += line + '\n'
+          prev = 'code'
       save docsText, codeText
 
       sections
@@ -190,6 +214,11 @@ Read resource file and return its content.
     getResource = (name) ->
       fullPath = path.join __dirname, 'resources', name
       fs.readFileSync(fullPath).toString()
+
+Regex to match a blank line.
+
+    blank = (line) ->
+      /^\s*$/.test line
 
 Languages are stored in JSON format in the file `resources/languages.json`
 Each item maps the file extension to the name of the Pygments lexer and the
@@ -289,29 +318,6 @@ Parse command line using [Commander JS](https://github.com/visionmedia/commander
       else
         console.log commander.helpInformation()
 
-Document Sources
-----------------
-
-Run Docco over a list of `sources` with the given `options`.
-
-    document = (sources, options = {}, callback = null) ->
-      config = {}
-      config[key] = defaults[key] for key,value of defaults
-      config[key] = value for key,value of options if key of defaults
-
-      config.sources = sources.filter((source) -> getLanguage source, config).sort()
-      console.log "docco: skipped unknown type (#{m})" for m in sources when m not in config.sources
-
-      config.doccoTemplate = _.template fs.readFileSync(config.template).toString()
-      doccoStyles = fs.readFileSync(config.css).toString()
-
-      ensureDirectory config.output, ->
-        fs.writeFileSync path.join(config.output,path.basename(config.css)), doccoStyles
-        files = config.sources.slice()
-        nextFile = ->
-          callback() if callback? and not files.length
-          generateDocumentation files.shift(), config, nextFile if files.length
-        nextFile()
 
 Public API
 ----------

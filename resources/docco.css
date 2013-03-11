@@ -18,17 +18,16 @@ a:visited {
   color: #261a3b;
 }
 
-p {
-  margin: 15px 0 10px 0;
+p, ul, li {
+  margin: 15px 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  margin: 15px 0 0 0;
+  margin: 30px 0 15px 0;
 }
 
 h1 {
   margin-top: 40px;
-  margin-bottom: 15px;
 }
 
 hr {
@@ -50,10 +49,10 @@ ul.sections {
   margin:0;
 }
 
-/* 
+/*
   Force border-box so that % widths fit the parent
   container without overlap because of margin/padding.
-  
+
   More Info : http://www.quirksmode.org/css/box.html
 */
 ul.sections > li > div {
@@ -83,7 +82,7 @@ ul.sections > li > div {
 #jump_to a.large {
   display: none;
 }
-#jump_to a.small { 
+#jump_to a.small {
   font-size: 22px;
   font-weight: bold;
   color: #676767;
@@ -169,20 +168,11 @@ ul.sections > li > div {
   #container {
     position: relative;
   }
-  body { 
+  body {
     background-color: #F5F5FF;
     font-size: 15px;
-    line-height: 22px;    
+    line-height: 22px;
   }
-  p {
-    margin: 0 0 15px 0;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    margin: 0 0 15px 0;
-  }
-  h1 {
-    margin-top: 40px;
-  }  
   pre, tt, code {
     line-height: 18px;
   }
@@ -190,7 +180,7 @@ ul.sections > li > div {
   #jump_to {
     padding: 5px 10px;
   }
-  #jump_wrapper { 
+  #jump_wrapper {
     padding: 0;
   }
   #jump_to, #jump_page {
