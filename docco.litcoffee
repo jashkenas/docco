@@ -176,11 +176,13 @@ the specified output path.
     generateHtml = (source, sections, config) ->
       destination = (filepath) ->
         path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html')
-      hasTitle = marked.lexer(sections[0].docsText)[0].type is 'heading'
-      title = if hasTitle then null else path.basename(source)
+      firstBlock = marked.lexer(sections[0].docsText)[0]
+      hasTitle = firstBlock.type is 'heading'
+      title = if hasTitle then firstBlock.text else path.basename source
       dest  = destination source
       html  = config.template {
         title      : title,
+        hasTitle   : hasTitle
         sections   : sections,
         sources    : config.sources,
         path       : path,

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title></title>
+  <title>Docco</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
@@ -242,11 +242,13 @@ the specified output path.
           <div class="highlight"><pre><span class="nv">generateHtml = </span><span class="nf">(source, sections, config) -&gt;</span>
   <span class="nv">destination = </span><span class="nf">(filepath) -&gt;</span>
     <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">output</span><span class="p">,</span> <span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">filepath</span><span class="p">,</span> <span class="nx">path</span><span class="p">.</span><span class="nx">extname</span><span class="p">(</span><span class="nx">filepath</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;.html&#39;</span><span class="p">)</span>
-  <span class="nv">hasTitle = </span><span class="nx">marked</span><span class="p">.</span><span class="nx">lexer</span><span class="p">(</span><span class="nx">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">docsText</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">type</span> <span class="o">is</span> <span class="s">&#39;heading&#39;</span>
-  <span class="nv">title = </span><span class="k">if</span> <span class="nx">hasTitle</span> <span class="k">then</span> <span class="kc">null</span> <span class="k">else</span> <span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">source</span><span class="p">)</span>
+  <span class="nv">firstBlock = </span><span class="nx">marked</span><span class="p">.</span><span class="nx">lexer</span><span class="p">(</span><span class="nx">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">docsText</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="nv">hasTitle = </span><span class="nx">firstBlock</span><span class="p">.</span><span class="nx">type</span> <span class="o">is</span> <span class="s">&#39;heading&#39;</span>
+  <span class="nv">title = </span><span class="k">if</span> <span class="nx">hasTitle</span> <span class="k">then</span> <span class="nx">firstBlock</span><span class="p">.</span><span class="nx">text</span> <span class="k">else</span> <span class="nx">path</span><span class="p">.</span><span class="nx">basename</span> <span class="nx">source</span>
   <span class="nv">dest  = </span><span class="nx">destination</span> <span class="nx">source</span>
   <span class="nv">html  = </span><span class="nx">config</span><span class="p">.</span><span class="nx">template</span> <span class="p">{</span>
     <span class="nv">title      : </span><span class="nx">title</span><span class="p">,</span>
+    <span class="nv">hasTitle   : </span><span class="nx">hasTitle</span>
     <span class="nv">sections   : </span><span class="nx">sections</span><span class="p">,</span>
     <span class="nv">sources    : </span><span class="nx">config</span><span class="p">.</span><span class="nx">sources</span><span class="p">,</span>
     <span class="nv">path       : </span><span class="nx">path</span><span class="p">,</span>

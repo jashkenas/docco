@@ -140,15 +140,17 @@
   };
 
   generateHtml = function(source, sections, config) {
-    var dest, destination, hasTitle, html, title;
+    var dest, destination, firstBlock, hasTitle, html, title;
     destination = function(filepath) {
       return path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html');
     };
-    hasTitle = marked.lexer(sections[0].docsText)[0].type === 'heading';
-    title = hasTitle ? null : path.basename(source);
+    firstBlock = marked.lexer(sections[0].docsText)[0];
+    hasTitle = firstBlock.type === 'heading';
+    title = hasTitle ? firstBlock.text : path.basename(source);
     dest = destination(source);
     html = config.template({
       title: title,
+      hasTitle: hasTitle,
       sections: sections,
       sources: config.sources,
       path: path,

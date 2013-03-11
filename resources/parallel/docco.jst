@@ -28,7 +28,7 @@
       </ul>
     <% } %>
     <ul class="sections">
-        <% if (title) { %>
+        <% if (!hasTitle) { %>
           <li id="title">
               <div class="annotation">
                   <h1><%= title %></h1>
