@@ -4,7 +4,6 @@
 <head>
   <title>Docco</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
   <link rel="stylesheet" media="all" href="resources/linear/docco.css" />
 </head>
@@ -114,8 +113,8 @@ out in an HTML template.
           <div class="highlight"><pre><span class="nb">document</span> <span class="o">=</span> <span class="nf">(config) -&gt;</span>
   <span class="nx">exec</span> <span class="s">&quot;mkdir -p </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">output</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
 
-    <span class="nx">exec</span> <span class="s">&quot;cp </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">css</span><span class="si">}</span><span class="s"> </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">output</span><span class="si">}</span><span class="s">&quot;</span>
-    <span class="nx">exec</span> <span class="s">&quot;cp -R </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">public</span><span class="si">}</span><span class="s"> </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">output</span><span class="si">}</span><span class="s">&quot;</span> <span class="k">if</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">existsSync</span> <span class="nx">config</span><span class="p">.</span><span class="nx">public</span>
+    <span class="nx">exec</span> <span class="s">&quot;cp -f </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">css</span><span class="si">}</span><span class="s"> </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">output</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="nx">exec</span> <span class="s">&quot;cp -fR </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">public</span><span class="si">}</span><span class="s"> </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">output</span><span class="si">}</span><span class="s">&quot;</span> <span class="k">if</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">existsSync</span> <span class="nx">config</span><span class="p">.</span><span class="nx">public</span>
     <span class="nv">files = </span><span class="nx">config</span><span class="p">.</span><span class="nx">sources</span><span class="p">.</span><span class="nx">slice</span><span class="p">()</span>
 
     <span class="nv">nextFile = </span><span class="nf">-&gt;</span>
