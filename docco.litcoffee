@@ -299,10 +299,8 @@ Run Docco over a list of `sources` with the given `options`.
       config[key] = defaults[key] for key,value of defaults
       config[key] = value for key,value of options if key of defaults
 
-      resolved = []
-      resolved = resolved.concat(resolveSource(src)) for src in sources
-      config.sources = resolved.filter((source) -> getLanguage source, config).sort()
-      console.log "docco: skipped unknown type (#{m})" for m in resolved when m not in config.sources
+      config.sources = sources.filter((source) -> getLanguage source, config).sort()
+      console.log "docco: skipped unknown type (#{m})" for m in sources when m not in config.sources
 
       config.doccoTemplate = _.template fs.readFileSync(config.template).toString()
       doccoStyles = fs.readFileSync(config.css).toString()
@@ -315,24 +313,7 @@ Run Docco over a list of `sources` with the given `options`.
           generateDocumentation files.shift(), config, nextFile if files.length
         nextFile()
 
-Resolve Wildcard Source Inputs
-------------------------------
-
-Resolve a wildcard `source` input to the files it matches.
-
-    resolveSource = (source) ->
-      return source if not source.match(/([\*\?])/)
-      regex_str = path.basename(source)
-        .replace(/\./g, "\\$&")
-        .replace(/\*/,".*")
-        .replace(/\?/,".")
-      regex = new RegExp('^(' + regex_str + ')$')
-      file_path = path.dirname(source)
-      files = fs.readdirSync file_path
-      return (path.join(file_path,file) for file in files when file.match regex)
-
 Public API
 ----------
 
-    module.exports = {run, document, parse, resolveSource, version, defaults,
-      languages, ensureDirectory}
+    Docco = module.exports = {run, document, parse, version}

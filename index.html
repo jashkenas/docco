@@ -744,10 +744,8 @@ Parse command line using <a href="https://github.com/visionmedia/commander.js">C
 
             </div>
             
-            <div class="content"><div class="highlight"><pre>  <span class="nv">resolved = </span><span class="p">[]</span>
-  <span class="nv">resolved = </span><span class="nx">resolved</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">resolveSource</span><span class="p">(</span><span class="nx">src</span><span class="p">))</span> <span class="k">for</span> <span class="nx">src</span> <span class="k">in</span> <span class="nx">sources</span>
-  <span class="nv">config.sources = </span><span class="nx">resolved</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nf">(source) -&gt;</span> <span class="nx">getLanguage</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">config</span><span class="p">).</span><span class="nx">sort</span><span class="p">()</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&quot;docco: skipped unknown type (</span><span class="si">#{</span><span class="nx">m</span><span class="si">}</span><span class="s">)&quot;</span> <span class="k">for</span> <span class="nx">m</span> <span class="k">in</span> <span class="nx">resolved</span> <span class="k">when</span> <span class="nx">m</span> <span class="o">not</span> <span class="k">in</span> <span class="nx">config</span><span class="p">.</span><span class="nx">sources</span></pre></div></div>
+            <div class="content"><div class="highlight"><pre>  <span class="nv">config.sources = </span><span class="nx">sources</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nf">(source) -&gt;</span> <span class="nx">getLanguage</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">config</span><span class="p">).</span><span class="nx">sort</span><span class="p">()</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&quot;docco: skipped unknown type (</span><span class="si">#{</span><span class="nx">m</span><span class="si">}</span><span class="s">)&quot;</span> <span class="k">for</span> <span class="nx">m</span> <span class="k">in</span> <span class="nx">sources</span> <span class="k">when</span> <span class="nx">m</span> <span class="o">not</span> <span class="k">in</span> <span class="nx">config</span><span class="p">.</span><span class="nx">sources</span></pre></div></div>
             
         </li>
         
@@ -793,24 +791,11 @@ Parse command line using <a href="https://github.com/visionmedia/commander.js">C
                 <a class="pilcrow" href="#section-35">&#182;</a>
               </div>            
               
-<h2>Resolve Wildcard Source Inputs</h2>
-<p>Resolve a wildcard <code>source</code> input to the files it matches.
-
-
-</p>
+<h2>Public API</h2>
 
             </div>
             
-            <div class="content"><div class="highlight"><pre><span class="nv">resolveSource = </span><span class="nf">(source) -&gt;</span>
-  <span class="k">return</span> <span class="nx">source</span> <span class="k">if</span> <span class="o">not</span> <span class="nx">source</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/([\*\?])/</span><span class="p">)</span>
-  <span class="nv">regex_str = </span><span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">source</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\./g</span><span class="p">,</span> <span class="s">&quot;\\$&amp;&quot;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\*/</span><span class="p">,</span><span class="s">&quot;.*&quot;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\?/</span><span class="p">,</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
-  <span class="nv">regex = </span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s">&#39;^(&#39;</span> <span class="o">+</span> <span class="nx">regex_str</span> <span class="o">+</span> <span class="s">&#39;)$&#39;</span><span class="p">)</span>
-  <span class="nv">file_path = </span><span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="nx">source</span><span class="p">)</span>
-  <span class="nv">files = </span><span class="nx">fs</span><span class="p">.</span><span class="nx">readdirSync</span> <span class="nx">file_path</span>
-  <span class="k">return</span> <span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">file_path</span><span class="p">,</span><span class="nx">file</span><span class="p">)</span> <span class="k">for</span> <span class="nx">file</span> <span class="k">in</span> <span class="nx">files</span> <span class="k">when</span> <span class="nx">file</span><span class="p">.</span><span class="nx">match</span> <span class="nx">regex</span><span class="p">)</span></pre></div></div>
+            <div class="content"><div class="highlight"><pre><span class="nv">Docco = module.exports = </span><span class="p">{</span><span class="nx">run</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">parse</span><span class="p">,</span> <span class="nx">version</span><span class="p">}</span></pre></div></div>
             
         </li>
         
@@ -819,22 +804,6 @@ Parse command line using <a href="https://github.com/visionmedia/commander.js">C
             <div class="annotation">
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-36">&#182;</a>
-              </div>            
-              
-<h2>Public API</h2>
-
-            </div>
-            
-            <div class="content"><div class="highlight"><pre><span class="nv">module.exports = </span><span class="p">{</span><span class="nx">run</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">parse</span><span class="p">,</span> <span class="nx">resolveSource</span><span class="p">,</span> <span class="nx">version</span><span class="p">,</span> <span class="nx">defaults</span><span class="p">,</span>
-  <span class="nx">languages</span><span class="p">,</span> <span class="nx">ensureDirectory</span><span class="p">}</span></pre></div></div>
-            
-        </li>
-        
-           
-        <li id="section-37">
-            <div class="annotation">
-              <div class="pilwrap">
-                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>            
               
 
