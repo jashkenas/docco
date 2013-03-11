@@ -22,8 +22,5 @@
   "main" :        "./docco",
   "bin": {
     "docco":      "./bin/docco"
-  },
-  "scripts" : {
-    "test":       "cake test"
   }
 }
