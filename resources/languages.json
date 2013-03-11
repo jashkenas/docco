@@ -22,5 +22,6 @@
   ".markdown":  {"name": "markdown", "symbol": ""},
   ".less":      {"name": "scss", "symbol": "//"},
   ".m":         {"name": "objc", "symbol": "//"},
-  ".scala":     {"name": "scala", "symbol": "//"}
+  ".scala":     {"name": "scala", "symbol": "//"},
+  ".cs":        {"name": "c#", "symbol": "//"}
 }
