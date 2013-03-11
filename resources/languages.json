@@ -1,4 +1,5 @@
 { ".coffee":    {"name": "coffee-script", "symbol": "#"},
+  ".litcoffee": {"name": "coffee-script", "symbol": "#", "literate": true},
   ".ls":        {"name": "livescript", "symbol": "#"},
   ".rb":        {"name": "ruby", "symbol": "#"},
   ".py":        {"name": "python", "symbol": "#"},
@@ -17,8 +18,8 @@
   ".hs":        {"name": "haskell", "symbol": "--"},
   ".erl":       {"name": "erlang", "symbol": "%"},
   ".hrl":       {"name": "erlang", "symbol": "%"},
-  ".md":        {"name": "text", "symbol": ""},
-  ".markdown":  {"name": "text", "symbol": ""},
+  ".md":        {"name": "markdown", "symbol": ""},
+  ".markdown":  {"name": "markdown", "symbol": ""},
   ".less":      {"name": "scss", "symbol": "//"},
   ".m":         {"name": "objc", "symbol": "//"},
   ".scala":     {"name": "scala", "symbol": "//"}

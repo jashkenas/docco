@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "commander": ">= 0.5.2",
-    "marked":    ">= 0.2.7"
+    "marked":    ">= 0.2.7",
+    "underscore":">= 1.0.0"
   },
   "main" :        "./docco",
   "bin": {

@@ -79,6 +79,13 @@ follows it, and create an individual **section** for it.
       save = (docsText, codeText) ->
         sections.push {docsText, codeText}
 
+      if language.literate
+        for line, i in lines
+          lines[i] = if match = (/^([ ]{4}|\t)/).exec line
+            line[match[0].length..]
+          else
+            '# ' + line
+
       for line in lines
         if line.match(language.commentMatcher) and not line.match(language.commentFilter)
           if hasCode
@@ -89,6 +96,7 @@ follows it, and create an individual **section** for it.
           hasCode = yes
           codeText += line + '\n'
       save docsText, codeText
+
       sections
 
 Highlights parsed sections of code, using **Pygments** over stdio,
@@ -150,7 +158,7 @@ the specified output path.
 
     generateHtml = (source, sections, config) ->
       destination = (filepath) ->
-        path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html')
+        path.join(config.output, path.basename(filepath, config.fullExtension) + '.html')
       title = path.basename source
       dest  = destination source
       html  = config.doccoTemplate {
@@ -170,16 +178,17 @@ Helpers & Setup
 
 Require our external dependencies.
 
+    _             = require 'underscore'
     fs            = require 'fs'
     path          = require 'path'
     marked        = require 'marked'
-    {spawn, exec} = require 'child_process'
     commander     = require 'commander'
+    {spawn, exec} = require 'child_process'
 
 Read resource file and return its content.
 
     getResource = (name) ->
-      fullPath = path.join __dirname, '..', 'resources', name
+      fullPath = path.join __dirname, 'resources', name
       fs.readFileSync(fullPath).toString()
 
 Languages are stored in JSON format in the file `resources/languages.json`
@@ -218,7 +227,15 @@ Build out the appropriate matchers and delimiters for each language.
 
 Get the current language we're documenting, based on the extension.
 
-    getLanguage = (source, config) -> languages[config.extension or path.extname(source)]
+    getLanguage = (source, config) ->
+      ext  = config.fullExtension = config.extension or path.extname(source)
+      lang = languages[ext]
+      if lang.name is 'markdown'
+        codeExt = path.extname(path.basename(source, ext))
+        if codeExt and codeLang = languages[codeExt]
+          config.fullExtension = codeExt + ext
+          lang = _.extend {}, codeLang, {literate: yes}
+      lang
 
 Ensure that the destination directory exists.
 
@@ -230,22 +247,6 @@ Ensure that the destination directory exists.
           return ensureDirectory path.dirname(dir), (er, made) ->
             if er then cb er, made else ensureDirectory dir, cb, made
         cb er, made
-
-Micro-templating, originally by John Resig, borrowed by way of
-[Underscore.js](http://documentcloud.github.com/underscore/).
-
-    template = (str) ->
-      new Function 'obj',
-        'var p=[],print=function(){p.push.apply(p,arguments);};' +
-        'with(obj){p.push(\'' +
-        str.replace(/[\r\t\n]/g, " ")
-           .replace(/'(?=[^<]*%>)/g,"\t")
-           .split("'").join("\\'")
-           .split("\t").join("'")
-           .replace(/<%=(.+?)%>/g, "',$1,'")
-           .split('<%').join("');")
-           .split('%>').join("p.push('") +
-           "');}return p.join('');"
 
 The start of each Pygments highlight block.
 
@@ -303,7 +304,7 @@ Run Docco over a list of `sources` with the given `options`.
       config.sources = resolved.filter((source) -> getLanguage source, config).sort()
       console.log "docco: skipped unknown type (#{m})" for m in resolved when m not in config.sources
 
-      config.doccoTemplate = template fs.readFileSync(config.template).toString()
+      config.doccoTemplate = _.template fs.readFileSync(config.template).toString()
       doccoStyles = fs.readFileSync(config.css).toString()
 
       ensureDirectory config.output, ->
@@ -333,5 +334,5 @@ Resolve a wildcard `source` input to the files it matches.
 Public API
 ----------
 
-module.exports = {run, document, parse, resolveSource, version, defaults,
-  languages, ensureDirectory}
+    module.exports = {run, document, parse, resolveSource, version, defaults,
+      languages, ensureDirectory}
