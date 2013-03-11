@@ -274,7 +274,7 @@ the specified output path.
             
             <div class="content"><div class="highlight"><pre><span class="nv">generateHtml = </span><span class="nf">(source, sections, config) -&gt;</span>
   <span class="nv">destination = </span><span class="nf">(filepath) -&gt;</span>
-    <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">output</span><span class="p">,</span> <span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">filepath</span><span class="p">,</span> <span class="nx">config</span><span class="p">.</span><span class="nx">fullExtension</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;.html&#39;</span><span class="p">)</span>
+    <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">output</span><span class="p">,</span> <span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">filepath</span><span class="p">,</span> <span class="nx">path</span><span class="p">.</span><span class="nx">extname</span><span class="p">(</span><span class="nx">filepath</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;.html&#39;</span><span class="p">)</span>
   <span class="nv">title = </span><span class="nx">path</span><span class="p">.</span><span class="nx">basename</span> <span class="nx">source</span>
   <span class="nv">dest  = </span><span class="nx">destination</span> <span class="nx">source</span>
   <span class="nv">html  = </span><span class="nx">config</span><span class="p">.</span><span class="nx">doccoTemplate</span> <span class="p">{</span>
@@ -514,12 +514,11 @@ on this to recover the original sections.
             </div>
             
             <div class="content"><div class="highlight"><pre><span class="nv">getLanguage = </span><span class="nf">(source, config) -&gt;</span>
-  <span class="nv">ext  = config.fullExtension = </span><span class="nx">config</span><span class="p">.</span><span class="nx">extension</span> <span class="o">or</span> <span class="nx">path</span><span class="p">.</span><span class="nx">extname</span><span class="p">(</span><span class="nx">source</span><span class="p">)</span>
+  <span class="nv">ext  = </span><span class="nx">config</span><span class="p">.</span><span class="nx">extension</span> <span class="o">or</span> <span class="nx">path</span><span class="p">.</span><span class="nx">extname</span><span class="p">(</span><span class="nx">source</span><span class="p">)</span>
   <span class="nv">lang = </span><span class="nx">languages</span><span class="p">[</span><span class="nx">ext</span><span class="p">]</span>
   <span class="k">if</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">name</span> <span class="o">is</span> <span class="s">&#39;markdown&#39;</span>
     <span class="nv">codeExt = </span><span class="nx">path</span><span class="p">.</span><span class="nx">extname</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">source</span><span class="p">,</span> <span class="nx">ext</span><span class="p">))</span>
     <span class="k">if</span> <span class="nx">codeExt</span> <span class="o">and</span> <span class="nv">codeLang = </span><span class="nx">languages</span><span class="p">[</span><span class="nx">codeExt</span><span class="p">]</span>
-      <span class="nv">config.fullExtension = </span><span class="nx">codeExt</span> <span class="o">+</span> <span class="nx">ext</span>
       <span class="nv">lang = </span><span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="p">{},</span> <span class="nx">codeLang</span><span class="p">,</span> <span class="p">{</span><span class="nv">literate: </span><span class="kc">yes</span><span class="p">}</span>
   <span class="nx">lang</span></pre></div></div>
             

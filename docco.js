@@ -168,7 +168,7 @@
   generateHtml = function(source, sections, config) {
     var dest, destination, html, title;
     destination = function(filepath) {
-      return path.join(config.output, path.basename(filepath, config.fullExtension) + '.html');
+      return path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html');
     };
     title = path.basename(source);
     dest = destination(source);
@@ -220,12 +220,11 @@
 
   getLanguage = function(source, config) {
     var codeExt, codeLang, lang;
-    ext = config.fullExtension = config.extension || path.extname(source);
+    ext = config.extension || path.extname(source);
     lang = languages[ext];
     if (lang.name === 'markdown') {
       codeExt = path.extname(path.basename(source, ext));
       if (codeExt && (codeLang = languages[codeExt])) {
-        config.fullExtension = codeExt + ext;
         lang = _.extend({}, codeLang, {
           literate: true
         });

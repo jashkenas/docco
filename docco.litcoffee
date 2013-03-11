@@ -182,7 +182,7 @@ the specified output path.
 
     generateHtml = (source, sections, config) ->
       destination = (filepath) ->
-        path.join(config.output, path.basename(filepath, config.fullExtension) + '.html')
+        path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html')
       title = path.basename source
       dest  = destination source
       html  = config.doccoTemplate {
@@ -257,12 +257,11 @@ Build out the appropriate matchers and delimiters for each language.
 Get the current language we're documenting, based on the extension.
 
     getLanguage = (source, config) ->
-      ext  = config.fullExtension = config.extension or path.extname(source)
+      ext  = config.extension or path.extname(source)
       lang = languages[ext]
       if lang.name is 'markdown'
         codeExt = path.extname(path.basename(source, ext))
         if codeExt and codeLang = languages[codeExt]
-          config.fullExtension = codeExt + ext
           lang = _.extend {}, codeLang, {literate: yes}
       lang
 
