@@ -145,7 +145,7 @@
       return path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html');
     };
     firstBlock = marked.lexer(sections[0].docsText)[0];
-    hasTitle = firstBlock.type === 'heading';
+    hasTitle = (firstBlock != null ? firstBlock.type : void 0) === 'heading';
     title = hasTitle ? firstBlock.text : path.basename(source);
     dest = destination(source);
     html = config.template({

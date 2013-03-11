@@ -15,7 +15,6 @@
         <ul id="jump_to">
           <li>
             <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
-            <a class="small" href="javascript:void(0);">+</a>
             <div id="jump_wrapper">
             <div id="jump_page">
               <% for (var i=0, l=sources.length; i<l; i++) { %>
@@ -27,6 +26,9 @@
             </div>
           </li>
         </ul>
+      <% } %>
+      <% if (!hasTitle) { %>
+        <h1><%= title %></h1>
       <% } %>
       <% for (var i = 0, l = sections.length; i<l; i++) { %>
         <% var section = sections[i]; %>

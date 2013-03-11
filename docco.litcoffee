@@ -177,7 +177,7 @@ the specified output path.
       destination = (filepath) ->
         path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html')
       firstBlock = marked.lexer(sections[0].docsText)[0]
-      hasTitle = firstBlock.type is 'heading'
+      hasTitle = firstBlock?.type is 'heading'
       title = if hasTitle then firstBlock.text else path.basename source
       dest  = destination source
       html  = config.template {
