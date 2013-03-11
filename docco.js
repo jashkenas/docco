@@ -6,9 +6,9 @@
   document = function(config) {
     return exec("mkdir -p " + config.output, function() {
       var files, nextFile;
-      exec("cp " + config.css + " " + config.output);
+      exec("cp -f " + config.css + " " + config.output);
       if (fs.existsSync(config["public"])) {
-        exec("cp -R " + config["public"] + " " + config.output);
+        exec("cp -fR " + config["public"] + " " + config.output);
       }
       files = config.sources.slice();
       nextFile = function() {

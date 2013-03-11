@@ -70,8 +70,8 @@ out in an HTML template.
     document = (config) ->
       exec "mkdir -p #{config.output}", ->
 
-        exec "cp #{config.css} #{config.output}"
-        exec "cp -R #{config.public} #{config.output}" if fs.existsSync config.public
+        exec "cp -f #{config.css} #{config.output}"
+        exec "cp -fR #{config.public} #{config.output}" if fs.existsSync config.public
         files = config.sources.slice()
 
         nextFile = ->
