@@ -11,6 +11,17 @@
 <body>
   <div class="container">
     <div class="page">
+
+      <% if (hasTitle) { %>
+        <% var section = sections.shift(); %>
+        <%= section.docsHtml %>
+        <% if (!(/^\s*$/m).test(section.codeText)) { %>
+          <%= section.codeHtml %>
+        <% } %>
+      <% } else { %>
+        <h1><%= title %></h1>
+      <% } %>
+
       <% if (sources.length > 1) { %>
         <ul id="jump_to">
           <li>
@@ -27,13 +38,11 @@
           </li>
         </ul>
       <% } %>
-      <% if (!hasTitle) { %>
-        <h1><%= title %></h1>
-      <% } %>
+
       <% for (var i = 0, l = sections.length; i<l; i++) { %>
         <% var section = sections[i]; %>
         <%= section.docsHtml %>
-        <% if (section.codeText.replace(/\s/gm, '') != '') { %>
+        <% if (!(/^\s*$/m).test(section.codeText)) { %>
           <%= section.codeHtml %>
         <% } %>
       <% } %>

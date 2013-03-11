@@ -165,65 +165,6 @@ ul.sections {
   margin:0;
 }
 
-/*---------------------- Jump Page -----------------------------*/
-
-#jump_to, #jump_page {
-  margin: 0;
-  background: white;
-  -webkit-box-shadow: 0 0 25px #777; -moz-box-shadow: 0 0 25px #777;
-  -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px;
-  font: 16px Arial;
-  cursor: pointer;
-  text-align: right;
-  list-style: none;
-  padding: 5px 10px;
-}
-
-#jump_to a {
-  text-decoration: none;
-}
-
-#jump_to a.large {
-  display: inline-block;
-}
-
-#jump_to, #jump_wrapper {
-  position: fixed;
-  right: 0; top: 0;
-  padding: 10px 15px;
-  margin:0;
-}
-
-#jump_wrapper {
-  display: none;
-  padding:0;
-}
-
-#jump_to:hover #jump_wrapper {
-  display: block;
-}
-
-#jump_page {
-  padding: 5px 0 3px;
-  margin: 0 0 25px 25px;
-}
-
-#jump_to, #jump_page {
-  font: 10px Arial;
-  text-transform: uppercase;
-}
-
-#jump_page .source {
-  display: block;
-  padding: 5px 10px;
-  text-decoration: none;
-  border-top: 1px solid #eee;
-}
-
-#jump_page .source:hover {
-  background: #f5f5ff;
-}
-
 
 /*---------------------- Syntax Highlighting -----------------------------*/
 
