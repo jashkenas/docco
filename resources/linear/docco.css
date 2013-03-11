@@ -76,7 +76,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: "fleurons";
     color: #999;
     font-size: 80px;
-    margin: 10px 0 50px;
+    padding: 10px 0 30px;
   }
 
 a {
@@ -164,6 +164,35 @@ ul.sections {
   padding:0 0 5px 0;;
   margin:0;
 }
+
+.toc {
+  max-height: 0;
+  overflow: hidden;
+  text-align: center;
+  font-size: 13px;
+  line-height: 20px;
+  -moz-transition: max-height 1s;
+  -webkit-transition: max-height 1s;
+  transition: max-height 1s;
+}
+  .header:hover .toc {
+    max-height: 500px;
+  }
+  .toc h3 {
+    margin-top: 20px;
+  }
+  .toc ol {
+    margin: 0 0 20px 0;
+    display: inline-block;
+    text-align: left;
+    list-style-type: upper-roman;
+  }
+    .toc li {
+      font-family: 'novecento-bold';
+    }
+      .toc li a {
+        font-family: 'aller-light';
+      }
 
 
 /*---------------------- Syntax Highlighting -----------------------------*/
