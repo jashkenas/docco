@@ -305,14 +305,14 @@ Parse command line using [Commander JS](https://github.com/visionmedia/commander
     run = (args=process.argv) ->
       commander.version(version)
         .usage("[options] <filePattern ...>")
-        .option("-c, --css [file]","use a custom css file",defaults.css)
-        .option("-o, --output [path]","use a custom output path",defaults.output)
-        .option("-t, --template [file]","use a custom .jst template",defaults.template)
-        .option("-e, --extension <ext>","use the given file extension for all inputs",defaults.extension)
+        .option("-c, --css [file]","use a custom css file", defaults.css)
+        .option("-o, --output [path]","use a custom output path", defaults.output)
+        .option("-t, --template [file]","use a custom .jst template", defaults.template)
+        .option("-e, --extension <ext>","use the given file extension for all inputs", defaults.extension)
         .parse(args)
         .name = "docco"
       if commander.args.length
-        document(commander.args.slice(),commander)
+        document(commander.args.slice(), commander)
       else
         console.log commander.helpInformation()
 
