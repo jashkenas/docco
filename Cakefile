@@ -23,8 +23,8 @@ task 'install', 'install the `docco` command into /usr/local (or --prefix)', (op
 
 task 'doc', 'rebuild the Docco documentation', ->
   exec([
-    'bin/docco docco.litcoffee'
-    'sed "s/docco.css/resources\\/docco.css/" < docs/docco.html > index.html'
+    'bin/docco --layout linear docco.litcoffee'
+    'sed "s/docco.css/resources\\/linear\\/docco.css/" < docs/docco.html > index.html'
     'rm -r docs'
   ].join(' && '), (err) ->
     throw err if err

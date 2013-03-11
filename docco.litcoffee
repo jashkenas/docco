@@ -1,9 +1,9 @@
 Docco
 =====
 
-**Docco** is a quick-and-dirty, hundred-line-long, literate-programming-style
-documentation generator. It produces HTML
-that displays your comments alongside your code. Comments are passed through
+**Docco** is a quick-and-dirty literate-programming-style
+documentation generator. It produces an HTML document that displays your
+comments alongside your code. Comments are passed through
 [Markdown](http://daringfireball.net/projects/markdown/syntax), and code is
 passed through [Pygments](http://pygments.org/) syntax highlighting, if it
 is present on the system.
@@ -71,22 +71,12 @@ and merging them into an HTML template.
           generateHtml source, sections, config
           callback()
 
-    document = (sources, options = {}, callback = null) ->
-      config = {}
-      config[key] = defaults[key] for key,value of defaults
-      config[key] = value for key,value of options if key of defaults
-
-      config.sources = sources.filter((source) -> getLanguage source, config).sort()
-      console.log "docco: skipped unknown type (#{m})" for m in sources when m not in config.sources
-
-      config.doccoTemplate = _.template fs.readFileSync(config.template).toString()
-      doccoStyles = fs.readFileSync(config.css).toString()
-
+    document = (config) ->
       ensureDirectory config.output, ->
-        fs.writeFileSync path.join(config.output,path.basename(config.css)), doccoStyles
+        exec "cp #{config.css} #{config.output}"
+        exec "cp -R #{config.public} #{config.output}" if fs.existsSync config.public
         files = config.sources.slice()
         nextFile = ->
-          callback() if callback? and not files.length
           generateDocumentation files.shift(), config, nextFile if files.length
         nextFile()
 
@@ -189,7 +179,7 @@ the specified output path.
       hasTitle = marked.lexer(sections[0].docsText)[0].type is 'heading'
       title = if hasTitle then null else path.basename(source)
       dest  = destination source
-      html  = config.doccoTemplate {
+      html  = config.template {
         title      : title,
         sections   : sections,
         sources    : config.sources,
@@ -258,7 +248,7 @@ Get the current language we're documenting, based on the extension.
     getLanguage = (source, config) ->
       ext  = config.extension or path.extname(source)
       lang = languages[ext]
-      if lang.name is 'markdown'
+      if lang and lang.name is 'markdown'
         codeExt = path.extname(path.basename(source, ext))
         if codeExt and codeLang = languages[codeExt]
           lang = _.extend {}, codeLang, {literate: yes}
@@ -287,13 +277,40 @@ Extract the docco version from `package.json`
 
     version = JSON.parse(fs.readFileSync("#{__dirname}/package.json")).version
 
+
+Configuration
+-------------
+
 Default configuration options.
 
     defaults =
-      template : "#{__dirname}/resources/docco.jst"
-      css      : "#{__dirname}/resources/docco.css"
-      output   : "docs/"
-      extension: null
+      layout:     'parallel'
+      output:     'docs/'
+      template:   null
+      css:        null
+      extension:  null
+
+Configure this particular run of **Docco**, based on passed-in options.
+
+    configure = (options) ->
+      config = _.extend {}, defaults, _.pick(options, _.keys(defaults)...)
+
+      if options.template or options.css
+        config.layout = null
+      else
+        dir = config.layout = "#{__dirname}/resources/#{config.layout}"
+        config.public       = "#{dir}/public" if fs.existsSync "#{dir}/public"
+        config.template     = "#{dir}/docco.jst"
+        config.css          = "#{dir}/docco.css"
+      config.template = _.template fs.readFileSync(config.template).toString()
+
+      config.sources = options.args.filter((source) ->
+        lang = getLanguage source, config
+        console.warn "docco: skipped unknown type (#{m})" unless lang
+        lang
+      ).sort()
+
+      config
 
 
 Run from Commandline
@@ -304,15 +321,16 @@ Parse command line using [Commander JS](https://github.com/visionmedia/commander
 
     run = (args=process.argv) ->
       commander.version(version)
-        .usage("[options] <filePattern ...>")
-        .option("-c, --css [file]","use a custom css file", defaults.css)
-        .option("-o, --output [path]","use a custom output path", defaults.output)
-        .option("-t, --template [file]","use a custom .jst template", defaults.template)
-        .option("-e, --extension <ext>","use the given file extension for all inputs", defaults.extension)
+        .usage('[options] files')
+        .option('-l, --layout [name]',    'choose a built-in layout (parallel or linear)')
+        .option('-o, --output [path]',    'output to a given folder', defaults.output)
+        .option('-c, --css [file]',       'use a custom css file', defaults.css)
+        .option('-t, --template [file]',  'use a custom .jst template', defaults.template)
+        .option('-e, --extension [ext]',  'assume a file extension for all inputs', defaults.extension)
         .parse(args)
         .name = "docco"
       if commander.args.length
-        document(commander.args.slice(), commander)
+        document configure commander
       else
         console.log commander.helpInformation()
 
