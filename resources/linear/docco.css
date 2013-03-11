@@ -44,7 +44,7 @@
 
 body {
   font-family: "aller-light";
-  background: url('public/images/gray.png');
+  background: url('public/images/gray.png') #fff;
   background-size: 322px;
   margin: 0;
 }
