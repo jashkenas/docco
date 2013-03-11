@@ -22,9 +22,10 @@ Usage: docco [options] FILES
 
     -h, --help             output usage information
     -V, --version          output the version number
+    -l, --layout [layout]  choose a built-in layouts (parallel, linear)
     -c, --css [file]       use a custom css file
     -o, --output [path]    use a custom output path
     -t, --template [file]  use a custom .jst template
-    -e, --extension <ext>  use the given file extension for all inputs
+    -e, --extension [ext]  use the given file extension for all inputs
 
 For code syntax highlighting, install Python Pygments with `sudo easy_install pygments`
