@@ -1,5 +1,3 @@
-Docco         = require './src/docco'
-CoffeeScript  = require 'coffee-script'
 {spawn, exec} = require 'child_process'
 fs            = require 'fs'
 path          = require 'path'
@@ -8,7 +6,7 @@ option '-p', '--prefix [DIR]', 'set the installation prefix for `cake install`'
 option '-w', '--watch', 'continually build the docco library'
 
 task 'build', 'build the docco library', (options) ->
-  coffee = spawn 'coffee', ['-c' + (if options.watch then 'w' else ''), '-o', 'lib', 'src']
+  coffee = spawn 'coffee', ['-c' + (if options.watch then 'w' else ''), '.']
   coffee.stdout.on 'data', (data) -> console.log data.toString().trim()
   coffee.stderr.on 'data', (data) -> console.log data.toString().trim()
 
@@ -25,7 +23,7 @@ task 'install', 'install the `docco` command into /usr/local (or --prefix)', (op
 
 task 'doc', 'rebuild the Docco documentation', ->
   exec([
-    'bin/docco src/docco.coffee'
+    'bin/docco docco.litcoffee'
     'sed "s/docco.css/resources\\/docco.css/" < docs/docco.html > index.html'
     'rm -r docs'
   ].join(' && '), (err) ->
@@ -36,7 +34,8 @@ task 'test', 'run the Docco test suite', ->
   runTests()
 
 # Simple test runner, adapted from [CoffeeScript](http://coffeescript.org/).
-runTests = () ->
+runTests = ->
+  require 'coffee-script'
   startTime     = Date.now()
   currentFile   = null
   currentTest   = null
@@ -49,7 +48,7 @@ runTests = () ->
 
   # Wrap each assert function in a try/catch block to report passed/failed assertions.
   wrapAssert = (func,name) ->
-    return () ->
+    return ->
       try
         result = func.apply this, arguments
         ++passedAssert
@@ -64,7 +63,7 @@ runTests = () ->
       result
 
   global[name] = wrapAssert(func,name) for name, func of require 'assert'
-  global.Docco = Docco
+  global.Docco = require './docco'
 
   # Our test helper function for delimiting different test cases.
   global.test = (description, fn) ->

@@ -18,7 +18,7 @@
     "commander": ">= 0.5.2",
     "marked":    ">= 0.2.7"
   },
-  "main" :        "./lib/docco",
+  "main" :        "./docco",
   "bin": {
     "docco":      "./bin/docco"
   },
