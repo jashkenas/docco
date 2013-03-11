@@ -76,7 +76,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: "fleurons";
     color: #999;
     font-size: 80px;
-    padding: 10px 0 30px;
+    padding: 10px 0 25px;
   }
 
 a {
@@ -122,6 +122,7 @@ pre, tt, code {
     -moz-box-shadow:    inset 0 0 10px rgba(0,0,0,0.1);
     -webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
     box-shadow:         inset 0 0 10px rgba(0,0,0,0.1);
+    overflow-x: scroll;
   }
     .page pre code {
       border: 0;
@@ -163,6 +164,10 @@ ul.sections {
   list-style: none;
   padding:0 0 5px 0;;
   margin:0;
+}
+
+.page li p {
+  margin: 12px 0;
 }
 
 .toc {
