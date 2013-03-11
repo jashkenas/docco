@@ -260,6 +260,12 @@ ul.sections > li > div {
     opacity: 0;
     -webkit-transition: opacity 0.2s linear;
   }
+    .for-h1 .pilcrow {
+      top: 47px;
+    }
+    .for-h2 .pilcrow, .for-h3 .pilcrow, .for-h4 .pilcrow {
+      top: 35px;
+    }
 
   ul.sections > li > div.annotation:hover .pilcrow {
     opacity: 1;

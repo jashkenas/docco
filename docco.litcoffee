@@ -1,3 +1,6 @@
+Docco
+=====
+
 **Docco** is a quick-and-dirty, hundred-line-long, literate-programming-style
 documentation generator. It produces HTML
 that displays your comments alongside your code. Comments are passed through
@@ -183,7 +186,8 @@ the specified output path.
     generateHtml = (source, sections, config) ->
       destination = (filepath) ->
         path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html')
-      title = path.basename source
+      hasTitle = marked.lexer(sections[0].docsText)[0].type is 'heading'
+      title = if hasTitle then null else path.basename(source)
       dest  = destination source
       html  = config.doccoTemplate {
         title      : title,

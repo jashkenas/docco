@@ -27,19 +27,22 @@
         </li>
       </ul>
     <% } %>
-    <ul class="sections">  
-        <li id="title">
-            <div class="annotation">
-                <h1><%= title %></h1>
-            </div>
-        </li>
+    <ul class="sections">
+        <% if (title) { %>
+          <li id="title">
+              <div class="annotation">
+                  <h1><%= title %></h1>
+              </div>
+          </li>
+        <% } %>
         <% for (var i=0, l=sections.length; i<l; i++) { %>
-        <% var section = sections[i]; %>   
+        <% var section = sections[i]; %>
         <li id="section-<%= i + 1 %>">
             <div class="annotation">
-              <div class="pilwrap">
+              <% heading = section.docsHtml.match(/^\s*<(h\d)>/) %>
+              <div class="pilwrap <%= heading ? 'for-' + heading[1] : '' %>">
                 <a class="pilcrow" href="#section-<%= i + 1 %>">&#182;</a>
-              </div>            
+              </div>
               <%= section.docsHtml %>
             </div>
             <% if (section.codeText.replace(/\s/gm, '') != '') { %>
@@ -47,7 +50,7 @@
             <% } %>
         </li>
         <% } %>
-    </ul> 
+    </ul>
   </div>
 </body>
 </html>

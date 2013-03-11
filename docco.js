@@ -169,11 +169,12 @@
   };
 
   generateHtml = function(source, sections, config) {
-    var dest, destination, html, title;
+    var dest, destination, hasTitle, html, title;
     destination = function(filepath) {
       return path.join(config.output, path.basename(filepath, path.extname(filepath)) + '.html');
     };
-    title = path.basename(source);
+    hasTitle = marked.lexer(sections[0].docsText)[0].type === 'heading';
+    title = hasTitle ? null : path.basename(source);
     dest = destination(source);
     html = config.doccoTemplate({
       title: title,
