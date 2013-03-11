@@ -225,7 +225,7 @@ concatenating, and then splitting the result string wherever the marker occurs.
     <span class="nv">codeFragments = </span><span class="k">if</span> <span class="nx">output</span>
       <span class="nx">output</span><span class="p">.</span><span class="nx">split</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">codeSplitHtml</span>
     <span class="k">else</span>
-      <span class="p">(</span><span class="nx">htmlEscape</span> <span class="nx">section</span><span class="p">.</span><span class="nx">codeText</span> <span class="k">for</span> <span class="nx">section</span> <span class="k">in</span> <span class="nx">sections</span><span class="p">)</span>
+      <span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">escape</span> <span class="nx">section</span><span class="p">.</span><span class="nx">codeText</span> <span class="k">for</span> <span class="nx">section</span> <span class="k">in</span> <span class="nx">sections</span><span class="p">)</span>
     <span class="nv">docsFragments = </span><span class="nx">marked</span><span class="p">(</span><span class="nx">docs</span><span class="p">).</span><span class="nx">split</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">docsSplitHtml</span>
 
     <span class="k">for</span> <span class="nx">section</span><span class="p">,</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">sections</span>
@@ -236,24 +236,6 @@ concatenating, and then splitting the result string wherever the marker occurs.
   <span class="k">if</span> <span class="nx">pygments</span><span class="p">.</span><span class="nx">stdin</span><span class="p">.</span><span class="nx">writable</span>
     <span class="nx">pygments</span><span class="p">.</span><span class="nx">stdin</span><span class="p">.</span><span class="nx">write</span> <span class="nx">code</span>
     <span class="nx">pygments</span><span class="p">.</span><span class="nx">stdin</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span></pre></div>
-        
-      
-        
-        
-<p><strong>Escape</strong> an HTML string, in order to produce valid non-highlighted output when
-Pygments is not present on the system.
-
-
-</p>
-
-        
-          <div class="highlight"><pre><span class="nv">htmlEscape = </span><span class="nf">(string) -&gt;</span>
-  <span class="nx">string</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&amp;/g</span><span class="p">,</span> <span class="s">&#39;&amp;amp;&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&lt;/g</span><span class="p">,</span> <span class="s">&#39;&amp;lt;&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&gt;/g</span><span class="p">,</span> <span class="s">&#39;&amp;gt;&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&quot;/g</span><span class="p">,</span> <span class="s">&#39;&amp;quot;&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&#39;/g</span><span class="p">,</span> <span class="s">&#39;&amp;#x27;&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\//g</span><span class="p">,</span><span class="s">&#39;&amp;#x2F;&#39;</span><span class="p">)</span></pre></div>
         
       
         
@@ -518,7 +500,7 @@ file extension. Detect and tag &quot;literate&quot; <code>.ext.md</code> variant
       
         
         
-<h2>Run from Commandline</h2>
+<h2>Command Line Interface</h2>
 
         
       

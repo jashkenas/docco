@@ -159,7 +159,7 @@ concatenating, and then splitting the result string wherever the marker occurs.
         codeFragments = if output
           output.split lang.codeSplitHtml
         else
-          (htmlEscape section.codeText for section in sections)
+          (_.escape section.codeText for section in sections)
         docsFragments = marked(docs).split lang.docsSplitHtml
 
         for section, i in sections
@@ -170,17 +170,6 @@ concatenating, and then splitting the result string wherever the marker occurs.
       if pygments.stdin.writable
         pygments.stdin.write code
         pygments.stdin.end()
-
-**Escape** an HTML string, in order to produce valid non-highlighted output when
-Pygments is not present on the system.
-
-    htmlEscape = (string) ->
-      string.replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#x27;')
-        .replace(/\//g,'&#x2F;')
 
 Once all of the code has finished highlighting, we can **write** the resulting
 documentation file by passing the completed HTML sections into the template,
@@ -320,8 +309,8 @@ Keep it DRY. Extract the docco **version** from `package.json`
     version = JSON.parse(fs.readFileSync("#{__dirname}/package.json")).version
 
 
-Run from Commandline
---------------------
+Command Line Interface
+----------------------
 
 Finally, let's define the interface to run Docco from the command line.
 Parse options using [Commander](https://github.com/visionmedia/commander.js).
