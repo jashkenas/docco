@@ -8,7 +8,7 @@ option '-p', '--prefix [DIR]', 'set the installation prefix for `cake install`'
 option '-w', '--watch', 'continually build the docco library'
 
 task 'build', 'build the docco library', (options) ->
-  coffee = spawn 'node', ['./node_modules/coffee-script/bin/coffee','-c' + (if options.watch then 'w' else ''), '-o', 'lib', 'src']
+  coffee = spawn 'coffee', ['-c' + (if options.watch then 'w' else ''), '-o', 'lib', 'src']
   coffee.stdout.on 'data', (data) -> console.log data.toString().trim()
   coffee.stderr.on 'data', (data) -> console.log data.toString().trim()
 
@@ -34,7 +34,7 @@ task 'doc', 'rebuild the Docco documentation', ->
 
 task 'test', 'run the Docco test suite', ->
   runTests()
-    
+
 # Simple test runner, adapted from [CoffeeScript](http://coffeescript.org/).
 runTests = () ->
   startTime     = Date.now()
@@ -49,7 +49,7 @@ runTests = () ->
 
   # Wrap each assert function in a try/catch block to report passed/failed assertions.
   wrapAssert = (func,name) ->
-    return () -> 
+    return () ->
       try
         result = func.apply this, arguments
         ++passedAssert
@@ -58,12 +58,12 @@ runTests = () ->
         e.description = arguments[2] if arguments.length == 3
         e.source      = currentSource
         e.testName    = currentTest
-        failures.push 
+        failures.push
           filename: currentFile
-          error: e 
+          error: e
       result
 
-  global[name] = wrapAssert(func,name) for name, func of require 'assert'    
+  global[name] = wrapAssert(func,name) for name, func of require 'assert'
   global.Docco = Docco
 
   # Our test helper function for delimiting different test cases.
@@ -78,7 +78,7 @@ runTests = () ->
       e.testName    = currentTest
       e.description = description if description?
       e.source      = fn.toString() if fn.toString?
-      failures.push filename: currentFile, error: e 
+      failures.push filename: currentFile, error: e
 
   # When all the tests have run, collect and print errors.
   # If a stacktrace is available, output the compiled function source.
