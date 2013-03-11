@@ -96,12 +96,13 @@ follows it, and create an individual **section** for it.
       language = getLanguage source, config
       hasCode  = docsText = codeText = ''
 
-      save = (docsText, codeText) ->
+      save = ->
         sections.push {docsText, codeText}
+        hasCode = docsText = codeText = ''
 
       if language.literate
         for line, i in lines
-          lines[i] = if blank line
+          lines[i] = if /^\s*$/.test line
             ''
           else if match = (/^([ ]{4}|\t)/).exec line
             line[match[0].length..]
@@ -110,16 +111,15 @@ follows it, and create an individual **section** for it.
 
       for line in lines
         if (not line and prev is 'text') or (line.match(language.commentMatcher) and not line.match(language.commentFilter))
-          if hasCode
-            save docsText, codeText
-            hasCode = docsText = codeText = ''
-          docsText += line.replace(language.commentMatcher, '') + '\n'
+          save() if hasCode
+          docsText += (line = line.replace(language.commentMatcher, '')) + '\n'
+          save() if /^(---+|===+)$/.test line
           prev = 'text'
         else
           hasCode = yes
           codeText += line + '\n'
           prev = 'code'
-      save docsText, codeText
+      save()
 
       sections
 
@@ -214,11 +214,6 @@ Read resource file and return its content.
     getResource = (name) ->
       fullPath = path.join __dirname, 'resources', name
       fs.readFileSync(fullPath).toString()
-
-Regex to match a blank line.
-
-    blank = (line) ->
-      /^\s*$/.test line
 
 Languages are stored in JSON format in the file `resources/languages.json`
 Each item maps the file extension to the name of the Pygments lexer and the

@@ -19,7 +19,7 @@ a:visited {
 }
 
 p, ul, ol {
-  margin: 15px 0;
+  margin: 0 0 15px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -278,7 +278,7 @@ ul.sections > li > div {
     padding: 10px 25px 1px 50px;
   }
   ul.sections > li > div.content {
-    padding: 14px 15px 16px 25px;
+    padding: 9px 15px 16px 25px;
   }
 }
 
