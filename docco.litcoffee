@@ -288,7 +288,7 @@ A function to get the current language we're documenting, based on the
 file extension. Detect and tag "literate" `.ext.md` variants.
 
     getLanguage = (source, config) ->
-      ext  = config.extension or path.extname(source)
+      ext  = config.extension or path.extname(source) or path.basename(source)
       lang = languages[ext]
       if lang and lang.name is 'markdown'
         codeExt = path.extname(path.basename(source, ext))

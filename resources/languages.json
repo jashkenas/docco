@@ -23,5 +23,6 @@
   ".less":      {"name": "scss", "symbol": "//"},
   ".m":         {"name": "objc", "symbol": "//"},
   ".scala":     {"name": "scala", "symbol": "//"},
-  ".cs":        {"name": "c#", "symbol": "//"}
+  ".cs":        {"name": "c#", "symbol": "//"},
+  "Makefile":   {"name": "make", "symbol": "#"}
 }
