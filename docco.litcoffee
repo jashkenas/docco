@@ -74,24 +74,30 @@ sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template.
 
     document = ->
-      exec "mkdir -p #{config.output}", ->
+      wrench.mkdirSyncRecursive config.output
 
-        exec "cp -f #{config.css} #{config.output}"
-        exec "cp -fR #{config.public} #{config.output}" if fs.existsSync config.public
-        files = config.sources.slice()
+      cssName = path.basename config.css
+      cssOutput = path.join config.output, cssName
+      cssContents = fs.readFileSync config.css
+      fs.writeFileSync cssOutput, cssContents
 
-        nextFile = ->
-          source = files.shift()
-          fs.readFile source, (error, buffer) ->
-            throw error if error
+      if fs.existsSync config.public
+        wrench.copyDirSyncRecursive config.public, config.output, preserve: yes
 
-            code = buffer.toString()
-            sections = parse source, code
-            format source, sections
-            write source, sections
-            nextFile() if files.length
+      files = config.sources.slice()
 
-        nextFile()
+      nextFile = ->
+        source = files.shift()
+        fs.readFile source, (error, buffer) ->
+          throw error if error
+
+          code = buffer.toString()
+          sections = parse source, code
+          format source, sections
+          write source, sections
+          nextFile() if files.length
+
+      nextFile()
 
 Given a string of source code, **parse** out each block of prose and the code that
 follows it — by detecting which is which, line by line — and then create an
@@ -216,8 +222,8 @@ Require our external dependencies.
     path          = require 'path'
     marked        = require 'marked'
     commander     = require 'commander'
+    wrench        = require 'wrench'
     {highlight}   = require 'highlight.js'
-    {spawn, exec} = require 'child_process'
 
 Languages are stored in JSON in the file `resources/languages.json`.
 Each item maps the file extension to the name of the language and the
