@@ -7,6 +7,7 @@
     return exec("mkdir -p " + config.output, function() {
       var files, nextFile;
       exec("cp -f " + config.css + " " + config.output);
+      exec("cp -f " + config.js + " " + config.output);
       if (fs.existsSync(config["public"])) {
         exec("cp -fR " + config["public"] + " " + config.output);
       }
@@ -111,6 +112,7 @@
     output: 'docs/',
     template: null,
     css: null,
+    js: null,
     extension: null
   };
 
@@ -126,6 +128,7 @@
       }
       config.template = "" + dir + "/docco.jst";
       config.css = "" + dir + "/docco.css";
+      config.js = "" + dir + "/docco.js";
     }
     config.template = _.template(fs.readFileSync(config.template).toString());
     return config.sources = options.args.filter(function(source) {

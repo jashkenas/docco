@@ -77,7 +77,7 @@ out in an HTML template.
       exec "mkdir -p #{config.output}", ->
 
         exec "cp -f #{config.css} #{config.output}"
-        exec "cp -f #{config.css} #{config.output}"
+        exec "cp -f #{config.js} #{config.output}"
         exec "cp -fR #{config.public} #{config.output}" if fs.existsSync config.public
         files = config.sources.slice()
 
