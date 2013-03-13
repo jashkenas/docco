@@ -77,6 +77,7 @@ out in an HTML template.
       exec "mkdir -p #{config.output}", ->
 
         exec "cp -f #{config.css} #{config.output}"
+        exec "cp -f #{config.css} #{config.output}"
         exec "cp -fR #{config.public} #{config.output}" if fs.existsSync config.public
         files = config.sources.slice()
 
@@ -181,6 +182,7 @@ options.
       output:     'docs/'
       template:   null
       css:        null
+      js:         null
       extension:  null
 
 **Configure** this particular run of Docco. We might use a passed-in external
@@ -197,6 +199,7 @@ source files for languages for which we have definitions.
         config.public       = "#{dir}/public" if fs.existsSync "#{dir}/public"
         config.template     = "#{dir}/docco.jst"
         config.css          = "#{dir}/docco.css"
+        config.js           = "#{dir}/docco.js"
       config.template = _.template fs.readFileSync(config.template).toString()
 
       config.sources = options.args.filter((source) ->
