@@ -86,6 +86,7 @@ out in an HTML template.
         complete   = ->
           exec [
             "cp -f #{config.css} #{config.output}"
+            "cp -f #{config.js} #{config.output}"
             "cp -fR #{config.public} #{config.output}" if fs.existsSync config.public
           ].join(' && '), callback
 
@@ -193,6 +194,7 @@ options.
       output:     'docs/'
       template:   null
       css:        null
+      js:         null
       extension:  null
 
 **Configure** this particular run of Docco. We might use a passed-in external
@@ -209,6 +211,7 @@ source files for languages for which we have definitions.
         config.public       = "#{dir}/public" if fs.existsSync "#{dir}/public"
         config.template     = "#{dir}/docco.jst"
         config.css          = options.css or "#{dir}/docco.css"
+        config.js           = options.js or "#{dir}/docco.js"
       config.template = _.template fs.readFileSync(config.template).toString()
 
       config.sources = options.args.filter((source) ->
