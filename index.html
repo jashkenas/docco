@@ -80,12 +80,19 @@ also by Mr. Tomayko.</p>
 <a href="http://fogus.me/fun/marginalia/">Marginalia</a> is a bit of a departure from
 &quot;quick-and-dirty&quot;, but it&#39;ll get the job done.</p>
 </li>
+<li><p>There&#39;s a <strong>Go</strong> port called <a href="http://nikhilm.github.com/gocco/">Gocco</a>,
+written by <a href="https://github.com/nikhilm">Nikhil Marathe</a>.</p>
+</li>
 <li><p><strong>Lua</strong> enthusiasts can get their fix with
 <a href="https://github.com/rgieseke">Robert Gieseke</a>&#39;s <a href="http://rgieseke.github.com/locco/">Locco</a>.</p>
 </li>
 <li><p>And if you happen to be a <strong>.NET</strong>
 aficionado, check out <a href="https://github.com/dontangg">Don Wilson</a>&#39;s
 <a href="http://dontangg.github.com/nocco/">Nocco</a>.</p>
+</li>
+<li><p>Going further afield from the quick-and-dirty, <a href="http://nevir.github.com/groc/">Groc</a>
+is a <strong>CoffeeScript</strong> fork of Docco that adds a searchable table of contents,
+and aims to gracefully handle large projects with complex heirarchies of code.</p>
 </li>
 </ul>
 <p>Note that not all ports will support all Docco features ... yet.
@@ -393,7 +400,7 @@ Parse options using <a href="https://github.com/visionmedia/commander.js">Comman
   c = config
   commander.version(version)
     .usage(<span class="string">'[options] files'</span>)
-    .option(<span class="string">'-l, --layout [name]'</span>,    <span class="string">'choose a layout (parallel, linear or classic)'</span>, c.parallel)
+    .option(<span class="string">'-l, --layout [name]'</span>,    <span class="string">'choose a layout (parallel, linear or classic)'</span>, c.layout)
     .option(<span class="string">'-o, --output [path]'</span>,    <span class="string">'output to a given folder'</span>, c.output)
     .option(<span class="string">'-c, --css [file]'</span>,       <span class="string">'use a custom css file'</span>, c.css)
     .option(<span class="string">'-t, --template [file]'</span>,  <span class="string">'use a custom .jst template'</span>, c.template)

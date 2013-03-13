@@ -48,12 +48,19 @@ also by Mr. Tomayko.
 [Marginalia](http://fogus.me/fun/marginalia/) is a bit of a departure from
 "quick-and-dirty", but it'll get the job done.
 
+* There's a **Go** port called [Gocco](http://nikhilm.github.com/gocco/),
+written by [Nikhil Marathe](https://github.com/nikhilm).
+
 * **Lua** enthusiasts can get their fix with
 [Robert Gieseke](https://github.com/rgieseke)'s [Locco](http://rgieseke.github.com/locco/).
 
 * And if you happen to be a **.NET**
 aficionado, check out [Don Wilson](https://github.com/dontangg)'s
 [Nocco](http://dontangg.github.com/nocco/).
+
+* Going further afield from the quick-and-dirty, [Groc](http://nevir.github.com/groc/)
+is a **CoffeeScript** fork of Docco that adds a searchable table of contents,
+and aims to gracefully handle large projects with complex heirarchies of code.
 
 Note that not all ports will support all Docco features ... yet.
 
