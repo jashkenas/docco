@@ -187,7 +187,7 @@
       args = process.argv;
     }
     c = config;
-    commander.version(version).usage('[options] files').option('-l, --layout [name]', 'choose a built-in layout (parallel or linear)', c.parallel).option('-o, --output [path]', 'output to a given folder', c.output).option('-c, --css [file]', 'use a custom css file', c.css).option('-t, --template [file]', 'use a custom .jst template', c.template).option('-e, --extension [ext]', 'assume a file extension for all inputs', c.extension).parse(args).name = "docco";
+    commander.version(version).usage('[options] files').option('-l, --layout [name]', 'choose a layout (parallel, linear or classic)', c.parallel).option('-o, --output [path]', 'output to a given folder', c.output).option('-c, --css [file]', 'use a custom css file', c.css).option('-t, --template [file]', 'use a custom .jst template', c.template).option('-e, --extension [ext]', 'assume a file extension for all inputs', c.extension).parse(args).name = "docco";
     if (commander.args.length) {
       return document(configure(commander));
     } else {

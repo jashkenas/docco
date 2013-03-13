@@ -266,7 +266,7 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
       c = config
       commander.version(version)
         .usage('[options] files')
-        .option('-l, --layout [name]',    'choose a built-in layout (parallel or linear)', c.parallel)
+        .option('-l, --layout [name]',    'choose a layout (parallel, linear or classic)', c.parallel)
         .option('-o, --output [path]',    'output to a given folder', c.output)
         .option('-c, --css [file]',       'use a custom css file', c.css)
         .option('-t, --template [file]',  'use a custom .jst template', c.template)
