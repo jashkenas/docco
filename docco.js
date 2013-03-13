@@ -207,7 +207,7 @@
 
   getLanguage = function(source, config) {
     var codeExt, codeLang, lang;
-    ext = config.extension || path.extname(source);
+    ext = config.extension || path.extname(source) || path.basename(source);
     lang = languages[ext];
     if (lang && lang.name === 'markdown') {
       codeExt = path.extname(path.basename(source, ext));
