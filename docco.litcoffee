@@ -6,9 +6,8 @@ Docco
 It produces an HTML document that displays your comments intermingled with your
 code. All prose is passed through
 [Markdown](http://daringfireball.net/projects/markdown/syntax), and code is
-passed through [Pygments](http://pygments.org/) syntax highlighting (if you
-happen to have it installed). This page is the result of running Docco against
-its own
+passed through [Highlight.js](http://highlightjs.org/) syntax highlighting.
+This page is the result of running Docco against its own
 [source file](https://github.com/jashkenas/docco/blob/master/docco.litcoffee).
 
 1. Install Docco with **npm**: `sudo npm install -g docco`
@@ -67,7 +66,7 @@ assets, reading all the source files in, splitting them up into prose+code
 sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template.
 
-    document = (config) ->
+    document = ->
       exec "mkdir -p #{config.output}", ->
 
         exec "cp -f #{config.css} #{config.output}"
@@ -80,10 +79,10 @@ out in an HTML template.
             throw error if error
 
             code = buffer.toString()
-            sections = parse source, code, config
-            highlight source, sections, config, ->
-              writeHtml source, sections, config
-              nextFile() if files.length
+            sections = parse source, code
+            format source, sections
+            write source, sections
+            nextFile() if files.length
 
         nextFile()
 
@@ -92,10 +91,10 @@ follows it — by detecting which is which, line by line — and then create an
 individual **section** for it. Each section is an object with `docsText` and
 `codeText` properties, and eventually `docsHtml` and `codeHtml` as well.
 
-    parse = (source, code, config) ->
+    parse = (source, code) ->
       lines    = code.split '\n'
       sections = []
-      lang     = getLanguage source, config
+      lang     = getLanguage source
       hasCode  = docsText = codeText = ''
 
       save = ->
@@ -130,52 +129,22 @@ normal below.
 
       sections
 
-To **highlight** and format the now-parsed sections of code, we use **Pygments**
+To **format** and highlight the now-parsed sections of code, we use **Highlight.js**
 over stdio, and run the text of their corresponding comments through
-**Markdown**, using [Marked](https://github.com/chjj/marked). If Pygments is
-not present on the system, simply output the code without colors.
+**Markdown**, using [Marked](https://github.com/chjj/marked).
 
-We are able to process *all* of the sections with a single call to Pygments and
-a single call to Marked, by inserting marker comments between sections,
-concatenating, and then splitting the result string wherever the marker occurs.
-
-    highlight = (source, sections, config, callback) ->
-
-      lang = getLanguage source, config
-      pygments = spawn 'pygmentize', [
-        '-l', lang.name,
-        '-f', 'html',
-        '-O', 'encoding=utf-8,tabsize=2'
-      ]
-      output = ''
-      code = (section.codeText for section in sections).join lang.codeSplitText
-      docs = (section.docsText for section in sections).join lang.docsSplitText
-
-      pygments.stdout.on 'data', (result) ->
-        output += result if result
-
-      pygments.on 'exit', ->
-        output = output.replace(highlightStart, '').replace(highlightEnd, '')
-        codeFragments = if output
-          output.split lang.codeSplitHtml
-        else
-          (_.escape section.codeText for section in sections)
-        docsFragments = marked(docs).split lang.docsSplitHtml
-
-        for section, i in sections
-          section.codeHtml = highlightStart + codeFragments[i] + highlightEnd
-          section.docsHtml = docsFragments[i]
-        callback()
-
-      if pygments.stdin.writable
-        pygments.stdin.write code
-        pygments.stdin.end()
+    format = (source, sections) ->
+      language = getLanguage source
+      for section, i in sections
+        code = highlight(language.name, section.codeText).value .trim()
+        section.codeHtml = highlightStart + code + highlightEnd
+        section.docsHtml = marked(section.docsText)
 
 Once all of the code has finished highlighting, we can **write** the resulting
 documentation file by passing the completed HTML sections into the template,
 and rendering it to the specified output path.
 
-    writeHtml = (source, sections, config) ->
+    write = (source, sections) ->
 
       destination = (file) ->
         path.join(config.output, path.basename(file, path.extname(file)) + '.html')
@@ -200,7 +169,7 @@ Configuration
 Default configuration **options**. All of these may be overriden by command-line
 options.
 
-    defaults =
+    config =
       layout:     'parallel'
       output:     'docs/'
       template:   null
@@ -212,7 +181,7 @@ template, or one of the built-in **layouts**. We only attempt to process
 source files for languages for which we have definitions.
 
     configure = (options) ->
-      config = _.extend {}, defaults, _.pick(options, _.keys(defaults)...)
+      _.extend config, _.pick(options, _.keys(config)...)
 
       if options.template or options.css
         config.layout = null
@@ -229,8 +198,6 @@ source files for languages for which we have definitions.
         lang
       ).sort()
 
-      config
-
 
 Helpers & Initial Setup
 -----------------------
@@ -242,10 +209,11 @@ Require our external dependencies.
     path          = require 'path'
     marked        = require 'marked'
     commander     = require 'commander'
+    {highlight}   = require 'highlight.js'
     {spawn, exec} = require 'child_process'
 
 Languages are stored in JSON in the file `resources/languages.json`.
-Each item maps the file extension to the name of the Pygments lexer and the
+Each item maps the file extension to the name of the language and the
 `symbol` that indicates a line comment. To add support for a new programming
 language to Docco, just add it to the file.
 
@@ -263,31 +231,10 @@ Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\)) and interpolati
 
       l.commentFilter = /(^#![/]|^\s*#\{)/
 
-The dividing token we feed into Pygments, to delimit the boundaries between
-sections.
-
-      l.codeSplitText = "\n#{l.symbol}DIVIDER\n"
-
-The mirror of `codeSplitText` that we expect Pygments to return. We can split
-on this to recover the original sections.
-*Note: the class is "c" for Python and "c1" for the other languages.*
-
-      l.codeSplitHtml = ///\n*<span\sclass="c1?">#{l.symbol}DIVIDER<\/span>\n*///
-
-The dividing token we feed into Markdown, to delimit the boundaries between
-sections.
-
-      l.docsSplitText = "\n##{l.name}DOCDIVIDER\n"
-
-The mirror of `docsSplitText` that we expect markdown to return. We can split
-on this to recover the original sections.
-
-      l.docsSplitHtml = ///<h1>#{l.name}DOCDIVIDER</h1>///
-
 A function to get the current language we're documenting, based on the
 file extension. Detect and tag "literate" `.ext.md` variants.
 
-    getLanguage = (source, config) ->
+    getLanguage = (source) ->
       ext  = config.extension or path.extname(source) or path.basename(source)
       lang = languages[ext]
       if lang and lang.name is 'markdown'
@@ -316,14 +263,14 @@ Finally, let's define the interface to run Docco from the command line.
 Parse options using [Commander](https://github.com/visionmedia/commander.js).
 
     run = (args = process.argv) ->
-      d = defaults
+      c = config
       commander.version(version)
         .usage('[options] files')
-        .option('-l, --layout [name]',    'choose a built-in layout (parallel or linear)', d.parallel)
-        .option('-o, --output [path]',    'output to a given folder', d.output)
-        .option('-c, --css [file]',       'use a custom css file', d.css)
-        .option('-t, --template [file]',  'use a custom .jst template', d.template)
-        .option('-e, --extension [ext]',  'assume a file extension for all inputs', d.extension)
+        .option('-l, --layout [name]',    'choose a built-in layout (parallel or linear)', c.parallel)
+        .option('-o, --output [path]',    'output to a given folder', c.output)
+        .option('-c, --css [file]',       'use a custom css file', c.css)
+        .option('-t, --template [file]',  'use a custom .jst template', c.template)
+        .option('-e, --extension [ext]',  'assume a file extension for all inputs', c.extension)
         .parse(args)
         .name = "docco"
       if commander.args.length

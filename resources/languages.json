@@ -1,5 +1,5 @@
-{ ".coffee":    {"name": "coffee-script", "symbol": "#"},
-  ".litcoffee": {"name": "coffee-script", "symbol": "#", "literate": true},
+{ ".coffee":    {"name": "coffeescript", "symbol": "#"},
+  ".litcoffee": {"name": "coffeescript", "symbol": "#", "literate": true},
   ".ls":        {"name": "livescript", "symbol": "#"},
   ".rb":        {"name": "ruby", "symbol": "#"},
   ".py":        {"name": "python", "symbol": "#"},

@@ -24,15 +24,13 @@
 
       
         
-        
-<p><strong>Docco</strong> is a quick-and-dirty documentation generator, written in
+        <p><strong>Docco</strong> is a quick-and-dirty documentation generator, written in
 <a href="http://coffeescript.org/#literate">Literate CoffeeScript</a>.
 It produces an HTML document that displays your comments intermingled with your
 code. All prose is passed through
 <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>, and code is
-passed through <a href="http://pygments.org/">Pygments</a> syntax highlighting (if you
-happen to have it installed). This page is the result of running Docco against
-its own
+passed through <a href="http://highlightjs.org/">Highlight.js</a> syntax highlighting.
+This page is the result of running Docco against its own
 <a href="https://github.com/jashkenas/docco/blob/master/docco.litcoffee">source file</a>.
 
 </p>
@@ -65,8 +63,7 @@ language is also supported — just tack an <code>.md</code> extension on the en
         
       
         
-        
-<ul>
+        <ul>
 <li><p>If <strong>Node.js</strong> doesn&#39;t run on your platform, or you&#39;d prefer a more
 convenient package, get <a href="http://github.com/rtomayko">Ryan Tomayko</a>&#39;s
 <a href="http://rtomayko.github.com/rocco/rocco.html">Rocco</a>, the Ruby port that&#39;s
@@ -100,448 +97,324 @@ aficionado, check out <a href="https://github.com/dontangg">Don Wilson</a>&#39;s
         
       
         
-        
-<p>Generate the documentation for our configured source file by copying over static
+        <p>Generate the documentation for our configured source file by copying over static
 assets, reading all the source files in, splitting them up into prose+code
 sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template.
 
-
 </p>
 
         
-          <div class="highlight"><pre><span class="nb">document</span> <span class="o">=</span> <span class="nf">(config) -&gt;</span>
-  <span class="nx">exec</span> <span class="s">&quot;mkdir -p </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">output</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+          <div class="highlight"><pre><span class="function"><span class="title">document</span></span> = -&gt;
+  exec <span class="string">"mkdir -p <span class="subst">#{config.output}</span>"</span>, -&gt;
 
-    <span class="nx">exec</span> <span class="s">&quot;cp -f </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">css</span><span class="si">}</span><span class="s"> </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">output</span><span class="si">}</span><span class="s">&quot;</span>
-    <span class="nx">exec</span> <span class="s">&quot;cp -fR </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">public</span><span class="si">}</span><span class="s"> </span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">output</span><span class="si">}</span><span class="s">&quot;</span> <span class="k">if</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">existsSync</span> <span class="nx">config</span><span class="p">.</span><span class="nx">public</span>
-    <span class="nv">files = </span><span class="nx">config</span><span class="p">.</span><span class="nx">sources</span><span class="p">.</span><span class="nx">slice</span><span class="p">()</span>
+    exec <span class="string">"cp -f <span class="subst">#{config.css}</span> <span class="subst">#{config.output}</span>"</span>
+    exec <span class="string">"cp -fR <span class="subst">#{config.public}</span> <span class="subst">#{config.output}</span>"</span> <span class="keyword">if</span> fs.existsSync config.public
+    files = config.sources.slice()
 
-    <span class="nv">nextFile = </span><span class="nf">-&gt;</span>
-      <span class="nv">source = </span><span class="nx">files</span><span class="p">.</span><span class="nx">shift</span><span class="p">()</span>
-      <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span> <span class="nx">source</span><span class="p">,</span> <span class="nf">(error, buffer) -&gt;</span>
-        <span class="k">throw</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span>
+    <span class="function"><span class="title">nextFile</span></span> = -&gt;
+      source = files.shift()
+      fs.readFile source, (error, buffer) -&gt;
+        <span class="keyword">throw</span> error <span class="keyword">if</span> error
 
-        <span class="nv">code = </span><span class="nx">buffer</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
-        <span class="nv">sections = </span><span class="nx">parse</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">code</span><span class="p">,</span> <span class="nx">config</span>
-        <span class="nx">highlight</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">sections</span><span class="p">,</span> <span class="nx">config</span><span class="p">,</span> <span class="nf">-&gt;</span>
-          <span class="nx">writeHtml</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">sections</span><span class="p">,</span> <span class="nx">config</span>
-          <span class="nx">nextFile</span><span class="p">()</span> <span class="k">if</span> <span class="nx">files</span><span class="p">.</span><span class="nx">length</span>
+        code = buffer.toString()
+        sections = parse source, code
+        format source, sections
+        write source, sections
+        nextFile() <span class="keyword">if</span> files.length
 
-    <span class="nx">nextFile</span><span class="p">()</span></pre></div>
+    nextFile()</pre></div>
         
       
         
-        
-<p>Given a string of source code, <strong>parse</strong> out each block of prose and the code that
+        <p>Given a string of source code, <strong>parse</strong> out each block of prose and the code that
 follows it — by detecting which is which, line by line — and then create an
 individual <strong>section</strong> for it. Each section is an object with <code>docsText</code> and
 <code>codeText</code> properties, and eventually <code>docsHtml</code> and <code>codeHtml</code> as well.
 
-
 </p>
 
         
-          <div class="highlight"><pre><span class="nv">parse = </span><span class="nf">(source, code, config) -&gt;</span>
-  <span class="nv">lines    = </span><span class="nx">code</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39;\n&#39;</span>
-  <span class="nv">sections = </span><span class="p">[]</span>
-  <span class="nv">lang     = </span><span class="nx">getLanguage</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">config</span>
-  <span class="nv">hasCode  = docsText = codeText = </span><span class="s">&#39;&#39;</span>
+          <div class="highlight"><pre><span class="function"><span class="title">parse</span></span> = (source, code) -&gt;
+  lines    = code.split <span class="string">'\n'</span>
+  sections = []
+  lang     = getLanguage source
+  hasCode  = docsText = codeText = <span class="string">''</span>
 
-  <span class="nv">save = </span><span class="nf">-&gt;</span>
-    <span class="nx">sections</span><span class="p">.</span><span class="nx">push</span> <span class="p">{</span><span class="nx">docsText</span><span class="p">,</span> <span class="nx">codeText</span><span class="p">}</span>
-    <span class="nv">hasCode = docsText = codeText = </span><span class="s">&#39;&#39;</span></pre></div>
+  <span class="function"><span class="title">save</span></span> = -&gt;
+    sections.push {docsText, codeText}
+    hasCode = docsText = codeText = <span class="string">''</span></pre></div>
         
       
         
-        
-<p>Our quick-and-dirty implementation of the literate programming style. Simply
+        <p>Our quick-and-dirty implementation of the literate programming style. Simply
 invert the prose and code relationship on a per-line basis, and then continue as
 normal below.
 
-
 </p>
 
         
-          <div class="highlight"><pre>  <span class="k">if</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">literate</span>
-    <span class="k">for</span> <span class="nx">line</span><span class="p">,</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">lines</span>
-      <span class="nx">lines</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">if</span> <span class="sr">/^\s*$/</span><span class="p">.</span><span class="nx">test</span> <span class="nx">line</span>
-        <span class="s">&#39;&#39;</span>
-      <span class="k">else</span> <span class="k">if</span> <span class="nv">match = </span><span class="p">(</span><span class="sr">/^([ ]{4}|\t)/</span><span class="p">).</span><span class="nx">exec</span> <span class="nx">line</span>
-        <span class="nx">line</span><span class="p">[</span><span class="nx">match</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">length</span><span class="p">..]</span>
-      <span class="k">else</span>
-        <span class="nx">lang</span><span class="p">.</span><span class="nx">symbol</span> <span class="o">+</span> <span class="s">&#39; &#39;</span> <span class="o">+</span> <span class="nx">line</span>
+          <div class="highlight"><pre><span class="keyword">if</span> lang.literate
+    <span class="keyword">for</span> line, i <span class="keyword">in</span> lines
+      lines[i] = <span class="keyword">if</span> <span class="regexp">/^\s*$/</span>.test line
+        <span class="string">''</span>
+      <span class="keyword">else</span> <span class="keyword">if</span> match = (<span class="regexp">/^([ ]{4}|\t)/</span>).exec line
+        line[match[<span class="number">0</span>].length..]
+      <span class="keyword">else</span>
+        lang.symbol + <span class="string">' '</span> + line
 
-  <span class="k">for</span> <span class="nx">line</span> <span class="k">in</span> <span class="nx">lines</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">not</span> <span class="nx">line</span> <span class="o">and</span> <span class="nx">prev</span> <span class="o">is</span> <span class="s">&#39;text&#39;</span><span class="p">)</span> <span class="o">or</span>
-        <span class="p">(</span><span class="nx">line</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">lang</span><span class="p">.</span><span class="nx">commentMatcher</span><span class="p">)</span> <span class="o">and</span> <span class="o">not</span> <span class="nx">line</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">lang</span><span class="p">.</span><span class="nx">commentFilter</span><span class="p">))</span>
-      <span class="nx">save</span><span class="p">()</span> <span class="k">if</span> <span class="nx">hasCode</span>
-      <span class="nx">docsText</span> <span class="o">+=</span> <span class="p">(</span><span class="nv">line = </span><span class="nx">line</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">lang</span><span class="p">.</span><span class="nx">commentMatcher</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;\n&#39;</span>
-      <span class="nx">save</span><span class="p">()</span> <span class="k">if</span> <span class="sr">/^(---+|===+)$/</span><span class="p">.</span><span class="nx">test</span> <span class="nx">line</span>
-      <span class="nv">prev = </span><span class="s">&#39;text&#39;</span>
-    <span class="k">else</span>
-      <span class="nv">hasCode = </span><span class="kc">yes</span>
-      <span class="nx">codeText</span> <span class="o">+=</span> <span class="nx">line</span> <span class="o">+</span> <span class="s">&#39;\n&#39;</span>
-      <span class="nv">prev = </span><span class="s">&#39;code&#39;</span>
-  <span class="nx">save</span><span class="p">()</span>
+  <span class="keyword">for</span> line <span class="keyword">in</span> lines
+    <span class="keyword">if</span> (<span class="keyword">not</span> line <span class="keyword">and</span> prev <span class="keyword">is</span> <span class="string">'text'</span>) <span class="keyword">or</span>
+        (line.match(lang.commentMatcher) <span class="keyword">and</span> <span class="keyword">not</span> line.match(lang.commentFilter))
+      save() <span class="keyword">if</span> hasCode
+      docsText += (line = line.replace(lang.commentMatcher, <span class="string">''</span>)) + <span class="string">'\n'</span>
+      save() <span class="keyword">if</span> <span class="regexp">/^(---+|===+)$/</span>.test line
+      prev = <span class="string">'text'</span>
+    <span class="keyword">else</span>
+      hasCode = <span class="literal">yes</span>
+      codeText += line + <span class="string">'\n'</span>
+      prev = <span class="string">'code'</span>
+  save()
 
-  <span class="nx">sections</span></pre></div>
+  sections</pre></div>
         
       
         
-        
-<p>To <strong>highlight</strong> and format the now-parsed sections of code, we use <strong>Pygments</strong>
+        <p>To <strong>format</strong> and highlight the now-parsed sections of code, we use <strong>Highlight.js</strong>
 over stdio, and run the text of their corresponding comments through
-<strong>Markdown</strong>, using <a href="https://github.com/chjj/marked">Marked</a>. If Pygments is
-not present on the system, simply output the code without colors.
-
-</p>
-<p>We are able to process <em>all</em> of the sections with a single call to Pygments and
-a single call to Marked, by inserting marker comments between sections,
-concatenating, and then splitting the result string wherever the marker occurs.
-
+<strong>Markdown</strong>, using <a href="https://github.com/chjj/marked">Marked</a>.
 
 </p>
 
         
-          <div class="highlight"><pre><span class="nv">highlight = </span><span class="nf">(source, sections, config, callback) -&gt;</span>
-
-  <span class="nv">lang = </span><span class="nx">getLanguage</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">config</span>
-  <span class="nv">pygments = </span><span class="nx">spawn</span> <span class="s">&#39;pygmentize&#39;</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s">&#39;-l&#39;</span><span class="p">,</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span>
-    <span class="s">&#39;-f&#39;</span><span class="p">,</span> <span class="s">&#39;html&#39;</span><span class="p">,</span>
-    <span class="s">&#39;-O&#39;</span><span class="p">,</span> <span class="s">&#39;encoding=utf-8,tabsize=2&#39;</span>
-  <span class="p">]</span>
-  <span class="nv">output = </span><span class="s">&#39;&#39;</span>
-  <span class="nv">code = </span><span class="p">(</span><span class="nx">section</span><span class="p">.</span><span class="nx">codeText</span> <span class="k">for</span> <span class="nx">section</span> <span class="k">in</span> <span class="nx">sections</span><span class="p">).</span><span class="nx">join</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">codeSplitText</span>
-  <span class="nv">docs = </span><span class="p">(</span><span class="nx">section</span><span class="p">.</span><span class="nx">docsText</span> <span class="k">for</span> <span class="nx">section</span> <span class="k">in</span> <span class="nx">sections</span><span class="p">).</span><span class="nx">join</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">docsSplitText</span>
-
-  <span class="nx">pygments</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="nf">(result) -&gt;</span>
-    <span class="nx">output</span> <span class="o">+=</span> <span class="nx">result</span> <span class="k">if</span> <span class="nx">result</span>
-
-  <span class="nx">pygments</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;exit&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    <span class="nv">output = </span><span class="nx">output</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">highlightStart</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="nx">highlightEnd</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
-    <span class="nv">codeFragments = </span><span class="k">if</span> <span class="nx">output</span>
-      <span class="nx">output</span><span class="p">.</span><span class="nx">split</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">codeSplitHtml</span>
-    <span class="k">else</span>
-      <span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">escape</span> <span class="nx">section</span><span class="p">.</span><span class="nx">codeText</span> <span class="k">for</span> <span class="nx">section</span> <span class="k">in</span> <span class="nx">sections</span><span class="p">)</span>
-    <span class="nv">docsFragments = </span><span class="nx">marked</span><span class="p">(</span><span class="nx">docs</span><span class="p">).</span><span class="nx">split</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">docsSplitHtml</span>
-
-    <span class="k">for</span> <span class="nx">section</span><span class="p">,</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">sections</span>
-      <span class="nv">section.codeHtml = </span><span class="nx">highlightStart</span> <span class="o">+</span> <span class="nx">codeFragments</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="nx">highlightEnd</span>
-      <span class="nv">section.docsHtml = </span><span class="nx">docsFragments</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
-    <span class="nx">callback</span><span class="p">()</span>
-
-  <span class="k">if</span> <span class="nx">pygments</span><span class="p">.</span><span class="nx">stdin</span><span class="p">.</span><span class="nx">writable</span>
-    <span class="nx">pygments</span><span class="p">.</span><span class="nx">stdin</span><span class="p">.</span><span class="nx">write</span> <span class="nx">code</span>
-    <span class="nx">pygments</span><span class="p">.</span><span class="nx">stdin</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span></pre></div>
+          <div class="highlight"><pre><span class="function"><span class="title">format</span></span> = (source, sections) -&gt;
+  language = getLanguage source
+  <span class="keyword">for</span> section, i <span class="keyword">in</span> sections
+    code = highlight(language.name, section.codeText).value .trim()
+    section.codeHtml = highlightStart + code + highlightEnd
+    section.docsHtml = marked(section.docsText)</pre></div>
         
       
         
-        
-<p>Once all of the code has finished highlighting, we can <strong>write</strong> the resulting
+        <p>Once all of the code has finished highlighting, we can <strong>write</strong> the resulting
 documentation file by passing the completed HTML sections into the template,
 and rendering it to the specified output path.
 
-
 </p>
 
         
-          <div class="highlight"><pre><span class="nv">writeHtml = </span><span class="nf">(source, sections, config) -&gt;</span>
+          <div class="highlight"><pre><span class="function"><span class="title">write</span></span> = (source, sections) -&gt;
 
-  <span class="nv">destination = </span><span class="nf">(file) -&gt;</span>
-    <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">output</span><span class="p">,</span> <span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">path</span><span class="p">.</span><span class="nx">extname</span><span class="p">(</span><span class="nx">file</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;.html&#39;</span><span class="p">)</span></pre></div>
+  <span class="function"><span class="title">destination</span></span> = (file) -&gt;
+    path.join(config.output, path.basename(file, path.extname(file)) + <span class="string">'.html'</span>)</pre></div>
         
       
         
-        
-<p>The <strong>title</strong> of the file is either the first heading in the prose, or the
+        <p>The <strong>title</strong> of the file is either the first heading in the prose, or the
 name of the source file.
 
-
 </p>
 
         
-          <div class="highlight"><pre>  <span class="nv">first = </span><span class="nx">marked</span><span class="p">.</span><span class="nx">lexer</span><span class="p">(</span><span class="nx">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">docsText</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-  <span class="nv">hasTitle = </span><span class="nx">first</span> <span class="o">and</span> <span class="nx">first</span><span class="p">.</span><span class="nx">type</span> <span class="o">is</span> <span class="s">&#39;heading&#39;</span> <span class="o">and</span> <span class="nx">first</span><span class="p">.</span><span class="nx">depth</span> <span class="o">is</span> <span class="mi">1</span>
-  <span class="nv">title = </span><span class="k">if</span> <span class="nx">hasTitle</span> <span class="k">then</span> <span class="nx">first</span><span class="p">.</span><span class="nx">text</span> <span class="k">else</span> <span class="nx">path</span><span class="p">.</span><span class="nx">basename</span> <span class="nx">source</span>
+          <div class="highlight"><pre>first = marked.lexer(sections[<span class="number">0</span>].docsText)[<span class="number">0</span>]
+  hasTitle = first <span class="keyword">and</span> first.type <span class="keyword">is</span> <span class="string">'heading'</span> <span class="keyword">and</span> first.depth <span class="keyword">is</span> <span class="number">1</span>
+  title = <span class="keyword">if</span> hasTitle <span class="keyword">then</span> first.text <span class="keyword">else</span> path.basename source
 
-  <span class="nv">html = </span><span class="nx">config</span><span class="p">.</span><span class="nx">template</span> <span class="p">{</span><span class="nv">sources: </span><span class="nx">config</span><span class="p">.</span><span class="nx">sources</span><span class="p">,</span> <span class="nv">css: </span><span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">css</span><span class="p">),</span>
-    <span class="nx">title</span><span class="p">,</span> <span class="nx">hasTitle</span><span class="p">,</span> <span class="nx">sections</span><span class="p">,</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">destination</span><span class="p">,}</span>
+  html = config.template {sources: config.sources, css: path.basename(config.css),
+    title, hasTitle, sections, path, destination,}
 
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&quot;docco: </span><span class="si">#{</span><span class="nx">source</span><span class="si">}</span><span class="s"> -&gt; </span><span class="si">#{</span><span class="nx">destination</span> <span class="nx">source</span><span class="si">}</span><span class="s">&quot;</span>
-  <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span> <span class="nx">destination</span><span class="p">(</span><span class="nx">source</span><span class="p">),</span> <span class="nx">html</span></pre></div>
+  console.log <span class="string">"docco: <span class="subst">#{source}</span> -&gt; <span class="subst">#{destination source}</span>"</span>
+  fs.writeFileSync destination(source), html</pre></div>
         
       
         
-        
-<h2>Configuration</h2>
+        <h2>Configuration</h2>
 
         
       
         
-        
-<p>Default configuration <strong>options</strong>. All of these may be overriden by command-line
+        <p>Default configuration <strong>options</strong>. All of these may be overriden by command-line
 options.
 
-
 </p>
 
         
-          <div class="highlight"><pre><span class="nv">defaults =</span>
-  <span class="nv">layout: </span>    <span class="s">&#39;parallel&#39;</span>
-  <span class="nv">output: </span>    <span class="s">&#39;docs/&#39;</span>
-  <span class="nv">template: </span>  <span class="kc">null</span>
-  <span class="nv">css: </span>       <span class="kc">null</span>
-  <span class="nv">extension: </span> <span class="kc">null</span></pre></div>
+          <div class="highlight"><pre>config =
+  layout:     <span class="string">'parallel'</span>
+  output:     <span class="string">'docs/'</span>
+  template:   <span class="literal">null</span>
+  css:        <span class="literal">null</span>
+  extension:  <span class="literal">null</span></pre></div>
         
       
         
-        
-<p><strong>Configure</strong> this particular run of Docco. We might use a passed-in external
+        <p><strong>Configure</strong> this particular run of Docco. We might use a passed-in external
 template, or one of the built-in <strong>layouts</strong>. We only attempt to process
 source files for languages for which we have definitions.
 
+</p>
+
+        
+          <div class="highlight"><pre><span class="function"><span class="title">configure</span></span> = (options) -&gt;
+  _.extend config, _.pick(options, _.keys(config)...)
+
+  <span class="keyword">if</span> options.template <span class="keyword">or</span> options.css
+    config.layout = <span class="literal">null</span>
+  <span class="keyword">else</span>
+    dir = config.layout = <span class="string">"<span class="subst">#{__dirname}</span>/resources/<span class="subst">#{config.layout}</span>"</span>
+    config.public       = <span class="string">"<span class="subst">#{dir}</span>/public"</span> <span class="keyword">if</span> fs.existsSync <span class="string">"<span class="subst">#{dir}</span>/public"</span>
+    config.template     = <span class="string">"<span class="subst">#{dir}</span>/docco.jst"</span>
+    config.css          = <span class="string">"<span class="subst">#{dir}</span>/resources/linear/docco.css"</span>
+  config.template = _.template fs.readFileSync(config.template).toString()
+
+  config.sources = options.args.filter((source) -&gt;
+    lang = getLanguage source, config
+    console.warn <span class="string">"docco: skipped unknown type (<span class="subst">#{m}</span>)"</span> <span class="keyword">unless</span> lang
+    lang
+  ).sort()</pre></div>
+        
+      
+        
+        <h2>Helpers &amp; Initial Setup</h2>
+
+        
+      
+        
+        <p>Require our external dependencies.
 
 </p>
 
         
-          <div class="highlight"><pre><span class="nv">configure = </span><span class="nf">(options) -&gt;</span>
-  <span class="nv">config = </span><span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="p">{},</span> <span class="nx">defaults</span><span class="p">,</span> <span class="nx">_</span><span class="p">.</span><span class="nx">pick</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="nx">_</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">defaults</span><span class="p">)...)</span>
-
-  <span class="k">if</span> <span class="nx">options</span><span class="p">.</span><span class="nx">template</span> <span class="o">or</span> <span class="nx">options</span><span class="p">.</span><span class="nx">css</span>
-    <span class="nv">config.layout = </span><span class="kc">null</span>
-  <span class="k">else</span>
-    <span class="nv">dir = config.layout = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/resources/</span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">layout</span><span class="si">}</span><span class="s">&quot;</span>
-    <span class="nv">config.public       = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">dir</span><span class="si">}</span><span class="s">/public&quot;</span> <span class="k">if</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">existsSync</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">dir</span><span class="si">}</span><span class="s">/public&quot;</span>
-    <span class="nv">config.template     = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">dir</span><span class="si">}</span><span class="s">/docco.jst&quot;</span>
-    <span class="nv">config.css          = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">dir</span><span class="si">}</span><span class="s">/resources/linear/docco.css&quot;</span>
-  <span class="nv">config.template = </span><span class="nx">_</span><span class="p">.</span><span class="nx">template</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">template</span><span class="p">).</span><span class="nx">toString</span><span class="p">()</span>
-
-  <span class="nv">config.sources = </span><span class="nx">options</span><span class="p">.</span><span class="nx">args</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nf">(source) -&gt;</span>
-    <span class="nv">lang = </span><span class="nx">getLanguage</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">config</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span> <span class="s">&quot;docco: skipped unknown type (</span><span class="si">#{</span><span class="nx">m</span><span class="si">}</span><span class="s">)&quot;</span> <span class="k">unless</span> <span class="nx">lang</span>
-    <span class="nx">lang</span>
-  <span class="p">).</span><span class="nx">sort</span><span class="p">()</span>
-
-  <span class="nx">config</span></pre></div>
+          <div class="highlight"><pre>_             = require <span class="string">'underscore'</span>
+fs            = require <span class="string">'fs'</span>
+path          = require <span class="string">'path'</span>
+marked        = require <span class="string">'marked'</span>
+commander     = require <span class="string">'commander'</span>
+{highlight}   = require <span class="string">'highlight.js'</span>
+{spawn, exec} = require <span class="string">'child_process'</span></pre></div>
         
       
         
-        
-<h2>Helpers &amp; Initial Setup</h2>
-
-        
-      
-        
-        
-<p>Require our external dependencies.
-
-
-</p>
-
-        
-          <div class="highlight"><pre><span class="nv">_             = </span><span class="nx">require</span> <span class="s">&#39;underscore&#39;</span>
-<span class="nv">fs            = </span><span class="nx">require</span> <span class="s">&#39;fs&#39;</span>
-<span class="nv">path          = </span><span class="nx">require</span> <span class="s">&#39;path&#39;</span>
-<span class="nv">marked        = </span><span class="nx">require</span> <span class="s">&#39;marked&#39;</span>
-<span class="nv">commander     = </span><span class="nx">require</span> <span class="s">&#39;commander&#39;</span>
-<span class="p">{</span><span class="nx">spawn</span><span class="p">,</span> <span class="nx">exec</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;child_process&#39;</span></pre></div>
-        
-      
-        
-        
-<p>Languages are stored in JSON in the file <code>resources/languages.json</code>.
-Each item maps the file extension to the name of the Pygments lexer and the
+        <p>Languages are stored in JSON in the file <code>resources/languages.json</code>.
+Each item maps the file extension to the name of the language and the
 <code>symbol</code> that indicates a line comment. To add support for a new programming
 language to Docco, just add it to the file.
 
+</p>
+
+        
+          <div class="highlight"><pre>languages = JSON.parse fs.readFileSync(<span class="string">"<span class="subst">#{__dirname}</span>/resources/languages.json"</span>)</pre></div>
+        
+      
+        
+        <p>Build out the appropriate matchers and delimiters for each language.
 
 </p>
 
         
-          <div class="highlight"><pre><span class="nv">languages = </span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/resources/languages.json&quot;</span><span class="p">)</span></pre></div>
+          <div class="highlight"><pre><span class="keyword">for</span> ext, l <span class="keyword">of</span> languages</pre></div>
         
       
         
-        
-<p>Build out the appropriate matchers and delimiters for each language.
-
+        <p>Does the line begin with a comment?
 
 </p>
 
         
-          <div class="highlight"><pre><span class="k">for</span> <span class="nx">ext</span><span class="p">,</span> <span class="nx">l</span> <span class="k">of</span> <span class="nx">languages</span></pre></div>
+          <div class="highlight"><pre>l.commentMatcher = <span class="regexp">///^\s*<span class="comment">#{l.symbol}\s?///</span></pre></div>
         
       
         
-        
-<p>Does the line begin with a comment?
-
+        <p>Ignore <a href="http://en.wikipedia.org/wiki/Shebang_(Unix\">hashbangs</a>) and interpolations...
 
 </p>
 
         
-          <div class="highlight"><pre>  <span class="nv">l.commentMatcher = </span><span class="sr">///^\s*</span><span class="si">#{</span><span class="nx">l</span><span class="p">.</span><span class="nx">symbol</span><span class="si">}</span><span class="sr">\s?///</span></pre></div>
+          <div class="highlight"><pre>l.commentFilter = <span class="regexp">/(^#![/]|^\s*#\{)/</span></pre></div>
         
       
         
-        
-<p>Ignore <a href="http://en.wikipedia.org/wiki/Shebang_(Unix\">hashbangs</a>) and interpolations...
-
-
-</p>
-
-        
-          <div class="highlight"><pre>  <span class="nv">l.commentFilter = </span><span class="sr">/(^#![/]|^\s*#\{)/</span></pre></div>
-        
-      
-        
-        
-<p>The dividing token we feed into Pygments, to delimit the boundaries between
-sections.
-
-
-</p>
-
-        
-          <div class="highlight"><pre>  <span class="nv">l.codeSplitText = </span><span class="s">&quot;\n</span><span class="si">#{</span><span class="nx">l</span><span class="p">.</span><span class="nx">symbol</span><span class="si">}</span><span class="s">DIVIDER\n&quot;</span></pre></div>
-        
-      
-        
-        
-<p>The mirror of <code>codeSplitText</code> that we expect Pygments to return. We can split
-on this to recover the original sections.
-<em>Note: the class is &quot;c&quot; for Python and &quot;c1&quot; for the other languages.</em>
-
-
-</p>
-
-        
-          <div class="highlight"><pre>  <span class="nv">l.codeSplitHtml = </span><span class="sr">///\n*&lt;span\sclass=&quot;c1?&quot;&gt;</span><span class="si">#{</span><span class="nx">l</span><span class="p">.</span><span class="nx">symbol</span><span class="si">}</span><span class="sr">DIVIDER&lt;\/span&gt;\n*///</span></pre></div>
-        
-      
-        
-        
-<p>The dividing token we feed into Markdown, to delimit the boundaries between
-sections.
-
-
-</p>
-
-        
-          <div class="highlight"><pre>  <span class="nv">l.docsSplitText = </span><span class="s">&quot;\n</span><span class="err">#</span><span class="si">#{</span><span class="nx">l</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="s">DOCDIVIDER\n&quot;</span></pre></div>
-        
-      
-        
-        
-<p>The mirror of <code>docsSplitText</code> that we expect markdown to return. We can split
-on this to recover the original sections.
-
-
-</p>
-
-        
-          <div class="highlight"><pre>  <span class="nv">l.docsSplitHtml = </span><span class="sr">///&lt;h1&gt;</span><span class="si">#{</span><span class="nx">l</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sr">DOCDIVIDER&lt;/h1&gt;///</span></pre></div>
-        
-      
-        
-        
-<p>A function to get the current language we&#39;re documenting, based on the
+        <p>A function to get the current language we&#39;re documenting, based on the
 file extension. Detect and tag &quot;literate&quot; <code>.ext.md</code> variants.
 
+</p>
+
+        
+          <div class="highlight"><pre><span class="function"><span class="title">getLanguage</span></span> = (source) -&gt;
+  ext  = config.extension <span class="keyword">or</span> path.extname(source) <span class="keyword">or</span> path.basename(source)
+  lang = languages[ext]
+  <span class="keyword">if</span> lang <span class="keyword">and</span> lang.name <span class="keyword">is</span> <span class="string">'markdown'</span>
+    codeExt = path.extname(path.basename(source, ext))
+    <span class="keyword">if</span> codeExt <span class="keyword">and</span> codeLang = languages[codeExt]
+      lang = _.extend {}, codeLang, {literate: <span class="literal">yes</span>}
+  lang</pre></div>
+        
+      
+        
+        <p>The start of each Pygments highlight block.
 
 </p>
 
         
-          <div class="highlight"><pre><span class="nv">getLanguage = </span><span class="nf">(source, config) -&gt;</span>
-  <span class="nv">ext  = </span><span class="nx">config</span><span class="p">.</span><span class="nx">extension</span> <span class="o">or</span> <span class="nx">path</span><span class="p">.</span><span class="nx">extname</span><span class="p">(</span><span class="nx">source</span><span class="p">)</span>
-  <span class="nv">lang = </span><span class="nx">languages</span><span class="p">[</span><span class="nx">ext</span><span class="p">]</span>
-  <span class="k">if</span> <span class="nx">lang</span> <span class="o">and</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">name</span> <span class="o">is</span> <span class="s">&#39;markdown&#39;</span>
-    <span class="nv">codeExt = </span><span class="nx">path</span><span class="p">.</span><span class="nx">extname</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">source</span><span class="p">,</span> <span class="nx">ext</span><span class="p">))</span>
-    <span class="k">if</span> <span class="nx">codeExt</span> <span class="o">and</span> <span class="nv">codeLang = </span><span class="nx">languages</span><span class="p">[</span><span class="nx">codeExt</span><span class="p">]</span>
-      <span class="nv">lang = </span><span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="p">{},</span> <span class="nx">codeLang</span><span class="p">,</span> <span class="p">{</span><span class="nv">literate: </span><span class="kc">yes</span><span class="p">}</span>
-  <span class="nx">lang</span></pre></div>
+          <div class="highlight"><pre>highlightStart = <span class="string">'&lt;div class="highlight"&gt;&lt;pre&gt;'</span></pre></div>
         
       
         
-        
-<p>The start of each Pygments highlight block.
-
+        <p>The end of each Pygments highlight block.
 
 </p>
 
         
-          <div class="highlight"><pre><span class="nv">highlightStart = </span><span class="s">&#39;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&#39;</span></pre></div>
+          <div class="highlight"><pre>highlightEnd   = <span class="string">'&lt;/pre&gt;&lt;/div&gt;'</span></pre></div>
         
       
         
-        
-<p>The end of each Pygments highlight block.
-
+        <p>Keep it DRY. Extract the docco <strong>version</strong> from <code>package.json</code>
 
 </p>
 
         
-          <div class="highlight"><pre><span class="nv">highlightEnd   = </span><span class="s">&#39;&lt;/pre&gt;&lt;/div&gt;&#39;</span></pre></div>
+          <div class="highlight"><pre>version = JSON.parse(fs.readFileSync(<span class="string">"<span class="subst">#{__dirname}</span>/package.json"</span>)).version</pre></div>
         
       
         
-        
-<p>Keep it DRY. Extract the docco <strong>version</strong> from <code>package.json</code>
-
-
-</p>
-
-        
-          <div class="highlight"><pre><span class="nv">version = </span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/package.json&quot;</span><span class="p">)).</span><span class="nx">version</span></pre></div>
-        
-      
-        
-        
-<h2>Command Line Interface</h2>
+        <h2>Command Line Interface</h2>
 
         
       
         
-        
-<p>Finally, let&#39;s define the interface to run Docco from the command line.
+        <p>Finally, let&#39;s define the interface to run Docco from the command line.
 Parse options using <a href="https://github.com/visionmedia/commander.js">Commander</a>.
 
-
 </p>
 
         
-          <div class="highlight"><pre><span class="nv">run = </span><span class="nf">(args = process.argv) -&gt;</span>
-  <span class="nv">d = </span><span class="nx">defaults</span>
-  <span class="nx">commander</span><span class="p">.</span><span class="nx">version</span><span class="p">(</span><span class="nx">version</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">usage</span><span class="p">(</span><span class="s">&#39;[options] files&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="s">&#39;-l, --layout [name]&#39;</span><span class="p">,</span>    <span class="s">&#39;choose a built-in layout (parallel or linear)&#39;</span><span class="p">,</span> <span class="nx">d</span><span class="p">.</span><span class="nx">parallel</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="s">&#39;-o, --output [path]&#39;</span><span class="p">,</span>    <span class="s">&#39;output to a given folder&#39;</span><span class="p">,</span> <span class="nx">d</span><span class="p">.</span><span class="nx">output</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="s">&#39;-c, --css [file]&#39;</span><span class="p">,</span>       <span class="s">&#39;use a custom css file&#39;</span><span class="p">,</span> <span class="nx">d</span><span class="p">.</span><span class="nx">css</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="s">&#39;-t, --template [file]&#39;</span><span class="p">,</span>  <span class="s">&#39;use a custom .jst template&#39;</span><span class="p">,</span> <span class="nx">d</span><span class="p">.</span><span class="nx">template</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="s">&#39;-e, --extension [ext]&#39;</span><span class="p">,</span>  <span class="s">&#39;assume a file extension for all inputs&#39;</span><span class="p">,</span> <span class="nx">d</span><span class="p">.</span><span class="nx">extension</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span>
-    <span class="p">.</span><span class="nv">name = </span><span class="s">&quot;docco&quot;</span>
-  <span class="k">if</span> <span class="nx">commander</span><span class="p">.</span><span class="nx">args</span><span class="p">.</span><span class="nx">length</span>
-    <span class="nb">document</span> <span class="nx">configure</span> <span class="nx">commander</span>
-  <span class="k">else</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">commander</span><span class="p">.</span><span class="nx">helpInformation</span><span class="p">()</span></pre></div>
+          <div class="highlight"><pre><span class="function"><span class="title">run</span></span> = (args = process.argv) -&gt;
+  c = config
+  commander.version(version)
+    .usage(<span class="string">'[options] files'</span>)
+    .option(<span class="string">'-l, --layout [name]'</span>,    <span class="string">'choose a built-in layout (parallel or linear)'</span>, c.parallel)
+    .option(<span class="string">'-o, --output [path]'</span>,    <span class="string">'output to a given folder'</span>, c.output)
+    .option(<span class="string">'-c, --css [file]'</span>,       <span class="string">'use a custom css file'</span>, c.css)
+    .option(<span class="string">'-t, --template [file]'</span>,  <span class="string">'use a custom .jst template'</span>, c.template)
+    .option(<span class="string">'-e, --extension [ext]'</span>,  <span class="string">'assume a file extension for all inputs'</span>, c.extension)
+    .parse(args)
+    .name = <span class="string">"docco"</span>
+  <span class="keyword">if</span> commander.args.length
+    document configure commander
+  <span class="keyword">else</span>
+    console.log commander.helpInformation()</pre></div>
+        
+      
+        
+        <h2>Public API</h2>
+
         
       
         
         
-<h2>Public API</h2>
-
         
-      
-        
-        
-
-        
-          <div class="highlight"><pre><span class="nv">Docco = module.exports = </span><span class="p">{</span><span class="nx">run</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">parse</span><span class="p">,</span> <span class="nx">version</span><span class="p">}</span>
-
-</pre></div>
+          <div class="highlight"><pre>Docco = module.exports = {run, document, parse, version}</pre></div>
         
       
       <div class="fleur">h</div>
