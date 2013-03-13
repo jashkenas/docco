@@ -112,7 +112,7 @@ out in an HTML template.
 </p>
 
         
-          <div class="highlight"><pre><span class="function"><span class="title">document</span></span> = -&gt;
+          <div class='highlight'><pre><span class="function"><span class="title">document</span></span> = -&gt;
   exec <span class="string">"mkdir -p <span class="subst">#{config.output}</span>"</span>, -&gt;
 
     exec <span class="string">"cp -f <span class="subst">#{config.css}</span> <span class="subst">#{config.output}</span>"</span>
@@ -142,7 +142,7 @@ individual <strong>section</strong> for it. Each section is an object with <code
 </p>
 
         
-          <div class="highlight"><pre><span class="function"><span class="title">parse</span></span> = (source, code) -&gt;
+          <div class='highlight'><pre><span class="function"><span class="title">parse</span></span> = (source, code) -&gt;
   lines    = code.split <span class="string">'\n'</span>
   sections = []
   lang     = getLanguage source
@@ -161,7 +161,7 @@ normal below.
 </p>
 
         
-          <div class="highlight"><pre><span class="keyword">if</span> lang.literate
+          <div class='highlight'><pre><span class="keyword">if</span> lang.literate
     <span class="keyword">for</span> line, i <span class="keyword">in</span> lines
       lines[i] = <span class="keyword">if</span> <span class="regexp">/^\s*$/</span>.test line
         <span class="string">''</span>
@@ -194,11 +194,11 @@ over stdio, and run the text of their corresponding comments through
 </p>
 
         
-          <div class="highlight"><pre><span class="function"><span class="title">format</span></span> = (source, sections) -&gt;
+          <div class='highlight'><pre><span class="function"><span class="title">format</span></span> = (source, sections) -&gt;
   language = getLanguage source
   <span class="keyword">for</span> section, i <span class="keyword">in</span> sections
     code = highlight(language.name, section.codeText).value .trim()
-    section.codeHtml = highlightStart + code + highlightEnd
+    section.codeHtml = <span class="string">"&lt;div class='highlight'&gt;&lt;pre&gt;<span class="subst">#{code}</span>&lt;/pre&gt;&lt;/div&gt;"</span>
     section.docsHtml = marked(section.docsText)</pre></div>
         
       
@@ -210,7 +210,7 @@ and rendering it to the specified output path.
 </p>
 
         
-          <div class="highlight"><pre><span class="function"><span class="title">write</span></span> = (source, sections) -&gt;
+          <div class='highlight'><pre><span class="function"><span class="title">write</span></span> = (source, sections) -&gt;
 
   <span class="function"><span class="title">destination</span></span> = (file) -&gt;
     path.join(config.output, path.basename(file, path.extname(file)) + <span class="string">'.html'</span>)</pre></div>
@@ -223,7 +223,7 @@ name of the source file.
 </p>
 
         
-          <div class="highlight"><pre>first = marked.lexer(sections[<span class="number">0</span>].docsText)[<span class="number">0</span>]
+          <div class='highlight'><pre>first = marked.lexer(sections[<span class="number">0</span>].docsText)[<span class="number">0</span>]
   hasTitle = first <span class="keyword">and</span> first.type <span class="keyword">is</span> <span class="string">'heading'</span> <span class="keyword">and</span> first.depth <span class="keyword">is</span> <span class="number">1</span>
   title = <span class="keyword">if</span> hasTitle <span class="keyword">then</span> first.text <span class="keyword">else</span> path.basename source
 
@@ -246,7 +246,7 @@ options.
 </p>
 
         
-          <div class="highlight"><pre>config =
+          <div class='highlight'><pre>config =
   layout:     <span class="string">'parallel'</span>
   output:     <span class="string">'docs/'</span>
   template:   <span class="literal">null</span>
@@ -262,7 +262,7 @@ source files for languages for which we have definitions.
 </p>
 
         
-          <div class="highlight"><pre><span class="function"><span class="title">configure</span></span> = (options) -&gt;
+          <div class='highlight'><pre><span class="function"><span class="title">configure</span></span> = (options) -&gt;
   _.extend config, _.pick(options, _.keys(config)...)
 
   <span class="keyword">if</span> options.template <span class="keyword">or</span> options.css
@@ -292,7 +292,7 @@ source files for languages for which we have definitions.
 </p>
 
         
-          <div class="highlight"><pre>_             = require <span class="string">'underscore'</span>
+          <div class='highlight'><pre>_             = require <span class="string">'underscore'</span>
 fs            = require <span class="string">'fs'</span>
 path          = require <span class="string">'path'</span>
 marked        = require <span class="string">'marked'</span>
@@ -310,7 +310,7 @@ language to Docco, just add it to the file.
 </p>
 
         
-          <div class="highlight"><pre>languages = JSON.parse fs.readFileSync(<span class="string">"<span class="subst">#{__dirname}</span>/resources/languages.json"</span>)</pre></div>
+          <div class='highlight'><pre>languages = JSON.parse fs.readFileSync(<span class="string">"<span class="subst">#{__dirname}</span>/resources/languages.json"</span>)</pre></div>
         
       
         
@@ -319,7 +319,7 @@ language to Docco, just add it to the file.
 </p>
 
         
-          <div class="highlight"><pre><span class="keyword">for</span> ext, l <span class="keyword">of</span> languages</pre></div>
+          <div class='highlight'><pre><span class="keyword">for</span> ext, l <span class="keyword">of</span> languages</pre></div>
         
       
         
@@ -328,7 +328,7 @@ language to Docco, just add it to the file.
 </p>
 
         
-          <div class="highlight"><pre>l.commentMatcher = <span class="regexp">///^\s*<span class="comment">#{l.symbol}\s?///</span></pre></div>
+          <div class='highlight'><pre>l.commentMatcher = <span class="regexp">///^\s*<span class="comment">#{l.symbol}\s?///</span></pre></div>
         
       
         
@@ -337,7 +337,7 @@ language to Docco, just add it to the file.
 </p>
 
         
-          <div class="highlight"><pre>l.commentFilter = <span class="regexp">/(^#![/]|^\s*#\{)/</span></pre></div>
+          <div class='highlight'><pre>l.commentFilter = <span class="regexp">/(^#![/]|^\s*#\{)/</span></pre></div>
         
       
         
@@ -347,7 +347,7 @@ file extension. Detect and tag &quot;literate&quot; <code>.ext.md</code> variant
 </p>
 
         
-          <div class="highlight"><pre><span class="function"><span class="title">getLanguage</span></span> = (source) -&gt;
+          <div class='highlight'><pre><span class="function"><span class="title">getLanguage</span></span> = (source) -&gt;
   ext  = config.extension <span class="keyword">or</span> path.extname(source) <span class="keyword">or</span> path.basename(source)
   lang = languages[ext]
   <span class="keyword">if</span> lang <span class="keyword">and</span> lang.name <span class="keyword">is</span> <span class="string">'markdown'</span>
@@ -358,30 +358,12 @@ file extension. Detect and tag &quot;literate&quot; <code>.ext.md</code> variant
         
       
         
-        <p>The start of each Pygments highlight block.
-
-</p>
-
-        
-          <div class="highlight"><pre>highlightStart = <span class="string">'&lt;div class="highlight"&gt;&lt;pre&gt;'</span></pre></div>
-        
-      
-        
-        <p>The end of each Pygments highlight block.
-
-</p>
-
-        
-          <div class="highlight"><pre>highlightEnd   = <span class="string">'&lt;/pre&gt;&lt;/div&gt;'</span></pre></div>
-        
-      
-        
         <p>Keep it DRY. Extract the docco <strong>version</strong> from <code>package.json</code>
 
 </p>
 
         
-          <div class="highlight"><pre>version = JSON.parse(fs.readFileSync(<span class="string">"<span class="subst">#{__dirname}</span>/package.json"</span>)).version</pre></div>
+          <div class='highlight'><pre>version = JSON.parse(fs.readFileSync(<span class="string">"<span class="subst">#{__dirname}</span>/package.json"</span>)).version</pre></div>
         
       
         
@@ -396,7 +378,7 @@ Parse options using <a href="https://github.com/visionmedia/commander.js">Comman
 </p>
 
         
-          <div class="highlight"><pre><span class="function"><span class="title">run</span></span> = (args = process.argv) -&gt;
+          <div class='highlight'><pre><span class="function"><span class="title">run</span></span> = (args = process.argv) -&gt;
   c = config
   commander.version(version)
     .usage(<span class="string">'[options] files'</span>)
@@ -421,7 +403,7 @@ Parse options using <a href="https://github.com/visionmedia/commander.js">Comman
         
         
         
-          <div class="highlight"><pre>Docco = module.exports = {run, document, parse, version}</pre></div>
+          <div class='highlight'><pre>Docco = module.exports = {run, document, parse, version}</pre></div>
         
       
       <div class="fleur">h</div>

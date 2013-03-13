@@ -144,7 +144,7 @@ over stdio, and run the text of their corresponding comments through
       language = getLanguage source
       for section, i in sections
         code = highlight(language.name, section.codeText).value .trim()
-        section.codeHtml = highlightStart + code + highlightEnd
+        section.codeHtml = "<div class='highlight'><pre>#{code}</pre></div>"
         section.docsHtml = marked(section.docsText)
 
 Once all of the code has finished highlighting, we can **write** the resulting
@@ -249,14 +249,6 @@ file extension. Detect and tag "literate" `.ext.md` variants.
         if codeExt and codeLang = languages[codeExt]
           lang = _.extend {}, codeLang, {literate: yes}
       lang
-
-The start of each Pygments highlight block.
-
-    highlightStart = '<div class="highlight"><pre>'
-
-The end of each Pygments highlight block.
-
-    highlightEnd   = '</pre></div>'
 
 Keep it DRY. Extract the docco **version** from `package.json`
 
