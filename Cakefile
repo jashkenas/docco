@@ -4,6 +4,7 @@ path          = require 'path'
 
 option '-p', '--prefix [DIR]', 'set the installation prefix for `cake install`'
 option '-w', '--watch', 'continually build the docco library'
+option '-l', '--layout [LAYOUT]', 'specify the layout for Docco\'s docs'
 
 task 'build', 'build the docco library', (options) ->
   coffee = spawn 'coffee', ['-c' + (if options.watch then 'w' else ''), '.']
@@ -21,10 +22,11 @@ task 'install', 'install the `docco` command into /usr/local (or --prefix)', (op
    if err then console.error stderr
   )
 
-task 'doc', 'rebuild the Docco documentation', ->
+task 'doc', 'rebuild the Docco documentation', (options) ->
+  layout = options.layout or 'linear'
   exec([
-    'bin/docco --layout linear docco.litcoffee'
-    'sed "s/docco.css/resources\\/linear\\/docco.css/" < docs/docco.html > index.html'
+    "bin/docco --layout #{layout} docco.litcoffee"
+    "sed \"s/docco.css/resources\\/#{layout}\\/docco.css/\" < docs/docco.html > index.html"
     'rm -r docs'
   ].join(' && '), (err) ->
     throw err if err

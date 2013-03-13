@@ -128,13 +128,13 @@
   };
 
   writeHtml = function(source, sections, config) {
-    var destination, firstBlock, hasTitle, html, title;
+    var destination, first, hasTitle, html, title;
     destination = function(file) {
       return path.join(config.output, path.basename(file, path.extname(file)) + '.html');
     };
-    firstBlock = marked.lexer(sections[0].docsText)[0];
-    hasTitle = (firstBlock != null ? firstBlock.type : void 0) === 'heading';
-    title = hasTitle ? firstBlock.text : path.basename(source);
+    first = marked.lexer(sections[0].docsText)[0];
+    hasTitle = first && first.type === 'heading' && first.depth === 1;
+    title = hasTitle ? first.text : path.basename(source);
     html = config.template({
       sources: config.sources,
       css: path.basename(config.css),

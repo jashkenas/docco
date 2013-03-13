@@ -262,9 +262,9 @@ name of the source file.
 </p>
 
         
-          <div class="highlight"><pre>  <span class="nv">firstBlock = </span><span class="nx">marked</span><span class="p">.</span><span class="nx">lexer</span><span class="p">(</span><span class="nx">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">docsText</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-  <span class="nv">hasTitle = </span><span class="nx">firstBlock</span><span class="o">?</span><span class="p">.</span><span class="nx">type</span> <span class="o">is</span> <span class="s">&#39;heading&#39;</span>
-  <span class="nv">title = </span><span class="k">if</span> <span class="nx">hasTitle</span> <span class="k">then</span> <span class="nx">firstBlock</span><span class="p">.</span><span class="nx">text</span> <span class="k">else</span> <span class="nx">path</span><span class="p">.</span><span class="nx">basename</span> <span class="nx">source</span>
+          <div class="highlight"><pre>  <span class="nv">first = </span><span class="nx">marked</span><span class="p">.</span><span class="nx">lexer</span><span class="p">(</span><span class="nx">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">docsText</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="nv">hasTitle = </span><span class="nx">first</span> <span class="o">and</span> <span class="nx">first</span><span class="p">.</span><span class="nx">type</span> <span class="o">is</span> <span class="s">&#39;heading&#39;</span> <span class="o">and</span> <span class="nx">first</span><span class="p">.</span><span class="nx">depth</span> <span class="o">is</span> <span class="mi">1</span>
+  <span class="nv">title = </span><span class="k">if</span> <span class="nx">hasTitle</span> <span class="k">then</span> <span class="nx">first</span><span class="p">.</span><span class="nx">text</span> <span class="k">else</span> <span class="nx">path</span><span class="p">.</span><span class="nx">basename</span> <span class="nx">source</span>
 
   <span class="nv">html = </span><span class="nx">config</span><span class="p">.</span><span class="nx">template</span> <span class="p">{</span><span class="nv">sources: </span><span class="nx">config</span><span class="p">.</span><span class="nx">sources</span><span class="p">,</span> <span class="nv">css: </span><span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">css</span><span class="p">),</span>
     <span class="nx">title</span><span class="p">,</span> <span class="nx">hasTitle</span><span class="p">,</span> <span class="nx">sections</span><span class="p">,</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">destination</span><span class="p">,}</span>
@@ -539,15 +539,9 @@ Parse options using <a href="https://github.com/visionmedia/commander.js">Comman
         
 
         
-          <div class="highlight"><pre><span class="nv">Docco = module.exports = </span><span class="p">{</span><span class="nx">run</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">parse</span><span class="p">,</span> <span class="nx">version</span><span class="p">}</span></pre></div>
-        
-      
-        
-        
-<p>That&#39;s all, folks!
+          <div class="highlight"><pre><span class="nv">Docco = module.exports = </span><span class="p">{</span><span class="nx">run</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">parse</span><span class="p">,</span> <span class="nx">version</span><span class="p">}</span>
 
-</p>
-
+</pre></div>
         
       
       <div class="fleur">h</div>

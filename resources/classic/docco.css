@@ -1,66 +1,28 @@
-/*--------------------- Typography ----------------------------*/
-
-@font-face {
-    font-family: 'aller-light';
-    src: url('public/fonts/aller-light.eot');
-    src: url('public/fonts/aller-light.eot?#iefix') format('embedded-opentype'),
-         url('public/fonts/aller-light.woff') format('woff'),
-         url('public/fonts/aller-light.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'aller-bold';
-    src: url('public/fonts/aller-bold.eot');
-    src: url('public/fonts/aller-bold.eot?#iefix') format('embedded-opentype'),
-         url('public/fonts/aller-bold.woff') format('woff'),
-         url('public/fonts/aller-bold.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'novecento-bold';
-    src: url('public/fonts/novecento-bold.eot');
-    src: url('public/fonts/novecento-bold.eot?#iefix') format('embedded-opentype'),
-         url('public/fonts/novecento-bold.woff') format('woff'),
-         url('public/fonts/novecento-bold.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/*--------------------- Layout ----------------------------*/
+/*--------------------- Layout and Typography ----------------------------*/
 html { height: 100%; }
 body {
-  font-family: "aller-light";
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
   font-size: 14px;
-  line-height: 18px;
-  color: #30404f;
+  line-height: 16px;
+  color: #252519;
   margin: 0; padding: 0;
   height:100%;
 }
 #container { min-height: 100%; }
 
 a {
-  color: #000;
+  color: #261a3b;
 }
 
-b, strong {
-  font-weight: normal;
-  font-family: "aller-bold";
+a:visited {
+  color: #261a3b;
 }
 
 p, ul, ol {
-  margin: 15px 0 0px;
+  margin: 0 0 15px;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #112233;
-  line-height: 1em;
-  font-weight: normal;
-  font-family: "novecento-bold";
-  text-transform: uppercase;
   margin: 30px 0 15px 0;
 }
 
@@ -69,8 +31,8 @@ h1 {
 }
 
 hr {
-  border: 0;
-  background: 1px solid #ddd;
+  border: 0 none;
+  border-top: 1px solid #e5e5ee;
   height: 1px;
   margin: 20px 0;
 }
@@ -80,35 +42,6 @@ pre, tt, code {
   font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
   margin: 0; padding: 0;
 }
-  .annotation pre {
-    display: block;
-    margin: 0;
-    padding: 7px 10px;
-    background: #fcfcfc;
-    -moz-box-shadow:    inset 0 0 10px rgba(0,0,0,0.1);
-    -webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-    box-shadow:         inset 0 0 10px rgba(0,0,0,0.1);
-    overflow-x: auto;
-  }
-    .annotation pre code {
-      border: 0;
-      padding: 0;
-      background: transparent;
-    }
-
-
-blockquote {
-  border-left: 5px solid #ccc;
-  margin: 0;
-  padding: 1px 0 1px 1em;
-}
-  .sections blockquote p {
-    font-family: Menlo, Consolas, Monaco, monospace;
-    font-size: 12px; line-height: 16px;
-    color: #999;
-    margin: 10px 0 0;
-    white-space: pre-wrap;
-  }
 
 ul.sections {
   list-style: none;
@@ -200,6 +133,10 @@ ul.sections > li > div {
     padding:5px 10px 0 10px;
   }
 
+  ul.sections > li > div.annotation {
+    background: #fff;
+  }
+
   ul.sections > li > div.annotation ul, ul.sections > li > div.annotation ol {
     padding-left: 30px;
   }
@@ -235,15 +172,11 @@ ul.sections > li > div {
   body {
     background-color: #F5F5FF;
     font-size: 15px;
-    line-height: 21px;
+    line-height: 22px;
   }
   pre, tt, code {
     line-height: 18px;
   }
-  p, ul, ol {
-    margin: 0 0 15px;
-  }
-
 
   #jump_to {
     padding: 5px 10px;
@@ -271,7 +204,7 @@ ul.sections > li > div {
     position: absolute;
     top: 0; bottom: 0;
     width: 350px;
-    background: #fff;
+    background: #ffffff;
     border-right: 1px solid #e5e5ee;
     z-index: -1;
   }
@@ -341,11 +274,6 @@ ul.sections > li > div {
 
 /*---------------------- (> 1025px) ---------------------*/
 @media only screen and (min-width: 1025px) {
-
-  body {
-    font-size: 16px;
-    line-height: 24px;
-  }
 
   #background {
     width: 525px;

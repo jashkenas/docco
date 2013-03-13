@@ -183,9 +183,9 @@ and rendering it to the specified output path.
 The **title** of the file is either the first heading in the prose, or the
 name of the source file.
 
-      firstBlock = marked.lexer(sections[0].docsText)[0]
-      hasTitle = firstBlock?.type is 'heading'
-      title = if hasTitle then firstBlock.text else path.basename source
+      first = marked.lexer(sections[0].docsText)[0]
+      hasTitle = first and first.type is 'heading' and first.depth is 1
+      title = if hasTitle then first.text else path.basename source
 
       html = config.template {sources: config.sources, css: path.basename(config.css),
         title, hasTitle, sections, path, destination,}
@@ -336,5 +336,3 @@ Public API
 ----------
 
     Docco = module.exports = {run, document, parse, version}
-
-That's all, folks!
