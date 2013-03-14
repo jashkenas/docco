@@ -60,7 +60,7 @@ aficionado, check out [Don Wilson](https://github.com/dontangg)'s
 
 * Going further afield from the quick-and-dirty, [Groc](http://nevir.github.com/groc/)
 is a **CoffeeScript** fork of Docco that adds a searchable table of contents,
-and aims to gracefully handle large projects with complex heirarchies of code.
+and aims to gracefully handle large projects with complex hierarchies of code.
 
 Note that not all ports will support all Docco features ... yet.
 
