@@ -195,6 +195,7 @@
     run: run,
     document: document,
     parse: parse,
+    configure: configure,
     version: version
   };
 
