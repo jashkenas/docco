@@ -281,4 +281,4 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
 Public API
 ----------
 
-    Docco = module.exports = {run, document, parse, version}
+    Docco = module.exports = {run, document, parse, configure, version}
