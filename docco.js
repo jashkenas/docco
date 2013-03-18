@@ -130,7 +130,7 @@
   configure = function(options) {
     var dir;
 
-    _.extend(config = {}, defaultConfig, _.pick.apply(_, [options].concat(__slice.call(_.keys(defaultConfig)))));
+    config = _.extend({}, defaultConfig, _.pick.apply(_, [options].concat(__slice.call(_.keys(defaultConfig)))));
     if (options.template) {
       config.layout = null;
     } else {

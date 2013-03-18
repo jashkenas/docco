@@ -200,7 +200,7 @@ template, or one of the built-in **layouts**. We only attempt to process
 source files for languages for which we have definitions.
 
     configure = (options) ->
-      _.extend config = {}, defaultConfig, _.pick(options, _.keys(defaultConfig)...)
+      config = _.extend {}, defaultConfig, _.pick(options, _.keys(defaultConfig)...)
 
       if options.template
         config.layout = null
