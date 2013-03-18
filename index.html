@@ -92,7 +92,7 @@ aficionado, check out <a href="https://github.com/dontangg">Don Wilson</a>&#39;s
 </li>
 <li><p>Going further afield from the quick-and-dirty, <a href="http://nevir.github.com/groc/">Groc</a>
 is a <strong>CoffeeScript</strong> fork of Docco that adds a searchable table of contents,
-and aims to gracefully handle large projects with complex heirarchies of code.</p>
+and aims to gracefully handle large projects with complex hierarchies of code.</p>
 </li>
 </ul>
 <p>Note that not all ports will support all Docco features ... yet.
@@ -161,7 +161,7 @@ normal below.
 </p>
 
         
-          <div class='highlight'><pre><span class="keyword">if</span> lang.literate
+          <div class='highlight'><pre>  <span class="keyword">if</span> lang.literate
     <span class="keyword">for</span> line, i <span class="keyword">in</span> lines
       lines[i] = <span class="keyword">if</span> <span class="regexp">/^\s*$/</span>.test line
         <span class="string">''</span>
@@ -197,7 +197,8 @@ over stdio, and run the text of their corresponding comments through
           <div class='highlight'><pre><span class="function"><span class="title">format</span></span> = (source, sections) -&gt;
   language = getLanguage source
   <span class="keyword">for</span> section, i <span class="keyword">in</span> sections
-    code = highlight(language.name, section.codeText).value .trim()
+    code = highlight(language.name, section.codeText).value
+    code = code.replace(<span class="regexp">/\s+$/</span>, <span class="string">''</span>)
     section.codeHtml = <span class="string">"&lt;div class='highlight'&gt;&lt;pre&gt;<span class="subst">#{code}</span>&lt;/pre&gt;&lt;/div&gt;"</span>
     section.docsHtml = marked(section.docsText)</pre></div>
         
@@ -223,7 +224,7 @@ name of the source file.
 </p>
 
         
-          <div class='highlight'><pre>first = marked.lexer(sections[<span class="number">0</span>].docsText)[<span class="number">0</span>]
+          <div class='highlight'><pre>  first = marked.lexer(sections[<span class="number">0</span>].docsText)[<span class="number">0</span>]
   hasTitle = first <span class="keyword">and</span> first.type <span class="keyword">is</span> <span class="string">'heading'</span> <span class="keyword">and</span> first.depth <span class="keyword">is</span> <span class="number">1</span>
   title = <span class="keyword">if</span> hasTitle <span class="keyword">then</span> first.text <span class="keyword">else</span> path.basename source
 
@@ -328,7 +329,7 @@ language to Docco, just add it to the file.
 </p>
 
         
-          <div class='highlight'><pre>l.commentMatcher = <span class="regexp">///^\s*<span class="comment">#{l.symbol}\s?///</span></pre></div>
+          <div class='highlight'><pre>  l.commentMatcher = <span class="regexp">///^\s*<span class="comment">#{l.symbol}\s?///</span></pre></div>
         
       
         
@@ -337,7 +338,7 @@ language to Docco, just add it to the file.
 </p>
 
         
-          <div class='highlight'><pre>l.commentFilter = <span class="regexp">/(^#![/]|^\s*#\{)/</span></pre></div>
+          <div class='highlight'><pre>  l.commentFilter = <span class="regexp">/(^#![/]|^\s*#\{)/</span></pre></div>
         
       
         

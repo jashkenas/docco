@@ -143,7 +143,8 @@ over stdio, and run the text of their corresponding comments through
     format = (source, sections) ->
       language = getLanguage source
       for section, i in sections
-        code = highlight(language.name, section.codeText).value .trim()
+        code = highlight(language.name, section.codeText).value
+        code = code.replace(/\s+$/, '')
         section.codeHtml = "<div class='highlight'><pre>#{code}</pre></div>"
         section.docsHtml = marked(section.docsText)
 

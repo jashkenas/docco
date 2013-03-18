@@ -78,7 +78,8 @@
     _results = [];
     for (i = _i = 0, _len = sections.length; _i < _len; i = ++_i) {
       section = sections[i];
-      code = highlight(language.name, section.codeText).value.trim();
+      code = highlight(language.name, section.codeText).value;
+      code = code.replace(/\s+$/, '');
       section.codeHtml = "<div class='highlight'><pre>" + code + "</pre></div>";
       _results.push(section.docsHtml = marked(section.docsText));
     }
