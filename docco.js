@@ -118,7 +118,7 @@
   configure = function(options) {
     var dir;
     _.extend(config, _.pick.apply(_, [options].concat(__slice.call(_.keys(config)))));
-    if (options.template || options.css) {
+    if (options.template) {
       config.layout = null;
     } else {
       dir = config.layout = "" + __dirname + "/resources/" + config.layout;
@@ -126,7 +126,7 @@
         config["public"] = "" + dir + "/public";
       }
       config.template = "" + dir + "/docco.jst";
-      config.css = "" + dir + "/docco.css";
+      config.css = options.css || ("" + dir + "/docco.css");
     }
     config.template = _.template(fs.readFileSync(config.template).toString());
     return config.sources = options.args.filter(function(source) {

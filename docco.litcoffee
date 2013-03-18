@@ -191,13 +191,13 @@ source files for languages for which we have definitions.
     configure = (options) ->
       _.extend config, _.pick(options, _.keys(config)...)
 
-      if options.template or options.css
+      if options.template
         config.layout = null
       else
         dir = config.layout = "#{__dirname}/resources/#{config.layout}"
         config.public       = "#{dir}/public" if fs.existsSync "#{dir}/public"
         config.template     = "#{dir}/docco.jst"
-        config.css          = "#{dir}/docco.css"
+        config.css          = options.css or "#{dir}/docco.css"
       config.template = _.template fs.readFileSync(config.template).toString()
 
       config.sources = options.args.filter((source) ->

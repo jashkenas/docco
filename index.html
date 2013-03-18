@@ -266,13 +266,13 @@ source files for languages for which we have definitions.
           <div class='highlight'><pre><span class="function"><span class="title">configure</span></span> = (options) -&gt;
   _.extend config, _.pick(options, _.keys(config)...)
 
-  <span class="keyword">if</span> options.template <span class="keyword">or</span> options.css
+  <span class="keyword">if</span> options.template
     config.layout = <span class="literal">null</span>
   <span class="keyword">else</span>
     dir = config.layout = <span class="string">"<span class="subst">#{__dirname}</span>/resources/<span class="subst">#{config.layout}</span>"</span>
     config.public       = <span class="string">"<span class="subst">#{dir}</span>/public"</span> <span class="keyword">if</span> fs.existsSync <span class="string">"<span class="subst">#{dir}</span>/public"</span>
     config.template     = <span class="string">"<span class="subst">#{dir}</span>/docco.jst"</span>
-    config.css          = <span class="string">"<span class="subst">#{dir}</span>/resources/linear/docco.css"</span>
+    config.css          = options.css <span class="keyword">or</span> <span class="string">"<span class="subst">#{dir}</span>/resources/linear/docco.css"</span>
   config.template = _.template fs.readFileSync(config.template).toString()
 
   config.sources = options.args.filter((source) -&gt;
