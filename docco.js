@@ -3,7 +3,11 @@
   var Docco, commander, config, configure, document, exec, ext, format, fs, getLanguage, highlight, l, languages, marked, parse, path, run, spawn, version, write, _, _ref,
     __slice = [].slice;
 
-  document = function() {
+  document = function(options) {
+    if (options == null) {
+      options = {};
+    }
+    configure(options);
     return exec("mkdir -p " + config.output, function() {
       var files, nextFile;
       exec("cp -f " + config.css + " " + config.output);
@@ -186,7 +190,7 @@
     c = config;
     commander.version(version).usage('[options] files').option('-l, --layout [name]', 'choose a layout (parallel, linear or classic)', c.layout).option('-o, --output [path]', 'output to a given folder', c.output).option('-c, --css [file]', 'use a custom css file', c.css).option('-t, --template [file]', 'use a custom .jst template', c.template).option('-e, --extension [ext]', 'assume a file extension for all inputs', c.extension).parse(args).name = "docco";
     if (commander.args.length) {
-      return document(configure(commander));
+      return document(commander);
     } else {
       return console.log(commander.helpInformation());
     }

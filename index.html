@@ -112,7 +112,9 @@ out in an HTML template.
 </p>
 
         
-          <div class='highlight'><pre><span class="function"><span class="title">document</span></span> = -&gt;
+          <div class='highlight'><pre><span class="function"><span class="title">document</span></span> = (options = {}) -&gt;
+  configure options
+
   exec <span class="string">"mkdir -p <span class="subst">#{config.output}</span>"</span>, -&gt;
 
     exec <span class="string">"cp -f <span class="subst">#{config.css}</span> <span class="subst">#{config.output}</span>"</span>
@@ -391,7 +393,7 @@ Parse options using <a href="https://github.com/visionmedia/commander.js">Comman
     .parse(args)
     .name = <span class="string">"docco"</span>
   <span class="keyword">if</span> commander.args.length
-    document configure commander
+    document commander
   <span class="keyword">else</span>
     console.log commander.helpInformation()</pre></div>
         

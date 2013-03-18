@@ -73,7 +73,9 @@ assets, reading all the source files in, splitting them up into prose+code
 sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template.
 
-    document = ->
+    document = (options = {}) ->
+      configure options
+
       exec "mkdir -p #{config.output}", ->
 
         exec "cp -f #{config.css} #{config.output}"
@@ -274,7 +276,7 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         .parse(args)
         .name = "docco"
       if commander.args.length
-        document configure commander
+        document commander
       else
         console.log commander.helpInformation()
 
