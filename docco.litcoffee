@@ -180,22 +180,27 @@ name of the source file.
 Configuration
 -------------
 
-Default configuration **options**. All of these may be overriden by command-line
-options.
+Default configuration **options**. All of these may be extended by
+user-specified options.
 
-    config =
+    defaultConfig =
       layout:     'parallel'
       output:     'docs/'
       template:   null
       css:        null
       extension:  null
 
+Configuration **options** which are an extension of both `defaultConfig` and
+user-specified options.
+
+    config = {}
+
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
 source files for languages for which we have definitions.
 
     configure = (options) ->
-      _.extend config, _.pick(options, _.keys(config)...)
+      _.extend config = {}, defaultConfig, _.pick(options, _.keys(defaultConfig)...)
 
       if options.template
         config.layout = null
