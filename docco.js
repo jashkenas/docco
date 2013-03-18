@@ -9,7 +9,7 @@
     }
     configure(options);
     return exec("mkdir -p " + config.output, function() {
-      var nextFile;
+      var nextFile, tasks;
 
       nextFile = function(source, callback) {
         return fs.readFile(source, function(error, buffer) {
@@ -25,23 +25,22 @@
           return callback();
         });
       };
-      return async.parallel([
+      tasks = [
         function(done) {
           return exec("cp -f " + config.css + " " + config.output, done);
         }, function(done) {
-          if (fs.existsSync(config["public"])) {
-            return exec("cp -fR " + config["public"] + " " + config.output, done);
-          } else {
-            return done();
-          }
-        }, function(done) {
           return async.map(config.sources, nextFile, done);
         }
-      ], function(error) {
+      ];
+      if (fs.existsSync(config["public"])) {
+        tasks.unshift(function(done) {
+          return exec("cp -fR " + config["public"] + " " + config.output, done);
+        });
+      }
+      return async.parallel(tasks, function(error) {
         if (callback) {
           return callback(error);
-        }
-        if (error) {
+        } else if (error) {
           throw error;
         }
       });

@@ -92,18 +92,16 @@ out in an HTML template.
             write source, sections
             callback()
 
-        async.parallel [
-          (done) ->
-            exec "cp -f #{config.css} #{config.output}", done
-        , (done) ->
-            if fs.existsSync config.public
-              exec "cp -fR #{config.public} #{config.output}", done
-            else done()
-        , (done) ->
-            async.map config.sources, nextFile, done
-        ], (error) ->
-          return callback error if callback
-          throw error if error
+        tasks = [
+          (done) -> exec "cp -f #{config.css} #{config.output}", done
+          (done) -> async.map config.sources, nextFile, done
+        ]
+        if fs.existsSync config.public
+          tasks.unshift (done) -> exec "cp -fR #{config.public} #{config.output}", done
+
+        async.parallel tasks, (error) ->
+          if callback   then callback error
+          else if error then throw error
 
 Given a string of source code, **parse** out each block of prose and the code that
 follows it — by detecting which is which, line by line — and then create an
