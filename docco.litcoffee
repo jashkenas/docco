@@ -41,7 +41,7 @@ available as a gem.
 [Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell**,
 also by Mr. Tomayko.
 
-* If Python's more your speed, take a look at
+* If **Python** is more your speed, take a look at
 [Nick Fitzgerald](http://github.com/fitzgen)'s [Pycco](http://fitzgen.github.com/pycco/).
 
 * For **Clojure** fans, [Fogus](http://blog.fogus.me/)'s
@@ -50,6 +50,10 @@ also by Mr. Tomayko.
 
 * There's a **Go** port called [Gocco](http://nikhilm.github.com/gocco/),
 written by [Nikhil Marathe](https://github.com/nikhilm).
+
+* Your all you **PHP** buffs out there, Fredi Bach's
+[sourceMakeup](http://jquery-jkit.com/sourcemakeup/) (we'll let the faux pas
+with respect to our naming scheme slide), should do the trick nicely.
 
 * **Lua** enthusiasts can get their fix with
 [Robert Gieseke](https://github.com/rgieseke)'s [Locco](http://rgieseke.github.com/locco/).
