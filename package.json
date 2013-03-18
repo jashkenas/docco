@@ -12,6 +12,7 @@
     "node":       ">=0.2.0"
   },
   "dependencies": {
+    "async":      ">= 0.2.6",
     "commander":  ">= 0.5.2",
     "marked":     ">= 0.2.7",
     "underscore": ">= 1.0.0",

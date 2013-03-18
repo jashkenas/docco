@@ -77,27 +77,33 @@ assets, reading all the source files in, splitting them up into prose+code
 sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template.
 
-    document = (options = {}) ->
+    document = (options = {}, callback) ->
       configure options
 
       exec "mkdir -p #{config.output}", ->
 
-        exec "cp -f #{config.css} #{config.output}"
-        exec "cp -fR #{config.public} #{config.output}" if fs.existsSync config.public
-        files = config.sources.slice()
-
-        nextFile = ->
-          source = files.shift()
+        nextFile = (source, callback) ->
           fs.readFile source, (error, buffer) ->
-            throw error if error
+            return callback error if error
 
             code = buffer.toString()
             sections = parse source, code
             format source, sections
             write source, sections
-            nextFile() if files.length
+            callback()
 
-        nextFile()
+        async.parallel [
+          (done) ->
+            exec "cp -f #{config.css} #{config.output}", done
+        , (done) ->
+            if fs.existsSync config.public
+              exec "cp -fR #{config.public} #{config.output}", done
+            else done()
+        , (done) ->
+            async.map config.sources, nextFile, done
+        ], (error) ->
+          return callback error if callback
+          throw error if error
 
 Given a string of source code, **parse** out each block of prose and the code that
 follows it — by detecting which is which, line by line — and then create an
@@ -221,6 +227,7 @@ Require our external dependencies.
     _             = require 'underscore'
     fs            = require 'fs'
     path          = require 'path'
+    async         = require 'async'
     marked        = require 'marked'
     commander     = require 'commander'
     {highlight}   = require 'highlight.js'
