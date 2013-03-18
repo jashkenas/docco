@@ -13,16 +13,24 @@
     <% if (sources.length > 1) { %>
       <ul id="jump_to">
         <li>
-          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
-          <a class="small" href="javascript:void(0);">+</a>
+        <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+        <a class="small" href="javascript:void(0);">+</a>
           <div id="jump_wrapper">
           <div id="jump_page">
-            <% for (var i=0, l=sources.length; i<l; i++) { %>
-              <% var source = sources[i]; %>
-              <a class="source" href="<%= path.basename(destination(source)) %>">
-                <%= path.basename(source) %>
-              </a>
+            <% if (sources.length > 5) { %>
+              <div id="jump_actions">
+                <input id="jump_filter" placeholder="Filter Files &hellip;">
+              </div>
             <% } %>
+            <div id="jump_sources" class="jump_page">
+              <% for (var i=0, l=sources.length; i<l; i++) { %>
+                <% var source = sources[i]; %>
+                <a class="source" href="<%= path.basename(destination(source)) %>">
+                  <%= path.basename(source) %>
+                </a>
+              <% } %>
+            </div>
+            <div id="jump_results" class="jump_page"></div>
           </div>
         </li>
       </ul>
@@ -52,5 +60,8 @@
         <% } %>
     </ul>
   </div>
+  <% if (sources.length > 1) { %>
+    <script type="text/javascript" src="docco.js"></script>
+  <% } %>
 </body>
 </html>

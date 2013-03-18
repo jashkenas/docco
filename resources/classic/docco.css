@@ -101,6 +101,10 @@ ul.sections > li > div {
   padding:0;
 }
 
+#jump_filter {
+  margin: 0px 5px 5px;
+}
+
 #jump_to:hover #jump_wrapper {
   display: block;
 }
