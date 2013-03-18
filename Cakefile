@@ -31,3 +31,8 @@ task 'doc', 'rebuild the Docco documentation', (options) ->
   ].join(' && '), (err) ->
     throw err if err
   )
+
+task 'loc', 'count the lines of code in Docco', ->
+  code = fs.readFileSync('docco.litcoffee').toString()
+  lines = code.split('\n').filter (line) -> /^    /.test line
+  console.log "Docco LOC: #{lines.length}"
