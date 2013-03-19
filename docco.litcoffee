@@ -77,16 +77,17 @@ assets, reading all the source files in, splitting them up into prose+code
 sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template.
 
-    document = (options = {}, callback = (error) -> throw error if error) ->
+    document = (options = {}, callback) ->
       configure options
 
       exec "mkdir -p #{config.output}", ->
 
-        complete = ->
+        callback ?= (error) -> throw error if error
+        complete  = ->
           exec [
             "cp -f #{config.css} #{config.output}"
             "cp -fR #{config.public} #{config.output}" if fs.existsSync config.public
-          ].join('&'), callback
+          ].join('&&'), callback
 
         files = config.sources.slice()
 

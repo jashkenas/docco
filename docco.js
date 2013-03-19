@@ -7,19 +7,19 @@
     if (options == null) {
       options = {};
     }
-    if (callback == null) {
-      callback = function(error) {
-        if (error) {
-          throw error;
-        }
-      };
-    }
     configure(options);
     return exec("mkdir -p " + config.output, function() {
       var complete, files, nextFile;
 
+      if (callback == null) {
+        callback = function(error) {
+          if (error) {
+            throw error;
+          }
+        };
+      }
       complete = function() {
-        return exec(["cp -f " + config.css + " " + config.output, fs.existsSync(config["public"]) ? "cp -fR " + config["public"] + " " + config.output : void 0].join('&'), callback);
+        return exec(["cp -f " + config.css + " " + config.output, fs.existsSync(config["public"]) ? "cp -fR " + config["public"] + " " + config.output : void 0].join('&&'), callback);
       };
       files = config.sources.slice();
       nextFile = function() {
