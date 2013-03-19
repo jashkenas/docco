@@ -78,7 +78,7 @@ sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template.
 
     document = (options = {}) ->
-      configure options
+      config = configure options
 
       exec "mkdir -p #{config.output}", ->
 
@@ -92,9 +92,9 @@ out in an HTML template.
             throw error if error
 
             code = buffer.toString()
-            sections = parse source, code
-            format source, sections
-            write source, sections
+            sections = parse source, code, config
+            format source, sections, config
+            write source, sections, config
             nextFile() if files.length
 
         nextFile()
@@ -104,10 +104,10 @@ follows it — by detecting which is which, line by line — and then create an
 individual **section** for it. Each section is an object with `docsText` and
 `codeText` properties, and eventually `docsHtml` and `codeHtml` as well.
 
-    parse = (source, code) ->
+    parse = (source, code, config) ->
       lines    = code.split '\n'
       sections = []
-      lang     = getLanguage source
+      lang     = getLanguage source, config
       hasCode  = docsText = codeText = ''
 
       save = ->
@@ -146,8 +146,8 @@ To **format** and highlight the now-parsed sections of code, we use **Highlight.
 over stdio, and run the text of their corresponding comments through
 **Markdown**, using [Marked](https://github.com/chjj/marked).
 
-    format = (source, sections) ->
-      language = getLanguage source
+    format = (source, sections, config) ->
+      language = getLanguage source, config
       for section, i in sections
         code = highlight(language.name, section.codeText).value
         code = code.replace(/\s+$/, '')
@@ -158,7 +158,7 @@ Once all of the code has finished highlighting, we can **write** the resulting
 documentation file by passing the completed HTML sections into the template,
 and rendering it to the specified output path.
 
-    write = (source, sections) ->
+    write = (source, sections, config) ->
 
       destination = (file) ->
         path.join(config.output, path.basename(file, path.extname(file)) + '.html')
@@ -183,24 +183,19 @@ Configuration
 Default configuration **options**. All of these may be extended by
 user-specified options.
 
-    defaultConfig =
+    defaults =
       layout:     'parallel'
       output:     'docs/'
       template:   null
       css:        null
       extension:  null
 
-Configuration **options** which are an extension of both `defaultConfig` and
-user-specified options.
-
-    config = {}
-
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
 source files for languages for which we have definitions.
 
     configure = (options) ->
-      config = _.extend {}, defaultConfig, _.pick(options, _.keys(defaultConfig)...)
+      config = _.extend {}, defaults, _.pick(options, _.keys(defaults)...)
 
       if options.template
         config.layout = null
@@ -216,6 +211,8 @@ source files for languages for which we have definitions.
         console.warn "docco: skipped unknown type (#{m})" unless lang
         lang
       ).sort()
+
+      config
 
 
 Helpers & Initial Setup
@@ -253,7 +250,7 @@ Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\)) and interpolati
 A function to get the current language we're documenting, based on the
 file extension. Detect and tag "literate" `.ext.md` variants.
 
-    getLanguage = (source) ->
+    getLanguage = (source, config) ->
       ext  = config.extension or path.extname(source) or path.basename(source)
       lang = languages[ext]
       if lang and lang.name is 'markdown'
@@ -274,7 +271,7 @@ Finally, let's define the interface to run Docco from the command line.
 Parse options using [Commander](https://github.com/visionmedia/commander.js).
 
     run = (args = process.argv) ->
-      c = config
+      c = defaults
       commander.version(version)
         .usage('[options] files')
         .option('-l, --layout [name]',    'choose a layout (parallel, linear or classic)', c.layout)
