@@ -82,12 +82,12 @@ out in an HTML template.
 
       exec "mkdir -p #{config.output}", ->
 
-        callback ?= (error) -> throw error if error
-        complete  = ->
+        callback or= (error) -> throw error if error
+        complete   = ->
           exec [
             "cp -f #{config.css} #{config.output}"
             "cp -fR #{config.public} #{config.output}" if fs.existsSync config.public
-          ].join('&&'), callback
+          ].join(' && '), callback
 
         files = config.sources.slice()
 
