@@ -80,14 +80,16 @@ out in an HTML template.
     document = (options = {}, callback) ->
       configure options
 
-      mkdirp config.output, ->
+      fs.mkdirp config.output, ->
 
         callback or= (error) -> throw error if error
         complete   = ->
-          exec [
-            "cp -f #{config.css} #{config.output}"
-            "cp -fR #{config.public} #{config.output}" if fs.existsSync config.public
-          ].join(' && '), callback
+          async.parallel [
+            (done) -> fs.copy config.css, config.output, done
+          , (done) ->
+              if fs.existsSync config.public then fs.copyRecursive config.public, config.output, done
+              else done()
+          ], callback
 
         files = config.sources.slice()
 
@@ -223,16 +225,14 @@ Helpers & Initial Setup
 
 Require our external dependencies.
 
-    _                  = require 'underscore'
-    fs                 = require 'fs'
-    path               = require 'path'
-    async              = require 'async'
-    marked             = require 'marked'
-    mkdirp             = require 'mkdirp'
-    commander          = require 'commander'
-    {highlight}        = require 'highlight.js'
-    {spawn, exec}      = require 'child_process'
-    {copyDirRecursive} = require 'wrench'
+    _             = require 'underscore'
+    fs            = require 'fs.extra'
+    path          = require 'path'
+    async         = require 'async'
+    marked        = require 'marked'
+    commander     = require 'commander'
+    {highlight}   = require 'highlight.js'
+    {spawn, exec} = require 'child_process'
 
 Languages are stored in JSON in the file `resources/languages.json`.
 Each item maps the file extension to the name of the language and the
