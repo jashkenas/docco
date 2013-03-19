@@ -77,31 +77,23 @@ assets, reading all the source files in, splitting them up into prose+code
 sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template.
 
-    document = (options = {}, callback) ->
+    document = (options = {}, callback = (error) -> throw error if error) ->
       configure options
 
       exec "mkdir -p #{config.output}", ->
 
-        steps     = 2
-        completed = 0
+        complete = ->
+          exec [
+            "cp -f #{config.css} #{config.output}"
+            "cp -fR #{config.public} #{config.output}" if fs.existsSync config.public
+          ].join('&'), callback
 
-        complete  = (error) ->
-          if error
-            if _.isFunction callback then return callback error
-            else throw error
-
-          callback?() if ++completed is steps
-
-        exec "cp -f #{config.css} #{config.output}", complete
-        if fs.existsSync config.public
-          steps++
-          exec "cp -fR #{config.public} #{config.output}", complete
         files = config.sources.slice()
 
         nextFile = ->
           source = files.shift()
           fs.readFile source, (error, buffer) ->
-            complete error if error
+            return callback error if error
 
             code = buffer.toString()
             sections = parse source, code

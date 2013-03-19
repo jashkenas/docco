@@ -7,29 +7,20 @@
     if (options == null) {
       options = {};
     }
-    configure(options);
-    return exec("mkdir -p " + config.output, function() {
-      var complete, completed, files, nextFile, steps;
-
-      steps = 2;
-      completed = 0;
-      complete = function(error) {
+    if (callback == null) {
+      callback = function(error) {
         if (error) {
-          if (_.isFunction(callback)) {
-            return callback(error);
-          } else {
-            throw error;
-          }
-        }
-        if (++completed === steps) {
-          return typeof callback === "function" ? callback() : void 0;
+          throw error;
         }
       };
-      exec("cp -f " + config.css + " " + config.output, complete);
-      if (fs.existsSync(config["public"])) {
-        steps++;
-        exec("cp -fR " + config["public"] + " " + config.output, complete);
-      }
+    }
+    configure(options);
+    return exec("mkdir -p " + config.output, function() {
+      var complete, files, nextFile;
+
+      complete = function() {
+        return exec(["cp -f " + config.css + " " + config.output, fs.existsSync(config["public"]) ? "cp -fR " + config["public"] + " " + config.output : void 0].join('&'), callback);
+      };
       files = config.sources.slice();
       nextFile = function() {
         var source;
@@ -39,7 +30,7 @@
           var code, sections;
 
           if (error) {
-            complete(error);
+            return callback(error);
           }
           code = buffer.toString();
           sections = parse(source, code);
