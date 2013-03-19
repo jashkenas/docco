@@ -3,7 +3,7 @@
   var Docco, commander, configure, defaults, document, exec, ext, format, fs, getLanguage, highlight, l, languages, marked, parse, path, run, spawn, version, write, _, _ref,
     __slice = [].slice;
 
-  document = function(options) {
+  document = function(options, callback) {
     var config;
 
     if (options == null) {
@@ -11,12 +11,16 @@
     }
     config = configure(options);
     return exec("mkdir -p " + config.output, function() {
-      var files, nextFile;
+      var complete, files, nextFile;
 
-      exec("cp -f " + config.css + " " + config.output);
-      if (fs.existsSync(config["public"])) {
-        exec("cp -fR " + config["public"] + " " + config.output);
-      }
+      callback || (callback = function(error) {
+        if (error) {
+          throw error;
+        }
+      });
+      complete = function() {
+        return exec(["cp -f " + config.css + " " + config.output, fs.existsSync(config["public"]) ? "cp -fR " + config["public"] + " " + config.output : void 0].join(' && '), callback);
+      };
       files = config.sources.slice();
       nextFile = function() {
         var source;
@@ -26,7 +30,7 @@
           var code, sections;
 
           if (error) {
-            throw error;
+            return callback(error);
           }
           code = buffer.toString();
           sections = parse(source, code, config);
@@ -34,6 +38,8 @@
           write(source, sections, config);
           if (files.length) {
             return nextFile();
+          } else {
+            return complete();
           }
         });
       };
