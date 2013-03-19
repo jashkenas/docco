@@ -80,7 +80,7 @@ out in an HTML template.
     document = (options = {}, callback) ->
       configure options
 
-      exec "mkdir -p #{config.output}", ->
+      mkdirp config.output, ->
 
         callback or= (error) -> throw error if error
         complete   = ->
@@ -223,13 +223,16 @@ Helpers & Initial Setup
 
 Require our external dependencies.
 
-    _             = require 'underscore'
-    fs            = require 'fs'
-    path          = require 'path'
-    marked        = require 'marked'
-    commander     = require 'commander'
-    {highlight}   = require 'highlight.js'
-    {spawn, exec} = require 'child_process'
+    _                  = require 'underscore'
+    fs                 = require 'fs'
+    path               = require 'path'
+    async              = require 'async'
+    marked             = require 'marked'
+    mkdirp             = require 'mkdirp'
+    commander          = require 'commander'
+    {highlight}        = require 'highlight.js'
+    {spawn, exec}      = require 'child_process'
+    {copyDirRecursive} = require 'wrench'
 
 Languages are stored in JSON in the file `resources/languages.json`.
 Each item maps the file extension to the name of the language and the
