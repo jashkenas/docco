@@ -1,9 +1,9 @@
 {
   "name":         "docco",
   "description":  "The Quick and Dirty Literate Programming Documentation Generator",
-  "keywords":     ["documentation", "docs", "generator", "coffeescript"],
+  "keywords":     ["documentation", "docs", "generator", "literate", "coffeescript"],
   "author":       "Jeremy Ashkenas",
-  "version":      "0.4.0",
+  "version":      "0.6.2",
   "licenses": [{
     "type":       "MIT",
     "url":        "http://opensource.org/licenses/mit-license.php"
@@ -11,21 +11,14 @@
   "engines": {
     "node":       ">=0.2.0"
   },
-  "directories": {
-    "lib" :       "./lib"
-  },
   "dependencies": {
-    "commander": ">=0.5.2"
+    "commander":  ">= 0.5.2",
+    "marked":     ">= 0.2.7",
+    "underscore": ">= 1.0.0",
+    "highlight.js": ">= 7.3.0"
   },
-  "devDependencies": {
-    "coffee-script": ">=1.3.3",
-    "rimraf"       :">=2.0.2"
-  },
-  "main" :        "./lib/docco",
+  "main" :        "./docco",
   "bin": {
     "docco":      "./bin/docco"
-  },
-  "scripts" : {
-    "test":       "cake test"
   }
 }
