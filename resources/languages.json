@@ -24,5 +24,6 @@
   ".m":         {"name": "objc", "symbol": "//"},
   ".scala":     {"name": "scala", "symbol": "//"},
   ".cs":        {"name": "c#", "symbol": "//"},
+  ".scm":       {"name": "scheme", "symbol": ";;"},
   "Makefile":   {"name": "make", "symbol": "#"}
 }
