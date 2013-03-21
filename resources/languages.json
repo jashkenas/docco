@@ -1,47 +1,49 @@
 { ".coffee" :
-    {"name" : "coffee-script", "symbol" : "#"},
-  ".ls":
-    {"name": "livescript", "symbol": "#"},
-  ".rb":
-    {"name" : "ruby", "symbol" : "#"},
-  ".py":
-    {"name": "python", "symbol" : "#"},
-  ".feature":
-    {"name" : "gherkin", "symbol" : "#"},
-  ".yaml":
-    {"name" : "yaml", "symbol" : "#"},
-  ".tex":
-    {"name" : "tex", "symbol" : "%"},
-  ".latex":
-    {"name" : "tex", "symbol" : "%"},
-  ".js":
-    {"name" : "javascript", "symbol" : "//"},
-  ".java":
-    {"name" : "java", "symbol" : "//"},
-  ".sass":
-    {"name" : "sass", "symbol" : "//"},
-  ".scss":
-    {"name" : "scss", "symbol" : "//"},
-  ".c":
-    {"name" : "c", "symbol" : "//"},
-  ".h":
-    {"name" : "c", "symbol" : "//"},
-  ".cpp":
-    {"name" : "cpp", "symbol" : "//"},
-  ".php":
-    {"name" : "php", "symbol" : "//"},
-  ".hs":
-    {"name" : "haskell", "symbol" : "--"},
-  ".erl":
-    {"name" : "erlang", "symbol" : "%"},
-  ".hrl":
-    {"name" : "erlang", "symbol" : "%"},
-  ".md":
-    {"name" : "text", "symbol" : ""},
-  ".markdown":
-    {"name" : "text", "symbol" : ""},
-  ".less":
-    {"name" : "scss", "symbol": "//"},
-  ".m":
-    {"name" : "objc", "symbol": "//"}
+		{"name" : "coffee-script", "symbol" : "#"},
+	".ls":
+		{"name": "livescript", "symbol": "#"},
+	".rb":
+		{"name" : "ruby", "symbol" : "#"},
+	".py":
+		{"name": "python", "symbol" : "#"},
+	".feature":
+		{"name" : "gherkin", "symbol" : "#"},
+	".yaml":
+		{"name" : "yaml", "symbol" : "#"},
+	".tex":
+		{"name" : "tex", "symbol" : "%"},
+	".latex":
+		{"name" : "tex", "symbol" : "%"},
+	".js":
+		{"name" : "javascript", "symbol" : "//"},
+	".java":
+		{"name" : "java", "symbol" : "//"},
+	".sass":
+		{"name" : "sass", "symbol" : "//"},
+	".scss":
+		{"name" : "scss", "symbol" : "//"},
+	".c":
+		{"name" : "c", "symbol" : "//"},
+	".h":
+		{"name" : "c", "symbol" : "//"},
+	".cpp":
+		{"name" : "cpp", "symbol" : "//"},
+	".php":
+		{"name" : "php", "symbol" : "//"},
+	".hs":
+		{"name" : "haskell", "symbol" : "--"},
+	".erl":
+		{"name" : "erlang", "symbol" : "%"},
+	".hrl":
+		{"name" : "erlang", "symbol" : "%"},
+	".md":
+		{"name" : "text", "symbol" : ""},
+	".markdown":
+		{"name" : "text", "symbol" : ""},
+	".less":
+		{"name" : "scss", "symbol": "//"},
+	".m":
+		{"name" : "objc", "symbol": "//"},
+	".scm":
+		{"name" : "scheme", "symbol": ";;"}
 }
