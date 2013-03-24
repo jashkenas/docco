@@ -59,27 +59,46 @@
       });
       return hasCode = docsText = codeText = '';
     };
+    processCommentLine = function(line) {
+      // save any code section, if any
+      if (hasCode) {
+        save();
+      }
+      // extract text from comment and append to docsText
+      docsText += (line = line.replace(lang.commentMatcher, '')) + '\n';
+      // huh?  diff pattern triggers save?
+      if (/^(---+|===+)$/.test(line)) {
+        save();
+      }
+      prev = 'text';
+    };
+    processCodeLine = function(line) {
+      // we're not in comment block, so append line to code block
+      hasCode = true;
+      codeText += line + '\n';
+      prev = 'code';
+    };
     if (lang.literate) {
       for (i = _i = 0, _len = lines.length; _i < _len; i = ++_i) {
         line = lines[i];
         lines[i] = /^\s*$/.test(line) ? '' : (match = /^([ ]{4}|\t)/.exec(line)) ? line.slice(match[0].length) : lang.symbol + ' ' + line;
       }
     }
+    var inCommenBlock = false;
     for (_j = 0, _len1 = lines.length; _j < _len1; _j++) {
       line = lines[_j];
-      if ((!line && prev === 'text') || (line.match(lang.commentMatcher) && !line.match(lang.commentFilter))) {
-        if (hasCode) {
-          save();
-        }
-        docsText += (line = line.replace(lang.commentMatcher, '')) + '\n';
-        if (/^(---+|===+)$/.test(line)) {
-          save();
-        }
-        prev = 'text';
+      if (lang.comment_start_block && line.match(lang.comment_start_block)) {
+        inCommenBlock = true;
+      } else if (lang.comment_end_block && line.match(lang.comment_end_block)) {
+        inCommenBlock = false;
+      } else if (inCommenBlock) {
+        processCommentLine(line);
+      } else if ((!line && prev === 'text') || (line.match(lang.commentMatcher) && !line.match(lang.commentFilter))) {
+        // if blank line and finishing text block
+        // or we have a legit single comment line (it's not escaped/filtered)
+        processCommentLine(line);
       } else {
-        hasCode = true;
-        codeText += line + '\n';
-        prev = 'code';
+        processCodeLine(line);
       }
     }
     save();
@@ -171,12 +190,15 @@
 
   _ref = require('child_process'), spawn = _ref.spawn, exec = _ref.exec;
 
-  languages = JSON.parse(fs.readFileSync("" + __dirname + "/resources/languages.json"));
-
+  languages = require("./resources/languages");
   for (ext in languages) {
     l = languages[ext];
     l.commentMatcher = RegExp("^\\s*" + l.symbol + "\\s?");
     l.commentFilter = /(^#![/]|^\s*#\{)/;
+    if (l.start_block && l.end_block) {
+      l.comment_start_block = new RegExp(l.start_block);
+      l.comment_end_block = new RegExp(l.end_block);
+    }
   }
 
   getLanguage = function(source) {
