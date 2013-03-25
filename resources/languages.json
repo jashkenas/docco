@@ -25,5 +25,7 @@
   ".scala":     {"name": "scala", "symbol": "//"},
   ".cs":        {"name": "c#", "symbol": "//"},
   ".scm":       {"name": "scheme", "symbol": ";;"},
+  ".miz":       {"name": "mizar", "symbol": "::"},
+  ".voc":       {"name": "mizar", "symbol": "::"},
   "Makefile":   {"name": "make", "symbol": "#"}
 }
