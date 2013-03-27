@@ -138,6 +138,7 @@ normal below.
           save() if hasCode
           docsText += (line = line.replace(lang.commentMatcher, '')) + '\n'
           save() if /^(---+|===+)$/.test line
+          save() if /^\s*#{1,6}/.test line
           prev = 'text'
         else
           hasCode = yes
