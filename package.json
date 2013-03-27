@@ -15,7 +15,7 @@
     "async":      ">= 0.2.6",
     "commander":  ">= 0.5.2",
     "marked":     ">= 0.2.7",
-    "fs.extra":   ">= 1.2.0",
+    "fs-extra":   ">= 0.6.0",
     "underscore": ">= 1.0.0",
     "highlight.js": ">= 7.3.0"
   },
