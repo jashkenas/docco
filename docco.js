@@ -10,7 +10,6 @@
     configure(options);
     return exec("mkdir -p " + config.output, function() {
       var complete, files, nextFile;
-
       callback || (callback = function(error) {
         if (error) {
           throw error;
@@ -22,11 +21,9 @@
       files = config.sources.slice();
       nextFile = function() {
         var source;
-
         source = files.shift();
         return fs.readFile(source, function(error, buffer) {
           var code, sections;
-
           if (error) {
             return callback(error);
           }
@@ -47,7 +44,6 @@
 
   parse = function(source, code) {
     var codeText, docsText, hasCode, i, lang, line, lines, match, prev, save, sections, _i, _j, _len, _len1;
-
     lines = code.split('\n');
     sections = [];
     lang = getLanguage(source);
@@ -75,6 +71,9 @@
         if (/^(---+|===+)$/.test(line)) {
           save();
         }
+        if (/^\s*#{1,6}/.test(line)) {
+          save();
+        }
         prev = 'text';
       } else {
         hasCode = true;
@@ -88,7 +87,6 @@
 
   format = function(source, sections) {
     var code, i, language, section, _i, _len, _results;
-
     language = getLanguage(source);
     _results = [];
     for (i = _i = 0, _len = sections.length; _i < _len; i = ++_i) {
@@ -103,7 +101,6 @@
 
   write = function(source, sections) {
     var destination, first, hasTitle, html, title;
-
     destination = function(file) {
       return path.join(config.output, path.basename(file, path.extname(file)) + '.html');
     };
@@ -133,7 +130,6 @@
 
   configure = function(options) {
     var dir;
-
     _.extend(config, _.pick.apply(_, [options].concat(__slice.call(_.keys(config)))));
     if (options.template) {
       config.layout = null;
@@ -148,7 +144,6 @@
     config.template = _.template(fs.readFileSync(config.template).toString());
     return config.sources = options.args.filter(function(source) {
       var lang;
-
       lang = getLanguage(source, config);
       if (!lang) {
         console.warn("docco: skipped unknown type (" + (path.basename(source)) + ")");
@@ -181,7 +176,6 @@
 
   getLanguage = function(source) {
     var codeExt, codeLang, lang;
-
     ext = config.extension || path.extname(source) || path.basename(source);
     lang = languages[ext];
     if (lang && lang.name === 'markdown') {
@@ -199,7 +193,6 @@
 
   run = function(args) {
     var c;
-
     if (args == null) {
       args = process.argv;
     }
