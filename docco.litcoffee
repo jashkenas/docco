@@ -84,12 +84,10 @@ out in an HTML template.
 
         callback or= (error) -> throw error if error
         complete   = ->
-          async.parallel [
-            (done) -> fs.copy config.css, config.output, done
-          , (done) ->
-              if fs.existsSync config.public then fs.copy config.public, config.output, done
-              else done()
-          ], callback
+          fs.copy config.css, config.output, (error) ->
+            return callback error if error
+            if fs.existsSync config.public then fs.copy config.public, config.output, callback
+            else callback()
 
         files = config.sources.slice()
 
@@ -228,7 +226,6 @@ Require our external dependencies.
     _           = require 'underscore'
     fs          = require 'fs-extra'
     path        = require 'path'
-    async       = require 'async'
     marked      = require 'marked'
     commander   = require 'commander'
     {highlight} = require 'highlight.js'
