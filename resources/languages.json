@@ -25,5 +25,7 @@
   ".scala":     {"name": "scala", "symbol": "//"},
   ".cs":        {"name": "c#", "symbol": "//"},
   ".scm":       {"name": "scheme", "symbol": ";;"},
-  "Makefile":   {"name": "make", "symbol": "#"}
+  "Makefile":   {"name": "make", "symbol": "#"},
+  ".html":      {"name": "html", "symbol": ""},
+  ".htm":       {"name": "html", "symbol": ""}
 }
