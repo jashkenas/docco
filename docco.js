@@ -33,8 +33,8 @@
             return callback(error);
           }
           code = buffer.toString();
-          sections = parse(source, code, config);
-          format(source, sections, config);
+          sections = parse(source, code, config.extension);
+          format(source, sections, config.extension);
           write(source, sections, config);
           if (files.length) {
             return nextFile();
@@ -47,12 +47,12 @@
     });
   };
 
-  parse = function(source, code, config) {
+  parse = function(source, code, extension) {
     var codeText, docsText, hasCode, i, lang, line, lines, match, prev, save, sections, _i, _j, _len, _len1;
 
     lines = code.split('\n');
     sections = [];
-    lang = getLanguage(source, config);
+    lang = getLanguage(source, extension);
     hasCode = docsText = codeText = '';
     save = function() {
       sections.push({
@@ -88,10 +88,10 @@
     return sections;
   };
 
-  format = function(source, sections, config) {
+  format = function(source, sections, extension) {
     var code, i, language, section, _i, _len, _results;
 
-    language = getLanguage(source, config);
+    language = getLanguage(source, extension);
     _results = [];
     for (i = _i = 0, _len = sections.length; _i < _len; i = ++_i) {
       section = sections[i];
@@ -151,7 +151,7 @@
     config.sources = options.args.filter(function(source) {
       var lang;
 
-      lang = getLanguage(source, config);
+      lang = getLanguage(source, config.extension);
       if (!lang) {
         console.warn("docco: skipped unknown type (" + m + ")");
       }
@@ -182,10 +182,10 @@
     l.commentFilter = /(^#![/]|^\s*#\{)/;
   }
 
-  getLanguage = function(source, config) {
+  getLanguage = function(source, extension) {
     var codeExt, codeLang, lang;
 
-    ext = config.extension || path.extname(source) || path.basename(source);
+    ext = extension || path.extname(source) || path.basename(source);
     lang = languages[ext];
     if (lang && lang.name === 'markdown') {
       codeExt = path.extname(path.basename(source, ext));

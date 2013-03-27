@@ -97,8 +97,8 @@ out in an HTML template.
             return callback error if error
 
             code = buffer.toString()
-            sections = parse source, code, config
-            format source, sections, config
+            sections = parse source, code, config.extension
+            format source, sections, config.extension
             write source, sections, config
             if files.length then nextFile() else complete()
 
@@ -109,10 +109,10 @@ follows it — by detecting which is which, line by line — and then create an
 individual **section** for it. Each section is an object with `docsText` and
 `codeText` properties, and eventually `docsHtml` and `codeHtml` as well.
 
-    parse = (source, code, config) ->
+    parse = (source, code, extension) ->
       lines    = code.split '\n'
       sections = []
-      lang     = getLanguage source, config
+      lang     = getLanguage source, extension
       hasCode  = docsText = codeText = ''
 
       save = ->
@@ -151,8 +151,8 @@ To **format** and highlight the now-parsed sections of code, we use **Highlight.
 over stdio, and run the text of their corresponding comments through
 **Markdown**, using [Marked](https://github.com/chjj/marked).
 
-    format = (source, sections, config) ->
-      language = getLanguage source, config
+    format = (source, sections, extension) ->
+      language = getLanguage source, extension
       for section, i in sections
         code = highlight(language.name, section.codeText).value
         code = code.replace(/\s+$/, '')
@@ -212,7 +212,7 @@ source files for languages for which we have definitions.
       config.template = _.template fs.readFileSync(config.template).toString()
 
       config.sources = options.args.filter((source) ->
-        lang = getLanguage source, config
+        lang = getLanguage source, config.extension
         console.warn "docco: skipped unknown type (#{m})" unless lang
         lang
       ).sort()
@@ -255,8 +255,8 @@ Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\)) and interpolati
 A function to get the current language we're documenting, based on the
 file extension. Detect and tag "literate" `.ext.md` variants.
 
-    getLanguage = (source, config) ->
-      ext  = config.extension or path.extname(source) or path.basename(source)
+    getLanguage = (source, extension) ->
+      ext  = extension or path.extname(source) or path.basename(source)
       lang = languages[ext]
       if lang and lang.name is 'markdown'
         codeExt = path.extname(path.basename(source, ext))
