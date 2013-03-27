@@ -20,8 +20,7 @@
         return fs.copy(config.css, config.output, function(error) {
           if (error) {
             return callback(error);
-          }
-          if (fs.existsSync(config["public"])) {
+          } else if (fs.existsSync(config["public"])) {
             return fs.copy(config["public"], config.output, callback);
           } else {
             return callback();
