@@ -153,7 +153,7 @@
 
       lang = getLanguage(source, config.extension);
       if (!lang) {
-        console.warn("docco: skipped unknown type (" + m + ")");
+        console.warn("docco: skipped unknown type (" + (path.basename(source)) + ")");
       }
       return lang;
     }).sort();
