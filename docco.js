@@ -9,19 +9,22 @@
     }
     configure(options);
     return fs.mkdirs(config.output, function() {
-      var complete, files, nextFile;
+      var complete, copyAsset, files, nextFile;
 
       callback || (callback = function(error) {
         if (error) {
           throw error;
         }
       });
+      copyAsset = function(file, callback) {
+        return fs.copy(file, path.join(config.output, path.basename(file)), callback);
+      };
       complete = function() {
-        return fs.copy(config.css, config.output, function(error) {
+        return copyAsset(config.css, function(error) {
           if (error) {
             return callback(error);
           } else if (fs.existsSync(config["public"])) {
-            return fs.copy(config["public"], config.output, callback);
+            return copyAsset(config["public"], callback);
           } else {
             return callback();
           }

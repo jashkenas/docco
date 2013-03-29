@@ -83,10 +83,12 @@ out in an HTML template.
       fs.mkdirs config.output, ->
 
         callback or= (error) -> throw error if error
+        copyAsset  = (file, callback) ->
+          fs.copy file, path.join(config.output, path.basename(file)), callback
         complete   = ->
-          fs.copy config.css, config.output, (error) ->
+          copyAsset config.css, (error) ->
             if error then callback error
-            else if fs.existsSync config.public then fs.copy config.public, config.output, callback
+            else if fs.existsSync config.public then copyAsset config.public, callback
             else callback()
 
         files = config.sources.slice()
