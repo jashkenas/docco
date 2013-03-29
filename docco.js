@@ -136,7 +136,7 @@
 
   config = {
     layout: 'parallel',
-    output: 'docs/',
+    output: 'docs',
     template: null,
     css: null,
     extension: null
@@ -149,12 +149,12 @@
     if (options.template) {
       config.layout = null;
     } else {
-      dir = config.layout = "" + __dirname + "/resources/" + config.layout;
-      if (fs.existsSync("" + dir + "/public")) {
-        config["public"] = "" + dir + "/public";
+      dir = config.layout = path.join(__dirname, 'resources', config.layout);
+      if (fs.existsSync(path.join(dir, 'public'))) {
+        config["public"] = path.join(dir, 'public');
       }
-      config.template = "" + dir + "/docco.jst";
-      config.css = options.css || ("" + dir + "/docco.css");
+      config.template = path.join(dir, 'docco.jst');
+      config.css = options.css || path.join(dir, 'docco.css');
     }
     config.template = _.template(fs.readFileSync(config.template).toString());
     return config.sources = options.args.filter(function(source) {
@@ -180,7 +180,7 @@
 
   highlight = require('highlight.js').highlight;
 
-  languages = JSON.parse(fs.readFileSync("" + __dirname + "/resources/languages.json"));
+  languages = JSON.parse(fs.readFileSync(path.join(__dirname, 'resources', 'languages.json')));
 
   for (ext in languages) {
     l = languages[ext];
@@ -204,7 +204,7 @@
     return lang;
   };
 
-  version = JSON.parse(fs.readFileSync("" + __dirname + "/package.json")).version;
+  version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version;
 
   run = function(args) {
     var c;

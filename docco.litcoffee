@@ -192,7 +192,7 @@ options.
 
     config =
       layout:     'parallel'
-      output:     'docs/'
+      output:     'docs'
       template:   null
       css:        null
       extension:  null
@@ -207,10 +207,10 @@ source files for languages for which we have definitions.
       if options.template
         config.layout = null
       else
-        dir = config.layout = "#{__dirname}/resources/#{config.layout}"
-        config.public       = "#{dir}/public" if fs.existsSync "#{dir}/public"
-        config.template     = "#{dir}/docco.jst"
-        config.css          = options.css or "#{dir}/docco.css"
+        dir = config.layout = path.join __dirname, 'resources', config.layout
+        config.public       = path.join dir, 'public' if fs.existsSync path.join dir, 'public'
+        config.template     = path.join dir, 'docco.jst'
+        config.css          = options.css or path.join dir, 'docco.css'
       config.template = _.template fs.readFileSync(config.template).toString()
 
       config.sources = options.args.filter((source) ->
@@ -237,7 +237,7 @@ Each item maps the file extension to the name of the language and the
 `symbol` that indicates a line comment. To add support for a new programming
 language to Docco, just add it to the file.
 
-    languages = JSON.parse fs.readFileSync("#{__dirname}/resources/languages.json")
+    languages = JSON.parse fs.readFileSync(path.join(__dirname, 'resources', 'languages.json'))
 
 Build out the appropriate matchers and delimiters for each language.
 
@@ -265,7 +265,7 @@ file extension. Detect and tag "literate" `.ext.md` variants.
 
 Keep it DRY. Extract the docco **version** from `package.json`
 
-    version = JSON.parse(fs.readFileSync("#{__dirname}/package.json")).version
+    version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version
 
 
 Command Line Interface
