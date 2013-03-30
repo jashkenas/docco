@@ -80,14 +80,16 @@ out in an HTML template.
     document = (options = {}, callback) ->
       config = configure options
 
-      exec "mkdir -p #{config.output}", ->
+      fs.mkdirs config.output, ->
 
         callback or= (error) -> throw error if error
+        copyAsset  = (file, callback) ->
+          fs.copy file, path.join(config.output, path.basename(file)), callback
         complete   = ->
-          exec [
-            "cp -f #{config.css} #{config.output}"
-            "cp -fR #{config.public} #{config.output}" if fs.existsSync config.public
-          ].join(' && '), callback
+          copyAsset config.css, (error) ->
+            if error then callback error
+            else if fs.existsSync config.public then copyAsset config.public, callback
+            else callback()
 
         files = config.sources.slice()
 
@@ -190,7 +192,7 @@ user-specified options.
 
     defaults =
       layout:     'parallel'
-      output:     'docs/'
+      output:     'docs'
       template:   null
       css:        null
       extension:  null
@@ -205,10 +207,10 @@ source files for languages for which we have definitions.
       if options.template
         config.layout = null
       else
-        dir = config.layout = "#{__dirname}/resources/#{config.layout}"
-        config.public       = "#{dir}/public" if fs.existsSync "#{dir}/public"
-        config.template     = "#{dir}/docco.jst"
-        config.css          = options.css or "#{dir}/docco.css"
+        dir = config.layout = path.join __dirname, 'resources', config.layout
+        config.public       = path.join dir, 'public' if fs.existsSync path.join dir, 'public'
+        config.template     = path.join dir, 'docco.jst'
+        config.css          = options.css or path.join dir, 'docco.css'
       config.template = _.template fs.readFileSync(config.template).toString()
 
       config.sources = options.args.filter((source) ->
@@ -225,20 +227,19 @@ Helpers & Initial Setup
 
 Require our external dependencies.
 
-    _             = require 'underscore'
-    fs            = require 'fs'
-    path          = require 'path'
-    marked        = require 'marked'
-    commander     = require 'commander'
-    {highlight}   = require 'highlight.js'
-    {spawn, exec} = require 'child_process'
+    _           = require 'underscore'
+    fs          = require 'fs-extra'
+    path        = require 'path'
+    marked      = require 'marked'
+    commander   = require 'commander'
+    {highlight} = require 'highlight.js'
 
 Languages are stored in JSON in the file `resources/languages.json`.
 Each item maps the file extension to the name of the language and the
 `symbol` that indicates a line comment. To add support for a new programming
 language to Docco, just add it to the file.
 
-    languages = JSON.parse fs.readFileSync("#{__dirname}/resources/languages.json")
+    languages = JSON.parse fs.readFileSync(path.join(__dirname, 'resources', 'languages.json'))
 
 Build out the appropriate matchers and delimiters for each language.
 
@@ -266,7 +267,7 @@ file extension. Detect and tag "literate" `.ext.md` variants.
 
 Keep it DRY. Extract the docco **version** from `package.json`
 
-    version = JSON.parse(fs.readFileSync("#{__dirname}/package.json")).version
+    version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version
 
 
 Command Line Interface
