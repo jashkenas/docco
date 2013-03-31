@@ -44,8 +44,8 @@
             return callback(error);
           }
           code = buffer.toString();
-          sections = parse(source, code, config.extension);
-          format(source, sections, config.extension);
+          sections = parse(source, code, config);
+          format(source, sections, config);
           write(source, sections, config);
           if (files.length) {
             return nextFile();
@@ -58,12 +58,15 @@
     });
   };
 
-  parse = function(source, code, extension) {
+  parse = function(source, code, config) {
     var codeText, docsText, hasCode, i, lang, line, lines, match, prev, save, sections, _i, _j, _len, _len1;
 
+    if (config == null) {
+      config = {};
+    }
     lines = code.split('\n');
     sections = [];
-    lang = getLanguage(source, extension);
+    lang = getLanguage(source, config);
     hasCode = docsText = codeText = '';
     save = function() {
       sections.push({
@@ -99,10 +102,10 @@
     return sections;
   };
 
-  format = function(source, sections, extension) {
+  format = function(source, sections, config) {
     var code, i, language, section, _i, _len, _results;
 
-    language = getLanguage(source, extension);
+    language = getLanguage(source, config);
     _results = [];
     for (i = _i = 0, _len = sections.length; _i < _len; i = ++_i) {
       section = sections[i];
@@ -162,7 +165,7 @@
     config.sources = options.args.filter(function(source) {
       var lang;
 
-      lang = getLanguage(source, config.extension);
+      lang = getLanguage(source, config);
       if (!lang) {
         console.warn("docco: skipped unknown type (" + (path.basename(source)) + ")");
       }
@@ -191,10 +194,10 @@
     l.commentFilter = /(^#![/]|^\s*#\{)/;
   }
 
-  getLanguage = function(source, extension) {
+  getLanguage = function(source, config) {
     var codeExt, codeLang, lang;
 
-    ext = extension || path.extname(source) || path.basename(source);
+    ext = config.extension || path.extname(source) || path.basename(source);
     lang = languages[ext];
     if (lang && lang.name === 'markdown') {
       codeExt = path.extname(path.basename(source, ext));
