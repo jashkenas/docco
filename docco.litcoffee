@@ -135,8 +135,7 @@ normal below.
             lang.symbol + ' ' + line
 
       for line in lines
-        if (not line and prev is 'text') or
-            (line.match(lang.commentMatcher) and not line.match(lang.commentFilter))
+        if line.match(lang.commentMatcher) and not line.match(lang.commentFilter)
           save() if hasCode
           docsText += (line = line.replace(lang.commentMatcher, '')) + '\n'
           save() if /^(---+|===+)$/.test line
