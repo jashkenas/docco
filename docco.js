@@ -78,7 +78,7 @@
     }
     for (_j = 0, _len1 = lines.length; _j < _len1; _j++) {
       line = lines[_j];
-      if ((!line && prev === 'text') || (line.match(lang.commentMatcher) && !line.match(lang.commentFilter))) {
+      if (line.match(lang.commentMatcher) && !line.match(lang.commentFilter)) {
         if (hasCode) {
           save();
         }
