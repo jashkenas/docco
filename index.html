@@ -31,9 +31,7 @@ code. All prose is passed through
 <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>, and code is
 passed through <a href="http://highlightjs.org/">Highlight.js</a> syntax highlighting.
 This page is the result of running Docco against its own
-<a href="https://github.com/jashkenas/docco/blob/master/docco.litcoffee">source file</a>.
-
-</p>
+<a href="https://github.com/jashkenas/docco/blob/master/docco.litcoffee">source file</a>.</p>
 <ol>
 <li><p>Install Docco with <strong>npm</strong>: <code>sudo npm install -g docco</code></p>
 </li>
@@ -42,22 +40,15 @@ This page is the result of running Docco against its own
 </ol>
 <p>There is no &quot;Step 3&quot;. This will generate an HTML page for each of the named
 source files, with a menu linking to the other pages, saving the whole mess
-into a <code>docs</code> folder (configurable).
-
-</p>
+into a <code>docs</code> folder (configurable).</p>
 <p>The <a href="http://github.com/jashkenas/docco">Docco source</a> is available on GitHub,
-and is released under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.
-
-</p>
+and is released under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
 <p>Docco can be used to process code written in any programming language. If it
 doesn&#39;t handle your favorite yet, feel free to
 <a href="https://github.com/jashkenas/docco/blob/master/resources/languages.json">add it to the list</a>.
 Finally, the <a href="http://coffeescript.org/#literate">&quot;literate&quot; style</a> of <em>any</em>
 language is also supported — just tack an <code>.md</code> extension on the end:
-<code>.coffee.md</code>, <code>.py.md</code>, and so on.
-
-
-</p>
+<code>.coffee.md</code>, <code>.py.md</code>, and so on.</p>
 <h2>Partners in Crime:</h2>
 
         
@@ -99,10 +90,7 @@ is a <strong>CoffeeScript</strong> fork of Docco that adds a searchable table of
 and aims to gracefully handle large projects with complex hierarchies of code.</p>
 </li>
 </ul>
-<p>Note that not all ports will support all Docco features ... yet.
-
-
-</p>
+<p>Note that not all ports will support all Docco features ... yet.</p>
 <h2>Main Documentation Generation Functions</h2>
 
         
@@ -111,30 +99,35 @@ and aims to gracefully handle large projects with complex hierarchies of code.</
         <p>Generate the documentation for our configured source file by copying over static
 assets, reading all the source files in, splitting them up into prose+code
 sections, highlighting each file in the appropriate language, and printing them
-out in an HTML template.
-
-</p>
+out in an HTML template.</p>
 
         
-          <div class='highlight'><pre><span class="function"><span class="title">document</span></span> = (options = {}) -&gt;
+          <div class='highlight'><pre><span class="function"><span class="title">document</span></span> = (options = {}, callback) -&gt;
   configure options
 
-  exec <span class="string">"mkdir -p <span class="subst">#{config.output}</span>"</span>, -&gt;
+  fs.mkdirs config.output, -&gt;
 
-    exec <span class="string">"cp -f <span class="subst">#{config.css}</span> <span class="subst">#{config.output}</span>"</span>
-    exec <span class="string">"cp -fR <span class="subst">#{config.public}</span> <span class="subst">#{config.output}</span>"</span> <span class="keyword">if</span> fs.existsSync config.public
+    callback <span class="function"><span class="title">or</span></span>= (error) -&gt; <span class="keyword">throw</span> error <span class="keyword">if</span> error
+    <span class="function"><span class="title">copyAsset</span></span>  = (file, callback) -&gt;
+      fs.copy file, path.join(config.output, path.basename(file)), callback
+    <span class="function"><span class="title">complete</span></span>   = -&gt;
+      copyAsset config.css, (error) -&gt;
+        <span class="keyword">if</span> error <span class="keyword">then</span> callback error
+        <span class="keyword">else</span> <span class="keyword">if</span> fs.existsSync config.public <span class="keyword">then</span> copyAsset config.public, callback
+        <span class="keyword">else</span> callback()
+
     files = config.sources.slice()
 
     <span class="function"><span class="title">nextFile</span></span> = -&gt;
       source = files.shift()
       fs.readFile source, (error, buffer) -&gt;
-        <span class="keyword">throw</span> error <span class="keyword">if</span> error
+        <span class="keyword">return</span> callback error <span class="keyword">if</span> error
 
         code = buffer.toString()
         sections = parse source, code
         format source, sections
         write source, sections
-        nextFile() <span class="keyword">if</span> files.length
+        <span class="keyword">if</span> files.length <span class="keyword">then</span> nextFile() <span class="keyword">else</span> complete()
 
     nextFile()</pre></div>
         
@@ -143,9 +136,7 @@ out in an HTML template.
         <p>Given a string of source code, <strong>parse</strong> out each block of prose and the code that
 follows it — by detecting which is which, line by line — and then create an
 individual <strong>section</strong> for it. Each section is an object with <code>docsText</code> and
-<code>codeText</code> properties, and eventually <code>docsHtml</code> and <code>codeHtml</code> as well.
-
-</p>
+<code>codeText</code> properties, and eventually <code>docsHtml</code> and <code>codeHtml</code> as well.</p>
 
         
           <div class='highlight'><pre><span class="function"><span class="title">parse</span></span> = (source, code) -&gt;
@@ -162,9 +153,7 @@ individual <strong>section</strong> for it. Each section is an object with <code
         
         <p>Our quick-and-dirty implementation of the literate programming style. Simply
 invert the prose and code relationship on a per-line basis, and then continue as
-normal below.
-
-</p>
+normal below.</p>
 
         
           <div class='highlight'><pre>  <span class="keyword">if</span> lang.literate
@@ -195,9 +184,7 @@ normal below.
         
         <p>To <strong>format</strong> and highlight the now-parsed sections of code, we use <strong>Highlight.js</strong>
 over stdio, and run the text of their corresponding comments through
-<strong>Markdown</strong>, using <a href="https://github.com/chjj/marked">Marked</a>.
-
-</p>
+<strong>Markdown</strong>, using <a href="https://github.com/chjj/marked">Marked</a>.</p>
 
         
           <div class='highlight'><pre><span class="function"><span class="title">format</span></span> = (source, sections) -&gt;
@@ -212,9 +199,7 @@ over stdio, and run the text of their corresponding comments through
         
         <p>Once all of the code has finished highlighting, we can <strong>write</strong> the resulting
 documentation file by passing the completed HTML sections into the template,
-and rendering it to the specified output path.
-
-</p>
+and rendering it to the specified output path.</p>
 
         
           <div class='highlight'><pre><span class="function"><span class="title">write</span></span> = (source, sections) -&gt;
@@ -225,9 +210,7 @@ and rendering it to the specified output path.
       
         
         <p>The <strong>title</strong> of the file is either the first heading in the prose, or the
-name of the source file.
-
-</p>
+name of the source file.</p>
 
         
           <div class='highlight'><pre>  first = marked.lexer(sections[<span class="number">0</span>].docsText)[<span class="number">0</span>]
@@ -248,14 +231,12 @@ name of the source file.
       
         
         <p>Default configuration <strong>options</strong>. All of these may be overriden by command-line
-options.
-
-</p>
+options.</p>
 
         
           <div class='highlight'><pre>config =
   layout:     <span class="string">'parallel'</span>
-  output:     <span class="string">'docs/'</span>
+  output:     <span class="string">'docs'</span>
   template:   <span class="literal">null</span>
   css:        <span class="literal">null</span>
   extension:  <span class="literal">null</span></pre></div>
@@ -264,9 +245,7 @@ options.
         
         <p><strong>Configure</strong> this particular run of Docco. We might use a passed-in external
 template, or one of the built-in <strong>layouts</strong>. We only attempt to process
-source files for languages for which we have definitions.
-
-</p>
+source files for languages for which we have definitions.</p>
 
         
           <div class='highlight'><pre><span class="function"><span class="title">configure</span></span> = (options) -&gt;
@@ -275,15 +254,15 @@ source files for languages for which we have definitions.
   <span class="keyword">if</span> options.template
     config.layout = <span class="literal">null</span>
   <span class="keyword">else</span>
-    dir = config.layout = <span class="string">"<span class="subst">#{__dirname}</span>/resources/<span class="subst">#{config.layout}</span>"</span>
-    config.public       = <span class="string">"<span class="subst">#{dir}</span>/public"</span> <span class="keyword">if</span> fs.existsSync <span class="string">"<span class="subst">#{dir}</span>/public"</span>
-    config.template     = <span class="string">"<span class="subst">#{dir}</span>/docco.jst"</span>
-    config.css          = options.css <span class="keyword">or</span> <span class="string">"<span class="subst">#{dir}</span>/resources/linear/docco.css"</span>
+    dir = config.layout = path.join __dirname, <span class="string">'resources'</span>, config.layout
+    config.public       = path.join dir, <span class="string">'public'</span> <span class="keyword">if</span> fs.existsSync path.join dir, <span class="string">'public'</span>
+    config.template     = path.join dir, <span class="string">'docco.jst'</span>
+    config.css          = options.css <span class="keyword">or</span> path.join dir, <span class="string">'resources/linear/docco.css'</span>
   config.template = _.template fs.readFileSync(config.template).toString()
 
   config.sources = options.args.filter((source) -&gt;
     lang = getLanguage source, config
-    console.warn <span class="string">"docco: skipped unknown type (<span class="subst">#{m}</span>)"</span> <span class="keyword">unless</span> lang
+    console.warn <span class="string">"docco: skipped unknown type (<span class="subst">#{path.basename source}</span>)"</span> <span class="keyword">unless</span> lang
     lang
   ).sort()</pre></div>
         
@@ -294,54 +273,43 @@ source files for languages for which we have definitions.
         
       
         
-        <p>Require our external dependencies.
-
-</p>
+        <p>Require our external dependencies.</p>
 
         
-          <div class='highlight'><pre>_             = require <span class="string">'underscore'</span>
-fs            = require <span class="string">'fs'</span>
-path          = require <span class="string">'path'</span>
-marked        = require <span class="string">'marked'</span>
-commander     = require <span class="string">'commander'</span>
-{highlight}   = require <span class="string">'highlight.js'</span>
-{spawn, exec} = require <span class="string">'child_process'</span></pre></div>
+          <div class='highlight'><pre>_           = require <span class="string">'underscore'</span>
+fs          = require <span class="string">'fs-extra'</span>
+path        = require <span class="string">'path'</span>
+marked      = require <span class="string">'marked'</span>
+commander   = require <span class="string">'commander'</span>
+{highlight} = require <span class="string">'highlight.js'</span></pre></div>
         
       
         
         <p>Languages are stored in JSON in the file <code>resources/languages.json</code>.
 Each item maps the file extension to the name of the language and the
 <code>symbol</code> that indicates a line comment. To add support for a new programming
-language to Docco, just add it to the file.
-
-</p>
+language to Docco, just add it to the file.</p>
 
         
-          <div class='highlight'><pre>languages = JSON.parse fs.readFileSync(<span class="string">"<span class="subst">#{__dirname}</span>/resources/languages.json"</span>)</pre></div>
+          <div class='highlight'><pre>languages = JSON.parse fs.readFileSync(path.join(__dirname, <span class="string">'resources'</span>, <span class="string">'languages.json'</span>))</pre></div>
         
       
         
-        <p>Build out the appropriate matchers and delimiters for each language.
-
-</p>
+        <p>Build out the appropriate matchers and delimiters for each language.</p>
 
         
           <div class='highlight'><pre><span class="keyword">for</span> ext, l <span class="keyword">of</span> languages</pre></div>
         
       
         
-        <p>Does the line begin with a comment?
-
-</p>
+        <p>Does the line begin with a comment?</p>
 
         
           <div class='highlight'><pre>  l.commentMatcher = <span class="regexp">///^\s*<span class="comment">#{l.symbol}\s?///</span></pre></div>
         
       
         
-        <p>Ignore <a href="http://en.wikipedia.org/wiki/Shebang_(Unix\">hashbangs</a>) and interpolations...
-
-</p>
+        <p>Ignore <a href="http://en.wikipedia.org/wiki/Shebang_(Unix\">hashbangs</a>) and interpolations...</p>
 
         
           <div class='highlight'><pre>  l.commentFilter = <span class="regexp">/(^#![/]|^\s*#\{)/</span></pre></div>
@@ -349,9 +317,7 @@ language to Docco, just add it to the file.
       
         
         <p>A function to get the current language we&#39;re documenting, based on the
-file extension. Detect and tag &quot;literate&quot; <code>.ext.md</code> variants.
-
-</p>
+file extension. Detect and tag &quot;literate&quot; <code>.ext.md</code> variants.</p>
 
         
           <div class='highlight'><pre><span class="function"><span class="title">getLanguage</span></span> = (source) -&gt;
@@ -365,12 +331,10 @@ file extension. Detect and tag &quot;literate&quot; <code>.ext.md</code> variant
         
       
         
-        <p>Keep it DRY. Extract the docco <strong>version</strong> from <code>package.json</code>
-
-</p>
+        <p>Keep it DRY. Extract the docco <strong>version</strong> from <code>package.json</code></p>
 
         
-          <div class='highlight'><pre>version = JSON.parse(fs.readFileSync(<span class="string">"<span class="subst">#{__dirname}</span>/package.json"</span>)).version</pre></div>
+          <div class='highlight'><pre>version = JSON.parse(fs.readFileSync(path.join(__dirname, <span class="string">'package.json'</span>))).version</pre></div>
         
       
         
@@ -380,9 +344,7 @@ file extension. Detect and tag &quot;literate&quot; <code>.ext.md</code> variant
       
         
         <p>Finally, let&#39;s define the interface to run Docco from the command line.
-Parse options using <a href="https://github.com/visionmedia/commander.js">Commander</a>.
-
-</p>
+Parse options using <a href="https://github.com/visionmedia/commander.js">Commander</a>.</p>
 
         
           <div class='highlight'><pre><span class="function"><span class="title">run</span></span> = (args = process.argv) -&gt;
