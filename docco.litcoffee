@@ -224,12 +224,25 @@ Helpers & Initial Setup
 
 Require our external dependencies.
 
-    _           = require 'underscore'
-    fs          = require 'fs-extra'
-    path        = require 'path'
-    marked      = require 'marked'
-    commander   = require 'commander'
-    {highlight} = require 'highlight.js'
+    _             = require 'underscore'
+    fs            = require 'fs-extra'
+    path          = require 'path'
+    commander     = require 'commander'
+    highlighter   = require 'highlight.js'
+    highlight     = highlighter.highlight
+    highlightAuto = highlighter.highlightAuto
+    marked        = require 'marked'
+
+Configure marked to use highlight.js in annotations code blocks.
+
+    marked.setOptions {
+        highlight: (code, lang) ->
+            if !lang then highlightAuto(code).value
+            else
+                ext = '.' + lang
+                if languages[ext] then lang = languages[ext].name
+                highlight(lang, code).value
+    }
 
 Languages are stored in JSON in the file `resources/languages.json`.
 Each item maps the file extension to the name of the language and the
