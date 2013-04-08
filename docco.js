@@ -59,7 +59,7 @@
   };
 
   parse = function(source, code, config) {
-    var codeText, docsText, hasCode, i, lang, line, lines, match, prev, save, sections, _i, _j, _len, _len1;
+    var codeText, docsText, hasCode, i, isText, lang, line, lines, match, maybeCode, save, sections, _i, _j, _len, _len1;
 
     if (config == null) {
       config = {};
@@ -76,9 +76,10 @@
       return hasCode = docsText = codeText = '';
     };
     if (lang.literate) {
+      isText = maybeCode = true;
       for (i = _i = 0, _len = lines.length; _i < _len; i = ++_i) {
         line = lines[i];
-        lines[i] = /^\s*$/.test(line) ? '' : (match = /^([ ]{4}|\t)/.exec(line)) ? line.slice(match[0].length) : lang.symbol + ' ' + line;
+        lines[i] = maybeCode && (match = /^([ ]{4}|[ ]{0,3}\t)/.exec(line)) ? (isText = false, line.slice(match[0].length)) : (maybeCode = /^\s*$/.test(line)) ? isText ? lang.symbol : '' : (isText = true, lang.symbol + ' ' + line);
       }
     }
     for (_j = 0, _len1 = lines.length; _j < _len1; _j++) {
@@ -91,11 +92,9 @@
         if (/^(---+|===+)$/.test(line)) {
           save();
         }
-        prev = 'text';
       } else {
         hasCode = true;
         codeText += line + '\n';
-        prev = 'code';
       }
     }
     save();
