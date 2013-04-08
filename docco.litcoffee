@@ -248,7 +248,7 @@ Does the line begin with a comment?
 
       l.commentMatcher = ///^\s*#{l.symbol}\s?///
 
-Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\)) and interpolations...
+Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_%28Unix%29) and interpolations...
 
       l.commentFilter = /(^#![/]|^\s*#\{)/
 
