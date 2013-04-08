@@ -32,23 +32,23 @@ language is also supported — just tack an `.md` extension on the end:
 Partners in Crime:
 ------------------
 
-* If **Node.js** doesn't run on your platform, or you'd prefer a more
+* If Node.js doesn't run on your platform, or you'd prefer a more
 convenient package, get [Ryan Tomayko](http://github.com/rtomayko)'s
-[Rocco](http://rtomayko.github.com/rocco/rocco.html), the Ruby port that's
+[Rocco](http://rtomayko.github.io/rocco/rocco.html), the **Ruby** port that's
 available as a gem.
 
 * If you're writing shell scripts, try
-[Shocco](http://rtomayko.github.com/shocco/), a port for the **POSIX shell**,
+[Shocco](http://rtomayko.github.io/shocco/), a port for the **POSIX shell**,
 also by Mr. Tomayko.
 
 * If **Python** is more your speed, take a look at
-[Nick Fitzgerald](http://github.com/fitzgen)'s [Pycco](http://fitzgen.github.com/pycco/).
+[Nick Fitzgerald](http://github.com/fitzgen)'s [Pycco](http://fitzgen.github.io/pycco/).
 
 * For **Clojure** fans, [Fogus](http://blog.fogus.me/)'s
 [Marginalia](http://fogus.me/fun/marginalia/) is a bit of a departure from
 "quick-and-dirty", but it'll get the job done.
 
-* There's a **Go** port called [Gocco](http://nikhilm.github.com/gocco/),
+* There's a **Go** port called [Gocco](http://nikhilm.github.io/gocco/),
 written by [Nikhil Marathe](https://github.com/nikhilm).
 
 * Your all you **PHP** buffs out there, Fredi Bach's
@@ -56,13 +56,13 @@ written by [Nikhil Marathe](https://github.com/nikhilm).
 with respect to our naming scheme slide), should do the trick nicely.
 
 * **Lua** enthusiasts can get their fix with
-[Robert Gieseke](https://github.com/rgieseke)'s [Locco](http://rgieseke.github.com/locco/).
+[Robert Gieseke](https://github.com/rgieseke)'s [Locco](http://rgieseke.github.io/locco/).
 
 * And if you happen to be a **.NET**
 aficionado, check out [Don Wilson](https://github.com/dontangg)'s
-[Nocco](http://dontangg.github.com/nocco/).
+[Nocco](http://dontangg.github.io/nocco/).
 
-* Going further afield from the quick-and-dirty, [Groc](http://nevir.github.com/groc/)
+* Going further afield from the quick-and-dirty, [Groc](http://nevir.github.io/groc/)
 is a **CoffeeScript** fork of Docco that adds a searchable table of contents,
 and aims to gracefully handle large projects with complex hierarchies of code.
 
@@ -248,7 +248,7 @@ Does the line begin with a comment?
 
       l.commentMatcher = ///^\s*#{l.symbol}\s?///
 
-Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\)) and interpolations...
+Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_%28Unix%29) and interpolations...
 
       l.commentFilter = /(^#![/]|^\s*#\{)/
 
