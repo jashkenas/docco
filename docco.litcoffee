@@ -32,9 +32,9 @@ language is also supported — just tack an `.md` extension on the end:
 Partners in Crime:
 ------------------
 
-* If **Node.js** doesn't run on your platform, or you'd prefer a more
+* If Node.js doesn't run on your platform, or you'd prefer a more
 convenient package, get [Ryan Tomayko](http://github.com/rtomayko)'s
-[Rocco](http://rtomayko.github.com/rocco/rocco.html), the Ruby port that's
+[Rocco](http://rtomayko.github.com/rocco/rocco.html), the **Ruby** port that's
 available as a gem.
 
 * If you're writing shell scripts, try
