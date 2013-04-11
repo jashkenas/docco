@@ -59,7 +59,7 @@
   };
 
   parse = function(source, code, config) {
-    var codeText, docsText, hasCode, i, isText, lang, line, lines, match, maybeCode, save, sections, _i, _j, _len, _len1;
+    var codeBlock, codeText, docsText, hasCode, i, isText, lang, line, lines, match, maybeCode, save, sections, _i, _j, _len, _len1;
 
     if (config == null) {
       config = {};
@@ -68,6 +68,7 @@
     sections = [];
     lang = getLanguage(source, config);
     hasCode = docsText = codeText = '';
+    codeBlock = /^([ ]{4}|[ ]{0,3}\t)/;
     save = function() {
       sections.push({
         docsText: docsText,
@@ -75,16 +76,16 @@
       });
       return hasCode = docsText = codeText = '';
     };
-    if (lang.literate) {
+    if (lang.literate && lang.symbol) {
       isText = maybeCode = true;
       for (i = _i = 0, _len = lines.length; _i < _len; i = ++_i) {
         line = lines[i];
-        lines[i] = maybeCode && (match = /^([ ]{4}|[ ]{0,3}\t)/.exec(line)) ? (isText = false, line.slice(match[0].length)) : (maybeCode = /^\s*$/.test(line)) ? isText ? lang.symbol : '' : (isText = true, lang.symbol + ' ' + line);
+        lines[i] = maybeCode && (match = codeBlock.exec(line)) ? (isText = false, line.slice(match[0].length)) : (maybeCode = /^\s*$/.test(line)) ? isText ? lang.symbol : '' : (isText = true, lang.symbol + ' ' + line);
       }
     }
     for (_j = 0, _len1 = lines.length; _j < _len1; _j++) {
       line = lines[_j];
-      if (line.match(lang.commentMatcher) && !line.match(lang.commentFilter)) {
+      if ((lang.literate && !lang.symbol && !line.match(codeBlock)) || (lang.symbol && line.match(lang.commentMatcher) && !line.match(lang.commentFilter))) {
         if (hasCode) {
           save();
         }

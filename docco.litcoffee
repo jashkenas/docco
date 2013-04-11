@@ -112,10 +112,11 @@ individual **section** for it. Each section is an object with `docsText` and
 `codeText` properties, and eventually `docsHtml` and `codeHtml` as well.
 
     parse = (source, code, config = {}) ->
-      lines    = code.split '\n'
-      sections = []
-      lang     = getLanguage source, config
-      hasCode  = docsText = codeText = ''
+      lines     = code.split '\n'
+      sections  = []
+      lang      = getLanguage source, config
+      hasCode   = docsText = codeText = ''
+      codeBlock = /^([ ]{4}|[ ]{0,3}\t)/
 
       save = ->
         sections.push {docsText, codeText}
@@ -125,10 +126,10 @@ Our quick-and-dirty implementation of the literate programming style. Simply
 invert the prose and code relationship on a per-line basis, and then continue as
 normal below.
 
-      if lang.literate
+      if lang.literate and lang.symbol
         isText = maybeCode = yes
         for line, i in lines
-          lines[i] = if maybeCode and match = /^([ ]{4}|[ ]{0,3}\t)/.exec line
+          lines[i] = if maybeCode and match = codeBlock.exec line
             isText = no
             line[match[0].length..]
           else if maybeCode = /^\s*$/.test line
@@ -138,7 +139,8 @@ normal below.
             lang.symbol + ' ' + line
 
       for line in lines
-        if line.match(lang.commentMatcher) and not line.match(lang.commentFilter)
+        if (lang.literate and not lang.symbol and not line.match(codeBlock)) or
+           (lang.symbol and line.match(lang.commentMatcher) and not line.match(lang.commentFilter))
           save() if hasCode
           docsText += (line = line.replace(lang.commentMatcher, '')) + '\n'
           save() if /^(---+|===+)$/.test line
