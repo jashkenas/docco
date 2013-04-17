@@ -120,7 +120,7 @@
     var destination, first, hasTitle, html, title;
 
     destination = function(file) {
-      return path.join(config.output, path.basename(file, path.extname(file)) + '.html');
+      return path.join(config.output, file + '.html');
     };
     first = marked.lexer(sections[0].docsText)[0];
     hasTitle = first && first.type === 'heading' && first.depth === 1;
