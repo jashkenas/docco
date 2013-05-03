@@ -11,7 +11,7 @@
     }
     config = configure(options);
     return fs.mkdirs(config.output, function() {
-      var complete, copyAsset, files, nextFile;
+      var complete, copyAsset, files, nextFile, parseFiles, parseTitles;
 
       callback || (callback = function(error) {
         if (error) {
@@ -32,29 +32,65 @@
           }
         });
       };
-      files = config.sources.slice();
-      nextFile = function() {
-        var source;
 
-        source = files.shift();
-        return fs.readFile(source, function(error, buffer) {
-          var code, sections;
+      parseFiles = function(titles, files) {
+        nextFile = function() {
+          var source, title;
 
-          if (error) {
-            return callback(error);
-          }
-          code = buffer.toString();
-          sections = parse(source, code, config);
-          format(source, sections, config);
-          write(source, sections, config);
-          if (files.length) {
-            return nextFile();
-          } else {
-            return complete();
-          }
-        });
+          source = files.shift();
+          return fs.readFile(source, function(error, buffer) {
+            var code, sections;
+
+            if (error) {
+              return callback(error);
+            }
+            code = buffer.toString();
+            sections = parse(source, code, config);
+            format(source, sections, config);
+            write(source, sections, config, titles);
+            if (files.length) {
+              return nextFile();
+            } else {
+              return complete();
+            }
+          });
+        };
+        
+        return nextFile();
       };
-      return nextFile();
+      
+      parseTitles = function(files) {
+        nextFile = function(titles) {
+          var source;
+
+          source = files.shift();
+          return fs.readFile(source, function(error, buffer) {
+            var code, sections;
+
+            if (error) {
+              return callback(error);
+            }
+            code = buffer.toString();
+            sections = parse(source, code, config);
+            format(source, sections, config);
+
+            var first = marked.lexer(sections[0].docsText)[0];
+            var hasTitle = first && first.type === 'heading' && first.depth === 1;
+            var title = hasTitle ? first.text : path.basename(source);
+
+            titles.push(title);
+            if (files.length) {
+              return nextFile(titles);
+            } else {
+              return parseFiles(titles, config.sources.slice());
+            }
+          });
+        };
+        
+        return nextFile(new Array());
+      };
+
+      return parseTitles(config.sources.slice());
     });
   };
 
@@ -116,7 +152,7 @@
     return _results;
   };
 
-  write = function(source, sections, config) {
+  write = function(source, sections, config, titles) {
     var destination, first, hasTitle, html, title;
 
     destination = function(file) {
@@ -127,6 +163,7 @@
     title = hasTitle ? first.text : path.basename(source);
     html = config.template({
       sources: config.sources,
+      titles: titles,
       css: path.basename(config.css),
       title: title,
       hasTitle: hasTitle,
