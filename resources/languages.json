@@ -8,6 +8,7 @@
   ".js":          {"name": "javascript", "symbol": "//"},
   ".java":        {"name": "java", "symbol": "//"},
   ".scss":        {"name": "scss", "symbol": "//"},
+  ".css":         {"name": "css", "symbol": "//"},
   ".cpp":         {"name": "cpp", "symbol": "//"},
   ".php":         {"name": "php", "symbol": "//"},
   ".hs":          {"name": "haskell", "symbol": "--"},
