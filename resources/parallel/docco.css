@@ -78,7 +78,7 @@ h1 {
 
 hr {
   border: 0;
-  background: 1px solid #ddd;
+  background: 1px #ddd;
   height: 1px;
   margin: 20px 0;
 }
