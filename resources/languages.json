@@ -37,6 +37,7 @@
   ".go":          {"name": "go", "symbol": "//"},
   ".ini":         {"name": "ini", "symbol": ";"},
   ".lisp":        {"name": "lisp", "symbol": ";"},
+  ".lua":         {"name": "lua", "symbol": "--"},
   ".mel":         {"name": "mel", "symbol": "//"},
   ".pl":          {"name": "perl", "symbol": "#"},
   ".pm":          {"name": "perl", "symbol": "#"},
