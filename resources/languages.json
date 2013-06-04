@@ -18,6 +18,7 @@
   ".less":        {"name": "scss", "symbol": "//"},
   ".h":           {"name": "objectivec", "symbol": "//"},
   ".m":           {"name": "objectivec", "symbol": "//"},
+  ".n":           {"name": "nemerle", "symbol": "//"},
   ".mm":          {"name": "objectivec", "symbol": "//"},
   ".scala":       {"name": "scala", "symbol": "//"},
   ".cs":          {"name": "cs", "symbol": "//"},
