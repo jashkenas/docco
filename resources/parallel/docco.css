@@ -213,7 +213,6 @@ ul.sections > li > div {
   }
 
   ul.sections > li > div.content {
-    background: #f5f5ff;
     overflow-x:auto;
     -webkit-box-shadow: inset 0 0 5px #e5e5ee;
     box-shadow: inset 0 0 5px #e5e5ee;
@@ -314,7 +313,6 @@ ul.sections > li > div {
   ul.sections > li > div.content {
     padding: 13px;
     vertical-align: top;
-    background: #f5f5ff;
     border: none;
     -webkit-box-shadow: none;
     box-shadow: none;
