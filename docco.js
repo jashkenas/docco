@@ -161,15 +161,21 @@
       config.css = options.css || path.join(dir, 'docco.css');
     }
     config.template = _.template(fs.readFileSync(config.template).toString());
-    config.sources = options.args.filter(function(source) {
-      var lang;
-
-      lang = getLanguage(source, config);
-      if (!lang) {
-        console.warn("docco: skipped unknown type (" + (path.basename(source)) + ")");
-      }
-      return lang;
-    }).sort();
+    
+    if (options.args && options.args instanceof Array) {
+      config.sources = options.args.filter(function(source) {
+        var lang;
+  
+        lang = getLanguage(source, config);
+        if (!lang) {
+          console.warn("docco: skipped unknown type (" + (path.basename(source)) + ")");
+        }
+        return lang;
+      }).sort();
+    } else {
+      throw new Error("docco: Sources Array must be defined on 'options.args'.");
+    }
+      
     return config;
   };
 
