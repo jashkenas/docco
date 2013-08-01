@@ -10,6 +10,7 @@
   ".cls":         {"name": "tex", "symbol": "%"},
   ".js":          {"name": "javascript", "symbol": "//"},
   ".java":        {"name": "java", "symbol": "//"},
+  ".groovy":      {"name": "groovy", "symbol": "//"},
   ".scss":        {"name": "scss", "symbol": "//"},
   ".cpp":         {"name": "cpp", "symbol": "//"},
   ".php":         {"name": "php", "symbol": "//"},
