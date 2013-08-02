@@ -234,6 +234,10 @@ Require our external dependencies.
     commander   = require 'commander'
     {highlight} = require 'highlight.js'
 
+Enable nicer typography with marked.
+
+    marked.setOptions smartypants: yes
+
 Languages are stored in JSON in the file `resources/languages.json`.
 Each item maps the file extension to the name of the language and the
 `symbol` that indicates a line comment. To add support for a new programming
