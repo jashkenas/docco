@@ -196,6 +196,7 @@ user-specified options.
       template:   null
       css:        null
       extension:  null
+      languages:  {}
 
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
@@ -247,22 +248,25 @@ language to Docco, just add it to the file.
 
 Build out the appropriate matchers and delimiters for each language.
 
-    for ext, l of languages
+    buildMatchers = (languages) ->
+      for ext, l of languages
 
 Does the line begin with a comment?
 
-      l.commentMatcher = ///^\s*#{l.symbol}\s?///
+        l.commentMatcher = ///^\s*#{l.symbol}\s?///
 
 Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_%28Unix%29) and interpolations...
 
-      l.commentFilter = /(^#![/]|^\s*#\{)/
+        l.commentFilter = /(^#![/]|^\s*#\{)/
+      languages
+    languages = buildMatchers languages
 
 A function to get the current language we're documenting, based on the
 file extension. Detect and tag "literate" `.ext.md` variants.
 
     getLanguage = (source, config) ->
       ext  = config.extension or path.extname(source) or path.basename(source)
-      lang = languages[ext]
+      lang = config.languages[ext] or languages[ext]
       if lang and lang.name is 'markdown'
         codeExt = path.extname(path.basename(source, ext))
         if codeExt and codeLang = languages[codeExt]
@@ -278,12 +282,25 @@ Command Line Interface
 ----------------------
 
 Finally, let's define the interface to run Docco from the command line.
+
+We accept customised language formats as a command-line argument in the form
+`ext:langname:commentsymbol,ext:langname:commentsymbol`.
+
+    parseLanguages = (langs) ->
+        return {} unless _.isString langs
+        buildMatchers _.object _.map langs.split(','), (s) ->
+            [ext, name, symbol, literate] = s.split(':')
+            literate ?= false
+            [ext, {name, symbol, literate}]
+
+
 Parse options using [Commander](https://github.com/visionmedia/commander.js).
 
     run = (args = process.argv) ->
       c = defaults
       commander.version(version)
         .usage('[options] files')
+        .option('-L, --languages [langs]','set custom language comment styles', parseLanguages)
         .option('-l, --layout [name]',    'choose a layout (parallel, linear or classic)', c.layout)
         .option('-o, --output [path]',    'output to a given folder', c.output)
         .option('-c, --css [file]',       'use a custom css file', c.css)
