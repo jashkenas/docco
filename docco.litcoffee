@@ -205,6 +205,7 @@ source files for languages for which we have definitions.
     configure = (options) ->
       config = _.extend {}, defaults, _.pick(options, _.keys(defaults)...)
 
+      config.languages = buildMatchers config.languages
       if options.template
         config.layout = null
       else
@@ -288,7 +289,7 @@ We accept customised language formats as a command-line argument in the form
 
     parseLanguages = (langs) ->
         return {} unless _.isString langs
-        buildMatchers _.object _.map langs.split(','), (s) ->
+        _.object _.map langs.split(','), (s) ->
             [ext, name, symbol, literate] = s.split(':')
             literate ?= false
             [ext, {name, symbol, literate}]
