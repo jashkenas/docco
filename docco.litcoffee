@@ -155,8 +155,24 @@ over stdio, and run the text of their corresponding comments through
 
     format = (source, sections, config) ->
       language = getLanguage source, config
+
+Tell Marked how to highlight code blocks within comments, treating that code
+as either the language specified in the code block or the language of the file
+if not specified.
+
+      marked.setOptions {
+        highlight: (code, lang) ->
+          lang or= language.name
+
+          if highlightjs.LANGUAGES[lang]
+            highlightjs.highlight(lang, code).value
+          else
+            console.warn "docco: couldn't highlight code block with unknown language '#{lang}' in #{source}"
+            code
+      }
+
       for section, i in sections
-        code = highlight(language.name, section.codeText).value
+        code = highlightjs.highlight(language.name, section.codeText).value
         code = code.replace(/\s+$/, '')
         section.codeHtml = "<div class='highlight'><pre>#{code}</pre></div>"
         section.docsHtml = marked(section.docsText)
@@ -232,7 +248,7 @@ Require our external dependencies.
     path        = require 'path'
     marked      = require 'marked'
     commander   = require 'commander'
-    {highlight} = require 'highlight.js'
+    highlightjs = require 'highlight.js'
 
 Enable nicer typography with marked.
 
