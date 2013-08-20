@@ -283,7 +283,6 @@ Command Line Interface
 ----------------------
 
 Finally, let's define the interface to run Docco from the command line.
-
 Parse options using [Commander](https://github.com/visionmedia/commander.js).
 
     run = (args = process.argv) ->
