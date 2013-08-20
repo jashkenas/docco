@@ -284,24 +284,13 @@ Command Line Interface
 
 Finally, let's define the interface to run Docco from the command line.
 
-We accept customised language formats as a command-line argument in the form
-`ext:langname:commentsymbol,ext:langname:commentsymbol`.
-
-    parseLanguages = (langs) ->
-        return {} unless _.isString langs
-        _.object _.map langs.split(','), (s) ->
-            [ext, name, symbol, literate] = s.split(':')
-            literate ?= false
-            [ext, {name, symbol, literate}]
-
-
 Parse options using [Commander](https://github.com/visionmedia/commander.js).
 
     run = (args = process.argv) ->
       c = defaults
       commander.version(version)
         .usage('[options] files')
-        .option('-L, --languages [langs]','set custom language comment styles', parseLanguages)
+        .option('-L, --languages [file]', 'use a custom languages.json', _.compose JSON.parse, fs.readFileSync)
         .option('-l, --layout [name]',    'choose a layout (parallel, linear or classic)', c.layout)
         .option('-o, --output [path]',    'output to a given folder', c.output)
         .option('-c, --css [file]',       'use a custom css file', c.css)
