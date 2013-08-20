@@ -27,3 +27,4 @@ Usage: docco [options] FILES
     -o, --output [path]    use a custom output path
     -t, --template [file]  use a custom .jst template
     -e, --extension [ext]  use the given file extension for all inputs
+    -L, --languages [file] use a custom languages.json
