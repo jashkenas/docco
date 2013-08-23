@@ -183,8 +183,14 @@ and rendering it to the specified output path.
 
     write = (source, sections, config) ->
 
+      qualifiedName = (file) ->
+        nameParts = path.dirname(file).split(path.sep)
+        nameParts.push(path.basename(file, path.extname(file)))
+
+        nameParts.join(config.seperator) + '.html'
+
       destination = (file) ->
-        path.join(config.output, path.basename(file, path.extname(file)) + '.html')
+        path.join(config.output, qualifiedName(file))
 
 The **title** of the file is either the first heading in the prose, or the
 name of the source file.
@@ -213,6 +219,7 @@ user-specified options.
       css:        null
       extension:  null
       languages:  {}
+      seperator:  '-'
 
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
