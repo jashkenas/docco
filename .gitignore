@@ -3,3 +3,4 @@ output
 docs
 test/data
 node_modules
+*.swp
