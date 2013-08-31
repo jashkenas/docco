@@ -58,5 +58,9 @@
   ".vbs":         {"name": "vbscript", "symbol": "'"},
   ".wsc":         {"name": "vbscript", "symbol": "'"},
   ".wsf":         {"name": "vbscript", "symbol": "'"},
-  ".vhdl":        {"name": "vhdl", "symbol": "--"}
+  ".vhdl":        {"name": "vhdl", "symbol": "--"},
+  ".glsl":        {"name": "glsl", "symbol": "//"},
+  ".vert":        {"name": "glsl", "symbol": "//"},
+  ".frag":        {"name": "glsl", "symbol": "//"},
+  ".geom":        {"name": "glsl", "symbol": "//"}
 }
