@@ -8,6 +8,10 @@
     "type":       "MIT",
     "url":        "http://opensource.org/licenses/mit-license.php"
   }],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jashkenas/docco.git"
+  },
   "engines": {
     "node":       ">=0.2.0"
   },
