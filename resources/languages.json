@@ -58,5 +58,7 @@
   ".vbs":         {"name": "vbscript", "symbol": "'"},
   ".wsc":         {"name": "vbscript", "symbol": "'"},
   ".wsf":         {"name": "vbscript", "symbol": "'"},
-  ".vhdl":        {"name": "vhdl", "symbol": "--"}
+  ".vhdl":        {"name": "vhdl", "symbol": "--"},
+  ".ts":          {"name": "typescript", "symbol": "//"},
+  ".d.ts":          {"name": "typescript", "symbol": "//"}
 }
