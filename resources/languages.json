@@ -19,7 +19,7 @@
   ".hrl":         {"name": "erlang", "symbol": "%"},
   ".md":          {"name": "markdown", "symbol": ""},
   ".markdown":    {"name": "markdown", "symbol": ""},
-  ".less":        {"name": "scss", "symbol": "//"},
+  ".less":        {"name": "less", "symbol": "//"},
   ".h":           {"name": "objectivec", "symbol": "//"},
   ".m":           {"name": "objectivec", "symbol": "//"},
   ".n":           {"name": "nemerle", "symbol": "//"},
