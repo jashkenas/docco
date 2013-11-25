@@ -204,7 +204,8 @@ Configuration
 -------------
 
 Default configuration **options**. All of these may be extended by
-user-specified options.
+user-specified options. You can use **variables** attribute to pass
+extra data to the template.
 
     defaults =
       layout:     'parallel'
