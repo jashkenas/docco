@@ -12,6 +12,8 @@
   ".java":        {"name": "java", "symbol": "//"},
   ".groovy":      {"name": "groovy", "symbol": "//"},
   ".scss":        {"name": "scss", "symbol": "//"},
+  ".sass":        {"name": "sass", "symbol": "//"},
+  ".slim":        {"name": "slim", "symbol": "//"},
   ".cpp":         {"name": "cpp", "symbol": "//"},
   ".php":         {"name": "php", "symbol": "//"},
   ".hs":          {"name": "haskell", "symbol": "--"},

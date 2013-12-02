@@ -147,7 +147,8 @@
     output: 'docs',
     template: null,
     css: null,
-    extension: null
+    extension: null,
+    variables: null
   };
 
   configure = function(options) {

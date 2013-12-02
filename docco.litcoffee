@@ -204,7 +204,8 @@ Configuration
 -------------
 
 Default configuration **options**. All of these may be extended by
-user-specified options.
+user-specified options. You can use **variables** attribute to pass
+extra data to the template.
 
     defaults =
       layout:     'parallel'
@@ -213,6 +214,7 @@ user-specified options.
       css:        null
       extension:  null
       languages:  {}
+      variables:  null
 
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
