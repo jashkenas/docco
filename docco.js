@@ -102,12 +102,20 @@
     marked.setOptions({
       highlight: function(code, lang) {
         lang || (lang = language.name);
-        if (highlightjs.LANGUAGES[lang]) {
-          return highlightjs.highlight(lang, code).value;
-        } else {
+  
+        try {
+          highlightjs.highlightAuto(code).value;
+        } catch (err) {
           console.warn("docco: couldn't highlight code block with unknown language '" + lang + "' in " + source);
           return code;
         }
+        /*
+        if (highlightjs.LANGUAGES[lang]) {
+          return highlightjs.highlight(lang, code).value;
+        } else {
+          
+        }
+        */
       }
     });
     _results = [];
