@@ -164,7 +164,7 @@ if not specified.
         highlight: (code, lang) ->
           lang or= language.name
 
-          if highlightjs.LANGUAGES[lang]
+          if highlightjs.getLanguage(lang)
             highlightjs.highlight(lang, code).value
           else
             console.warn "docco: couldn't highlight code block with unknown language '#{lang}' in #{source}"
