@@ -9,6 +9,7 @@
   ".sty":         {"name": "tex", "symbol": "%"},
   ".cls":         {"name": "tex", "symbol": "%"},
   ".js":          {"name": "javascript", "symbol": "//"},
+  ".json":        {"name": "javascript", "symbol": "//"},
   ".java":        {"name": "java", "symbol": "//"},
   ".groovy":      {"name": "groovy", "symbol": "//"},
   ".scss":        {"name": "scss", "symbol": "//"},
