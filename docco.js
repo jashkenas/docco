@@ -122,24 +122,32 @@
   };
 
   write = function(source, sections, config) {
-    var destination, first, hasTitle, html, title;
+    var css, destination, first, hasTitle, html, relative, title;
     destination = function(file) {
-      return path.join(config.output, path.basename(file, path.extname(file)) + '.html');
+      return path.join(config.output, path.dirname(file), path.basename(file, path.extname(file)) + '.html');
+    };
+    relative = function(file) {
+      var from, to;
+      to = path.dirname(path.resolve(file));
+      from = path.dirname(path.resolve(destination(source)));
+      return path.join(path.relative(from, to), path.basename(file));
     };
     first = marked.lexer(sections[0].docsText)[0];
     hasTitle = first && first.type === 'heading' && first.depth === 1;
     title = hasTitle ? first.text : path.basename(source);
+    css = relative(path.join(config.output, path.basename(config.css)));
     html = config.template({
       sources: config.sources,
-      css: path.basename(config.css),
+      css: css,
       title: title,
       hasTitle: hasTitle,
       sections: sections,
       path: path,
-      destination: destination
+      destination: destination,
+      relative: relative
     });
     console.log("docco: " + source + " -> " + (destination(source)));
-    return fs.writeFileSync(destination(source), html);
+    return fs.outputFileSync(destination(source), html);
   };
 
   defaults = {

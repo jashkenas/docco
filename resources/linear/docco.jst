@@ -29,8 +29,8 @@
               <% for (var i=0, l = sources.length; i < l; i++) { %>
                 <% var source = sources[i]; %>
                 <li>
-                  <a class="source" href="<%= path.basename(destination(source)) %>">
-                    <%= path.basename(source) %>
+                  <a class="source" href="<%= relative(destination(source)) %>">
+                    <%= source %>
                   </a>
                 </li>
               <% } %>
