@@ -20,7 +20,7 @@
             <% for (var i=0, l=sources.length; i<l; i++) { %>
               <% var source = sources[i]; %>
               <a class="source" href="<%= path.basename(destination(source)) %>">
-                <%= path.basename(source) %>
+                <%= path.dirname(source) %>/<%= path.basename(source) %>
               </a>
             <% } %>
           </div>
