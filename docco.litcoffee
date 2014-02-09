@@ -193,7 +193,7 @@ name of the source file.
         section.docsText.length > 0
       first = marked.lexer(firstSection.docsText)[0]
       hasTitle = first and first.type is 'heading' and first.depth is 1
-      title = if hasTitle then first.text else path.basename sources
+      title = if hasTitle then first.text else path.basename source
 
       html = config.template {sources: config.sources, css: path.basename(config.css),
         title, hasTitle, sections, path, destination,}

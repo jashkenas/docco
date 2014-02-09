@@ -131,7 +131,7 @@
     });
     first = marked.lexer(firstSection.docsText)[0];
     hasTitle = first && first.type === 'heading' && first.depth === 1;
-    title = hasTitle ? first.text : path.basename(sources);
+    title = hasTitle ? first.text : path.basename(source);
     html = config.template({
       sources: config.sources,
       css: path.basename(config.css),
