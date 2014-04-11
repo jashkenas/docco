@@ -189,7 +189,9 @@ and rendering it to the specified output path.
 The **title** of the file is either the first heading in the prose, or the
 name of the source file.
 
-      first = marked.lexer(sections[0].docsText)[0]
+      firstSection = _.find sections, (section) ->
+        section.docsText.length > 0
+      first = marked.lexer(firstSection.docsText)[0] if firstSection
       hasTitle = first and first.type is 'heading' and first.depth is 1
       title = if hasTitle then first.text else path.basename source
 
