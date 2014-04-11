@@ -1,6 +1,7 @@
 { ".coffee":      {"name": "coffeescript", "symbol": "#"},
   ".litcoffee":   {"name": "coffeescript", "symbol": "#", "literate": true},
   "Cakefile":     {"name": "coffeescript", "symbol": "#"},
+  ".cson":        {"name": "coffeescript", "symbol": "#"},
   ".rb":          {"name": "ruby", "symbol": "#"},
   ".py":          {"name": "python", "symbol": "#"},
   ".tex":         {"name": "tex", "symbol": "%"},
