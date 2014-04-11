@@ -129,7 +129,9 @@
     firstSection = _.find(sections, function(section) {
       return section.docsText.length > 0;
     });
-    first = marked.lexer(firstSection.docsText)[0];
+    if (firstSection) {
+      first = marked.lexer(firstSection.docsText)[0];
+    }
     hasTitle = first && first.type === 'heading' && first.depth === 1;
     title = hasTitle ? first.text : path.basename(source);
     html = config.template({

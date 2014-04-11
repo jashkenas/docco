@@ -191,7 +191,7 @@ name of the source file.
 
       firstSection = _.find sections, (section) ->
         section.docsText.length > 0
-      first = marked.lexer(firstSection.docsText)[0]
+      first = marked.lexer(firstSection.docsText)[0] if firstSection
       hasTitle = first and first.type is 'heading' and first.depth is 1
       title = if hasTitle then first.text else path.basename source
 
