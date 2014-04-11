@@ -20,6 +20,7 @@
   ".md":          {"name": "markdown", "symbol": ""},
   ".markdown":    {"name": "markdown", "symbol": ""},
   ".less":        {"name": "less", "symbol": "//"},
+  ".ls":          {"name": "coffeescript", "symbol": "#"},
   ".h":           {"name": "objectivec", "symbol": "//"},
   ".m":           {"name": "objectivec", "symbol": "//"},
   ".n":           {"name": "nemerle", "symbol": "//"},
