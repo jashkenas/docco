@@ -61,6 +61,5 @@
   ".vhdl":        {"name": "vhdl", "symbol": "--"},
   ".glsl":        {"name": "glsl", "symbol": "//"},
   ".vert":        {"name": "glsl", "symbol": "//"},
-  ".frag":        {"name": "glsl", "symbol": "//"},
-  ".geom":        {"name": "glsl", "symbol": "//"}
+  ".frag":        {"name": "glsl", "symbol": "//"}
 }
