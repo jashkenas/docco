@@ -4,6 +4,7 @@
   ".as":          {"name": "actionscript", "symbol": "//"},
   ".bat":         {"name": "dos", "symbol": "@?rem"},
   ".btm":         {"name": "dos", "symbol": "@?rem"},
+  ".c":           {"name": "c", "symbol": "//"},
   ".clj":         {"name": "clojure", "symbol": ";"},
   ".cls":         {"name": "tex", "symbol": "%"},
   ".cmake":       {"name": "cmake", "symbol": "#"},
