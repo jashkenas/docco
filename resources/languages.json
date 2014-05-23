@@ -25,6 +25,7 @@
   ".hs":          {"name": "haskell", "symbol": "--"},
   ".ini":         {"name": "ini", "symbol": ";"},
   ".js":          {"name": "javascript", "symbol": "//"},
+  ".jsx":         {"name": "javascript", "symbol": "//"},
   ".java":        {"name": "java", "symbol": "//"},
   ".latex":       {"name": "tex", "symbol": "%"},
   ".less":        {"name": "less", "symbol": "//"},
