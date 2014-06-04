@@ -156,6 +156,16 @@ over stdio, and run the text of their corresponding comments through
     format = (source, sections, config) ->
       language = getLanguage source, config
 
+Pass any user defined options to Marked if specified via command line option
+
+      markedOptions =
+        smartypants: true
+
+      if config.marked
+        markedOptions = config.marked
+
+      marked.setOptions markedOptions
+
 Tell Marked how to highlight code blocks within comments, treating that code
 as either the language specified in the code block or the language of the file
 if not specified.
@@ -215,6 +225,7 @@ user-specified options.
       css:        null
       extension:  null
       languages:  {}
+      marked: {}
 
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
@@ -232,6 +243,9 @@ source files for languages for which we have definitions.
         config.template     = path.join dir, 'docco.jst'
         config.css          = options.css or path.join dir, 'docco.css'
       config.template = _.template fs.readFileSync(config.template).toString()
+
+      if options.marked
+        config.marked = JSON.parse fs.readFileSync(options.marked)
 
       config.sources = options.args.filter((source) ->
         lang = getLanguage source, config
@@ -253,10 +267,6 @@ Require our external dependencies.
     marked      = require 'marked'
     commander   = require 'commander'
     highlightjs = require 'highlight.js'
-
-Enable nicer typography with marked.
-
-    marked.setOptions smartypants: yes
 
 Languages are stored in JSON in the file `resources/languages.json`.
 Each item maps the file extension to the name of the language and the
@@ -313,6 +323,7 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         .option('-c, --css [file]',       'use a custom css file', c.css)
         .option('-t, --template [file]',  'use a custom .jst template', c.template)
         .option('-e, --extension [ext]',  'assume a file extension for all inputs', c.extension)
+        .option('-m, --marked [file]',    'use custom marked options', c.marked)
         .parse(args)
         .name = "docco"
       if commander.args.length

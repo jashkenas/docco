@@ -97,8 +97,15 @@
   };
 
   format = function(source, sections, config) {
-    var code, i, language, section, _i, _len, _results;
+    var code, i, language, markedOptions, section, _i, _len, _results;
     language = getLanguage(source, config);
+    markedOptions = {
+      smartypants: true
+    };
+    if (config.marked) {
+      markedOptions = config.marked;
+    }
+    marked.setOptions(markedOptions);
     marked.setOptions({
       highlight: function(code, lang) {
         lang || (lang = language.name);
@@ -153,7 +160,8 @@
     template: null,
     css: null,
     extension: null,
-    languages: {}
+    languages: {},
+    marked: {}
   };
 
   configure = function(options) {
@@ -171,6 +179,9 @@
       config.css = options.css || path.join(dir, 'docco.css');
     }
     config.template = _.template(fs.readFileSync(config.template).toString());
+    if (options.marked) {
+      config.marked = JSON.parse(fs.readFileSync(options.marked));
+    }
     config.sources = options.args.filter(function(source) {
       var lang;
       lang = getLanguage(source, config);
@@ -193,10 +204,6 @@
   commander = require('commander');
 
   highlightjs = require('highlight.js');
-
-  marked.setOptions({
-    smartypants: true
-  });
 
   languages = JSON.parse(fs.readFileSync(path.join(__dirname, 'resources', 'languages.json')));
 
@@ -235,7 +242,7 @@
       args = process.argv;
     }
     c = defaults;
-    commander.version(version).usage('[options] files').option('-L, --languages [file]', 'use a custom languages.json', _.compose(JSON.parse, fs.readFileSync)).option('-l, --layout [name]', 'choose a layout (parallel, linear or classic)', c.layout).option('-o, --output [path]', 'output to a given folder', c.output).option('-c, --css [file]', 'use a custom css file', c.css).option('-t, --template [file]', 'use a custom .jst template', c.template).option('-e, --extension [ext]', 'assume a file extension for all inputs', c.extension).parse(args).name = "docco";
+    commander.version(version).usage('[options] files').option('-L, --languages [file]', 'use a custom languages.json', _.compose(JSON.parse, fs.readFileSync)).option('-l, --layout [name]', 'choose a layout (parallel, linear or classic)', c.layout).option('-o, --output [path]', 'output to a given folder', c.output).option('-c, --css [file]', 'use a custom css file', c.css).option('-t, --template [file]', 'use a custom .jst template', c.template).option('-e, --extension [ext]', 'assume a file extension for all inputs', c.extension).option('-m, --marked [file]', 'use custom marked options', c.marked).parse(args).name = "docco";
     if (commander.args.length) {
       return document(commander);
     } else {
