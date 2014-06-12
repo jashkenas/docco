@@ -225,7 +225,7 @@ user-specified options.
       css:        null
       extension:  null
       languages:  {}
-      marked: {}
+      marked:     null
 
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
