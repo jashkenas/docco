@@ -161,7 +161,7 @@
     css: null,
     extension: null,
     languages: {},
-    marked: {}
+    marked: null
   };
 
   configure = function(options) {
