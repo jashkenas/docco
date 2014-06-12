@@ -15,8 +15,8 @@ task 'install', 'install the `docco` command into /usr/local (or --prefix)', (op
   base = options.prefix or '/usr/local'
   lib  = base + '/lib/docco'
   exec([
-    'mkdir -p ' + lib
-    'cp -rf bin README resources lib ' + lib
+    'mkdir -p ' + lib + ' ' + base + '/bin'
+    'cp -rf bin README resources ' + lib
     'ln -sf ' + lib + '/bin/docco ' + base + '/bin/docco'
   ].join(' && '), (err, stdout, stderr) ->
    if err then console.error stderr
