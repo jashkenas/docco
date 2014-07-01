@@ -295,7 +295,7 @@ file extension. Detect and tag "literate" `.ext.md` variants.
 
     getLanguage = (source, config) ->
       ext  = config.extension or path.extname(source) or path.basename(source)
-      lang = config.languages[ext] or languages[ext]
+      lang = config.languages?[ext] or languages[ext]
       if lang and lang.name is 'markdown'
         codeExt = path.extname(path.basename(source, ext))
         if codeExt and codeLang = languages[codeExt]
