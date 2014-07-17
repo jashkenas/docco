@@ -67,5 +67,6 @@
   ".rc":          {"name": "rust", "symbol": "//"},
   ".rs":          {"name": "rust", "symbol": "//"},
   ".wsc":         {"name": "vbscript", "symbol": "'"},
-  ".wsf":         {"name": "vbscript", "symbol": "'"}
+  ".wsf":         {"name": "vbscript", "symbol": "'"},
+  ".yaml":        {"name": "yaml", "symbol": "#"}
 }
