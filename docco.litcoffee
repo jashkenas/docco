@@ -280,9 +280,11 @@ Build out the appropriate matchers and delimiters for each language.
     buildMatchers = (languages) ->
       for ext, l of languages
 
-Does the line begin with a comment?
+Is the line a comment? Note that because of how we handle literate code, the matcher is a bit
+more complex as we want to leave inline comments inline.
 
-        l.commentMatcher = ///^\s*#{l.symbol}\s?///
+        if l.literate then l.commentMatcher = ///^#{l.symbol}(?!([\ ]{4}|[\ ]{0,3}\t)*#{l.symbol})\s?///
+        else l.commentMatcher = ///^\s*#{l.symbol}\s?///
 
 Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_%28Unix%29) and interpolations...
 
