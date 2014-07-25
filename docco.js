@@ -212,8 +212,7 @@
     for (ext in languages) {
       l = languages[ext];
       if (l.literate) {
-        console.log("literate");
-        l.commentMatcher = RegExp("^" + l.symbol + "(?!([ ]{4}|[ ]{0,3}\\t)*" + l.symbol + ")\\s?");
+        l.commentMatcher = RegExp("^" + l.symbol);
       } else {
         l.commentMatcher = RegExp("^\\s*" + l.symbol + "\\s?");
       }
