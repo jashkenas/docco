@@ -281,8 +281,8 @@ Build out the appropriate matchers and delimiters for each language.
       for ext, l of languages
 
 Is the line prose? Note that because of the way we preprocess literate languages, and
-because we want to leave the inline comments inline for those, it's much simpler to identify
-which comments are intended to be prose.
+because we want to leave the inline comments inline for them, we ignore comments that
+have preceeding whitespace.
 
         if l.literate then l.commentMatcher = ///^#{l.symbol}///
         else l.commentMatcher = ///^\s*#{l.symbol}\s?///
