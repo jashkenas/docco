@@ -55,6 +55,7 @@
   ".sh":          {"name": "bash", "symbol": "#"},
   ".sql":         {"name": "sql", "symbol": "--"},
   ".sty":         {"name": "tex", "symbol": "%"},
+  ".swift":       {"name": "swift", "symbol": "//"},
   ".t":           {"name": "perl", "symbol": "#"},
   ".ts":          {"name": "typescript", "symbol": "//"},
   ".vala":        {"name": "vala", "symbol": "//"},
