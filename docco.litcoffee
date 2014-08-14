@@ -120,6 +120,8 @@ individual **section** for it. Each section is an object with `docsText` and
       save = ->
         sections.push {docsText, codeText}
         hasCode = docsText = codeText = ''
+        multiline = false
+        stripWhitespace = 0
 
 Our quick-and-dirty implementation of the literate programming style. Simply
 invert the prose and code relationship on a per-line basis, and then continue as
@@ -138,9 +140,26 @@ normal below.
             lang.symbol + ' ' + line
 
       for line in lines
-        if line.match(lang.commentMatcher) and not line.match(lang.commentFilter)
+        if multiline
+          comment = line[stripWhitespace..]
+        else if (match = line.match(lang.commentMatcher)) and not line.match(lang.commentFilter)
+          comment = match[1]
+        else
+          comment = ''
+
+        if lang.commentEnter and not multiline and match = line.match(lang.commentEnter)
+          line = comment = match[2]
+          stripWhitespace = match[1].length
+          multiline = true
+
+        if lang.commentExit and multiline and match = line.match(lang.commentExit)
+          line = comment = match[1]
+          stripWhitespace = 0
+          multiline = false
+
+        if comment
           save() if hasCode
-          docsText += (line = line.replace(lang.commentMatcher, '')) + '\n'
+          docsText += comment + '\n'
           save() if /^(---+|===+)$/.test line
         else
           hasCode = yes
@@ -282,7 +301,11 @@ Build out the appropriate matchers and delimiters for each language.
 
 Does the line begin with a comment?
 
-        l.commentMatcher = ///^\s*#{l.symbol}\s?///
+        l.commentMatcher = ///^\s*#{l.symbol}\s?(.*)$///
+
+        if l.multiline
+          l.commentEnter = ///^(\s*)#{l.multiline}\s?(.*)$///
+          l.commentExit = ///^(.*)\s?#{l.multiline}\s*$///
 
 Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_%28Unix%29) and interpolations...
 
