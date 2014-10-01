@@ -235,7 +235,15 @@ source files for languages for which we have definitions.
       config = _.extend {}, defaults, _.pick(options, _.keys(defaults)...)
 
       config.languages = buildMatchers config.languages
+
+The user is able to override the layout file used with the `--template` parameter.
+In this case, it is also neccessary to explicitly specify a stylesheet file.
+These custom templates are compiled exactly like the predefined ones, but the `public` folder
+is only copied for the latter.
+
       if options.template
+        unless options.css
+          console.warn "docco: no stylesheet file specified"
         config.layout = null
       else
         dir = config.layout = path.join __dirname, 'resources', config.layout
