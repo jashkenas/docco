@@ -169,7 +169,7 @@ ul.sections {
 
 .toc {
   max-height: 0;
-  overflow: hidden;
+  overflow: auto;
   text-align: center;
   font-size: 13px;
   line-height: 20px;
