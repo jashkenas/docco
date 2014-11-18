@@ -84,13 +84,13 @@ out in an HTML template.
 
         callback or= (error) -> throw error if error
         copyAsset  = (file, callback) ->
-          if fs.existsSync file then fs.copy file, path.join(config.output, path.basename(file)), callback
-          else callback()
+          return callback() unless fs.existsSync file
+          fs.copy file, path.join(config.output, path.basename(file)), callback
         complete   = ->
           copyAsset config.css, (error) ->
-            if error then callback error
-            else if fs.existsSync config.public then copyAsset config.public, callback
-            else callback()
+            return callback error if error
+            return copyAsset config.public, callback if fs.existsSync config.public
+            callback()
 
         files = config.sources.slice()
 

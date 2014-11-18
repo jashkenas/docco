@@ -17,21 +17,20 @@
         }
       });
       copyAsset = function(file, callback) {
-        if (fs.existsSync(file)) {
-          return fs.copy(file, path.join(config.output, path.basename(file)), callback);
-        } else {
+        if (!fs.existsSync(file)) {
           return callback();
         }
+        return fs.copy(file, path.join(config.output, path.basename(file)), callback);
       };
       complete = function() {
         return copyAsset(config.css, function(error) {
           if (error) {
             return callback(error);
-          } else if (fs.existsSync(config["public"])) {
-            return copyAsset(config["public"], callback);
-          } else {
-            return callback();
           }
+          if (fs.existsSync(config["public"])) {
+            return copyAsset(config["public"], callback);
+          }
+          return callback();
         });
       };
       files = config.sources.slice();
