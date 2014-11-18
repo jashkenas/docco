@@ -85,7 +85,7 @@ out in an HTML template.
         callback or= (error) -> throw error if error
         copyAsset  = (file, callback) ->
           if fs.existsSync file then fs.copy file, path.join(config.output, path.basename(file)), callback
-          else callback
+          else callback()
         complete   = ->
           copyAsset config.css, (error) ->
             if error then callback error

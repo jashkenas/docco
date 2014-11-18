@@ -20,7 +20,7 @@
         if (fs.existsSync(file)) {
           return fs.copy(file, path.join(config.output, path.basename(file)), callback);
         } else {
-          return callback;
+          return callback();
         }
       };
       complete = function() {
