@@ -134,7 +134,7 @@
   write = function(source, sections, config) {
     var destination, first, firstSection, hasTitle, html, title;
     destination = function(file) {
-      return path.join(config.output, file + '.html');
+      return path.join(config.output, file.replace(/[\\\/]/g, '_') + '.html');
     };
     firstSection = _.find(sections, function(section) {
       return section.docsText.length > 0;
