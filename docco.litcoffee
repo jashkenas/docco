@@ -194,8 +194,9 @@ and rendering it to the specified output path.
 
     write = (source, sections, config) ->
 
-      destination = (file) ->
-        path.join(config.output, file + '.html')
+      destination = (filename) ->
+        filename = if config.useTitle then title else (config.filename or filename)
+        path.join(config.output, filename + '.html')
 
 The **title** of the file is either the first heading in the prose, or the
 name of the source file.
@@ -227,6 +228,8 @@ user-specified options.
       extension:  null
       languages:  {}
       marked:     null
+      filename:   null
+      useTitle:   null
 
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
@@ -333,6 +336,8 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         .option('-t, --template [file]',  'use a custom .jst template', c.template)
         .option('-e, --extension [ext]',  'assume a file extension for all inputs', c.extension)
         .option('-m, --marked [file]',    'use custom marked options', c.marked)
+        .option('-n, --filename [name]',  'define custom file name without extension', c.name)
+        .option('-T, --useTitle',         'use document title as filename if available', c.useTitle)
         .parse(args)
         .name = "docco"
       if commander.args.length
