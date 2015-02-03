@@ -109,12 +109,13 @@ out in an HTML template.</p>
 
     callback <span class="hljs-function"><span class="hljs-title">or</span>= <span class="hljs-params">(error)</span> -&gt;</span> <span class="hljs-keyword">throw</span> error <span class="hljs-keyword">if</span> error
     <span class="hljs-function"><span class="hljs-title">copyAsset</span>  = <span class="hljs-params">(file, callback)</span> -&gt;</span>
+      <span class="hljs-keyword">return</span> callback() <span class="hljs-keyword">unless</span> fs.existsSync file
       fs.copy file, path.join(config.output, path.basename(file)), callback
     <span class="hljs-function"><span class="hljs-title">complete</span>   = -&gt;</span>
       copyAsset config.css, <span class="hljs-function"><span class="hljs-params">(error)</span> -&gt;</span>
-        <span class="hljs-keyword">if</span> error <span class="hljs-keyword">then</span> callback error
-        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> fs.existsSync config.public <span class="hljs-keyword">then</span> copyAsset config.public, callback
-        <span class="hljs-keyword">else</span> callback()
+        <span class="hljs-keyword">return</span> callback error <span class="hljs-keyword">if</span> error
+        <span class="hljs-keyword">return</span> copyAsset config.public, callback <span class="hljs-keyword">if</span> fs.existsSync config.public
+        callback()
 
     files = config.sources.slice()
 
@@ -192,6 +193,19 @@ over stdio, and run the text of their corresponding comments through
         
       
         
+        <p>Pass any user defined options to Marked if specified via command line option</p>
+
+        
+          <div class='highlight'><pre>  markedOptions =
+    <span class="hljs-attribute">smartypants</span>: <span class="hljs-literal">true</span>
+
+  <span class="hljs-keyword">if</span> config.marked
+    markedOptions = config.marked
+
+  marked.setOptions markedOptions</pre></div>
+        
+      
+        
         <p>Tell Marked how to highlight code blocks within comments, treating that code
 as either the language specified in the code block or the language of the file
 if not specified.</p>
@@ -224,7 +238,7 @@ and rendering it to the specified output path.</p>
           <div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">write</span> = <span class="hljs-params">(source, sections, config)</span> -&gt;</span>
 
   <span class="hljs-function"><span class="hljs-title">destination</span> = <span class="hljs-params">(file)</span> -&gt;</span>
-    path.join(config.output, path.basename(file, path.extname(file)) + <span class="hljs-string">'.html'</span>)</pre></div>
+    path.join(config.output, file + <span class="hljs-string">'.html'</span>)</pre></div>
         
       
         
@@ -232,7 +246,9 @@ and rendering it to the specified output path.</p>
 name of the source file.</p>
 
         
-          <div class='highlight'><pre>  first = marked.lexer(sections[<span class="hljs-number">0</span>].docsText)[<span class="hljs-number">0</span>]
+          <div class='highlight'><pre>  firstSection = _.find sections, <span class="hljs-function"><span class="hljs-params">(section)</span> -&gt;</span>
+    section.docsText.length &gt; <span class="hljs-number">0</span>
+  first = marked.lexer(firstSection.docsText)[<span class="hljs-number">0</span>] <span class="hljs-keyword">if</span> firstSection
   hasTitle = first <span class="hljs-keyword">and</span> first.type <span class="hljs-keyword">is</span> <span class="hljs-string">'heading'</span> <span class="hljs-keyword">and</span> first.depth <span class="hljs-keyword">is</span> <span class="hljs-number">1</span>
   title = <span class="hljs-keyword">if</span> hasTitle <span class="hljs-keyword">then</span> first.text <span class="hljs-keyword">else</span> path.basename source
 
@@ -259,7 +275,8 @@ user-specified options.</p>
   <span class="hljs-attribute">template</span>:   <span class="hljs-literal">null</span>
   <span class="hljs-attribute">css</span>:        <span class="hljs-literal">null</span>
   <span class="hljs-attribute">extension</span>:  <span class="hljs-literal">null</span>
-  <span class="hljs-attribute">languages</span>:  {}</pre></div>
+  <span class="hljs-attribute">languages</span>:  {}
+  <span class="hljs-attribute">marked</span>:     <span class="hljs-literal">null</span></pre></div>
         
       
         
@@ -271,8 +288,19 @@ source files for languages for which we have definitions.</p>
           <div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">configure</span> = <span class="hljs-params">(options)</span> -&gt;</span>
   config = _.extend {}, defaults, _.pick(options, _.keys(defaults)...)
 
-  config.languages = buildMatchers config.languages
-  <span class="hljs-keyword">if</span> options.template
+  config.languages = buildMatchers config.languages</pre></div>
+        
+      
+        
+        <p>The user is able to override the layout file used with the <code>--template</code> parameter.
+In this case, it is also neccessary to explicitly specify a stylesheet file.
+These custom templates are compiled exactly like the predefined ones, but the <code>public</code> folder
+is only copied for the latter.</p>
+
+        
+          <div class='highlight'><pre>  <span class="hljs-keyword">if</span> options.template
+    <span class="hljs-keyword">unless</span> options.css
+      <span class="hljs-built_in">console</span>.warn <span class="hljs-string">"docco: no stylesheet file specified"</span>
     config.layout = <span class="hljs-literal">null</span>
   <span class="hljs-keyword">else</span>
     dir = config.layout = path.join __dirname, <span class="hljs-string">'resources'</span>, config.layout
@@ -280,6 +308,9 @@ source files for languages for which we have definitions.</p>
     config.template     = path.join dir, <span class="hljs-string">'docco.jst'</span>
     config.css          = options.css <span class="hljs-keyword">or</span> path.join dir, <span class="hljs-string">'resources/linear/docco.css'</span>
   config.template = _.template fs.readFileSync(config.template).toString()
+
+  <span class="hljs-keyword">if</span> options.marked
+    config.marked = JSON.parse fs.readFileSync(options.marked)
 
   config.sources = options.args.filter<span class="hljs-function"><span class="hljs-params">((source) -&gt;
     lang = getLanguage source, config
@@ -308,13 +339,6 @@ path        = <span class="hljs-built_in">require</span> <span class="hljs-strin
 marked      = <span class="hljs-built_in">require</span> <span class="hljs-string">'marked'</span>
 commander   = <span class="hljs-built_in">require</span> <span class="hljs-string">'commander'</span>
 highlightjs = <span class="hljs-built_in">require</span> <span class="hljs-string">'highlight.js'</span></pre></div>
-        
-      
-        
-        <p>Enable nicer typography with marked.</p>
-
-        
-          <div class='highlight'><pre>marked.setOptions <span class="hljs-attribute">smartypants</span>: <span class="hljs-literal">yes</span></pre></div>
         
       
         
@@ -358,7 +382,7 @@ file extension. Detect and tag “literate” <code>.ext.md</code> variants.</p>
         
           <div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">getLanguage</span> = <span class="hljs-params">(source, config)</span> -&gt;</span>
   ext  = config.extension <span class="hljs-keyword">or</span> path.extname(source) <span class="hljs-keyword">or</span> path.basename(source)
-  lang = config.languages[ext] <span class="hljs-keyword">or</span> languages[ext]
+  lang = config.languages?[ext] <span class="hljs-keyword">or</span> languages[ext]
   <span class="hljs-keyword">if</span> lang <span class="hljs-keyword">and</span> lang.name <span class="hljs-keyword">is</span> <span class="hljs-string">'markdown'</span>
     codeExt = path.extname(path.basename(source, ext))
     <span class="hljs-keyword">if</span> codeExt <span class="hljs-keyword">and</span> codeLang = languages[codeExt]
@@ -393,6 +417,7 @@ Parse options using <a href="https://github.com/visionmedia/commander.js">Comman
     .option(<span class="hljs-string">'-c, --css [file]'</span>,       <span class="hljs-string">'use a custom css file'</span>, c.css)
     .option(<span class="hljs-string">'-t, --template [file]'</span>,  <span class="hljs-string">'use a custom .jst template'</span>, c.template)
     .option(<span class="hljs-string">'-e, --extension [ext]'</span>,  <span class="hljs-string">'assume a file extension for all inputs'</span>, c.extension)
+    .option(<span class="hljs-string">'-m, --marked [file]'</span>,    <span class="hljs-string">'use custom marked options'</span>, c.marked)
     .parse(args)
     .name = <span class="hljs-string">"docco"</span>
   <span class="hljs-keyword">if</span> commander.args.length

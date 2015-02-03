@@ -26,7 +26,7 @@ task 'doc', 'rebuild the Docco documentation', (options) ->
   layout = options.layout or 'linear'
   exec([
     "bin/docco --layout #{layout} docco.litcoffee"
-    "sed \"s/docco.css/resources\\/#{layout}\\/docco.css/\" < docs/docco.html > index.html"
+    "sed \"s/docco.css/resources\\/#{layout}\\/docco.css/\" < docs/docco.litcoffee.html > index.html"
     'rm -r docs'
   ].join(' && '), (err) ->
     throw err if err
