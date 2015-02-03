@@ -195,7 +195,7 @@ and rendering it to the specified output path.
     write = (source, sections, config) ->
 
       destination = (file) ->
-        path.join(config.output, file + '.html')
+        path.join(config.output, path.basename(file, path.extname(file)) + '.html')
 
 The **title** of the file is either the first heading in the prose, or the
 name of the source file.

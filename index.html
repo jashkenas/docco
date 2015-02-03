@@ -238,7 +238,7 @@ and rendering it to the specified output path.</p>
           <div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">write</span> = <span class="hljs-params">(source, sections, config)</span> -&gt;</span>
 
   <span class="hljs-function"><span class="hljs-title">destination</span> = <span class="hljs-params">(file)</span> -&gt;</span>
-    path.join(config.output, file + <span class="hljs-string">'.html'</span>)</pre></div>
+    path.join(config.output, path.basename(file, path.extname(file)) + <span class="hljs-string">'.html'</span>)</pre></div>
         
       
         
