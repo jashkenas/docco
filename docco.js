@@ -217,7 +217,11 @@
     var ext, l;
     for (ext in languages) {
       l = languages[ext];
-      l.commentMatcher = RegExp("^\\s*" + l.symbol + "\\s?");
+      if (l.literate) {
+        l.commentMatcher = RegExp("^" + l.symbol);
+      } else {
+        l.commentMatcher = RegExp("^\\s*" + l.symbol + "\\s?");
+      }
       l.commentFilter = /(^#![/]|^\s*#\{)/;
     }
     return languages;
