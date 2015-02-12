@@ -33,7 +33,7 @@
   ".latex":       {"name": "tex", "symbol": "%"},
   ".less":        {"name": "less", "symbol": "//"},
   ".lisp":        {"name": "lisp", "symbol": ";"},
-  ".litcoffee":   {"name": "coffeescript", "symbol": "#", "literate": true},
+  ".litcoffee":   {"name": "coffeescript", "symbol": "#", "literate": true, "source": ".coffee"},
   ".ls":          {"name": "coffeescript", "symbol": "#"},
   ".lua":         {"name": "lua", "symbol": "--"},
   ".n":           {"name": "nemerle", "symbol": "//"},

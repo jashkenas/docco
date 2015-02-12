@@ -26,7 +26,8 @@ doesn't handle your favorite yet, feel free to
 [add it to the list](https://github.com/jashkenas/docco/blob/master/resources/languages.json).
 Finally, the ["literate" style](http://coffeescript.org/#literate) of *any*
 language is also supported — just tack an `.md` extension on the end:
-`.coffee.md`, `.py.md`, and so on.
+`.coffee.md`, `.py.md`, and so on. Also get usable source code by adding the
+`--source` option while specifying a directory for the files.
 
 
 Partners in Crime:
@@ -75,7 +76,7 @@ Main Documentation Generation Functions
 Generate the documentation for our configured source file by copying over static
 assets, reading all the source files in, splitting them up into prose+code
 sections, highlighting each file in the appropriate language, and printing them
-out in an HTML template.
+out in an HTML template, and writing plain code files where instructed.
 
     document = (options = {}, callback) ->
       config = configure options
@@ -103,9 +104,13 @@ out in an HTML template.
             sections = parse source, code, config
             format source, sections, config
             write source, sections, config
+            outputCode source, sections, config
             if files.length then nextFile() else complete()
 
-        nextFile()
+        if config.source
+          fs.mkdirs config.source, nextFile
+        else
+          nextFile()
 
 Given a string of source code, **parse** out each block of prose and the code that
 follows it — by detecting which is which, line by line — and then create an
@@ -212,6 +217,21 @@ name of the source file.
       console.log "docco: #{source} -> #{destination source}"
       fs.writeFileSync destination(source), html
 
+Print out the consolidated code sections parsed from the source file in to another
+file. No documentation will be included in the new file.
+
+    outputCode = (source, sections, config) ->
+      lang = getLanguage source, config
+
+      destination = (file) ->
+        path.join config.source, path.basename(file, path.extname file) + lang.source
+
+      if config.source
+        code = _.pluck(sections, 'codeText').join '\n'
+        code = code.trim().replace /(\n{2,})/g, '\n\n'
+        console.log "docco: #{source} -> #{destination source}"
+        fs.writeFileSync destination(source), code
+
 
 Configuration
 -------------
@@ -227,6 +247,7 @@ user-specified options.
       extension:  null
       languages:  {}
       marked:     null
+      source:     null
 
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
@@ -305,10 +326,13 @@ file extension. Detect and tag "literate" `.ext.md` variants.
     getLanguage = (source, config) ->
       ext  = config.extension or path.extname(source) or path.basename(source)
       lang = config.languages?[ext] or languages[ext]
-      if lang and lang.name is 'markdown'
-        codeExt = path.extname(path.basename(source, ext))
-        if codeExt and codeLang = languages[codeExt]
-          lang = _.extend {}, codeLang, {literate: yes}
+      if lang
+        if lang.name is 'markdown'
+          codeExt = path.extname(path.basename(source, ext))
+          if codeExt and codeLang = languages[codeExt]
+            lang = _.extend {}, codeLang, {literate: yes, source: ''}
+        else unless lang.source
+          lang.source = ext
       lang
 
 Keep it DRY. Extract the docco **version** from `package.json`
@@ -333,6 +357,7 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         .option('-t, --template [file]',  'use a custom .jst template', c.template)
         .option('-e, --extension [ext]',  'assume a file extension for all inputs', c.extension)
         .option('-m, --marked [file]',    'use custom marked options', c.marked)
+        .option('-s, --source [path]',    'output code in a given folder', c.source)
         .parse(args)
         .name = "docco"
       if commander.args.length

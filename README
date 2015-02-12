@@ -29,3 +29,4 @@ Usage: docco [options] FILES
     -e, --extension [ext]  use the given file extension for all inputs
     -L, --languages [file] use a custom languages.json
     -m, --marked [file]    use custom marked options
+    -s, --source [path]    output code in a given folder
