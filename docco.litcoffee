@@ -52,7 +52,7 @@ also by Mr. Tomayko.
 * There's a **Go** port called [Gocco](http://nikhilm.github.io/gocco/),
 written by [Nikhil Marathe](https://github.com/nikhilm).
 
-* Your all you **PHP** buffs out there, Fredi Bach's
+* For all you **PHP** buffs out there, Fredi Bach's
 [sourceMakeup](http://jquery-jkit.com/sourcemakeup/) (we'll let the faux pas
 with respect to our naming scheme slide), should do the trick nicely.
 
@@ -75,39 +75,42 @@ Main Documentation Generation Functions
 
 Generate the documentation for our configured source file by copying over static
 assets, reading all the source files in, splitting them up into prose+code
-sections, highlighting each file in the appropriate language, printing them
+sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template, and writing plain code files where instructed.
 
     document = (options = {}, callback) ->
       config = configure options
 
-      fs.mkdirsSync config.output
-      fs.mkdirsSync config.source if config.source
+      fs.mkdirs config.output, ->
 
-      callback or= (error) -> throw error if error
-      copyAsset  = (file, callback) ->
-        fs.copy file, path.join(config.output, path.basename(file)), callback
-      complete   = ->
-        copyAsset config.css, (error) ->
-          if error then callback error
-          else if fs.existsSync config.public then copyAsset config.public, callback
-          else callback()
+        callback or= (error) -> throw error if error
+        copyAsset  = (file, callback) ->
+          return callback() unless fs.existsSync file
+          fs.copy file, path.join(config.output, path.basename(file)), callback
+        complete   = ->
+          copyAsset config.css, (error) ->
+            return callback error if error
+            return copyAsset config.public, callback if fs.existsSync config.public
+            callback()
 
-      files = config.sources.slice()
+        files = config.sources.slice()
 
-      nextFile = ->
-        source = files.shift()
-        fs.readFile source, (error, buffer) ->
-          return callback error if error
+        nextFile = ->
+          source = files.shift()
+          fs.readFile source, (error, buffer) ->
+            return callback error if error
 
-          code = buffer.toString()
-          sections = parse source, code, config
-          format source, sections, config
-          write source, sections, config
-          outputCode source, sections, config
-          if files.length then nextFile() else complete()
+            code = buffer.toString()
+            sections = parse source, code, config
+            format source, sections, config
+            write source, sections, config
+            outputCode source, sections, config
+            if files.length then nextFile() else complete()
 
-      nextFile()
+        if config.source
+          fs.mkdirs config.source, nextFile
+        else
+          nextFile()
 
 Given a string of source code, **parse** out each block of prose and the code that
 follows it — by detecting which is which, line by line — and then create an
@@ -158,8 +161,34 @@ over stdio, and run the text of their corresponding comments through
 
     format = (source, sections, config) ->
       language = getLanguage source, config
+
+Pass any user defined options to Marked if specified via command line option
+
+      markedOptions =
+        smartypants: true
+
+      if config.marked
+        markedOptions = config.marked
+
+      marked.setOptions markedOptions
+
+Tell Marked how to highlight code blocks within comments, treating that code
+as either the language specified in the code block or the language of the file
+if not specified.
+
+      marked.setOptions {
+        highlight: (code, lang) ->
+          lang or= language.name
+
+          if highlightjs.getLanguage(lang)
+            highlightjs.highlight(lang, code).value
+          else
+            console.warn "docco: couldn't highlight code block with unknown language '#{lang}' in #{source}"
+            code
+      }
+
       for section, i in sections
-        code = highlight(language.name, section.codeText).value
+        code = highlightjs.highlight(language.name, section.codeText).value
         code = code.replace(/\s+$/, '')
         section.codeHtml = "<div class='highlight'><pre>#{code}</pre></div>"
         section.docsHtml = marked(section.docsText)
@@ -176,7 +205,9 @@ and rendering it to the specified output path.
 The **title** of the file is either the first heading in the prose, or the
 name of the source file.
 
-      first = marked.lexer(sections[0].docsText)[0]
+      firstSection = _.find sections, (section) ->
+        section.docsText.length > 0
+      first = marked.lexer(firstSection.docsText)[0] if firstSection
       hasTitle = first and first.type is 'heading' and first.depth is 1
       title = if hasTitle then first.text else path.basename source
 
@@ -198,7 +229,6 @@ file. No documentation will be included in the new file.
       if config.source
         code = _.pluck(sections, 'codeText').join '\n'
         code = code.trim().replace /(\n{2,})/g, '\n\n'
-
         console.log "docco: #{source} -> #{destination source}"
         fs.writeFileSync destination(source), code
 
@@ -215,6 +245,8 @@ user-specified options.
       template:   null
       css:        null
       extension:  null
+      languages:  {}
+      marked:     null
       source:     null
 
 **Configure** this particular run of Docco. We might use a passed-in external
@@ -224,7 +256,16 @@ source files for languages for which we have definitions.
     configure = (options) ->
       config = _.extend {}, defaults, _.pick(options, _.keys(defaults)...)
 
+      config.languages = buildMatchers config.languages
+
+The user is able to override the layout file used with the `--template` parameter.
+In this case, it is also neccessary to explicitly specify a stylesheet file.
+These custom templates are compiled exactly like the predefined ones, but the `public` folder
+is only copied for the latter.
+
       if options.template
+        unless options.css
+          console.warn "docco: no stylesheet file specified"
         config.layout = null
       else
         dir = config.layout = path.join __dirname, 'resources', config.layout
@@ -232,6 +273,9 @@ source files for languages for which we have definitions.
         config.template     = path.join dir, 'docco.jst'
         config.css          = options.css or path.join dir, 'docco.css'
       config.template = _.template fs.readFileSync(config.template).toString()
+
+      if options.marked
+        config.marked = JSON.parse fs.readFileSync(options.marked)
 
       config.sources = options.args.filter((source) ->
         lang = getLanguage source, config
@@ -252,7 +296,7 @@ Require our external dependencies.
     path        = require 'path'
     marked      = require 'marked'
     commander   = require 'commander'
-    {highlight} = require 'highlight.js'
+    highlightjs = require 'highlight.js'
 
 Languages are stored in JSON in the file `resources/languages.json`.
 Each item maps the file extension to the name of the language and the
@@ -263,28 +307,31 @@ language to Docco, just add it to the file.
 
 Build out the appropriate matchers and delimiters for each language.
 
-    for ext, l of languages
+    buildMatchers = (languages) ->
+      for ext, l of languages
 
 Does the line begin with a comment?
 
-      l.commentMatcher = ///^\s*#{l.symbol}\s?///
+        l.commentMatcher = ///^\s*#{l.symbol}\s?///
 
 Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_%28Unix%29) and interpolations...
 
-      l.commentFilter = /(^#![/]|^\s*#\{)/
+        l.commentFilter = /(^#![/]|^\s*#\{)/
+      languages
+    languages = buildMatchers languages
 
 A function to get the current language we're documenting, based on the
 file extension. Detect and tag "literate" `.ext.md` variants.
 
     getLanguage = (source, config) ->
       ext  = config.extension or path.extname(source) or path.basename(source)
-      lang = languages[ext]
+      lang = config.languages?[ext] or languages[ext]
       if lang
         if lang.name is 'markdown'
           codeExt = path.extname(path.basename(source, ext))
           if codeExt and codeLang = languages[codeExt]
             lang = _.extend {}, codeLang, {literate: yes, source: ''}
-        else if not lang.source
+        else unless lang.source
           lang.source = ext
       lang
 
@@ -303,11 +350,13 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
       c = defaults
       commander.version(version)
         .usage('[options] files')
+        .option('-L, --languages [file]', 'use a custom languages.json', _.compose JSON.parse, fs.readFileSync)
         .option('-l, --layout [name]',    'choose a layout (parallel, linear or classic)', c.layout)
         .option('-o, --output [path]',    'output to a given folder', c.output)
         .option('-c, --css [file]',       'use a custom css file', c.css)
         .option('-t, --template [file]',  'use a custom .jst template', c.template)
         .option('-e, --extension [ext]',  'assume a file extension for all inputs', c.extension)
+        .option('-m, --marked [file]',    'use custom marked options', c.marked)
         .option('-s, --source [path]',    'output code in a given folder', c.source)
         .parse(args)
         .name = "docco"
@@ -320,4 +369,4 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
 Public API
 ----------
 
-    Docco = module.exports = {run, document, parse, version}
+    Docco = module.exports = {run, document, parse, format, version}
