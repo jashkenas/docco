@@ -113,7 +113,7 @@
       highlight: function(code, lang) {
         lang || (lang = language.name);
         if (highlightjs.getLanguage(lang)) {
-          return highlightjs.highlight(lang, code).value;
+          return highlightjs.fixMarkup(highlightjs.highlight(lang, code).value);
         } else {
           console.warn("docco: couldn't highlight code block with unknown language '" + lang + "' in " + source);
           return code;
@@ -124,7 +124,7 @@
     for (i = _i = 0, _len = sections.length; _i < _len; i = ++_i) {
       section = sections[i];
       code = highlightjs.highlight(language.name, section.codeText).value;
-      code = code.replace(/\s+$/, '');
+      code = highlightjs.fixMarkup(code).replace(/\s+$/, '');
       section.codeHtml = "<div class='highlight'><pre>" + code + "</pre></div>";
       _results.push(section.docsHtml = marked(section.docsText));
     }
@@ -241,6 +241,10 @@
   };
 
   version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version;
+
+  highlightjs.configure({
+    tabReplace: '  '
+  });
 
   run = function(args) {
     var c;
