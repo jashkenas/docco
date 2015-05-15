@@ -63,6 +63,7 @@
   ".swift":       {"name": "swift", "symbol": "//"},
   ".t":           {"name": "perl", "symbol": "#"},
   ".ts":          {"name": "typescript", "symbol": "//"},
+  ".v":           {"name": "verilog", "symbol": "//"},
   ".vala":        {"name": "vala", "symbol": "//"},
   ".vapi":        {"name": "vala", "symbol": "//"},
   ".vbe":         {"name": "vbscript", "symbol": "'"},
