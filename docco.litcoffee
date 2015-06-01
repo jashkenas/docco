@@ -195,7 +195,12 @@ and rendering it to the specified output path.
     write = (source, sections, config) ->
 
       destination = (file) ->
-        path.join(config.output, path.basename(file, path.extname(file)) + '.html')
+        path.join(config.output, path.dirname(file), path.basename(file, path.extname(file)) + '.html')
+
+      relative = (file) ->
+        to = path.dirname(path.resolve(file))
+        from = path.dirname(path.resolve(destination(source)))
+        path.join(path.relative(from, to), path.basename(file))
 
 The **title** of the file is either the first heading in the prose, or the
 name of the source file.
@@ -205,12 +210,13 @@ name of the source file.
       first = marked.lexer(firstSection.docsText)[0] if firstSection
       hasTitle = first and first.type is 'heading' and first.depth is 1
       title = if hasTitle then first.text else path.basename source
+      css = relative path.join(config.output, path.basename(config.css))
 
-      html = config.template {sources: config.sources, css: path.basename(config.css),
-        title, hasTitle, sections, path, destination,}
+      html = config.template {sources: config.sources, css,
+        title, hasTitle, sections, path, destination, relative}
 
       console.log "docco: #{source} -> #{destination source}"
-      fs.writeFileSync destination(source), html
+      fs.outputFileSync destination(source), html
 
 
 Configuration
