@@ -7,7 +7,7 @@
   ".btm":         {"name": "dos", "symbol": "@?rem"},
   ".c":           {"name": "c", "symbol": "//"},
   ".clj":         {"name": "clojure", "symbol": ";"},
-  ".cls":         {"name": "tex", "symbol": "%"},
+  ".cls":         {"name": "apex", "symbol": "//"},
   ".cmake":       {"name": "cmake", "symbol": "#"},
   ".cmd":         {"name": "dos", "symbol": "@?rem"},
   ".coffee":      {"name": "coffeescript", "symbol": "#"},
