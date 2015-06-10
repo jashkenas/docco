@@ -307,7 +307,7 @@ file extension. Detect and tag "literate" `.ext.md` variants.
       lang = config.languages?[ext] or languages[ext]
       if lang and lang.name is 'markdown'
         codeExt = path.extname(path.basename(source, ext))
-        if codeExt and codeLang = languages[codeExt]
+        if codeExt and codeLang = (config.languages?[codeExt] or languages[codeExt])
           lang = _.extend {}, codeLang, {literate: yes}
       lang
 
