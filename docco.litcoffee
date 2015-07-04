@@ -116,10 +116,11 @@ individual **section** for it. Each section is an object with `docsText` and
       lines    = code.split '\n'
       sections = []
       lang     = getLanguage source, config
+      klass    = lang.name
       hasCode  = docsText = codeText = ''
 
       save = ->
-        sections.push {docsText, codeText}
+        sections.push {docsText, codeText, klass}
         hasCode = docsText = codeText = ''
 
 Our quick-and-dirty implementation of the literate programming style. Simply
