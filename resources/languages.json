@@ -17,6 +17,8 @@
   ".d":           {"name": "d", "symbol": "//"},
   ".dtx":         {"name": "tex", "symbol": "%"},
   ".erl":         {"name": "erlang", "symbol": "%"},
+  ".fs":          {"name": "fsharp", "symbol": "//"},
+  ".fsx":          {"name": "fsharp", "symbol": "//"},
   ".frag":        {"name": "glsl", "symbol": "//"},
   ".glsl":        {"name": "glsl", "symbol": "//"},
   ".go":          {"name": "go", "symbol": "//"},
