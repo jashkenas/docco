@@ -183,7 +183,12 @@ if not specified.
       }
 
       for section, i in sections
-        code = highlightjs.highlight(language.name, section.codeText).value
+        try
+          code = highlightjs.highlight(language.name, section.codeText).value
+        catch err
+          throw err unless config.ignore
+          code = section.codeText
+
         code = code.replace(/\s+$/, '')
         section.codeHtml = "<div class='highlight'><pre>#{code}</pre></div>"
         section.docsHtml = marked(section.docsText)
@@ -227,6 +232,7 @@ user-specified options.
       extension:  null
       languages:  {}
       marked:     null
+      ignore:     false
 
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
@@ -333,6 +339,7 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         .option('-t, --template [file]',  'use a custom .jst template', c.template)
         .option('-e, --extension [ext]',  'assume a file extension for all inputs', c.extension)
         .option('-m, --marked [file]',    'use custom marked options', c.marked)
+        .option('-i, --ignore [file]',    'ignore unsupported languages', c.ignore)
         .parse(args)
         .name = "docco"
       if commander.args.length
