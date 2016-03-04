@@ -90,7 +90,7 @@
         if (/^(---+|===+)$/.test(line)) {
           save();
         }
-      } else {
+      } else if(!(config.filterAltSymbols && lang.altCommentMatcher && line.match(lang.altCommentMatcher))) {
         hasCode = true;
         codeText += line + '\n';
       }
@@ -188,6 +188,9 @@
     if (options.marked) {
       config.marked = JSON.parse(fs.readFileSync(options.marked));
     }
+    if (options.filterAltSymbols) {
+      config.filterAltSymbols = true;
+    }
     config.sources = options.args.filter(function(source) {
       var lang;
       lang = getLanguage(source, config);
@@ -219,6 +222,12 @@
       l = languages[ext];
       l.commentMatcher = RegExp("^\\s*" + l.symbol + "\\s?");
       l.commentFilter = /(^#![\/]|^\s*#\{)/;
+      if(l.altSymbol) {
+        l.altSymbol = _.map(l.altSymbol, function(c) {
+          return "^$.*\\|()[]{}".includes(c) ? "\\" + c : c;
+        }).join('');
+        l.altCommentMatcher = RegExp("^" + l.altSymbol + "|^." + l.altSymbol);
+      }
     }
     return languages;
   };
@@ -248,7 +257,7 @@
       args = process.argv;
     }
     c = defaults;
-    commander.version(version).usage('[options] files').option('-L, --languages [file]', 'use a custom languages.json', _.compose(JSON.parse, fs.readFileSync)).option('-l, --layout [name]', 'choose a layout (parallel, linear or classic)', c.layout).option('-o, --output [path]', 'output to a given folder', c.output).option('-c, --css [file]', 'use a custom css file', c.css).option('-t, --template [file]', 'use a custom .jst template', c.template).option('-e, --extension [ext]', 'assume a file extension for all inputs', c.extension).option('-m, --marked [file]', 'use custom marked options', c.marked).parse(args).name = "docco";
+    commander.version(version).usage('[options] files').option('-L, --languages [file]', 'use a custom languages.json', _.compose(JSON.parse, fs.readFileSync)).option('-l, --layout [name]', 'choose a layout (parallel, linear or classic)', c.layout).option('-o, --output [path]', 'output to a given folder', c.output).option('-c, --css [file]', 'use a custom css file', c.css).option('-t, --template [file]', 'use a custom .jst template', c.template).option('-e, --extension [ext]', 'assume a file extension for all inputs', c.extension).option('-m, --marked [file]', 'use custom marked options', c.marked).option('-A, --filter-alt-symbols', 'filter lines beginning with the alternative symbol(s)', c.filterAltSymbols).parse(args).name = "docco";
     if (commander.args.length) {
       return document(commander);
     } else {
