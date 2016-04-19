@@ -42,7 +42,7 @@ available as a gem.
 also by Mr. Tomayko.
 
 * If **Python** is more your speed, take a look at
-[Nick Fitzgerald](http://github.com/fitzgen)'s [Pycco](http://fitzgen.github.io/pycco/).
+[Nick Fitzgerald](http://github.com/fitzgen)'s [Pycco](https://pycco-docs.github.io/pycco/).
 
 * For **Clojure** fans, [Fogus](http://blog.fogus.me/)'s
 [Marginalia](http://fogus.me/fun/marginalia/) is a bit of a departure from
