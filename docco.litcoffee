@@ -206,7 +206,7 @@ name of the source file.
       title = if hasTitle then first.text else path.basename source
 
       html = config.template {sources: config.sources, css: path.basename(config.css),
-        title, hasTitle, sections, path, destination, language: getLanguage(source, config),}
+        title, hasTitle, sections, path, destination, language: getLanguage(source, config)}
 
       console.log "docco: #{source} -> #{destination source}"
       fs.writeFileSync destination(source), html
