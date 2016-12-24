@@ -12,6 +12,7 @@
   ".cmd":         {"name": "dos", "symbol": "@?rem"},
   ".coffee":      {"name": "coffeescript", "symbol": "#"},
   ".cpp":         {"name": "cpp", "symbol": "//"},
+  ".cr":          {"name": "crystal", "symbol": "#"},
   ".cs":          {"name": "cs", "symbol": "//"},
   ".cson":        {"name": "coffeescript", "symbol": "#"},
   ".d":           {"name": "d", "symbol": "//"},
