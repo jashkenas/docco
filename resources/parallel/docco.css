@@ -168,15 +168,15 @@ ul.sections > li > div {
 }
 
 #jump_to, #jump_wrapper {
-  position: fixed;
+  position: absolute;
   right: 0; top: 0;
   padding: 10px 15px;
-  margin:0;
+  margin: 0;
 }
 
 #jump_wrapper {
   display: none;
-  padding:0;
+  padding: 0;
 }
 
 #jump_to:hover #jump_wrapper {
