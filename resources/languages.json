@@ -17,6 +17,8 @@
   ".d":           {"name": "d", "symbol": "//"},
   ".dtx":         {"name": "tex", "symbol": "%"},
   ".erl":         {"name": "erlang", "symbol": "%"},
+  ".f":           {"name": "fortran", "symbol": "!"},
+  ".for":         {"name": "fortran", "symbol": "!"},
   ".frag":        {"name": "glsl", "symbol": "//"},
   ".glsl":        {"name": "glsl", "symbol": "//"},
   ".go":          {"name": "go", "symbol": "//"},
