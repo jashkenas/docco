@@ -2,6 +2,7 @@
   "Cakefile":     {"name": "coffeescript", "symbol": "#"},
   ".applescript": {"name": "applescript", "symbol": "--"},
   ".as":          {"name": "actionscript", "symbol": "//"},
+  ".asm":         {"name": "assembly", "symbol": ";"},
   ".asp":         {"name": "vbscript", "symbol": "'"},
   ".bat":         {"name": "dos", "symbol": "@?rem"},
   ".btm":         {"name": "dos", "symbol": "@?rem"},
