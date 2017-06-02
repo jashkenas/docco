@@ -176,7 +176,7 @@ if not specified.
           lang or= language.name
 
           if highlightjs.getLanguage(lang)
-            highlightjs.highlight(lang, code).value
+            highlightjs.fixMarkup highlightjs.highlight(lang, code).value
           else
             console.warn "docco: couldn't highlight code block with unknown language '#{lang}' in #{source}"
             code
@@ -184,7 +184,7 @@ if not specified.
 
       for section, i in sections
         code = highlightjs.highlight(language.name, section.codeText).value
-        code = code.replace(/\s+$/, '')
+        code = highlightjs.fixMarkup(code).replace /\s+$/, ''
         section.codeHtml = "<div class='highlight'><pre>#{code}</pre></div>"
         section.docsHtml = marked(section.docsText)
 
@@ -315,6 +315,10 @@ Keep it DRY. Extract the docco **version** from `package.json`
 
     version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version
 
+Tabs are replaced by two spaces in the output.
+
+    highlightjs.configure
+      tabReplace: '  '
 
 Command Line Interface
 ----------------------
