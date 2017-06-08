@@ -17,6 +17,7 @@
   ".cson":        {"name": "coffeescript", "symbol": "#"},
   ".d":           {"name": "d", "symbol": "//"},
   ".dtx":         {"name": "tex", "symbol": "%"},
+  ".ejs":         {"name": "javascript", "symbol": "//"},
   ".erl":         {"name": "erlang", "symbol": "%"},
   ".f":           {"name": "fortran", "symbol": "!"},
   ".for":         {"name": "fortran", "symbol": "!"},
