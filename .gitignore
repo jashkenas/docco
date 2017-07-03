@@ -3,4 +3,4 @@ output
 docs
 test/data
 node_modules
-test/fakes/doc
+doc
