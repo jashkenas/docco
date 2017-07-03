@@ -1,0 +1,11 @@
+{
+  "glob": [
+    "src/**/*.js",
+    "src/**/*.coffee",
+    "src/**/*.litcoffee",
+    "README.md",
+    "images/*.jpg"
+  ],
+  "github": false,
+  "repository-url": "https://github.com/nevir/groc"
+}
