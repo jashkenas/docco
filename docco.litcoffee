@@ -315,7 +315,6 @@ Keep it DRY. Extract the docco **version** from `package.json`
 
     version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version
 
-
 Command Line Interface
 ----------------------
 
