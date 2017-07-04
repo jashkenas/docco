@@ -1,0 +1,6 @@
+{
+  "sources": [
+    "docco.litcoffee",
+    "README.md"
+  ]
+}
