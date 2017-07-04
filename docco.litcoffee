@@ -77,15 +77,15 @@ assets, reading all the source files in, splitting them up into prose+code
 sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template.
 
-    document = (options = {}, callback) ->
-      config = configure options
-
+    document = (config = {}, callback) ->
+        
       fs.mkdirs config.output, ->
 
         callback or= (error) -> throw error if error
         copyAsset  = (file, callback) ->
           return callback() unless fs.existsSync file
           fs.copy file, path.join(config.output, path.basename(file)), callback
+
         complete   = ->
           copyAsset config.css, (error) ->
             return callback error if error
@@ -94,16 +94,46 @@ out in an HTML template.
 
         files = config.sources.slice()
 
-        nextFile = ->
+        nextFile = () ->
           source = files.shift()
-          fs.readFile source, (error, buffer) ->
-            return callback error if error
 
-            code = buffer.toString()
-            sections = parse source, code, config
-            format source, sections, config
-            write source, sections, config
-            if files.length then nextFile() else complete()
+If keeping the directory hierarchy, then insert the file's relative directory in to the path.
+
+          if config.keepHierarchy
+            toDirectory = config.root + '/' + config.output + '/' + (path.dirname source)
+          else
+            toDirectory = config.output
+
+Make sure the target directory exits.
+
+          # todo: async versions of exits ans mkdir.
+          if !fs.existsSync(toDirectory)
+            fs.mkdirsSync(toDirectory)
+
+Implementation of copying files if specified in the language file
+
+          lang = getLanguage source, config
+          if lang.copy
+            toFile = toDirectory + '/' + path.basename source
+            fs.copy source, toFile, (error, result) ->
+              return callback(error) if error
+              if files.length then nextFile() else complete()
+
+Implementation of spliting comments and code into split view html files.
+
+          else
+            fs.readFile source, (error, buffer) ->
+              return callback(error) if error
+
+              code = buffer.toString()
+              sections = parse source, code, config
+              format source, sections, config
+              toFile = toDirectory + '/' + (path.basename source, path.extname source)
+
+              console.log("Write To (source): #{source} or to #{toFile}")
+
+              write source, toFile, sections, config
+              if files.length then nextFile() else complete()
 
         nextFile()
 
@@ -192,10 +222,10 @@ Once all of the code has finished highlighting, we can **write** the resulting
 documentation file by passing the completed HTML sections into the template,
 and rendering it to the specified output path.
 
-    write = (source, sections, config) ->
+    write = (source, to, sections, config) ->
 
       destination = (file) ->
-        path.join(config.output, path.basename(file, path.extname(file)) + '.html')
+        to+'.html'
 
 The **title** of the file is either the first heading in the prose, or the
 name of the source file.
@@ -209,8 +239,8 @@ name of the source file.
       html = config.template {sources: config.sources, css: path.basename(config.css),
         title, hasTitle, sections, path, destination,}
 
-      console.log "docco: #{source} -> #{destination source}"
-      fs.writeFileSync destination(source), html
+      console.log "docco: #{source} -> #{destination to}"
+      fs.writeFileSync destination(to), html
 
 
 Configuration
@@ -227,6 +257,9 @@ user-specified options.
       extension:  null
       languages:  {}
       marked:     null
+      setup:      '.docco.json'
+      help:      false
+      keepHierarchy: true
 
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
@@ -276,6 +309,8 @@ Require our external dependencies.
     marked      = require 'marked'
     commander   = require 'commander'
     highlightjs = require 'highlight.js'
+    path        = require 'path'
+    glob        = require 'glob'
 
 Languages are stored in JSON in the file `resources/languages.json`.
 Each item maps the file extension to the name of the language and the
@@ -315,7 +350,6 @@ Keep it DRY. Extract the docco **version** from `package.json`
 
     version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version
 
-
 Command Line Interface
 ----------------------
 
@@ -323,23 +357,45 @@ Finally, let's define the interface to run Docco from the command line.
 Parse options using [Commander](https://github.com/visionmedia/commander.js).
 
     run = (args = process.argv) ->
-      c = defaults
+      config = defaults
+
       commander.version(version)
-        .usage('[options] files')
+        .usage('[options] [file]')
+        .option('-c, --css [file]',       'use a custom css file', config.css)
+        .option('-e, --extension [ext]',  'assume a file extension for all inputs', config.extension)
+        .option('-k, --keep',  'Keep the directory hierarchy', config.keepHierarchy)
         .option('-L, --languages [file]', 'use a custom languages.json', _.compose JSON.parse, fs.readFileSync)
-        .option('-l, --layout [name]',    'choose a layout (parallel, linear or classic)', c.layout)
-        .option('-o, --output [path]',    'output to a given folder', c.output)
-        .option('-c, --css [file]',       'use a custom css file', c.css)
-        .option('-t, --template [file]',  'use a custom .jst template', c.template)
-        .option('-e, --extension [ext]',  'assume a file extension for all inputs', c.extension)
-        .option('-m, --marked [file]',    'use custom marked options', c.marked)
+        .option('-l, --layout [name]',    'choose a layout (parallel, linear or classic)', config.layout)
+        .option('-m, --marked [file]',    'use custom marked options', config.marked)
+        .option('-o, --output [path]',    'output to a given folder', config.output)
+        .option('-s, --setup [file]',    'use configuration file, normally docco.json', '.docco.json')
+        .option('-t, --template [file]',  'use a custom .jst template', config.template)
         .parse(args)
         .name = "docco"
-      if commander.args.length
-        document commander
+
+      config = configure commander
+
+      setup = path.resolve config.setup
+      if fs.existsSync(setup)
+        config = _.extend(config, JSON.parse fs.readFileSync setup) if setup
+
+      config.root = process.cwd()
+      console.log("root directory:"+config.root)
+      if config.sources.length isnt 0
+        files =[]
+        for globName in config.sources
+          files = _.flatten _.union files, glob.sync path.resolve config.root, globName
+        config.sources = []
+        for file in files
+          config.sources.push path.relative(config.root, file)
+
+        console.log("---------------------------------------------------------------------")
+        console.log("Files:"+JSON.stringify(config.sources,null,2))
+        console.log("---------------------------------------------------------------------")
+        document config
       else
         console.log commander.helpInformation()
-
+      return
 
 Public API
 ----------

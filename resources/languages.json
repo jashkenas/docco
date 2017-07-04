@@ -29,6 +29,7 @@
   ".hs":          {"name": "haskell", "symbol": "--"},
   ".ini":         {"name": "ini", "symbol": ";"},
   ".jade":        {"name": "jade", "symbol": "//-"},
+  ".jpg":         {"name": "image", "copy": true},
   ".js":          {"name": "javascript", "symbol": "//"},
   ".jsm":         {"name": "javascript", "symbol": "//"},
   ".jsx":         {"name": "javascript", "symbol": "//"},
