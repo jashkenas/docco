@@ -77,7 +77,7 @@
   };
 
   parse = function(source, code, config = {}) {
-    var codeText, docsText, hasCode, i, isText, j, k, lang, len, len1, line, lines, match, maybeCode, save, sections;
+    var LINK_REGEX, TEXT_REGEX, codeText, docsText, hasCode, i, isText, j, k, lang, len, len1, line, lines, link, links, match, maybeCode, save, sections, text, texts;
     lines = code.split('\n');
     sections = [];
     lang = getLanguage(source, config);
@@ -95,7 +95,25 @@
     }
     for (k = 0, len1 = lines.length; k < len1; k++) {
       line = lines[k];
-      if (line.match(lang.commentMatcher) && !line.match(lang.commentFilter)) {
+      if (lang.linkMatcher && line.match(lang.linkMatcher)) {
+        console.log(line);
+        LINK_REGEX = /\((.+)\)/;
+        TEXT_REGEX = /\[(.+)\]/;
+        links = LINK_REGEX.exec(line);
+        texts = TEXT_REGEX.exec(line);
+        if ((links != null) && links.length > 1 && (texts != null) && texts.length > 1) {
+          link = links[1];
+          text = texts[1];
+          codeText += '<div><img src="' + link + '"></img><p>' + text + '</p></div>' + '\n';
+        }
+        hasCode = true;
+      } else if (lang.sectionMatcher && line.match(lang.sectionMatcher)) {
+        if (hasCode) {
+          save();
+        }
+        docsText += (line = line.replace(lang.commentMatcher, '')) + '\n';
+        save();
+      } else if (line.match(lang.commentMatcher) && !line.match(lang.commentFilter)) {
         if (hasCode) {
           save();
         }
@@ -136,9 +154,13 @@
     results = [];
     for (i = j = 0, len = sections.length; j < len; i = ++j) {
       section = sections[i];
-      code = highlightjs.highlight(language.name, section.codeText).value;
-      code = code.replace(/\s+$/, '');
-      section.codeHtml = `<div class='highlight'><pre>${code}</pre></div>`;
+      if (language.html) {
+        section.codeHtml = section.codeText;
+      } else {
+        code = highlightjs.highlight(language.name, section.codeText).value;
+        code = code.replace(/\s+$/, '');
+        section.codeHtml = `<div class='highlight'><pre>${code}</pre></div>`;
+      }
       results.push(section.docsHtml = marked(section.docsText));
     }
     return results;
@@ -239,6 +261,12 @@
       l = languages[ext];
       l.commentMatcher = RegExp(`^\\s*${l.symbol}\\s?`);
       l.commentFilter = /(^#![\/]|^\s*#\{)/;
+      if (l.link) {
+        l.linkMatcher = RegExp(`^${l.link}\\[(.+)\\]\\((.+)\\)`);
+      }
+      if (l.section) {
+        l.sectionMatcher = RegExp(`^${l.section}\\s?`);
+      }
     }
     return languages;
   };

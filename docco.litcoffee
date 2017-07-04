@@ -169,7 +169,22 @@ normal below.
             lang.symbol + ' ' + line
 
       for line in lines
-        if line.match(lang.commentMatcher) and not line.match(lang.commentFilter)
+        if lang.linkMatcher and line.match(lang.linkMatcher)
+          console.log(line)
+          LINK_REGEX = /\((.+)\)/
+          TEXT_REGEX = /\[(.+)\]/
+          links = LINK_REGEX.exec(line)
+          texts = TEXT_REGEX.exec(line)
+          if links? and links.length > 1 and texts? and texts.length > 1
+            link = links[1]
+            text = texts[1]
+            codeText += '<div><img src="'+link+'"></img><p>'+text+'</p></div>' + '\n'
+          hasCode = yes
+        else if lang.sectionMatcher and line.match(lang.sectionMatcher)
+          save() if hasCode
+          docsText += (line = line.replace(lang.commentMatcher, '')) + '\n'
+          save() # if /^(---+|===+)$/.test line
+        else if line.match(lang.commentMatcher) and not line.match(lang.commentFilter)
           save() if hasCode
           docsText += (line = line.replace(lang.commentMatcher, '')) + '\n'
           save() if /^(---+|===+)$/.test line
@@ -213,9 +228,12 @@ if not specified.
       }
 
       for section, i in sections
-        code = highlightjs.highlight(language.name, section.codeText).value
-        code = code.replace(/\s+$/, '')
-        section.codeHtml = "<div class='highlight'><pre>#{code}</pre></div>"
+        if language.html
+          section.codeHtml = section.codeText
+        else
+          code = highlightjs.highlight(language.name, section.codeText).value
+          code = code.replace(/\s+$/, '')
+          section.codeHtml = "<div class='highlight'><pre>#{code}</pre></div>"
         section.docsHtml = marked(section.docsText)
 
 Once all of the code has finished highlighting, we can **write** the resulting
@@ -331,6 +349,16 @@ Does the line begin with a comment?
 Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_%28Unix%29) and interpolations...
 
         l.commentFilter = /(^#![/]|^\s*#\{)/
+        
+Look for links if necessary.
+
+        if l.link
+          l.linkMatcher = ///^#{l.link}\[(.+)\]\((.+)\)///
+
+Look for explict section breaks
+
+        if l.section
+          l.sectionMatcher = ///^#{l.section}\s?///
 
       languages
     languages = buildMatchers languages

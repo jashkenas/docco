@@ -21,7 +21,7 @@ said yes and made a statement to not test the interviewee. The author later lear
 get the job, was sad and decided on writing FizzBuzz as a learning tool.
 
 ## FizzBuzz in CoffeeScript
-
+---
 # FizzBuzz in CoffeeScript could look like this:
 
     fizzbuzz = (number) ->

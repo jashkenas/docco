@@ -4,8 +4,6 @@ With Fluffy Bunnies!
 
 ## The Happy Bunny - Poem by Robb Lovell
 
-![Readme.md](images/fluffybunny1.jpg)
-
 ```
 I am a happy bunny.
 I hop high and low, 
@@ -15,9 +13,10 @@ My little bunny nose
 Squinches to and fro.
 ```
 
+![Readme.md](images/fluffybunny1.jpg)
+
 ### Stanza 2
 
-![Readme.md](images/fluffybunny2.jpg)
 ```
 I am the happy bunny.
 I hop high and low,  
@@ -27,9 +26,12 @@ I Hop, Hop, Hop, and you see me go!
 My little bunny legs
 Leap to and fro.
 ```
+
+![Readme.md](images/fluffybunny2.jpg)
+
+
 ### Stanza 3
 
-![Readme.md](images/fluffybunny3.jpg)
 
 ```
 I am a happy bunny.
@@ -40,6 +42,9 @@ Wiggle, Wiggle, Wiggle, I hear the show!
 My little bunny ears
 Wriggle to and fro.
 ```
+
+![Readme.md](images/fluffybunny3.jpg)
+
 
 ### Stanza 4
 ```
