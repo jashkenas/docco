@@ -167,7 +167,7 @@
   };
 
   write = function(source, to, sections, config) {
-    var destination, first, firstSection, hasTitle, html, title;
+    var cssPath, cssRelative, destination, first, firstSection, hasTitle, html, title, toDirectory;
     destination = function(file) {
       return to + '.html';
     };
@@ -179,9 +179,16 @@
     }
     hasTitle = first && first.type === 'heading' && first.depth === 1;
     title = hasTitle ? first.text : path.basename(source);
+    toDirectory = config.root + '/' + config.output + '/' + (path.dirname(source));
+    cssPath = path.basename(config.css);
+    if (config.flatten) {
+      cssRelative = path.basename(cssPath);
+    } else {
+      cssRelative = path.relative(toDirectory, config.root + "/" + config.output + "/" + cssPath);
+    }
     html = config.template({
       sources: config.sources,
-      css: path.basename(config.css),
+      css: cssRelative,
       title,
       hasTitle,
       sections,

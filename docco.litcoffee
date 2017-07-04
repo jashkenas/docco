@@ -254,7 +254,15 @@ name of the source file.
       hasTitle = first and first.type is 'heading' and first.depth is 1
       title = if hasTitle then first.text else path.basename source
 
-      html = config.template {sources: config.sources, css: path.basename(config.css),
+      toDirectory = config.root + '/' + config.output + '/' + (path.dirname source)
+      cssPath = path.basename(config.css)
+
+      if config.flatten
+        cssRelative = path.basename(cssPath)
+      else
+        cssRelative = path.relative(toDirectory, config.root+"/"+config.output+"/"+cssPath)
+
+      html = config.template {sources: config.sources, css: cssRelative,
         title, hasTitle, sections, path, destination,}
 
       console.log "docco: #{source} -> #{destination to}"
