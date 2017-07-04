@@ -278,8 +278,8 @@ name of the source file.
         toLinkBasenameNoExt = path.basename(asource,path.extname(asource))
         toLinkExtName = path.extname(asource)
 
-      # todo: dry this out with the code above.
-      if toExtName isnt '.jpg' and toExtName isnt '.png' and toExtName isnt '.tiff' and toExtName isnt '.jpeg'
+        # todo: dry this out with the code above.
+        if toExtName isnt '.jpg' and toExtName isnt '.png' and toExtName isnt '.tiff' and toExtName isnt '.jpeg'
           toLinkExtName = '.html'
         from = asourcetToDirectory + '/'  + toLinkBasenameNoExt + toLinkExtName
 
@@ -353,7 +353,60 @@ is only copied for the latter.
       ).sort()
 
       config
+    getDestinations = (config) ->
 
+      destinations = []
+      for source in config.sources
+        if config.flatten
+          toDirectory = config.output
+        else
+          toDirectory = config.root + '/' + config.output + '/' + (path.dirname source)
+
+        lang = getLanguage source, config
+        if lang.copy
+          toFile = toDirectory + '/' + path.basename source
+        else
+          toFile = toDirectory + '/' + (path.basename source, path.extname source) + '.html'
+
+        toExtName = path.extname(source)
+
+        # todo: this needs to be dried out, need to be able to flag files that don't use .html extensions.
+        if toExtName isnt '.jpg' and toExtName isnt '.png' and toExtName isnt '.tiff' and toExtName isnt '.jpeg'
+          toExtName = '.html'
+        cssPath = path.basename(config.css)
+
+        if config.flatten
+          cssRelative = cssPath
+        else
+          cssRelative = path.relative(toDirectory, config.root+"/"+config.output+"/"+cssPath)
+
+        sourceNoExt = path.basename(source,path.extname(source))
+
+        # todo: simplify the code below.
+        toSources = []
+        for asource in config.sources
+          linkPath = path.basename(asource)
+          asourcetToDirectory = config.root + '/' + config.output + '/' + (path.dirname asource)
+
+          toLinkBasenameNoExt = path.basename(asource,path.extname(asource))
+          toLinkExtName = path.extname(asource)
+
+          # todo: dry this out with the code above.
+          if toExtName isnt '.jpg' and toExtName isnt '.png' and toExtName isnt '.tiff' and toExtName isnt '.jpeg'
+            toLinkExtName = '.html'
+          from = asourcetToDirectory + '/'  + toLinkBasenameNoExt + toLinkExtName
+
+          if config.flatten
+            relativeLink = toLinkBasenameNoExt + toLinkExtName
+          else
+            relativeLink = path.relative(to, from)
+            if relativeLink is ''
+              relativeLink = sourceNoExt
+            else
+              relativeLink = relativeLink.slice(1)
+          toSources.push(relativeLink)
+      destinations.push({me: toFile, extension: toExtName, others: toSources, cssPath: cssRelative})
+      return destinations
 
 Helpers & Initial Setup
 -----------------------
@@ -456,6 +509,8 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         for file in files
           config.sources.push path.relative(config.root, file)
 
+        config.destinations = getDestinations config
+        console.log(JSON.stringify(config.destinations))
         document config
       else
         console.log commander.helpInformation()
