@@ -99,10 +99,10 @@ out in an HTML template.
 
 If keeping the directory hierarchy, then insert the file's relative directory in to the path.
 
-          if config.keepHierarchy
-            toDirectory = config.root + '/' + config.output + '/' + (path.dirname source)
-          else
+          if config.flatten
             toDirectory = config.output
+          else
+            toDirectory = config.root + '/' + config.output + '/' + (path.dirname source)
 
 Make sure the target directory exits.
 
@@ -259,7 +259,7 @@ user-specified options.
       marked:     null
       setup:      '.docco.json'
       help:      false
-      keepHierarchy: true
+      flatten: false
 
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
@@ -331,6 +331,7 @@ Does the line begin with a comment?
 Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_%28Unix%29) and interpolations...
 
         l.commentFilter = /(^#![/]|^\s*#\{)/
+
       languages
     languages = buildMatchers languages
 
@@ -363,7 +364,7 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         .usage('[options] [file]')
         .option('-c, --css [file]',       'use a custom css file', config.css)
         .option('-e, --extension [ext]',  'assume a file extension for all inputs', config.extension)
-        .option('-k, --keep',  'Keep the directory hierarchy', config.keepHierarchy)
+        .option('-f, --flatten',  'Flatten the directory hierarchy', config.flatten)
         .option('-L, --languages [file]', 'use a custom languages.json', _.compose JSON.parse, fs.readFileSync)
         .option('-l, --layout [name]',    'choose a layout (parallel, linear or classic)', config.layout)
         .option('-m, --marked [file]',    'use custom marked options', config.marked)

@@ -1,0 +1,9 @@
+{
+  "sources": [
+    "src/**/*.js",
+    "src/**/*.coffee",
+    "src/**/*.java",
+    "README.md",
+    "images/**/*.jpg"
+  ]
+}
