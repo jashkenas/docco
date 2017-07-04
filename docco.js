@@ -180,7 +180,7 @@
     title = hasTitle ? first.text : path.basename(source);
     toDirectory = config.root + '/' + config.output + '/' + (path.dirname(source));
     toExtName = path.extname(source);
-    if (toExtName !== '.jpg' && toExtName !== '.png') {
+    if (toExtName !== '.jpg' && toExtName !== '.png' && toExtName !== '.tiff' && toExtName !== '.jpeg') {
       toExtName = '.html';
     }
     cssPath = path.basename(config.css);

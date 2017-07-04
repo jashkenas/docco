@@ -20,12 +20,14 @@ Usage: docco [options] FILES
 
   Options:
 
-    -h, --help             output usage information
-    -V, --version          output the version number
-    -l, --layout [layout]  choose a built-in layouts (parallel, linear)
     -c, --css [file]       use a custom css file
-    -o, --output [path]    use a custom output path
-    -t, --template [file]  use a custom .jst template
     -e, --extension [ext]  use the given file extension for all inputs
+    -f, --flatten          flatten the directory hierarchy
+    -h, --help             output usage information
+    -l, --layout [layout]  choose a built-in layouts (parallel, linear)
     -L, --languages [file] use a custom languages.json
     -m, --marked [file]    use custom marked options
+    -o, --output [path]    use a custom output path
+    -s, --setup [file],    use configuration file, normally docco.json
+    -t, --template [file]  use a custom .jst template
+    -V, --version          output the version number

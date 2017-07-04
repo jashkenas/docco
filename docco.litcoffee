@@ -241,6 +241,7 @@ and rendering it to the specified output path.
 
     write = (source, to, sections, config) ->
 
+      # todo: figure out how to remove the breaking change here. normally this should return file+'.html'
       destination = (file) ->
         file
 
@@ -256,7 +257,8 @@ name of the source file.
       toDirectory = config.root + '/' + config.output + '/' + (path.dirname source)
       toExtName = path.extname(source)
 
-      if toExtName isnt '.jpg' and toExtName isnt '.png'
+      # todo: this needs to be dried out, need to be able to flag files that don't use .html extensions.
+      if toExtName isnt '.jpg' and toExtName isnt '.png' and toExtName isnt '.tiff' and toExtName isnt '.jpeg'
         toExtName = '.html'
       cssPath = path.basename(config.css)
 
@@ -267,6 +269,7 @@ name of the source file.
 
       sourceNoExt = path.basename(source,path.extname(source))
 
+      # todo: simplify the code below.
       toSources = []
       for asource in config.sources
         linkPath = path.basename(asource)
@@ -275,7 +278,8 @@ name of the source file.
         toLinkBasenameNoExt = path.basename(asource,path.extname(asource))
         toLinkExtName = path.extname(asource)
 
-        if toLinkExtName isnt '.jpg' and toLinkExtName isnt '.png'
+      # todo: dry this out with the code above.
+      if toExtName isnt '.jpg' and toExtName isnt '.png' and toExtName isnt '.tiff' and toExtName isnt '.jpeg'
           toLinkExtName = '.html'
         from = asourcetToDirectory + '/'  + toLinkBasenameNoExt + toLinkExtName
 
@@ -427,12 +431,12 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         .usage('[options] [file]')
         .option('-c, --css [file]',       'use a custom css file', config.css)
         .option('-e, --extension [ext]',  'assume a file extension for all inputs', config.extension)
-        .option('-f, --flatten',  'Flatten the directory hierarchy', config.flatten)
+        .option('-f, --flatten',          'flatten the directory hierarchy', config.flatten)
         .option('-L, --languages [file]', 'use a custom languages.json', _.compose JSON.parse, fs.readFileSync)
         .option('-l, --layout [name]',    'choose a layout (parallel, linear or classic)', config.layout)
         .option('-m, --marked [file]',    'use custom marked options', config.marked)
         .option('-o, --output [path]',    'output to a given folder', config.output)
-        .option('-s, --setup [file]',    'use configuration file, normally docco.json', '.docco.json')
+        .option('-s, --setup [file]',     'use configuration file, normally docco.json', '.docco.json')
         .option('-t, --template [file]',  'use a custom .jst template', config.template)
         .parse(args)
         .name = "docco"
