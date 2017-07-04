@@ -78,7 +78,7 @@ sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template.
 
     document = (config = {}, callback) ->
-        
+
       fs.mkdirs config.output, ->
 
         callback or= (error) -> throw error if error
@@ -278,8 +278,8 @@ name of the source file.
         toLinkBasenameNoExt = path.basename(asource,path.extname(asource))
         toLinkExtName = path.extname(asource)
 
-      # todo: dry this out with the code above.
-      if toExtName isnt '.jpg' and toExtName isnt '.png' and toExtName isnt '.tiff' and toExtName isnt '.jpeg'
+        # todo: dry this out with the code above.
+        if toExtName isnt '.jpg' and toExtName isnt '.png' and toExtName isnt '.tiff' and toExtName isnt '.jpeg'
           toLinkExtName = '.html'
         from = asourcetToDirectory + '/'  + toLinkBasenameNoExt + toLinkExtName
 
@@ -388,7 +388,7 @@ Does the line begin with a comment?
 Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_%28Unix%29) and interpolations...
 
         l.commentFilter = /(^#![/]|^\s*#\{)/
-        
+
 Look for links if necessary.
 
         if l.link
