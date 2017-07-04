@@ -106,7 +106,7 @@ If keeping the directory hierarchy, then insert the file's relative directory in
 
 Make sure the target directory exits.
 
-          # todo: async versions of exits ans mkdir.
+          # todo: async versions of exits and mkdir.
           if !fs.existsSync(toDirectory)
             fs.mkdirsSync(toDirectory)
 
