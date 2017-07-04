@@ -115,6 +115,8 @@ Implementation of copying files if specified in the language file
           lang = getLanguage source, config
           if lang.copy
             toFile = toDirectory + '/' + path.basename source
+            console.log "docco: #{source} -> #{toFile}"
+
             fs.copy source, toFile, (error, result) ->
               return callback(error) if error
               if files.length then nextFile() else complete()
@@ -129,8 +131,6 @@ Implementation of spliting comments and code into split view html files.
               sections = parse source, code, config
               format source, sections, config
               toFile = toDirectory + '/' + (path.basename source, path.extname source)
-
-              console.log("Write To (source): #{source} or to #{toFile}")
 
               write source, toFile, sections, config
               if files.length then nextFile() else complete()
@@ -170,7 +170,6 @@ normal below.
 
       for line in lines
         if lang.linkMatcher and line.match(lang.linkMatcher)
-          console.log(line)
           LINK_REGEX = /\((.+)\)/
           TEXT_REGEX = /\[(.+)\]/
           links = LINK_REGEX.exec(line)
@@ -243,7 +242,7 @@ and rendering it to the specified output path.
     write = (source, to, sections, config) ->
 
       destination = (file) ->
-        to+'.html'
+        file
 
 The **title** of the file is either the first heading in the prose, or the
 name of the source file.
@@ -255,18 +254,46 @@ name of the source file.
       title = if hasTitle then first.text else path.basename source
 
       toDirectory = config.root + '/' + config.output + '/' + (path.dirname source)
+      toExtName = path.extname(source)
+
+      if toExtName isnt '.jpg' and toExtName isnt '.png'
+        toExtName = '.html'
       cssPath = path.basename(config.css)
 
       if config.flatten
-        cssRelative = path.basename(cssPath)
+        cssRelative = cssPath
       else
         cssRelative = path.relative(toDirectory, config.root+"/"+config.output+"/"+cssPath)
 
-      html = config.template {sources: config.sources, css: cssRelative,
+      sourceNoExt = path.basename(source,path.extname(source))
+
+      toSources = []
+      for asource in config.sources
+        linkPath = path.basename(asource)
+        asourcetToDirectory = config.root + '/' + config.output + '/' + (path.dirname asource)
+
+        toLinkBasenameNoExt = path.basename(asource,path.extname(asource))
+        toLinkExtName = path.extname(asource)
+
+        if toLinkExtName isnt '.jpg' and toLinkExtName isnt '.png'
+          toLinkExtName = '.html'
+        from = asourcetToDirectory + '/'  + toLinkBasenameNoExt + toLinkExtName
+
+        if config.flatten
+          relativeLink = toLinkBasenameNoExt + toLinkExtName
+        else
+          relativeLink = path.relative(to, from)
+          if relativeLink is ''
+            relativeLink = sourceNoExt
+          else
+            relativeLink = relativeLink.slice(1)
+        toSources.push(relativeLink)
+
+      html = config.template {sources: toSources, css: cssRelative,
         title, hasTitle, sections, path, destination,}
 
-      console.log "docco: #{source} -> #{destination to}"
-      fs.writeFileSync destination(to), html
+      console.log "docco: #{source} -> #{destination to+toExtName}"
+      fs.writeFileSync destination(to+toExtName), html
 
 
 Configuration
@@ -417,7 +444,6 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         config = _.extend(config, JSON.parse fs.readFileSync setup) if setup
 
       config.root = process.cwd()
-      console.log("root directory:"+config.root)
       if config.sources.length isnt 0
         files =[]
         for globName in config.sources
@@ -426,9 +452,6 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         for file in files
           config.sources.push path.relative(config.root, file)
 
-        console.log("---------------------------------------------------------------------")
-        console.log("Files:"+JSON.stringify(config.sources,null,2))
-        console.log("---------------------------------------------------------------------")
         document config
       else
         console.log commander.helpInformation()

@@ -42,6 +42,7 @@
         lang = getLanguage(source, config);
         if (lang.copy) {
           toFile = toDirectory + '/' + path.basename(source);
+          console.log(`docco: ${source} -> ${toFile}`);
           return fs.copy(source, toFile, function(error, result) {
             if (error) {
               return callback(error);
@@ -62,7 +63,6 @@
             sections = parse(source, code, config);
             format(source, sections, config);
             toFile = toDirectory + '/' + (path.basename(source, path.extname(source)));
-            console.log(`Write To (source): ${source} or to ${toFile}`);
             write(source, toFile, sections, config);
             if (files.length) {
               return nextFile();
@@ -96,7 +96,6 @@
     for (k = 0, len1 = lines.length; k < len1; k++) {
       line = lines[k];
       if (lang.linkMatcher && line.match(lang.linkMatcher)) {
-        console.log(line);
         LINK_REGEX = /\((.+)\)/;
         TEXT_REGEX = /\[(.+)\]/;
         links = LINK_REGEX.exec(line);
@@ -167,9 +166,9 @@
   };
 
   write = function(source, to, sections, config) {
-    var cssPath, cssRelative, destination, first, firstSection, hasTitle, html, title, toDirectory;
+    var asource, asourcetToDirectory, cssPath, cssRelative, destination, first, firstSection, from, hasTitle, html, j, len, linkPath, ref, relativeLink, sourceNoExt, title, toDirectory, toExtName, toLinkBasenameNoExt, toLinkExtName, toSources;
     destination = function(file) {
-      return to + '.html';
+      return file;
     };
     firstSection = _.find(sections, function(section) {
       return section.docsText.length > 0;
@@ -180,14 +179,43 @@
     hasTitle = first && first.type === 'heading' && first.depth === 1;
     title = hasTitle ? first.text : path.basename(source);
     toDirectory = config.root + '/' + config.output + '/' + (path.dirname(source));
+    toExtName = path.extname(source);
+    if (toExtName !== '.jpg' && toExtName !== '.png') {
+      toExtName = '.html';
+    }
     cssPath = path.basename(config.css);
     if (config.flatten) {
-      cssRelative = path.basename(cssPath);
+      cssRelative = cssPath;
     } else {
       cssRelative = path.relative(toDirectory, config.root + "/" + config.output + "/" + cssPath);
     }
+    sourceNoExt = path.basename(source, path.extname(source));
+    toSources = [];
+    ref = config.sources;
+    for (j = 0, len = ref.length; j < len; j++) {
+      asource = ref[j];
+      linkPath = path.basename(asource);
+      asourcetToDirectory = config.root + '/' + config.output + '/' + (path.dirname(asource));
+      toLinkBasenameNoExt = path.basename(asource, path.extname(asource));
+      toLinkExtName = path.extname(asource);
+      if (toLinkExtName !== '.jpg' && toLinkExtName !== '.png') {
+        toLinkExtName = '.html';
+      }
+      from = asourcetToDirectory + '/' + toLinkBasenameNoExt + toLinkExtName;
+      if (config.flatten) {
+        relativeLink = toLinkBasenameNoExt + toLinkExtName;
+      } else {
+        relativeLink = path.relative(to, from);
+        if (relativeLink === '') {
+          relativeLink = sourceNoExt;
+        } else {
+          relativeLink = relativeLink.slice(1);
+        }
+      }
+      toSources.push(relativeLink);
+    }
     html = config.template({
-      sources: config.sources,
+      sources: toSources,
       css: cssRelative,
       title,
       hasTitle,
@@ -195,8 +223,8 @@
       path,
       destination
     });
-    console.log(`docco: ${source} -> ${destination(to)}`);
-    return fs.writeFileSync(destination(to), html);
+    console.log(`docco: ${source} -> ${destination(to + toExtName)}`);
+    return fs.writeFileSync(destination(to + toExtName), html);
   };
 
   defaults = {
@@ -309,7 +337,6 @@
       }
     }
     config.root = process.cwd();
-    console.log("root directory:" + config.root);
     if (config.sources.length !== 0) {
       files = [];
       ref = config.sources;
@@ -322,9 +349,6 @@
         file = files[k];
         config.sources.push(path.relative(config.root, file));
       }
-      console.log("---------------------------------------------------------------------");
-      console.log("Files:" + JSON.stringify(config.sources, null, 2));
-      console.log("---------------------------------------------------------------------");
       document(config);
     } else {
       console.log(commander.helpInformation());
