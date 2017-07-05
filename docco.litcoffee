@@ -78,7 +78,7 @@ sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template.
 
     document = (config = {}, callback) ->
-        
+
       fs.mkdirs config.output, ->
 
         callback or= (error) -> throw error if error
@@ -353,60 +353,107 @@ is only copied for the latter.
       ).sort()
 
       config
-    getDestinations = (config) ->
 
-      destinations = []
-      for source in config.sources
-        if config.flatten
-          toDirectory = config.output
-        else
-          toDirectory = config.root + '/' + config.output + '/' + (path.dirname source)
+    getSourceInformation = (file, rootDirectory) ->
+      source = path.parse file
+      source.root = rootDirectory
+      source.file = file
+      source.path = source.root+'/'+source.file
+      source
 
-        lang = getLanguage source, config
-        if lang.copy
-          toFile = toDirectory + '/' + path.basename source
-        else
-          toFile = toDirectory + '/' + (path.basename source, path.extname source) + '.html'
+    getDestinationInformation = (language, source, rootDirectory, targetDirectory, flatten) ->
+      destination = { }
+      
+      console.log("SourcE: #{JSON.stringify(source)},
+      #{JSON.stringify(rootDirectory)}, #{JSON.stringify(targetDirectory)}, #{JSON.stringify(flatten)})")
 
-        toExtName = path.extname(source)
+      destination.root = rootDirectory
 
-        # todo: this needs to be dried out, need to be able to flag files that don't use .html extensions.
-        if toExtName isnt '.jpg' and toExtName isnt '.png' and toExtName isnt '.tiff' and toExtName isnt '.jpeg'
-          toExtName = '.html'
-        cssPath = path.basename(config.css)
+      if flatten
+        destination.dir = targetDirectory
+      else
+        destination.dir = if source.dir is '' then targetDirectory else targetDirectory+"/"+source.dir
 
-        if config.flatten
-          cssRelative = cssPath
-        else
-          cssRelative = path.relative(toDirectory, config.root+"/"+config.output+"/"+cssPath)
+      if language.copy
+        destination.ext = source.ext
+      else
+        destination.ext = '.html'
 
-        sourceNoExt = path.basename(source,path.extname(source))
+      destination.base = source.name + destination.ext
+      destination.name = source.name
+      destination.file = destination.dir+'/'+source.name + destination.ext
 
-        # todo: simplify the code below.
-        toSources = []
-        for asource in config.sources
-          linkPath = path.basename(asource)
-          asourcetToDirectory = config.root + '/' + config.output + '/' + (path.dirname asource)
+      destination.path = destination.root+'/'+destination.file
+      destination.pathdir = path.dirname destination.path
 
-          toLinkBasenameNoExt = path.basename(asource,path.extname(asource))
-          toLinkExtName = path.extname(asource)
+      destination
 
-          # todo: dry this out with the code above.
-          if toExtName isnt '.jpg' and toExtName isnt '.png' and toExtName isnt '.tiff' and toExtName isnt '.jpeg'
-            toLinkExtName = '.html'
-          from = asourcetToDirectory + '/'  + toLinkBasenameNoExt + toLinkExtName
+    getRelativePath = (fromFile, toFile, base) ->
+      console.log("From: #{fromFile} To: #{toFile}")
+      fromTo = path.relative("/x/"+fromFile,"/x/"+toFile)
+      if fromTo is '' or fromTo is '.' or fromTo is '..' or fromTo is '../'
+        fromTo = base
+      else
+        fromTo = fromTo.slice(3)
 
-          if config.flatten
-            relativeLink = toLinkBasenameNoExt + toLinkExtName
-          else
-            relativeLink = path.relative(to, from)
-            if relativeLink is ''
-              relativeLink = sourceNoExt
-            else
-              relativeLink = relativeLink.slice(1)
-          toSources.push(relativeLink)
-      destinations.push({me: toFile, extension: toExtName, others: toSources, cssPath: cssRelative})
-      return destinations
+      fromTo
+
+    getCSSPath = (cssFile, targetDirectory, file) ->
+      css = path.parse(cssFile)
+      css.file = targetDirectory+'/'+css.base
+
+      cssPath = path.relative(file, css.file)
+      cssPath = cssPath.slice(3)
+      cssPath
+
+    getInformationOnFiles = (config) ->
+
+      targetDirectory = config.output
+      sourceDirectory = config.root
+      rootDirectory = config.root
+
+For each source file, figure out it's relative path to the source directory,
+the filename without and extension, and the extension.  Then figure out the 
+relative path to the targetDirectory. Then figure out the relative path between
+the two.
+
+      informationOnFiles = {}
+      for file in config.sources
+        destinations = {}
+
+First the source name:
+
+        source = getSourceInformation(file, rootDirectory)
+
+Next the destination:
+
+        language = getLanguage file, config
+
+        destination = getDestinationInformation(language, source, rootDirectory, targetDirectory, config.flatten)
+
+Now, figure out the relative paths the css:
+
+        destination.css = getCSSPath(config.css, targetDirectory, destination.file)
+
+        informationOnFiles[file] = {}
+        informationOnFiles[file].destination = destination
+        informationOnFiles[file].source = source
+
+Now, figure out the relative paths to the other source files:
+
+      for file in config.sources
+        sourceFileInformation = informationOnFiles[file]
+        source = sourceFileInformation.source
+        others = {}
+        for other in config.sources
+          destinationFileInformation = informationOnFiles[other]
+          target = destinationFileInformation.destination
+          others[target.base] = getRelativePath source.file, target.file, target.base
+
+        informationOnFiles[file].others = others
+
+      return informationOnFiles
+
 
 Helpers & Initial Setup
 -----------------------
@@ -441,7 +488,7 @@ Does the line begin with a comment?
 Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_%28Unix%29) and interpolations...
 
         l.commentFilter = /(^#![/]|^\s*#\{)/
-        
+
 Look for links if necessary.
 
         if l.link
@@ -509,8 +556,7 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         for file in files
           config.sources.push path.relative(config.root, file)
 
-        config.destinations = getDestinations config
-        console.log(JSON.stringify(config.destinations))
+        config.informationOnFiles = informationOnFiles config
         document config
       else
         console.log commander.helpInformation()
@@ -519,4 +565,16 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
 Public API
 ----------
 
-    Docco = module.exports = {run, document, parse, format, version}
+    Docco = module.exports = {
+      run,
+      document,
+      parse,
+      format,
+      version,
+      languages,
+      getDestinationInformation,
+      getLanguage,
+      getInformationOnFiles,
+      getCSSPath,
+      getRelativePath
+    }

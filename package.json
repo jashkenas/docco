@@ -31,5 +31,9 @@
   "main": "./docco",
   "bin": {
     "docco": "./bin/docco"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "mocha": "^3.4.2"
   }
 }
