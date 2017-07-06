@@ -2,8 +2,8 @@
 
   #!/usr/bin/env node
   { should } = require('chai'); should()
-  { languages, getLanguage } = require('../../docco')
   describe 'docco getLanguage', () ->
+    { languages, getLanguage } = require('../../docco')
 
     it 'gets the right language for the given a coffescript file.', () ->
       source = "src/fake_coffee.coffee"

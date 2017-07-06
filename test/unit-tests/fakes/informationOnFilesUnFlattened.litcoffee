@@ -1,116 +1,124 @@
 A fake for the unflattended getInformationOnFiles test.
 
   module.exports = {
-    "src/fake_coffee.coffee": {
-      "destination": {
-        "root": "/Project",
-        "dir": "docs/src",
-        "ext": ".html",
-        "base": "fake_coffee.html",
-        "name": "fake_coffee",
-        "file": "docs/src/fake_coffee.html",
-        "path": "/Project/docs/src/fake_coffee.html",
-        "pathdir": "/Project/docs/src",
-        "css": "../docco.css"
-      },
-      "source": {
-        "root": "/Project",
-        "dir": "src",
-        "base": "fake_coffee.coffee",
-        "ext": ".coffee",
-        "name": "fake_coffee",
-        "file": "src/fake_coffee.coffee",
-        "path": "/Project/src/fake_coffee.coffee"
-      },
-      "others": {
-        "fake_coffee.html": "../docs/src/fake_coffee.html",
-        "README.html": "../docs/README.html",
-        "fluffybunny1.jpg": "../docs/images/fluffybunny1.jpg",
-        "fake_litcoffee.html": "../docs/src/lib/fake_litcoffee.html"
-      }
-    },
     "README.md": {
       "destination": {
-        "root": "/Project",
-        "dir": "docs",
-        "ext": ".html",
-        "base": "README.html",
-        "name": "README",
-        "file": "docs/README.html",
-        "path": "/Project/docs/README.html",
-        "pathdir": "/Project/docs",
+        "base": "README.html"
         "css": "docco.css"
-      },
-      "source": {
-        "root": "/Project",
-        "dir": "",
-        "base": "README.md",
-        "ext": ".md",
-        "name": "README",
-        "file": "README.md",
-        "path": "/Project/README.md"
-      },
-      "others": {
-        "fake_coffee.html": "docs/src/fake_coffee.html",
-        "README.html": "docs/README.html",
-        "fluffybunny1.jpg": "docs/images/fluffybunny1.jpg",
-        "fake_litcoffee.html": "docs/src/lib/fake_litcoffee.html"
+        "dir": "docs"
+        "ext": ".html"
+        "file": "docs/README.html"
+        "name": "README"
+        "path": "/Project/docs/README.html"
+        "pathdir": "/Project/docs"
+        "relativefile": "README.html"
+        "root": "/Project"
       }
-    },
+      "others": {
+        "README.html": "README.html"
+        "fake_coffee.html": "src/fake_coffee.html"
+        "fake_litcoffee.html": "src/lib/fake_litcoffee.html"
+        "fluffybunny1.jpg": "images/fluffybunny1.jpg"
+      }
+      "source": {
+        "base": "README.md"
+        "dir": ""
+        "ext": ".md"
+        "file": "README.md"
+        "name": "README"
+        "path": "/Project/README.md"
+        "relativefile": "README.md"
+        "root": "/Project"
+      }
+    }
     "images/fluffybunny1.jpg": {
       "destination": {
-        "root": "/Project",
-        "dir": "docs/images",
-        "ext": ".jpg",
-        "base": "fluffybunny1.jpg",
-        "name": "fluffybunny1",
-        "file": "docs/images/fluffybunny1.jpg",
-        "path": "/Project/docs/images/fluffybunny1.jpg",
-        "pathdir": "/Project/docs/images",
+        "base": "fluffybunny1.jpg"
         "css": "../docco.css"
-      },
-      "source": {
-        "root": "/Project",
-        "dir": "images",
-        "base": "fluffybunny1.jpg",
-        "ext": ".jpg",
-        "name": "fluffybunny1",
-        "file": "images/fluffybunny1.jpg",
-        "path": "/Project/images/fluffybunny1.jpg"
-      },
-      "others": {
-        "fake_coffee.html": "../docs/src/fake_coffee.html",
-        "README.html": "../docs/README.html",
-        "fluffybunny1.jpg": "../docs/images/fluffybunny1.jpg",
-        "fake_litcoffee.html": "../docs/src/lib/fake_litcoffee.html"
+        "dir": "docs/images"
+        "ext": ".jpg"
+        "file": "docs/images/fluffybunny1.jpg"
+        "name": "fluffybunny1"
+        "path": "/Project/docs/images/fluffybunny1.jpg"
+        "pathdir": "/Project/docs/images"
+        "relativefile": "images/fluffybunny1.jpg"
+        "root": "/Project"
       }
-    },
+      "others": {
+        "README.html": "../README.html"
+        "fake_coffee.html": "../src/fake_coffee.html"
+        "fake_litcoffee.html": "../src/lib/fake_litcoffee.html"
+        "fluffybunny1.jpg": "fluffybunny1.jpg"
+      }
+      "source": {
+        "base": "fluffybunny1.jpg"
+        "dir": "images"
+        "ext": ".jpg"
+        "file": "images/fluffybunny1.jpg"
+        "name": "fluffybunny1"
+        "path": "/Project/images/fluffybunny1.jpg"
+        "relativefile": "images/fluffybunny1.jpg"
+        "root": "/Project"
+      }
+    }
+    "src/fake_coffee.coffee": {
+      "destination": {
+        "base": "fake_coffee.html"
+        "css": "../docco.css"
+        "dir": "docs/src"
+        "ext": ".html"
+        "file": "docs/src/fake_coffee.html"
+        "name": "fake_coffee"
+        "path": "/Project/docs/src/fake_coffee.html"
+        "pathdir": "/Project/docs/src"
+        "relativefile": "src/fake_coffee.html"
+        "root": "/Project"
+      }
+      "others": {
+        "README.html": "../README.html"
+        "fake_coffee.html": "fake_coffee.html"
+        "fake_litcoffee.html": "lib/fake_litcoffee.html"
+        "fluffybunny1.jpg": "../images/fluffybunny1.jpg"
+      }
+      "source": {
+        "base": "fake_coffee.coffee"
+        "dir": "src"
+        "ext": ".coffee"
+        "file": "src/fake_coffee.coffee"
+        "name": "fake_coffee"
+        "path": "/Project/src/fake_coffee.coffee"
+        "relativefile": "src/fake_coffee.coffee"
+        "root": "/Project"
+      }
+    }
     "src/lib/fake_litcoffee.litcoffee": {
       "destination": {
-        "root": "/Project",
-        "dir": "docs/src/lib",
-        "ext": ".html",
-        "base": "fake_litcoffee.html",
-        "name": "fake_litcoffee",
-        "file": "docs/src/lib/fake_litcoffee.html",
-        "path": "/Project/docs/src/lib/fake_litcoffee.html",
-        "pathdir": "/Project/docs/src/lib",
+        "base": "fake_litcoffee.html"
         "css": "../../docco.css"
-      },
-      "source": {
-        "root": "/Project",
-        "dir": "src/lib",
-        "base": "fake_litcoffee.litcoffee",
-        "ext": ".litcoffee",
-        "name": "fake_litcoffee",
-        "file": "src/lib/fake_litcoffee.litcoffee",
-        "path": "/Project/src/lib/fake_litcoffee.litcoffee"
-      },
+        "dir": "docs/src/lib"
+        "ext": ".html"
+        "file": "docs/src/lib/fake_litcoffee.html"
+        "name": "fake_litcoffee"
+        "path": "/Project/docs/src/lib/fake_litcoffee.html"
+        "pathdir": "/Project/docs/src/lib"
+        "relativefile": "src/lib/fake_litcoffee.html"
+        "root": "/Project"
+      }
       "others": {
-        "fake_coffee.html": "../../docs/src/fake_coffee.html",
-        "README.html": "../../docs/README.html",
-        "fluffybunny1.jpg": "../../docs/images/fluffybunny1.jpg",
-        "fake_litcoffee.html": "../../docs/src/lib/fake_litcoffee.html"
+        "README.html": "../../README.html"
+        "fake_coffee.html": "../fake_coffee.html"
+        "fake_litcoffee.html": "fake_litcoffee.html"
+        "fluffybunny1.jpg": "../../images/fluffybunny1.jpg"
+      }
+      "source": {
+        "base": "fake_litcoffee.litcoffee"
+        "dir": "src/lib"
+        "ext": ".litcoffee"
+        "file": "src/lib/fake_litcoffee.litcoffee"
+        "name": "fake_litcoffee"
+        "path": "/Project/src/lib/fake_litcoffee.litcoffee"
+        "relativefile": "src/lib/fake_litcoffee.litcoffee"
+        "root": "/Project"
       }
     }
   }

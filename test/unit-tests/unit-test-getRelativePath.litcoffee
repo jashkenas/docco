@@ -2,8 +2,8 @@
 
   #!/usr/bin/env node
   { should } = require('chai'); should()
-  { getRelativePath } = require('../../docco')
   describe 'docco getRelativePath', () ->
+    { getRelativePath } = require('../../docco')
 
     it 'gets the path to a file in the same directory.', () ->
       cssPath = getRelativePath('./file.css', './file.html', 'file.html' )

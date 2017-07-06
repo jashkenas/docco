@@ -99,7 +99,9 @@ out in an HTML template.
 
 If keeping the directory hierarchy, then insert the file's relative directory in to the path.
 
-          if config.flatten
+          lang = getLanguage source, config
+
+          if config.flatten and !lang.copy
             toDirectory = config.output
           else
             toDirectory = config.root + '/' + config.output + '/' + (path.dirname source)
@@ -112,7 +114,6 @@ Make sure the target directory exits.
 
 Implementation of copying files if specified in the language file
 
-          lang = getLanguage source, config
           if lang.copy
             toFile = toDirectory + '/' + path.basename source
             console.log "docco: #{source} -> #{toFile}"
@@ -132,7 +133,10 @@ Implementation of spliting comments and code into split view html files.
               format source, sections, config
               toFile = toDirectory + '/' + (path.basename source, path.extname source)
 
-              write source, toFile, sections, config
+              write source, sections, config
+
+#              writeO source, toFile, sections, config
+
               if files.length then nextFile() else complete()
 
         nextFile()
@@ -239,14 +243,18 @@ Once all of the code has finished highlighting, we can **write** the resulting
 documentation file by passing the completed HTML sections into the template,
 and rendering it to the specified output path.
 
-    write = (source, to, sections, config) ->
+    write = (source, sections, config) ->
+
+      console.log("source: "+source)
 
       # todo: figure out how to remove the breaking change here. normally this should return file+'.html'
       destination = (file) ->
         file
 
-The **title** of the file is either the first heading in the prose, or the
-name of the source file.
+      objectValues = (obj) ->
+        Object.keys(obj).map((key) ->
+          obj[key]
+        )
 
       firstSection = _.find sections, (section) ->
         section.docsText.length > 0
@@ -254,50 +262,14 @@ name of the source file.
       hasTitle = first and first.type is 'heading' and first.depth is 1
       title = if hasTitle then first.text else path.basename source
 
-      toDirectory = config.root + '/' + config.output + '/' + (path.dirname source)
-      toExtName = path.extname(source)
+      fileInfo = config.informationOnFiles[source]
+      others = objectValues(fileInfo.others)
+      html = config.template { sources: others, css: fileInfo.destination.css,
+        title, hasTitle, sections, path, destination }
 
-      # todo: this needs to be dried out, need to be able to flag files that don't use .html extensions.
-      if toExtName isnt '.jpg' and toExtName isnt '.png' and toExtName isnt '.tiff' and toExtName isnt '.jpeg'
-        toExtName = '.html'
-      cssPath = path.basename(config.css)
-
-      if config.flatten
-        cssRelative = cssPath
-      else
-        cssRelative = path.relative(toDirectory, config.root+"/"+config.output+"/"+cssPath)
-
-      sourceNoExt = path.basename(source,path.extname(source))
-
-      # todo: simplify the code below.
-      toSources = []
-      for asource in config.sources
-        linkPath = path.basename(asource)
-        asourcetToDirectory = config.root + '/' + config.output + '/' + (path.dirname asource)
-
-        toLinkBasenameNoExt = path.basename(asource,path.extname(asource))
-        toLinkExtName = path.extname(asource)
-
-        # todo: dry this out with the code above.
-        if toExtName isnt '.jpg' and toExtName isnt '.png' and toExtName isnt '.tiff' and toExtName isnt '.jpeg'
-          toLinkExtName = '.html'
-        from = asourcetToDirectory + '/'  + toLinkBasenameNoExt + toLinkExtName
-
-        if config.flatten
-          relativeLink = toLinkBasenameNoExt + toLinkExtName
-        else
-          relativeLink = path.relative(to, from)
-          if relativeLink is ''
-            relativeLink = sourceNoExt
-          else
-            relativeLink = relativeLink.slice(1)
-        toSources.push(relativeLink)
-
-      html = config.template {sources: toSources, css: cssRelative,
-        title, hasTitle, sections, path, destination,}
-
-      console.log "docco: #{source} -> #{destination to+toExtName}"
-      fs.writeFileSync destination(to+toExtName), html
+      console.log "docco: #{source} -> #{destination fileInfo.destination.path}"
+      fs.writeFileSync destination(fileInfo.destination.path), html
+      return
 
 
 Configuration
@@ -342,6 +314,7 @@ is only copied for the latter.
         config.template     = path.join dir, 'docco.jst'
         config.css          = options.css or path.join dir, 'docco.css'
       config.template = _.template fs.readFileSync(config.template).toString()
+      console.log("Template:"+config.template)
 
       if options.marked
         config.marked = JSON.parse fs.readFileSync(options.marked)
@@ -354,22 +327,22 @@ is only copied for the latter.
 
       config
 
-    getSourceInformation = (file, rootDirectory) ->
+    getSourceInformation = (file, rootDirectory, flatten) ->
       source = path.parse file
       source.root = rootDirectory
       source.file = file
       source.path = source.root+'/'+source.file
+      if flatten
+        source.relativefile = source.base
+      else
+        source.relativefile = source.file
       source
 
     getDestinationInformation = (language, source, rootDirectory, targetDirectory, flatten) ->
       destination = { }
-      
-      console.log("SourcE: #{JSON.stringify(source)},
-      #{JSON.stringify(rootDirectory)}, #{JSON.stringify(targetDirectory)}, #{JSON.stringify(flatten)})")
-
       destination.root = rootDirectory
 
-      if flatten
+      if flatten and !language.copy
         destination.dir = targetDirectory
       else
         destination.dir = if source.dir is '' then targetDirectory else targetDirectory+"/"+source.dir
@@ -382,6 +355,10 @@ is only copied for the latter.
       destination.base = source.name + destination.ext
       destination.name = source.name
       destination.file = destination.dir+'/'+source.name + destination.ext
+      if flatten and !language.copy
+        destination.relativefile = source.name+destination.ext
+      else
+        destination.relativefile = if source.dir is '' then source.name+destination.ext else source.dir+'/'+source.name + destination.ext
 
       destination.path = destination.root+'/'+destination.file
       destination.pathdir = path.dirname destination.path
@@ -390,12 +367,13 @@ is only copied for the latter.
 
     getRelativePath = (fromFile, toFile, base) ->
       console.log("From: #{fromFile} To: #{toFile}")
-      fromTo = path.relative("/x/"+fromFile,"/x/"+toFile)
+      fromTo = path.relative(fromFile,toFile)
       if fromTo is '' or fromTo is '.' or fromTo is '..' or fromTo is '../'
         fromTo = base
       else
         fromTo = fromTo.slice(3)
 
+      console.log("Path: #{fromTo}")
       fromTo
 
     getCSSPath = (cssFile, targetDirectory, file) ->
@@ -404,10 +382,23 @@ is only copied for the latter.
 
       cssPath = path.relative(file, css.file)
       cssPath = cssPath.slice(3)
+
       cssPath
 
-    getInformationOnFiles = (config) ->
+    getOthers = (file, informationOnFiles, config) ->
+      sourceFileInformation = informationOnFiles[file]
+      source = sourceFileInformation.source
+      others = {}
+      for other in config.sources
+        destinationFileInformation = informationOnFiles[other]
+        target = destinationFileInformation.destination
 
+        console.log(JSON.stringify(destinationFileInformation.destination,null,2))
+        others[target.base] = getRelativePath source.relativefile, target.relativefile, target.base
+
+      others
+
+    getInformationOnFiles = (config) ->
       targetDirectory = config.output
       sourceDirectory = config.root
       rootDirectory = config.root
@@ -423,7 +414,7 @@ the two.
 
 First the source name:
 
-        source = getSourceInformation(file, rootDirectory)
+        source = getSourceInformation(file, rootDirectory, config.flatten)
 
 Next the destination:
 
@@ -442,15 +433,7 @@ Now, figure out the relative paths the css:
 Now, figure out the relative paths to the other source files:
 
       for file in config.sources
-        sourceFileInformation = informationOnFiles[file]
-        source = sourceFileInformation.source
-        others = {}
-        for other in config.sources
-          destinationFileInformation = informationOnFiles[other]
-          target = destinationFileInformation.destination
-          others[target.base] = getRelativePath source.file, target.file, target.base
-
-        informationOnFiles[file].others = others
+        informationOnFiles[file].others = getOthers(file, informationOnFiles, config)
 
       return informationOnFiles
 
@@ -556,7 +539,7 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         for file in files
           config.sources.push path.relative(config.root, file)
 
-        config.informationOnFiles = informationOnFiles config
+        config.informationOnFiles = getInformationOnFiles config
         document config
       else
         console.log commander.helpInformation()
@@ -570,11 +553,13 @@ Public API
       document,
       parse,
       format,
+      write,
       version,
       languages,
       getDestinationInformation,
       getLanguage,
       getInformationOnFiles,
       getCSSPath,
-      getRelativePath
+      getRelativePath,
+      getOthers
     }

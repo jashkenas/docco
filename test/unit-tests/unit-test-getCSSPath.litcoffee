@@ -1,9 +1,9 @@
-# This tests if getLanguage is working correctly.
+# This tests if getLanguage is working correctly
 
   #!/usr/bin/env node
   { should } = require('chai'); should()
-  { getCSSPath } = require('../../docco')
   describe 'docco getCSSPath', () ->
+    { getCSSPath } = require('../../docco')
 
     it 'gets the path to the css in the same directory.', () ->
       cssPath = getCSSPath('file.css', 'docs', 'docs/file.html' )
