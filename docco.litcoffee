@@ -135,8 +135,6 @@ Implementation of spliting comments and code into split view html files.
 
               write source, sections, config
 
-#              writeO source, toFile, sections, config
-
               if files.length then nextFile() else complete()
 
         nextFile()
@@ -248,6 +246,7 @@ and rendering it to the specified output path.
       console.log("source: "+source)
 
       # todo: figure out how to remove the breaking change here. normally this should return file+'.html'
+
       destination = (file) ->
         file
 
