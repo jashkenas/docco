@@ -1,8 +1,10 @@
 # This tests if getLanguage is working correctly.
 
     { assert, should } = require('chai'); should()
+
+    getOthers = require '../../src/getOthers'
+
     describe 'docco getOthers', () ->
-      { getOthers } = require('../../docco')
 
       it 'gets paths to other destination files: top level, unflattened.', () ->
         informationOnFiles = require './fakes/informationOnFilesUnFlattened'

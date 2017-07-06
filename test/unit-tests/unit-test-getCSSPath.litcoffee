@@ -1,10 +1,10 @@
-# This tests if getLanguage is working correctly
+# This tests if getCSSPath is working correctly
 
     { should } = require('chai'); should()
+    getCSSPath = require('../../src/getCSSPath')
 
     describe 'docco getCSSPath', () ->
 
-      { getCSSPath } = require('../../docco')
 
       it 'gets the path to the css in the same directory.', () ->
         cssPath = getCSSPath('file.css', 'docs', 'docs/file.html' )

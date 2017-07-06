@@ -14,6 +14,17 @@ A fake for the unflattended getInformationOnFiles test.
           "relativefile": "README.html"
           "root": "/Project"
         }
+        "language": {
+          "commentFilter": /(^#![\/]|^\s*#\{)/
+          "commentMatcher": /^\s*\s?/
+          "html": true
+          "link": "!"
+          "linkMatcher": /^!\[(.+)\]\((.+)\)/
+          "name": "markdown"
+          "section": "#"
+          "sectionMatcher": /^#\s?/
+          "symbol": ""
+        }
         "others": {
           "README.html": "README.html"
           "fake_coffee.html": "src/fake_coffee.html"
@@ -43,6 +54,12 @@ A fake for the unflattended getInformationOnFiles test.
           "pathdir": "/Project/docs/images"
           "relativefile": "images/fluffybunny1.jpg"
           "root": "/Project"
+        }
+        "language": {
+          "commentFilter": /(^#![\/]|^\s*#\{)/
+          "commentMatcher": /^\s*undefined\s?/
+          "copy": true
+          "name": "image"
         }
         "others": {
           "README.html": "../README.html"
@@ -74,6 +91,12 @@ A fake for the unflattended getInformationOnFiles test.
           "relativefile": "src/fake_coffee.html"
           "root": "/Project"
         }
+        "language": {
+          "commentFilter": /(^#![\/]|^\s*#\{)/
+          "commentMatcher": /^\s*#\s?/
+          "name": "coffeescript"
+          "symbol": "#"
+        }
         "others": {
           "README.html": "../README.html"
           "fake_coffee.html": "fake_coffee.html"
@@ -103,6 +126,13 @@ A fake for the unflattended getInformationOnFiles test.
           "pathdir": "/Project/docs/src/lib"
           "relativefile": "src/lib/fake_litcoffee.html"
           "root": "/Project"
+        }
+        "language": {
+          "commentFilter": /(^#![\/]|^\s*#\{)/
+          "commentMatcher": /^\s*#\s?/
+          "literate": true
+          "name": "coffeescript"
+          "symbol": "#"
         }
         "others": {
           "README.html": "../../README.html"

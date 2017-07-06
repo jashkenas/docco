@@ -1,13 +1,16 @@
 # This tests if getLanguage is working correctly.
 
     { assert, should } = require('chai'); should()
+    { languages } = require('../../docco')
+    getDestinationInformation = require '../../src/getDestinationInformation'
+    getLanguage = require '../../src/getLanguage'
+
     describe 'docco getDestinationInformation', () ->
-      { languages, getLanguage, getDestinationInformation } = require('../../docco')
 
       it 'unflattened: gets destinationInformation for one source', () ->
         file = "src/fake_coffee.coffee"
         config = { languages:languages }
-        language = getLanguage file, config
+        language = getLanguage file, languages, config
         source = {
           "root":"/Project",
           "dir":"src",
@@ -39,7 +42,7 @@
       it 'flattened: gets destinationInformation for one source', () ->
         file = "src/fake_coffee.coffee"
         config = { languages:languages }
-        language = getLanguage file, config
+        language = getLanguage file, languages, config
         source = {
           "root":"/Project",
           "dir":"src",
@@ -71,7 +74,7 @@
       it 'unflattened: gets destinationInformation for one copy source', () ->
         file = "images/fluffybunny1.jpg"
         config = { languages:languages }
-        language = getLanguage file, config
+        language = getLanguage file, languages, config
         language.copy.should.be.true
 
         source = {
@@ -105,7 +108,7 @@
       it 'flattened: gets destinationInformation for one copy source', () ->
         file = "images/fluffybunny1.jpg"
         config = { languages:languages }
-        language = getLanguage file, config
+        language = getLanguage file, languages, config
         language.copy.should.be.true
         source = {
           "root":"/Project",

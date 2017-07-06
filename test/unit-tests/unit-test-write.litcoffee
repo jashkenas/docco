@@ -1,6 +1,7 @@
 # This tests if write is working correctly.
 
     { assert, should } = require('chai'); should()
+
     mockery = require('mockery')
     mockery.enable({
       useCleanCache: true,
@@ -31,7 +32,8 @@
           assert.equal(html,resultOfTemplateUnFlattened)
     })
 
-    { write, languages } = require('../../docco')
+    write = require '../../src/write'
+    { languages } = require('../../docco')
 
     template = require './fakes/fake-linear-jst'
     informationOnFilesFlattened = require './fakes/informationOnFilesFlattened'

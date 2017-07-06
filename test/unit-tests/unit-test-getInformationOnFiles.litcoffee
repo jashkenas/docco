@@ -2,7 +2,8 @@
 
     { assert, should } = require('chai'); should()
     describe 'docco getInformationOnFiles', () ->
-      { languages, getInformationOnFiles } = require('../../docco')
+      { languages } = require('../../docco')
+      getInformationOnFiles = require('../../src/getInformationOnFiles')
 
       it 'calculates file information with unflattened request', () ->
         informationOnFilesFake = require './fakes/informationOnFilesUnFlattened'
@@ -18,7 +19,7 @@
             "images/fluffybunny1.jpg"
             "src/lib/fake_litcoffee.litcoffee"
           ]
-        informationOnFiles = getInformationOnFiles(config)
+        informationOnFiles = getInformationOnFiles(languages, config)
         assert.deepEqual(informationOnFiles, informationOnFilesFake)
         return
 
@@ -38,6 +39,6 @@
             "src/lib/fake_litcoffee.litcoffee"
           ]
           flatten: true
-        informationOnFiles = getInformationOnFiles(config)
+        informationOnFiles = getInformationOnFiles(languages, config)
         assert.deepEqual(informationOnFiles, informationOnFilesFake)
         return
