@@ -9,7 +9,7 @@ cache:
 
 install:
   - npm install
-  - npm build
+  - npm run build
 
 test:
   - npm test
