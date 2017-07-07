@@ -89,6 +89,7 @@ npm run build
     * All built javascript is ignored in .gitignore
     * 'npm build' builds all javascript with gulp
     * 'npm test' runs all unit tests
+    * travis ci build and badge
 
 #### Breaking Changes:
 
