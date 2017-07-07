@@ -14,3 +14,4 @@ cache:
 
 install:
   - npm install
+  - npm build
