@@ -10,7 +10,7 @@
     times = 0
     mockery.registerMock('fs-extra', {
       existsSync: (file) ->
-        console.log("existsSync: "+file)
+
       readFileSync: (file) ->
         if times is 0
           times++

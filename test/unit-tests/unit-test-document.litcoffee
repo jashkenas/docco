@@ -36,14 +36,12 @@
         callback(null, "x=3")
         return
       readFileSync: () ->
-        console.log("readFileSync:")
         return '{
             ".coffee":      {"name": "coffeescript", "symbol": "#"},
             ".litcoffee":   {"name": "coffeescript", "symbol": "#", "literate": true},
             ".md":          {"name": "markdown", "symbol": "", "section": "#", "link": "!", "html": true}
           }'
       writeFileSync: (destination, html) ->
-        console.log("writeFileSync:"+destination+ " html"+html)
         if flattened
           destination.should.be.equal("/Project/docs/fake_coffee.html")
           assert.equal(html,resultOfTemplateFlattened)
@@ -54,10 +52,8 @@
     })
 
     mockery.registerMock('parse', (source, language, code, config = {}) ->
-      console.log("PARSE::::")
     )
     mockery.registerMock('format', (source, language, sections, config) ->
-      console.log("FORMAT::::")
     )
     mockery.registerMock('./write', (source, sections, config) ->
       source.should.be.equal("README.md")
