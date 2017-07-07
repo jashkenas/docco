@@ -19,7 +19,7 @@
 
     getLanguage = require './getLanguage'
 
-    getInformationOnFiles = (languages, config) ->
+    getInformationOnFiles = (config) ->
       targetDirectory = config.output
       sourceDirectory = config.root
       rootDirectory = config.root
@@ -31,7 +31,7 @@ the two.
 
       informationOnFiles = {}
       for file in config.sources
-        destinations = {}
+        language = getLanguage file, config.languages, config.extension
 
 First the source name:
 
@@ -39,8 +39,7 @@ First the source name:
 
 Next the destination:
 
-        language = getLanguage file, languages, config.extension
-
+        destinations = {}
         destination = getDestinationInformation(language, source, rootDirectory, targetDirectory, config.flatten)
 
 Now, figure out the relative paths the css:

@@ -21,6 +21,7 @@ individual **section** for it. Each section is an object with `docsText` and
       save = ->
         sections.push {docsText, codeText}
         hasCode = docsText = codeText = ''
+        return
 
 Our quick-and-dirty implementation of the literate programming style. Simply
 invert the prose and code relationship on a per-line basis, and then continue as

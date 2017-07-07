@@ -19,7 +19,7 @@
             "images/fluffybunny1.jpg"
             "src/lib/fake_litcoffee.litcoffee"
           ]
-        informationOnFiles = getInformationOnFiles(languages, config)
+        informationOnFiles = getInformationOnFiles(config)
         assert.deepEqual(informationOnFiles, informationOnFilesFake)
         return
 
@@ -39,6 +39,6 @@
             "src/lib/fake_litcoffee.litcoffee"
           ]
           flatten: true
-        informationOnFiles = getInformationOnFiles(languages, config)
+        informationOnFiles = getInformationOnFiles(config)
         assert.deepEqual(informationOnFiles, informationOnFilesFake)
         return

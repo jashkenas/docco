@@ -4,7 +4,6 @@
     getLanguage = require './getLanguage'
     buildMatchers = require './buildMatchers'
 
-
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
 source files for languages for which we have definitions.
@@ -12,7 +11,9 @@ source files for languages for which we have definitions.
     module.exports = configure = (options, defaults, languages) ->
       config = _.extend {}, defaults, _.pick(options, _.keys(defaults)...)
 
-      config.languages = buildMatchers config.languages
+Build out the appropriate matchers and delimiters for each language.
+
+      config.languages = buildMatchers languages
 
 The user is able to override the layout file used with the `--template` parameter.
 In this case, it is also neccessary to explicitly specify a stylesheet file.

@@ -17,7 +17,7 @@ assets, reading all the source files in, splitting them up into prose+code
 sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template.
 
-    document = (config = {}, languages, callback) ->
+    document = (config = {}, callback) ->
 
       fs.mkdirs config.output, ->
 
@@ -39,9 +39,7 @@ out in an HTML template.
 
 If keeping the directory hierarchy, then insert the file's relative directory in to the path.
 
-          console.log("Extension: "+config.extension)
-          console.log("languages:" +languages)
-          language = getLanguage source, languages, config.extension
+          language = config.informationOnFiles[source].language
 
           if config.flatten and !language.copy
             toDirectory = config.output

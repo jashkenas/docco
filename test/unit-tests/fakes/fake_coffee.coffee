@@ -1,4 +1,4 @@
-module.exports = "# Assignment:
+# Assignment:
 number   = 42
 opposite = true
 
@@ -6,4 +6,4 @@ opposite = true
 number = -42 if opposite
 
 # Functions:
-square = (x) -> x * x"
+square = (x) -> x * x

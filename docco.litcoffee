@@ -111,12 +111,6 @@ language to Docco, just add it to the file.
 
     languages = JSON.parse fs.readFileSync(path.join(__dirname, 'resources', 'languages.json'))
 
-Build out the appropriate matchers and delimiters for each language.
-
-    buildMatchers = require './src/buildMatchers'
-
-    languages = buildMatchers languages
-
 Keep it DRY. Extract the docco **version** from `package.json`
 
     version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version
@@ -175,8 +169,9 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         for file in files
           config.sources.push path.relative(config.root, file)
 
-        config.informationOnFiles = getInformationOnFiles languages, config
-        document config, languages
+        config.informationOnFiles = getInformationOnFiles config
+
+        document config
       else
         console.log commander.helpInformation()
       return

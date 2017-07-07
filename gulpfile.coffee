@@ -11,7 +11,7 @@ parallelize = require("concurrent-transform")
 
 threads = 100
 
-coffeeFiles = ['docco.litcoffee', 'test/**/*.litcoffee', 'test/unit-tests/fakes/fake_coffee.coffee']
+coffeeFiles = ['docco.litcoffee', 'test/**/*.litcoffee']
 
 javascriptFiles = ['docco.js', 'docco.js.map', 'test/**/*.js']
 
