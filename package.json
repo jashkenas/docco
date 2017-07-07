@@ -48,7 +48,6 @@
   },
   "scripts": {
     "test": "npm run test:unit",
-    "test:functional": "jenkins-mocha test/functional-tests/*.js",
     "test:unit": "jenkins-mocha test/unit-tests/*.js; jenkins-mocha --cobertura test/unit-tests/*.js",
     "build": "gulp build",
     "clean": "gulp clean"

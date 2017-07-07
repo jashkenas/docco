@@ -11,9 +11,9 @@ parallelize = require("concurrent-transform")
 
 threads = 100
 
-coffeeFiles = ['docco.litcoffee', 'test/**/*.litcoffee']
+coffeeFiles = ['docco.litcoffee', 'src/**/*.litcoffee', 'test/unit-tests/**/*.litcoffee']
 
-javascriptFiles = ['docco.js', 'docco.js.map', 'test/**/*.js']
+javascriptFiles = ['docco.js', 'docco.js.map', 'src/**/*.js', 'src/**/*.js.map', 'test/unit-tests/**/*.js', 'test/unit-tests/**/*.js.map']
 
 gulp.task('touch', () ->
   gulp.src(coffeeFiles)
