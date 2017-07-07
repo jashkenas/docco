@@ -31,3 +31,8 @@ Usage: docco [options] FILES
     -s, --setup [file],    use configuration file, normally docco.json
     -t, --template [file]  use a custom .jst template
     -V, --version          output the version number
+
+TODO:
+
+    * Multiline comments
+    * Links to files that are included or required

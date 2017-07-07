@@ -504,6 +504,21 @@ Keep it DRY. Extract the docco **version** from `package.json`
 Command Line Interface
 ----------------------
 
+Default configuration **options**. All of these may be extended by
+user-specified options.
+
+    defaults =
+      layout:     'parallel'
+      output:     'docs'
+      template:   null
+      css:        null
+      extension:  null
+      languages:  {}
+      marked:     null
+      setup:      '.docco.json'
+      help:      false
+      flatten: false
+
 Finally, let's define the interface to run Docco from the command line.
 Parse options using [Commander](https://github.com/visionmedia/commander.js).
 

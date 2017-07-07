@@ -9,7 +9,7 @@
       it 'gets the right language for the given a coffescript file.', () ->
         source = "src/fake_coffee.coffee"
         config = { languages:languages }
-        language = getLanguage source, languages, config
+        language = getLanguage source, languages
         language.name.should.be.equal("coffeescript")
         language.symbol.should.be.equal("#")
         return
@@ -17,7 +17,7 @@
       it 'gets the right language for the given a markdown file.', () ->
         source = "README.md"
         config = { languages:languages }
-        language = getLanguage source, languages, config
+        language = getLanguage source, languages
         language.name.should.be.equal("markdown")
         language.symbol.should.be.equal("")
         language.section.should.be.equal("#")
@@ -28,7 +28,7 @@
       it 'gets the right language for the given an image file.', () ->
         source = "images/fluffybunny.jpg"
         config = { languages:languages }
-        language = getLanguage source, languages, config
+        language = getLanguage source, languages
         language.name.should.be.equal("image")
         language.copy.should.be.true
         return

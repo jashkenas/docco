@@ -30,6 +30,17 @@
           "bin/docco",
           "--setup=.adocco.json"
         ]
+        defaults =
+          layout:     'parallel'
+          output:     'docs'
+          template:   null
+          css:        null
+          extension:  null
+          languages:  {}
+          marked:     null
+          setup:      '.docco.json'
+          help:      false
+          flatten: false
 
         commander.version(version)
           .usage('[options] [file]')
@@ -45,4 +56,4 @@
           .parse(args)
           .name = "docco"
 
-        config = configure commander
+        config = configure commander, defaults

@@ -8,6 +8,9 @@
     glob        = require 'glob'
 
     getLanguage = require './getLanguage'
+    parse = require './parse'
+    format = require './format'
+    write = require './write'
 
 Generate the documentation for our configured source file by copying over static
 assets, reading all the source files in, splitting them up into prose+code
@@ -36,9 +39,11 @@ out in an HTML template.
 
 If keeping the directory hierarchy, then insert the file's relative directory in to the path.
 
-          language = getLanguage source, languages, config
+          console.log("Extension: "+config.extension)
+          console.log("languages:" +languages)
+          language = getLanguage source, languages, config.extension
 
-          if config.flatten and !lang.copy
+          if config.flatten and !language.copy
             toDirectory = config.output
           else
             toDirectory = config.root + '/' + config.output + '/' + (path.dirname source)
@@ -66,15 +71,18 @@ Implementation of spliting comments and code into split view html files.
               return callback(error) if error
 
               code = buffer.toString()
-              sections = parse source, code, config
+              console.log "docco Code: #{code} "
+              console.log "docco Language: #{JSON.stringify(language)} "
+
+              sections = parse source, language, code, config
               format source, language, sections, config
               toFile = toDirectory + '/' + (path.basename source, path.extname source)
 
               write source, sections, config
-
               if files.length then nextFile() else complete()
 
         nextFile()
+      return
 
     module.exports = document
 

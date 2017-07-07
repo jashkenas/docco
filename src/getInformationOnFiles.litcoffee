@@ -39,7 +39,7 @@ First the source name:
 
 Next the destination:
 
-        language = getLanguage file, languages, config
+        language = getLanguage file, languages, config.extension
 
         destination = getDestinationInformation(language, source, rootDirectory, targetDirectory, config.flatten)
 

@@ -79,29 +79,8 @@ out in an HTML template.
 
     document = require './src/document'
 
-Given a string of source code, **parse** out each block of prose and the code that
-follows it — by detecting which is which, line by line — and then create an
-individual **section** for it. Each section is an object with `docsText` and
-`codeText` properties, and eventually `docsHtml` and `codeHtml` as well.
-
-    parse = require './src/parse'
-
-To **format** and highlight the now-parsed sections of code, we use **Highlight.js**
-over stdio, and run the text of their corresponding comments through
-**Markdown**, using [Marked](https://github.com/chjj/marked).
-
-    format = require './src/format'
-
-Once all of the code has finished highlighting, we can **write** the resulting
-documentation file by passing the completed HTML sections into the template,
-and rendering it to the specified output path.
-
-    write = require './src/write'
-
 Configuration
 -------------
-
-
 
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
@@ -142,6 +121,21 @@ Keep it DRY. Extract the docco **version** from `package.json`
 
     version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version
 
+Default configuration **options**. All of these may be extended by
+user-specified options.
+
+    defaults =
+      layout:     'parallel'
+      output:     'docs'
+      template:   null
+      css:        null
+      extension:  null
+      languages:  {}
+      marked:     null
+      setup:      '.docco.json'
+      help:      false
+      flatten: false
+
 Command Line Interface
 ----------------------
 
@@ -149,7 +143,7 @@ Finally, let's define the interface to run Docco from the command line.
 Parse options using [Commander](https://github.com/visionmedia/commander.js).
 
     run = (args = process.argv) ->
-      console.log(JSON.stringify(args,null,2)
+      console.log("args:" + JSON.stringify(args))
       config = defaults
 
       commander.version(version)
@@ -166,7 +160,7 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         .parse(args)
         .name = "docco"
 
-      config = configure commander
+      config = configure commander, defaults, languages
 
       setup = path.resolve config.setup
       if fs.existsSync(setup)
@@ -182,7 +176,7 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
           config.sources.push path.relative(config.root, file)
 
         config.informationOnFiles = getInformationOnFiles languages, config
-        document config languages
+        document config, languages
       else
         console.log commander.helpInformation()
       return
@@ -193,9 +187,6 @@ Public API
     Docco = module.exports = {
       run,
       document,
-      parse,
-      format,
-      write,
       version,
       languages,
 

@@ -4,26 +4,12 @@
     getLanguage = require './getLanguage'
     buildMatchers = require './buildMatchers'
 
-Default configuration **options**. All of these may be extended by
-user-specified options.
-
-    defaults =
-      layout:     'parallel'
-      output:     'docs'
-      template:   null
-      css:        null
-      extension:  null
-      languages:  {}
-      marked:     null
-      setup:      '.docco.json'
-      help:      false
-      flatten: false
 
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
 source files for languages for which we have definitions.
 
-    configure = (options) ->
+    module.exports = configure = (options, defaults, languages) ->
       config = _.extend {}, defaults, _.pick(options, _.keys(defaults)...)
 
       config.languages = buildMatchers config.languages
@@ -49,11 +35,9 @@ is only copied for the latter.
         config.marked = JSON.parse fs.readFileSync(options.marked)
 
       config.sources = options.args.filter((source) ->
-        lang = getLanguage source, config
+        lang = getLanguage source, languages, config.extension
         console.warn "docco: skipped unknown type (#{path.basename source})" unless lang
         lang
       ).sort()
 
       config
-
-    module.exports = configure

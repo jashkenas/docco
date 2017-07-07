@@ -11,7 +11,7 @@ To **format** and highlight the now-parsed sections of code, we use **Highlight.
 over stdio, and run the text of their corresponding comments through
 **Markdown**, using [Marked](https://github.com/chjj/marked).
 
-    format = (source, language, sections, config) ->
+    module.exports = format = (source, language, sections, config) ->
 
 Pass any user defined options to Marked if specified via command line option
 
@@ -28,13 +28,13 @@ as either the language specified in the code block or the language of the file
 if not specified.
 
       marked.setOptions {
-        highlight: (code, language) ->
-          language or= language.name
+        highlight: (code, lang) ->
+          lang or= language.name
 
-          if highlightjs.getLanguage(language)
-            highlightjs.highlight(language, code).value
+          if highlightjs.getLanguage(lang)
+            highlightjs.highlight(lang, code).value
           else
-            console.warn "docco: couldn't highlight code block with unknown language '#{language}' in #{source}"
+            console.warn "docco: couldn't highlight code block with unknown language '#{lang}' in #{source}"
             code
       }
 
@@ -47,4 +47,3 @@ if not specified.
           section.codeHtml = "<div class='highlight'><pre>#{code}</pre></div>"
         section.docsHtml = marked(section.docsText)
 
-    module.exports = format

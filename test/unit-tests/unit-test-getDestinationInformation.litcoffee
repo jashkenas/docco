@@ -10,7 +10,7 @@
       it 'unflattened: gets destinationInformation for one source', () ->
         file = "src/fake_coffee.coffee"
         config = { languages:languages }
-        language = getLanguage file, languages, config
+        language = getLanguage file, languages
         source = {
           "root":"/Project",
           "dir":"src",
@@ -42,7 +42,7 @@
       it 'flattened: gets destinationInformation for one source', () ->
         file = "src/fake_coffee.coffee"
         config = { languages:languages }
-        language = getLanguage file, languages, config
+        language = getLanguage file, languages
         source = {
           "root":"/Project",
           "dir":"src",
@@ -74,7 +74,7 @@
       it 'unflattened: gets destinationInformation for one copy source', () ->
         file = "images/fluffybunny1.jpg"
         config = { languages:languages }
-        language = getLanguage file, languages, config
+        language = getLanguage file, languages
         language.copy.should.be.true
 
         source = {
@@ -108,7 +108,7 @@
       it 'flattened: gets destinationInformation for one copy source', () ->
         file = "images/fluffybunny1.jpg"
         config = { languages:languages }
-        language = getLanguage file, languages, config
+        language = getLanguage file, languages
         language.copy.should.be.true
         source = {
           "root":"/Project",
