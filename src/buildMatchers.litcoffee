@@ -1,6 +1,6 @@
 Build out the appropriate matchers and delimiters for each language.
 
-    buildMatchers = (languages) ->
+    module.exports = buildMatchers = (languages) ->
       for ext, l of languages
 
 Does the line begin with a comment?
@@ -22,5 +22,3 @@ Look for explict section breaks
           l.sectionMatcher = ///^#{l.section}\s?///
 
       languages
-
-    module.exports = buildMatchers

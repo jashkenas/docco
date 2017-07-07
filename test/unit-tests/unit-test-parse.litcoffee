@@ -26,7 +26,6 @@
         languages = buildMatchers languages
 
         sections = parse(source, languages[0], code, config)
-        console.log(JSON.stringify(sections,null,2))
 
         sections[0].docsText.should.be.equal("Assignment:\n")
         sections[0].codeText.should.be.equal("number   = 42\nopposite = true\n\n")
@@ -36,4 +35,5 @@
 
         sections[2].docsText.should.be.equal("Functions:\n")
         sections[2].codeText.should.be.equal("square = (x) -> x * x\n\n")
-
+        return
+      return

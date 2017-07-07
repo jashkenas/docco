@@ -29,5 +29,4 @@
         cssPath = getRelativePath('docs/file.html', 'docs/file.html', 'file.html')
         cssPath.should.be.equal('file.html')
         return
-
       return

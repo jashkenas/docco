@@ -8,7 +8,6 @@
         destinationFileInformation = informationOnFiles[other]
         target = destinationFileInformation.destination
 
-        console.log(JSON.stringify(destinationFileInformation.destination,null,2))
         others[target.base] = getRelativePath source.relativefile, target.relativefile, target.base
 
       others

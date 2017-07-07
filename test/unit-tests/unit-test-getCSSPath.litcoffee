@@ -25,5 +25,4 @@
         cssPath = getCSSPath('docs/file.css', 'docs', 'src/file.html' )
         cssPath.should.be.equal('../docs/file.css')
         return
-
       return

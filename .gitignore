@@ -6,3 +6,5 @@ node_modules
 doc
 **/*.js
 **/*.map
+artifacts
+.nyc_output

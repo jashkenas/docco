@@ -16,3 +16,5 @@
             assert.deepEqual(l.linkMatcher,///^#{l.link}\[(.+)\]\((.+)\)///)
           if l.section
             assert.deepEqual(l.sectionMatcher,///^#{l.section}\s?///)
+      return
+    return

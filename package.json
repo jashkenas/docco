@@ -41,8 +41,16 @@
     "gulp-sourcemaps": "^2.6.0",
     "gulp-tap": "^1.0.1",
     "gulp-util": "^3.0.8",
+    "jenkins-mocha": "^4.1.2",
     "mocha": "^3.4.2",
     "mockery": "^2.1.0",
     "touch": "^3.1.0"
+  },
+  "scripts": {
+    "test": "npm run test:unit",
+    "test:functional": "jenkins-mocha test/functional-tests/*.js",
+    "test:unit": "jenkins-mocha test/unit-tests/*.js; jenkins-mocha --cobertura test/unit-tests/*.js",
+    "build": "gulp build",
+    "clean": "gulp clean"
   }
 }

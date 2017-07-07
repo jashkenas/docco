@@ -1,6 +1,8 @@
 # This tests if getDestinations is working correctly.
 
     { assert, should } = require('chai'); should()
+    buildMatchers = require '../../src/buildMatchers'
+
     describe 'docco getInformationOnFiles', () ->
       { languages } = require('../../docco')
       getInformationOnFiles = require('../../src/getInformationOnFiles')
@@ -9,7 +11,6 @@
         informationOnFilesFake = require './fakes/informationOnFilesUnFlattened'
         source = "src/fake_coffee.coffee"
         config =
-          languages:languages
           output: 'docs'
           root: '/Project'
           css: 'docco.css'
@@ -19,6 +20,8 @@
             "images/fluffybunny1.jpg"
             "src/lib/fake_litcoffee.litcoffee"
           ]
+        config.languages = buildMatchers languages
+
         informationOnFiles = getInformationOnFiles(config)
         assert.deepEqual(informationOnFiles, informationOnFilesFake)
         return
@@ -42,3 +45,4 @@
         informationOnFiles = getInformationOnFiles(config)
         assert.deepEqual(informationOnFiles, informationOnFilesFake)
         return
+      return

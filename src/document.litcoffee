@@ -56,8 +56,7 @@ Implementation of copying files if specified in the language file
 
           if language.copy
             toFile = toDirectory + '/' + path.basename source
-            console.log "docco: #{source} -> #{toFile}"
-  
+
             fs.copy source, toFile, (error, result) ->
               return callback(error) if error
               if files.length then nextFile() else complete()
@@ -69,8 +68,6 @@ Implementation of spliting comments and code into split view html files.
               return callback(error) if error
 
               code = buffer.toString()
-              console.log "docco Code: #{code} "
-              console.log "docco Language: #{JSON.stringify(language)} "
 
               sections = parse source, language, code, config
               format source, language, sections, config

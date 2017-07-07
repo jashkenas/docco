@@ -24,7 +24,6 @@
         targetDirectory = 'docs'
         flatten = false
         destination = getDestinationInformation(language, source, rootDirectory, targetDirectory, flatten)
-        console.log(JSON.stringify(destination,null,2))
         result = {
           "root": "/Project",
           "dir": "docs/src",
@@ -56,7 +55,6 @@
         targetDirectory = 'docs'
         flatten = true
         destination = getDestinationInformation(language, source, rootDirectory, targetDirectory, flatten)
-        console.log(JSON.stringify(destination,null,2))
         result = {
           "base": "fake_coffee.html"
           "dir": "docs"
@@ -90,7 +88,6 @@
         targetDirectory = 'docs'
         flatten = false
         destination = getDestinationInformation(language, source, rootDirectory, targetDirectory, flatten)
-        console.log(JSON.stringify(destination,null,2))
         result = {
           "root": "/Project",
           "dir": "docs/images",
@@ -123,7 +120,6 @@
         targetDirectory = 'docs'
         flatten = true
         destination = getDestinationInformation(language, source, rootDirectory, targetDirectory, flatten)
-        console.log(JSON.stringify(destination,null,2))
         result = {
           "root": "/Project"
           "dir": "docs/images"
@@ -137,3 +133,4 @@
         }
         assert.deepEqual(destination, result)
         return
+      return

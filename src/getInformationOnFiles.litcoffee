@@ -19,7 +19,7 @@
 
     getLanguage = require './getLanguage'
 
-    getInformationOnFiles = (config) ->
+    module.exports = getInformationOnFiles = (config) ->
       targetDirectory = config.output
       sourceDirectory = config.root
       rootDirectory = config.root
@@ -57,6 +57,3 @@ Now, figure out the relative paths to the other source files:
         informationOnFiles[file].others = getOthers(file, informationOnFiles, config)
 
       return informationOnFiles
-
-    module.exports = getInformationOnFiles
-

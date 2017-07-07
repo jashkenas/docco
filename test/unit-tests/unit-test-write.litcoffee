@@ -94,7 +94,5 @@
           "docsHtml":""}]
         result = write(source, sections, config)
         mockery.deregisterMock('fs-extra')
-
         return
-
       return

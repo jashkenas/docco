@@ -32,3 +32,4 @@
         language.name.should.be.equal("image")
         language.copy.should.be.true
         return
+      return

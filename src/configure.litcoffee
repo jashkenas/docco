@@ -30,7 +30,6 @@ is only copied for the latter.
         config.template     = path.join dir, 'docco.jst'
         config.css          = options.css or path.join dir, 'docco.css'
       config.template = _.template fs.readFileSync(config.template).toString()
-      console.log("Template:"+config.template)
 
       if options.marked
         config.marked = JSON.parse fs.readFileSync(options.marked)

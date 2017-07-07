@@ -57,3 +57,5 @@
           .name = "docco"
 
         config = configure commander, defaults
+        return
+      return

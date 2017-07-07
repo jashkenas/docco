@@ -79,6 +79,19 @@ out in an HTML template.
 
     document = require './src/document'
 
+Given a string of source code, **parse** out each block of prose and the code that
+follows it — by detecting which is which, line by line — and then create an
+individual **section** for it. Each section is an object with `docsText` and
+`codeText` properties, and eventually `docsHtml` and `codeHtml` as well.
+
+    parse = require './src/parse'
+
+To **format** and highlight the now-parsed sections of code, we use **Highlight.js**
+over stdio, and run the text of their corresponding comments through
+**Markdown**, using [Marked](https://github.com/chjj/marked).
+
+    format = require './src/format'
+
 Configuration
 -------------
 
@@ -137,7 +150,6 @@ Finally, let's define the interface to run Docco from the command line.
 Parse options using [Commander](https://github.com/visionmedia/commander.js).
 
     run = (args = process.argv) ->
-      console.log("args:" + JSON.stringify(args))
       config = defaults
 
       commander.version(version)
@@ -179,11 +191,4 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
 Public API
 ----------
 
-    Docco = module.exports = {
-      run,
-      document,
-      version,
-      languages,
-
-      getInformationOnFiles
-    }
+    module.exports = Docco = {run, document, parse, format, languages, version}

@@ -12,9 +12,7 @@ Once all of the code has finished highlighting, we can **write** the resulting
 documentation file by passing the completed HTML sections into the template,
 and rendering it to the specified output path.
 
-    write = (source, sections, config) ->
-
-      console.log("source: "+source)
+    module.exports = write = (source, sections, config) ->
 
       # todo: figure out how to remove the breaking change here. normally this should return file+'.html'
 
@@ -40,5 +38,3 @@ and rendering it to the specified output path.
       console.log "docco: #{source} -> #{destination fileInfo.destination.path}"
       fs.writeFileSync destination(fileInfo.destination.path), html
       return
-
-    module.exports = write
