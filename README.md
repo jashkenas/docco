@@ -68,7 +68,47 @@ npm run clean
 npm run build
 ```
 
+*** Release Notes:
+
+ Functionality:
+
+    * Added configuration file capabilities with a .docco.json file
+    * --setup flag to specify a different configuration file
+    * Images (.png, .jpg, .jpeg and .tiff) can now be copied to the doccumentation directory
+    * The source directory structure is kept in the target location by default
+    * --flatten flag to override keeping the directory structure and flattening it
+    * For markdown files, referenced images are displayed in the code section
+      which means that in the parallel theme, images are displayed on the right
+
+ Refactors:
+
+    * Code refactored into smaller chuncks
+    * Unit testing framework added and unit tests written to %85 coverage (more work needed here)
+    * All built javascript is ignored in .gitignore
+    * 'npm build' builds all javascript with gulp
+    * 'npm test' runs all unit tests
+
+ Breaking Changes:
+
+    * .jst template files need to remove call to 'path.basename()'
+      to modify the destination source file for links to other files
+
+      This:
+
+        `<a class="source" href="<%= path.basename(destination(source)) %>">`
+
+      Needs to be changed to
+
+        `<a class="source" href="<%= destination(source) %>">`
+
+    * hierarchical directory structure of source is kept by default.
+      Use --flatten to get the old behavior
+
+
 ### TODO:
 
     * Multiline comments
     * Links to files that are included or required
+    * publish to github
+    * index.html documentation update
+
