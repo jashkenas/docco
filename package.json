@@ -48,7 +48,7 @@
   "scripts": {
     "test": "npm run test:unit",
     "test:unit": "jenkins-mocha test/unit-tests/*.js; jenkins-mocha --cobertura test/unit-tests/*.js",
-    "build": "gulp build",
-    "clean": "gulp clean"
+    "build": "node_modules/gulp/bin/gulp build",
+    "clean": "node_modules/gulp/bin/gulp clean"
   }
 }
