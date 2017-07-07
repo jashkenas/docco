@@ -14,4 +14,9 @@ cache:
 
 install:
   - npm install
+
+build:
   - npm build
+
+test:
+  - npm test
