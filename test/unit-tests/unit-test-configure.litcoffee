@@ -57,5 +57,15 @@
           .name = "docco"
 
         config = configure commander, defaults
+
+        config.css.should.be.equal("/Users/rolov/Code/docco/resources/parallel/docco.css")
+        config.flatten.should.be.equal(false)
+        config.layout.should.be.equal("/Users/rolov/Code/docco/resources/parallel")
+        config.output.should.be.equal("docs")
+        config.public.should.be.equal("/Users/rolov/Code/docco/resources/parallel/public")
+        config.setup.should.be.equal(".adocco.json")
+        config.sources.length.should.be.equal(0)
+        config.template.should.be.ok
+
         return
       return

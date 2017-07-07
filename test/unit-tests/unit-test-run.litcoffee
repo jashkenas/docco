@@ -14,33 +14,39 @@
       readFileSync: (file) ->
         if times is 0
           times++
-          return '{"name":"coffeescript","symbol":"#"}'
+          return '{ "coffeescript": {"name":"coffeescript","symbol":"#"},' +
+              ' ".markdown": {"name": "markdown", "symbol": "", "section": "#", "link": "!", "html": true},' +
+              ' ".md": {"name": "markdown", "symbol": "", "section": "#", "link": "!", "html": true}}'
         else
           return '{  "version": "1.0.0" }'
 
     })
     mockery.registerMock('./src/document', (config) ->
-      assert.deepEqual(config, {
-          "layout": "parallel",
-          "output": "docs",
-          "template": null,
-          "css": null,
-          "extension": null,
-          "languages": {},
-          "marked": null,
-          "setup": ".docco.json",
-          "help": false,
-          "flatten": false,
-          "sources": [],
-          "root": "/Users/rolov/Code/docco",
-          "informationOnFiles": {}
-      })
+      fakeConfig = require './fakes/fake-config'
+
+      assert.deepEqual(config, fakeConfig)
     )
     mockery.registerMock('./src/configure', (commander, defaults, languages) ->
       commander.name.should.be.equal('docco')
       assert.deepEqual(languages, {
-          "name": "coffeescript",
-          "symbol": "#"
+          ".markdown": {
+            "html": true
+            "link": "!"
+            "name": "markdown"
+            "section": "#"
+            "symbol": ""
+          }
+          ".md": {
+            "html": true
+            "link": "!"
+            "name": "markdown"
+            "section": "#"
+            "symbol": ""
+          }
+          "coffeescript": {
+            "name": "coffeescript"
+            "symbol": "#"
+          }
       })
       assert.deepEqual(defaults, {
         "layout": "parallel",
@@ -58,6 +64,9 @@
         "README.md",
         "images/fluffybunny1.jpg"
       ]
+      defaults.languages = languages
+      defaults.css = 'docco.css'
+      defaults.extension = '.md'
       return defaults
     )
     optionTimes = 0
