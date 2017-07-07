@@ -62,6 +62,8 @@ Other values possible are:
 
 ### Build:
 
+[![Build Status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
+
 ```
 npm install
 npm run clean
@@ -70,7 +72,7 @@ npm run build
 
 ### Release Notes:
 
-##### Functionality:
+#### Functionality:
 
     * Added configuration file capabilities with a .docco.json file
     * --setup flag to specify a different configuration file
@@ -80,7 +82,7 @@ npm run build
     * For markdown files, referenced images are displayed in the code section
       which means that in the parallel theme, images are displayed on the right
 
-##### Refactors:
+#### Refactors:
 
     * Code refactored into smaller chuncks
     * Unit testing framework added and unit tests written to %85 coverage (more work needed here)
@@ -88,7 +90,7 @@ npm run build
     * 'npm build' builds all javascript with gulp
     * 'npm test' runs all unit tests
 
-##### Breaking Changes:
+#### Breaking Changes:
 
     * .jst template files need to remove call to 'path.basename()'
       to modify the destination source file for links to other files
