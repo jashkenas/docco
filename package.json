@@ -25,7 +25,6 @@
     "highlight.js": ">= 8.0.x",
     "marked": ">= 0.2.7",
     "path": "^0.12.7",
-    "shelljs": "^0.7.8",
     "underscore": ">= 1.0.0"
   },
   "main": "./docco",
