@@ -56,6 +56,7 @@ Implementation of copying files if specified in the language file
 
           if language.copy
             toFile = toDirectory + '/' + path.basename source
+            console.log "docco: #{source} -> #{toFile}"
 
             fs.copy source, toFile, (error, result) ->
               return callback(error) if error
@@ -80,4 +81,3 @@ Implementation of spliting comments and code into split view html files.
       return
 
     module.exports = document
-
