@@ -1,6 +1,7 @@
 # This tests if run is working correctly.
 
     { assert, should } = require('chai'); should()
+    fixForMatch = require './utils/fixForMatch'
     mockery = require('mockery')
     mockery.enable({
       useCleanCache: true,
@@ -23,6 +24,8 @@
     })
     mockery.registerMock('./src/document', (config) ->
       fakeConfig = require './fakes/fake-config'
+      fakeConfig = fixForMatch(fakeConfig, ['path', 'pathdir','root'])
+      config = fixForMatch(config, ['path', 'pathdir','root'])
 
       assert.deepEqual(config, fakeConfig)
     )
