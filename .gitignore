@@ -8,3 +8,4 @@ doc
 **/*.map
 artifacts
 .nyc_output
+!/test/sim/src/fake_litcoffee.js
