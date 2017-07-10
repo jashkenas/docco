@@ -169,7 +169,6 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
 
       config = configure commander, defaults, languages
 
-      console.log("#{JSON.stringify(config,null,2)}")
       setup = path.resolve config.setup
       if fs.existsSync(setup)
         config = _.extend(config, JSON.parse fs.readFileSync setup) if setup
