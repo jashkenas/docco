@@ -28,6 +28,12 @@
 
   glob = require('glob');
 
+  console.log("Dirname: " + __dirname);
+
+  console.log("Path to self:" + path.join(path.dirname(fs.realpathSync(__filename)), '../'));
+
+  console.log("Path to parent:" + path.dirname(fs.realpathSync(__filename)));
+
   languages = JSON.parse(fs.readFileSync(path.join(__dirname, 'resources', 'languages.json')));
 
   version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version;
