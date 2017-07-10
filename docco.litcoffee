@@ -127,6 +127,7 @@ language to Docco, just add it to the file.
 Keep it DRY. Extract the docco **version** from `package.json`
 
     version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version
+    console.log("Version: "+version)
 
 Default configuration **options**. All of these may be extended by
 user-specified options.
@@ -168,6 +169,7 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
 
       config = configure commander, defaults, languages
 
+      console.log("#{JSON.stringify(config,null,2)}")
       setup = path.resolve config.setup
       if fs.existsSync(setup)
         config = _.extend(config, JSON.parse fs.readFileSync setup) if setup
