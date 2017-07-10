@@ -31,7 +31,6 @@ the two.
 
       informationOnFiles = {}
       for file in config.sources
-        console.log("File: "+file)
         language = getLanguage file, config.languages, config.extension
         if !language?
           language = getLanguage 'not-supported', config.languages

@@ -39,7 +39,6 @@
     ref = config.sources;
     for (i = 0, len = ref.length; i < len; i++) {
       file = ref[i];
-      console.log("File: " + file);
       language = getLanguage(file, config.languages, config.extension);
       if (language == null) {
         language = getLanguage('not-supported', config.languages);

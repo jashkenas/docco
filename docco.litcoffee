@@ -122,11 +122,6 @@ Each item maps the file extension to the name of the language and the
 `symbol` that indicates a line comment. To add support for a new programming
 language to Docco, just add it to the file.
 
-    console.log("Dirname: "+__dirname)
-
-    console.log("Path to self:"+path.join(path.dirname(fs.realpathSync(__filename)), '../'))
-    console.log("Path to parent:"+path.dirname(fs.realpathSync(__filename)))
-
     languages = JSON.parse fs.readFileSync(path.join(__dirname, 'resources', 'languages.json'))
 
 Keep it DRY. Extract the docco **version** from `package.json`
@@ -156,6 +151,7 @@ Finally, let's define the interface to run Docco from the command line.
 Parse options using [Commander](https://github.com/visionmedia/commander.js).
 
     run = (args = process.argv) ->
+      console.log("Args:"+JSON.stringify(args,null,2))
       config = defaults
 
       commander.version(version)
