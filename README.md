@@ -63,6 +63,7 @@ Other values possible are:
 ### Build:
 
 [![Build Status](https://travis-ci.org/robblovell/docco.svg?branch=master)](https://travis-ci.org/robblovell/docco)
+
 ```
 npm install
 npm run clean
