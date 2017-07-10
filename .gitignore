@@ -4,8 +4,8 @@ docs
 test/data
 node_modules
 doc
-**/*.js
-**/*.map
+#**/*.js
+#**/*.map
 artifacts
 .nyc_output
 !/test/sim/src/fake_litcoffee.js

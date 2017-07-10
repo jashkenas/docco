@@ -1,0 +1,1 @@
+{"version":3,"file":"typeIsObject.js","sources":["utils/typeIsObject.litcoffee"],"names":[],"mappings":"AAAI,MAAM,CAAC,OAAP,GAAiB,SAAC,KAAD;AAAW,SAAO,OAAO,KAAP,KAAgB;AAAlC","sourcesContent":["    module.exports = (value) -> return typeof value is \"object\""]}
