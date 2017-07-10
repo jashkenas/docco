@@ -16,6 +16,7 @@
   ".cs":          {"name": "cs", "symbol": "//"},
   ".cson":        {"name": "coffeescript", "symbol": "#"},
   ".d":           {"name": "d", "symbol": "//"},
+  "not-supported":{"name": "Not Supported", "symbol": "//"},
   ".dtx":         {"name": "tex", "symbol": "%"},
   ".erl":         {"name": "erlang", "symbol": "%"},
   ".f":           {"name": "fortran", "symbol": "!"},

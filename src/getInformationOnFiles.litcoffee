@@ -32,6 +32,8 @@ the two.
       informationOnFiles = {}
       for file in config.sources
         language = getLanguage file, config.languages, config.extension
+        if !language?
+          language = getLanguage 'not-supported', config.languages
 
 First the source name:
 
