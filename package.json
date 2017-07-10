@@ -46,7 +46,7 @@
     "touch": "^3.1.0"
   },
   "scripts": {
-    "postinstall": "gulp build",
+    "postinstall": "coffee -f '**/*.litcoffee'",
     "test": "npm run test:unit",
     "test:unit": "jenkins-mocha test/unit-tests/*.js; jenkins-mocha --cobertura test/unit-tests/*.js",
     "build": "node_modules/gulp/bin/gulp.js build",
