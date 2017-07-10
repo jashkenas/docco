@@ -13,7 +13,7 @@ My little bunny nose
 Squinches to and fro.
 ```
 
-![Readme.md](images/fluffybunny1.jpg){:width=300px}
+![Readme.md](images/fluffybunny1.jpg)
 
 ### Stanza 2
 
