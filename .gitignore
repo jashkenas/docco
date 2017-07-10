@@ -9,3 +9,4 @@ doc
 artifacts
 .nyc_output
 !/test/sim/src/fake_litcoffee.js
+npm-debug.log
