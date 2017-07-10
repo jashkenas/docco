@@ -68,6 +68,7 @@
       }
     }
     config.root = process.cwd();
+    console.log("Files to process: " + config.sources.length);
     if (config.sources.length !== 0) {
       files = [];
       ref = config.sources;
@@ -75,7 +76,9 @@
         globName = ref[i];
         files = _.flatten(_.union(files, glob.sync(path.resolve(config.root, globName))));
       }
-      config.sources = [];
+      if (config.sources == null) {
+        config.sources = [];
+      }
       for (j = 0, len1 = files.length; j < len1; j++) {
         file = files[j];
         config.sources.push(path.relative(config.root, file));

@@ -179,11 +179,12 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         config = _.extend(config, JSON.parse fs.readFileSync setup) if setup
 
       config.root = process.cwd()
+      console.log("Files to process: "+config.sources.length)
       if config.sources.length isnt 0
         files =[]
         for globName in config.sources
           files = _.flatten _.union files, glob.sync path.resolve config.root, globName
-        config.sources = []
+        config.sources = [] if !config.sources?
         for file in files
           config.sources.push path.relative(config.root, file)
 
