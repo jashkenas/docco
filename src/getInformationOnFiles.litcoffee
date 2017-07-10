@@ -29,15 +29,12 @@ the filename without and extension, and the extension.  Then figure out the
 relative path to the targetDirectory. Then figure out the relative path between
 the two.
 
-      console.log("Looking through files: "+config.sources.length)
       informationOnFiles = {}
       for file in config.sources
         console.log("File: "+file)
         language = getLanguage file, config.languages, config.extension
         if !language?
           language = getLanguage 'not-supported', config.languages
-
-        console.log("language:"+JSON.stringify(language))
 
 First the source name:
 

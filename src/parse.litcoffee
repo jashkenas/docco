@@ -6,6 +6,7 @@
     highlightjs = require 'highlight.js'
     path        = require 'path'
     glob        = require 'glob'
+    htmlImageMatcher = /^<img .*\/>/
 
 Given a string of source code, **parse** out each block of prose and the code that
 follows it — by detecting which is which, line by line — and then create an
@@ -41,14 +42,22 @@ normal below.
 
       for line in lines
         if language.linkMatcher and line.match(language.linkMatcher)
+
           LINK_REGEX = /\((.+)\)/
           TEXT_REGEX = /\[(.+)\]/
+          STYLE_REGEX = /\{(.+)\}/
           links = LINK_REGEX.exec(line)
           texts = TEXT_REGEX.exec(line)
+          style = STYLE_REGEX.exec(line)
           if links? and links.length > 1 and texts? and texts.length > 1
             link = links[1]
             text = texts[1]
-            codeText += '<div><img src="'+link+'"></img><p>'+text+'</p></div>' + '\n'
+            style = style[1]
+            console.log("STYLE:"+JSON.stringify(style))
+            codeText += '<div><img src="'+link+'" style="'+style+'"></img><p>'+text+'</p></div>' + '\n'
+          hasCode = yes
+        else if line.match(htmlImageMatcher)
+          codeText += line
           hasCode = yes
         else if language.sectionMatcher and line.match(language.sectionMatcher)
           save() if hasCode

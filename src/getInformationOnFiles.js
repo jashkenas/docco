@@ -35,7 +35,6 @@
     targetDirectory = config.output;
     sourceDirectory = config.root;
     rootDirectory = config.root;
-    console.log("Looking through files: " + config.sources.length);
     informationOnFiles = {};
     ref = config.sources;
     for (i = 0, len = ref.length; i < len; i++) {
@@ -45,7 +44,6 @@
       if (language == null) {
         language = getLanguage('not-supported', config.languages);
       }
-      console.log("language:" + JSON.stringify(language));
       source = getSourceInformation(file, rootDirectory, config.flatten);
       destinations = {};
       destination = getDestinationInformation(language, source, rootDirectory, targetDirectory, config.flatten);

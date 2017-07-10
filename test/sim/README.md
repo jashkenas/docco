@@ -13,7 +13,7 @@ My little bunny nose
 Squinches to and fro.
 ```
 
-![Readme.md](images/fluffybunny1.jpg)
+![Readme.md](images/fluffybunny1.jpg){width:300px}
 
 ### Stanza 2
 
@@ -27,7 +27,8 @@ My little bunny legs
 Leap to and fro.
 ```
 
-![Readme.md](images/fluffybunny2.jpg)
+<img src="images/fluffybunny1.jpg" alt="Drawing" style="width:50%;"/>
+
 
 
 ### Stanza 3
