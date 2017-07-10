@@ -1,6 +1,7 @@
 {
   "sources": [
     "docco.litcoffee",
-    "README.md"
+    "README.md",
+    "src/**/*.litcoffee"
   ]
 }
