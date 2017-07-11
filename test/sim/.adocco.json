@@ -1,10 +1,10 @@
 {
   "sources": [
+    "README.md",
     "src/**/*.js",
     "src/**/*.coffee",
     "src/**/*.litcoffee",
     "src/**/*.java",
-    "README.md",
     "images/**/*.jpg"
   ]
 }
