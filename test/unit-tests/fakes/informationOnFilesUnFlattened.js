@@ -15,6 +15,8 @@
         "root": "/Project"
       },
       "language": {
+        "code": "\\`\\`\\`",
+        "codeMatcher": /^\s*\`\`\`/,
         "commentFilter": /(^#![\/]|^\s*#\{)/,
         "commentMatcher": /^\s*\s?/,
         "html": true,

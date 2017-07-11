@@ -32,4 +32,8 @@ Look for multiline comments.  The tricky part here is that the characters need t
           l.startMatcher = ///^\s*#{start}///
           l.stopMatcher = ///^\s*#{stop}///
 
+        if l.code
+          l.code = l.code.replace(/(.{1})/g,"\\$1")
+          l.codeMatcher = ///^\s*#{l.code}///
+
       languages

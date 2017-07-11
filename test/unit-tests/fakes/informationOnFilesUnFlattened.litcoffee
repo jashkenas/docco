@@ -15,6 +15,8 @@ A fake for the unflattended getInformationOnFiles test.
           "root": "/Project"
         }
         "language": {
+          "code": "\\`\\`\\`"
+          "codeMatcher": /^\s*\`\`\`/
           "commentFilter": /(^#![\/]|^\s*#\{)/
           "commentMatcher": /^\s*\s?/
           "html": true

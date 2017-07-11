@@ -21,7 +21,7 @@
   htmlImageMatcher = /^<img .*\/>/;
 
   module.exports = parse = function(source, language, code, config = {}) {
-    var LINK_REGEX, STYLE_REGEX, TEXT_REGEX, codeText, docsText, hasCode, i, isText, j, k, len, len1, line, lines, link, links, match, maybeCode, multilineComment, save, sections, style, styles, text, texts;
+    var LINK_REGEX, STYLE_REGEX, TEXT_REGEX, codeText, docsText, hasCode, i, isText, j, k, len, len1, line, lines, link, links, match, maybeCode, multilineComment, save, sections, style, styles, text, textToCode, texts;
     lines = code.split('\n');
     sections = [];
     hasCode = docsText = codeText = '';
@@ -63,7 +63,7 @@
       } else if (line.match(htmlImageMatcher)) {
         codeText += line;
         hasCode = true;
-      } else if (multilineComment && language.stopMatcher && line.match(language.stopMatcher)) {
+      } else if (multilineComment && (language.stopMatcher && line.match(language.stopMatcher))) {
         multilineComment = false;
         docsText += (line = line.replace(language.stopMatcher, '')) + '\n';
         save();
@@ -73,6 +73,13 @@
           save();
         }
         docsText += (line = line.replace(language.startMatcher, '')) + '\n';
+      } else if (textToCode && (language.codeMatcher && line.match(language.codeMatcher))) {
+        textToCode = false;
+        codeText += (line = line.replace(language.codeMatcher, '')) + '\n';
+      } else if (textToCode || (language.codeMatcher && line.match(language.codeMatcher))) {
+        textToCode = true;
+        hasCode = true;
+        codeText += (line = line.replace(language.codeMatcher, '')) + '\n';
       } else if (language.sectionMatcher && line.match(language.sectionMatcher)) {
         if (hasCode) {
           save();

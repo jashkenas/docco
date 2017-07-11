@@ -54,17 +54,31 @@ normal below.
             if styles and styles.length > 0 then style = styles[1] else style = ''
             codeText += '<div><img src="'+link+'" style="'+style+'"></img><p>'+text+'</p></div>' + '\n'
           hasCode = yes
-        else if line.match(htmlImageMatcher) # only one per line!
+        else if line.match(htmlImageMatcher)  # only one per line!
           codeText += line
           hasCode = yes
-        else if multilineComment and language.stopMatcher and line.match(language.stopMatcher)
+
+        else if multilineComment and
+        (language.stopMatcher and line.match(language.stopMatcher))
           multilineComment = false
           docsText += (line = line.replace(language.stopMatcher, '')) + '\n'
           save()
-        else if multilineComment or (language.startMatcher and line.match(language.startMatcher))
+        else if multilineComment or
+        (language.startMatcher and line.match(language.startMatcher))
           multilineComment = true
           save() if hasCode
           docsText += (line = line.replace(language.startMatcher, '')) + '\n'
+
+        else if textToCode and
+        (language.codeMatcher and line.match(language.codeMatcher))
+          textToCode = false
+          codeText += (line = line.replace(language.codeMatcher, '')) + '\n'
+        else if textToCode or
+        (language.codeMatcher and line.match(language.codeMatcher))
+          textToCode = true
+          hasCode = yes
+          codeText += (line = line.replace(language.codeMatcher, '')) + '\n'
+
         else if language.sectionMatcher and line.match(language.sectionMatcher)
           save() if hasCode
           docsText += (line = line.replace(language.commentMatcher, '')) + '\n'

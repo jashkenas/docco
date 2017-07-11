@@ -20,6 +20,10 @@
         l.startMatcher = RegExp(`^\\s*${start}`);
         l.stopMatcher = RegExp(`^\\s*${stop}`);
       }
+      if (l.code) {
+        l.code = l.code.replace(/(.{1})/g, "\\$1");
+        l.codeMatcher = RegExp(`^\\s*${l.code}`);
+      }
     }
     return languages;
   };
