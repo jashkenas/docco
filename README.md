@@ -82,6 +82,8 @@ npm run build
     * For markdown files, referenced images are displayed in the code section
       which means that in the parallel theme, images are displayed on the right
     * Multiline comments
+    * Allow images to be removed from the link menu for templates 
+    * New layout: sidebyside
 
 #### Refactors:
 
