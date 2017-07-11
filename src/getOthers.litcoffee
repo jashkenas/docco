@@ -8,7 +8,10 @@
         destinationFileInformation = informationOnFiles[other]
         target = destinationFileInformation.destination
 
-        others[target.base] = getRelativePath source.relativefile, target.relativefile, target.base
+        others[target.base] = {
+          link: getRelativePath source.relativefile, target.relativefile, target.base
+          file: other
+        }
 
       others
 

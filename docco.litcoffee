@@ -127,7 +127,6 @@ language to Docco, just add it to the file.
 Keep it DRY. Extract the docco **version** from `package.json`
 
     version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version
-    console.log("Version: "+version)
 
 Default configuration **options**. All of these may be extended by
 user-specified options.
@@ -151,7 +150,6 @@ Finally, let's define the interface to run Docco from the command line.
 Parse options using [Commander](https://github.com/visionmedia/commander.js).
 
     run = (args = process.argv) ->
-      console.log("Args:"+JSON.stringify(args,null,2))
       config = defaults
 
       commander.version(version)

@@ -26,11 +26,13 @@
           <div class="toc">
             <h3>Table of Contents</h3>
             <ol>
-              <% for (var i=0, l = sources.length; i < l; i++) { %>
-                <% var source = sources[i]; %>
+              <% for (var i=0, l = links.length; i < l; i++) { %>
                 <li>
-                  <a class="source" href="<%= destination(source) %>">
-                    <%= path.basename(source) %>
+                  <a class="source" href="<%= links[i].link %>">
+                    <% if (flatten) %>
+                    <%= path.basename(links[i].file) %>
+                    <% else %>
+                    <%= links[i].file %>
                   </a>
                 </li>
               <% } %>

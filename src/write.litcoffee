@@ -32,8 +32,20 @@ and rendering it to the specified output path.
 
       fileInfo = config.informationOnFiles[source]
       others = objectValues(fileInfo.others)
-      html = config.template { sources: others, css: fileInfo.destination.css,
-        title, hasTitle, sections, path, destination }
+      links = others.map((o)-> return o.link)
+      files = others.map((o)-> return o.file)
+      html = config.template {
+        sources: links,
+        files: files,
+        links: others,
+        css: fileInfo.destination.css,
+        title,
+        hasTitle,
+        sections,
+        path,
+        destination,
+        flatten: config.flatten
+      }
 
       console.log "docco: #{source} -> #{destination fileInfo.destination.path}"
       fs.writeFileSync destination(fileInfo.destination.path), html

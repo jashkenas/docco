@@ -1,1 +1,10 @@
-{"version":3,"file":"getOthers.js","sources":["getOthers.litcoffee"],"names":[],"mappings":"AAAI,IAAA;;AAAA,eAAA,GAAkB,OAAA,CAAQ,mBAAR;;AAElB,SAAA,GAAY,SAAC,IAAD,EAAO,kBAAP,EAA2B,MAA3B;AACV,MAAA;EAAA,qBAAA,GAAwB,kBAAmB,CAAA,IAAA;EAC3C,MAAA,GAAS,qBAAqB,CAAC;EAC/B,MAAA,GAAS;AACT;AAAA,OAAA,qCAAA;;IACE,0BAAA,GAA6B,kBAAmB,CAAA,KAAA;IAChD,MAAA,GAAS,0BAA0B,CAAC;IAEpC,MAAO,CAAA,MAAM,CAAC,IAAP,CAAP,GAAsB,eAAA,CAAgB,MAAM,CAAC,YAAvB,EAAqC,MAAM,CAAC,YAA5C,EAA0D,MAAM,CAAC,IAAjE;AAJxB;SAMA;AAVU;;AAYZ,MAAM,CAAC,OAAP,GAAiB","sourcesContent":["    getRelativePath = require './getRelativePath'\n\n    getOthers = (file, informationOnFiles, config) ->\n      sourceFileInformation = informationOnFiles[file]\n      source = sourceFileInformation.source\n      others = {}\n      for other in config.sources\n        destinationFileInformation = informationOnFiles[other]\n        target = destinationFileInformation.destination\n\n        others[target.base] = getRelativePath source.relativefile, target.relativefile, target.base\n\n      others\n\n    module.exports = getOthers\n"]}
+{
+  "version": 3,
+  "file": "getOthers.js",
+  "sourceRoot": "",
+  "sources": [
+    "getOthers.litcoffee"
+  ],
+  "names": [],
+  "mappings": ";AAAI;AAAA,MAAA;;EAAA,eAAA,GAAkB,OAAA,CAAQ,mBAAR;;EAElB,SAAA,GAAY,QAAA,CAAC,IAAD,EAAO,kBAAP,EAA2B,MAA3B,CAAA;AACV,QAAA;IAAA,qBAAA,GAAwB,kBAAmB,CAAA,IAAA;IAC3C,MAAA,GAAS,qBAAqB,CAAC;IAC/B,MAAA,GAAS,CAAA;AACT;AAAA,SAAA,qCAAA;;MACE,0BAAA,GAA6B,kBAAmB,CAAA,KAAA;MAChD,MAAA,GAAS,0BAA0B,CAAC;MAEpC,MAAO,CAAA,MAAM,CAAC,IAAP,CAAP,GAAsB;QACpB,IAAA,EAAM,eAAA,CAAgB,MAAM,CAAC,YAAvB,EAAqC,MAAM,CAAC,YAA5C,EAA0D,MAAM,CAAC,IAAjE,CADc;QAEpB,IAAA,EAAM;MAFc;AAJxB;WASA;EAbU;;EAeZ,MAAM,CAAC,OAAP,GAAiB;AAjBjB"
+}

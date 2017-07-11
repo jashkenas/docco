@@ -26,10 +26,22 @@ A fake for the unflattended getInformationOnFiles test.
           "symbol": ""
         }
         "others": {
-          "README.html": "README.html"
-          "fake_coffee.html": "src/fake_coffee.html"
-          "fake_litcoffee.html": "src/lib/fake_litcoffee.html"
-          "fluffybunny1.jpg": "images/fluffybunny1.jpg"
+          "README.html": {
+            "file": "README.md"
+            "link": "README.html"
+          }
+          "fake_coffee.html": {
+            "file": "src/fake_coffee.coffee"
+            "link": "src/fake_coffee.html"
+          }
+          "fake_litcoffee.html": {
+            "file": "src/lib/fake_litcoffee.litcoffee"
+            "link": "src/lib/fake_litcoffee.html"
+          }
+          "fluffybunny1.jpg": {
+            "file": "images/fluffybunny1.jpg"
+            "link": "images/fluffybunny1.jpg"
+          }
         }
         "source": {
           "base": "README.md"
@@ -62,10 +74,22 @@ A fake for the unflattended getInformationOnFiles test.
           "name": "image"
         }
         "others": {
-          "README.html": "../README.html"
-          "fake_coffee.html": "../src/fake_coffee.html"
-          "fake_litcoffee.html": "../src/lib/fake_litcoffee.html"
-          "fluffybunny1.jpg": "fluffybunny1.jpg"
+          "README.html": {
+            "file": "README.md"
+            "link": "../README.html"
+          }
+          "fake_coffee.html": {
+            "file": "src/fake_coffee.coffee"
+            "link": "../src/fake_coffee.html"
+          }
+          "fake_litcoffee.html": {
+            "file": "src/lib/fake_litcoffee.litcoffee"
+            "link": "../src/lib/fake_litcoffee.html"
+          }
+          "fluffybunny1.jpg": {
+            "file": "images/fluffybunny1.jpg"
+            "link": "fluffybunny1.jpg"
+          }
         }
         "source": {
           "base": "fluffybunny1.jpg"
@@ -94,14 +118,32 @@ A fake for the unflattended getInformationOnFiles test.
         "language": {
           "commentFilter": /(^#![\/]|^\s*#\{)/
           "commentMatcher": /^\s*#\s?/
+          "multiline": {
+            "start": "###"
+            "stop": "###"
+          }
           "name": "coffeescript"
+          "startMatcher": /^\s*\#\#\#/
+          "stopMatcher": /^\s*\#\#\#/
           "symbol": "#"
         }
         "others": {
-          "README.html": "../README.html"
-          "fake_coffee.html": "fake_coffee.html"
-          "fake_litcoffee.html": "lib/fake_litcoffee.html"
-          "fluffybunny1.jpg": "../images/fluffybunny1.jpg"
+          "README.html": {
+            "file": "README.md"
+            "link": "../README.html"
+          }
+          "fake_coffee.html": {
+            "file": "src/fake_coffee.coffee"
+            "link": "fake_coffee.html"
+          }
+          "fake_litcoffee.html": {
+            "file": "src/lib/fake_litcoffee.litcoffee"
+            "link": "lib/fake_litcoffee.html"
+          }
+          "fluffybunny1.jpg": {
+            "file": "images/fluffybunny1.jpg"
+            "link": "../images/fluffybunny1.jpg"
+          }
         }
         "source": {
           "base": "fake_coffee.coffee"
@@ -135,10 +177,22 @@ A fake for the unflattended getInformationOnFiles test.
           "symbol": "#"
         }
         "others": {
-          "README.html": "../../README.html"
-          "fake_coffee.html": "../fake_coffee.html"
-          "fake_litcoffee.html": "fake_litcoffee.html"
-          "fluffybunny1.jpg": "../../images/fluffybunny1.jpg"
+          "README.html": {
+            "file": "README.md"
+            "link": "../../README.html"
+          }
+          "fake_coffee.html": {
+            "file": "src/fake_coffee.coffee"
+            "link": "../fake_coffee.html"
+          }
+          "fake_litcoffee.html": {
+            "file": "src/lib/fake_litcoffee.litcoffee"
+            "link": "fake_litcoffee.html"
+          }
+          "fluffybunny1.jpg": {
+            "file": "images/fluffybunny1.jpg"
+            "link": "../../images/fluffybunny1.jpg"
+          }
         }
         "source": {
           "base": "fake_litcoffee.litcoffee"

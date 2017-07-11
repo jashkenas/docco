@@ -14,10 +14,10 @@
             "ext": ".html"
             "file": "docs/README.html"
             "name": "README"
-            "path": "/Users/rolov/Code/docco/docs/README.html"
-            "pathdir": "/Users/rolov/Code/docco/docs"
+            "path": "force matched"
+            "pathdir": "force matched"
             "relativefile": "README.html"
-            "root": "/Users/rolov/Code/docco"
+            "root": "force matched"
           }
           "language": {
             "html": true
@@ -27,7 +27,10 @@
             "symbol": ""
           }
           "others": {
-            "README.html": "README.html"
+            "README.html": {
+              "file": "README.md"
+              "link": "README.html"
+            }
           }
           "source": {
             "base": "README.md"
@@ -35,9 +38,9 @@
             "ext": ".md"
             "file": "README.md"
             "name": "README"
-            "path": "/Users/rolov/Code/docco/README.md"
+            "path": "force matched"
             "relativefile": "README.md"
-            "root": "/Users/rolov/Code/docco"
+            "root": "force matched"
           }
         }
       }
@@ -62,12 +65,12 @@
         }
       }
       "layout": "parallel"
-      "marked": null
+      "marked": {}
       "output": "docs"
-      "root": "/Users/rolov/Code/docco"
+      "root": "force matched"
       "setup": ".docco.json"
-      "sources": [
-        "README.md"
-      ]
-      "template": null
+      "sources": {
+        "0": "README.md"
+      }
+      "template": {}
     }

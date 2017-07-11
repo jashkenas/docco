@@ -18,10 +18,9 @@
           <div id="jump_wrapper">
           <div id="jump_page_wrapper">
             <div id="jump_page">
-              <% for (var i=0, l=sources.length; i<l; i++) { %>
-                <% var source = sources[i]; %>
-                <a class="source" href="<%= destination(source) %>">
-                  <%= path.basename(source) %>
+              <% for (var i=0, l=links.length; i<l; i++) { %>
+                <a class="source" href="<%= links[i].link %>">
+                  <%= links[i].file %>
                 </a>
               <% } %>
             </div>

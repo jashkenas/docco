@@ -17,8 +17,14 @@
         }
         others = getOthers('README.md', informationOnFiles, config)
         assert.deepEqual(others, {
-          "README.html": "README.html"
-          "fake_coffee.html": "src/fake_coffee.html"
+          "README.html": {
+            "file": "README.md"
+            "link": "README.html"
+          }
+          "fake_coffee.html": {
+            "file": "src/fake_coffee.coffee"
+            "link": "src/fake_coffee.html"
+          }
         })
         return
 
@@ -33,8 +39,14 @@
         }
         others = getOthers('src/fake_coffee.coffee', informationOnFiles, config)
         assert.deepEqual(others, {
-          "README.html": "../README.html"
-          "fake_coffee.html": "fake_coffee.html"
+          "README.html": {
+            "file": "README.md"
+            "link": "../README.html"
+          }
+          "fake_coffee.html": {
+            "file": "src/fake_coffee.coffee"
+            "link": "fake_coffee.html"
+          }
         })
         return
 
@@ -49,8 +61,14 @@
         }
         others = getOthers('README.md', informationOnFiles, config)
         assert.deepEqual(others, {
-          "README.html": "README.html"
-          "fake_coffee.html": "fake_coffee.html"
+          "README.html": {
+            "file": "README.md"
+            "link": "README.html"
+          }
+          "fake_coffee.html": {
+            "file": "src/fake_coffee.coffee"
+            "link": "fake_coffee.html"
+          }
         })
         return
 
@@ -65,8 +83,14 @@
         }
         others = getOthers('src/fake_coffee.coffee', informationOnFiles, config)
         assert.deepEqual(others, {
-          "README.html": "README.html"
-          "fake_coffee.html": "fake_coffee.html"
+          "README.html": {
+            "file": "README.md"
+            "link": "README.html"
+          }
+          "fake_coffee.html": {
+            "file": "src/fake_coffee.coffee"
+            "link": "fake_coffee.html"
+          }
         })
         return
       return
