@@ -5,7 +5,7 @@
   getRelativePath = require('./getRelativePath');
 
   getOthers = function(file, informationOnFiles, config) {
-    var destinationFileInformation, i, len, other, others, ref, source, sourceFileInformation, target;
+    var destinationFileInformation, i, image, len, other, others, ref, source, sourceFileInformation, target;
     sourceFileInformation = informationOnFiles[file];
     source = sourceFileInformation.source;
     others = {};
@@ -14,9 +14,11 @@
       other = ref[i];
       destinationFileInformation = informationOnFiles[other];
       target = destinationFileInformation.destination;
+      image = destinationFileInformation.language.name === 'image';
       others[target.base] = {
         link: getRelativePath(source.relativefile, target.relativefile, target.base),
-        file: other
+        file: other,
+        image: image
       };
     }
     return others;

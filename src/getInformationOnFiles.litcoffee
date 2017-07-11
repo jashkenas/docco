@@ -56,6 +56,8 @@ Now, figure out the relative paths the css:
 Now, figure out the relative paths to the other source files:
 
       for file in config.sources
-        informationOnFiles[file].others = getOthers(file, informationOnFiles, config)
+        others = getOthers(file, informationOnFiles, config)
+
+        informationOnFiles[file].others = others
 
       return informationOnFiles

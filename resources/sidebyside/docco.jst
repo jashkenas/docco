@@ -19,6 +19,7 @@
                 <div id="jump_page_wrapper">
                     <div id="jump_page">
                         <% for (var i=0, l=links.length, later='', now=''; i<l; i++) { %>
+                        <% if (!links[i].image) { %></l>
                         <% now = path.dirname(links[i].file) %>
                         <% if (now != later) {%>
                             <p style="text-align: left">
@@ -33,7 +34,7 @@
                             </a>
                         <% } %>
                         <% later = now %>
-                        <% } %>
+                        <% } }%>
                     </div>
                 </div>
         </li>

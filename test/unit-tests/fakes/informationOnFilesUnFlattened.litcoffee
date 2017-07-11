@@ -28,18 +28,22 @@ A fake for the unflattended getInformationOnFiles test.
         "others": {
           "README.html": {
             "file": "README.md"
+            "image": false
             "link": "README.html"
           }
           "fake_coffee.html": {
             "file": "src/fake_coffee.coffee"
+            "image": false
             "link": "src/fake_coffee.html"
           }
           "fake_litcoffee.html": {
             "file": "src/lib/fake_litcoffee.litcoffee"
+            "image": false
             "link": "src/lib/fake_litcoffee.html"
           }
           "fluffybunny1.jpg": {
             "file": "images/fluffybunny1.jpg"
+            "image": true
             "link": "images/fluffybunny1.jpg"
           }
         }
@@ -76,18 +80,22 @@ A fake for the unflattended getInformationOnFiles test.
         "others": {
           "README.html": {
             "file": "README.md"
+            "image": false
             "link": "../README.html"
           }
           "fake_coffee.html": {
             "file": "src/fake_coffee.coffee"
+            "image": false
             "link": "../src/fake_coffee.html"
           }
           "fake_litcoffee.html": {
             "file": "src/lib/fake_litcoffee.litcoffee"
+            "image": false
             "link": "../src/lib/fake_litcoffee.html"
           }
           "fluffybunny1.jpg": {
             "file": "images/fluffybunny1.jpg"
+            "image": true
             "link": "fluffybunny1.jpg"
           }
         }
@@ -130,18 +138,22 @@ A fake for the unflattended getInformationOnFiles test.
         "others": {
           "README.html": {
             "file": "README.md"
+            "image": false
             "link": "../README.html"
           }
           "fake_coffee.html": {
             "file": "src/fake_coffee.coffee"
+            "image": false
             "link": "fake_coffee.html"
           }
           "fake_litcoffee.html": {
             "file": "src/lib/fake_litcoffee.litcoffee"
+            "image": false
             "link": "lib/fake_litcoffee.html"
           }
           "fluffybunny1.jpg": {
             "file": "images/fluffybunny1.jpg"
+            "image": true
             "link": "../images/fluffybunny1.jpg"
           }
         }
@@ -179,18 +191,22 @@ A fake for the unflattended getInformationOnFiles test.
         "others": {
           "README.html": {
             "file": "README.md"
+            "image": false
             "link": "../../README.html"
           }
           "fake_coffee.html": {
             "file": "src/fake_coffee.coffee"
+            "image": false
             "link": "../fake_coffee.html"
           }
           "fake_litcoffee.html": {
             "file": "src/lib/fake_litcoffee.litcoffee"
+            "image": false
             "link": "fake_litcoffee.html"
           }
           "fluffybunny1.jpg": {
             "file": "images/fluffybunny1.jpg"
+            "image": true
             "link": "../../images/fluffybunny1.jpg"
           }
         }

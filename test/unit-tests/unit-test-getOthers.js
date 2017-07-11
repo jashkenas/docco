@@ -20,10 +20,12 @@
       assert.deepEqual(others, {
         "README.html": {
           "file": "README.md",
+          "image": false,
           "link": "README.html"
         },
         "fake_coffee.html": {
           "file": "src/fake_coffee.coffee",
+          "image": false,
           "link": "src/fake_coffee.html"
         }
       });
@@ -39,10 +41,12 @@
       assert.deepEqual(others, {
         "README.html": {
           "file": "README.md",
+          "image": false,
           "link": "../README.html"
         },
         "fake_coffee.html": {
           "file": "src/fake_coffee.coffee",
+          "image": false,
           "link": "fake_coffee.html"
         }
       });
@@ -58,10 +62,12 @@
       assert.deepEqual(others, {
         "README.html": {
           "file": "README.md",
+          "image": false,
           "link": "README.html"
         },
         "fake_coffee.html": {
           "file": "src/fake_coffee.coffee",
+          "image": false,
           "link": "fake_coffee.html"
         }
       });
@@ -70,18 +76,20 @@
       var config, informationOnFiles, others;
       informationOnFiles = require('./fakes/informationOnFilesFlattened');
       config = {
-        sources: ['README.md', 'src/fake_coffee.coffee'],
+        sources: ['README.md', 'images/fluffybunny1.jpg'],
         flatten: true
       };
-      others = getOthers('src/fake_coffee.coffee', informationOnFiles, config);
+      others = getOthers('images/fluffybunny1.jpg', informationOnFiles, config);
       assert.deepEqual(others, {
         "README.html": {
           "file": "README.md",
+          "image": false,
           "link": "README.html"
         },
-        "fake_coffee.html": {
-          "file": "src/fake_coffee.coffee",
-          "link": "fake_coffee.html"
+        "fluffybunny1.jpg": {
+          "file": "images/fluffybunny1.jpg",
+          "image": true,
+          "link": "images/fluffybunny1.jpg"
         }
       });
     });

@@ -29,6 +29,7 @@
           "others": {
             "README.html": {
               "file": "README.md"
+              "image": false
               "link": "README.html"
             }
           }

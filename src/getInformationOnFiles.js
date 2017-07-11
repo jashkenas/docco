@@ -31,7 +31,7 @@
   getLanguage = require('./getLanguage');
 
   module.exports = getInformationOnFiles = function(config) {
-    var destination, destinations, file, i, informationOnFiles, j, language, len, len1, ref, ref1, rootDirectory, source, sourceDirectory, targetDirectory;
+    var destination, destinations, file, i, informationOnFiles, j, language, len, len1, others, ref, ref1, rootDirectory, source, sourceDirectory, targetDirectory;
     targetDirectory = config.output;
     sourceDirectory = config.root;
     rootDirectory = config.root;
@@ -55,7 +55,8 @@
     ref1 = config.sources;
     for (j = 0, len1 = ref1.length; j < len1; j++) {
       file = ref1[j];
-      informationOnFiles[file].others = getOthers(file, informationOnFiles, config);
+      others = getOthers(file, informationOnFiles, config);
+      informationOnFiles[file].others = others;
     }
     return informationOnFiles;
   };
