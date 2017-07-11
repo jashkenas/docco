@@ -1,4 +1,6 @@
-# CoffeeScript.
+###
+  CoffeeScript.
+###
 
 # Assignment:
 number   = 42

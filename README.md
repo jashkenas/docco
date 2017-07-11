@@ -81,12 +81,12 @@ npm run build
     * --flatten flag to override keeping the directory structure and flattening it
     * For markdown files, referenced images are displayed in the code section
       which means that in the parallel theme, images are displayed on the right
+    * Multiline comments
 
 #### Refactors:
 
     * Code refactored into smaller chuncks
     * Unit testing framework added and unit tests written to %85 coverage (more work needed here)
-    * All built javascript is ignored in .gitignore
     * 'npm build' builds all javascript with gulp
     * 'npm test' runs all unit tests
     * travis ci build and badge
@@ -110,8 +110,8 @@ npm run build
 
 ### TODO:
 
-    * Multiline comments
     * Links to files that are included or required
     * publish to github
     * index.html documentation update
+    * All built javascript is ignored in .gitignore (npm packaging is the problem here).
 

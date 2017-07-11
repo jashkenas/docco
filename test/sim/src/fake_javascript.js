@@ -1,7 +1,12 @@
+/*
+   Fizzbuzz interview question.
+ */
+
 var fizzbuzz;
 
 fizzbuzz = function(number) {
   var i, results, x;
+  // print out numbers divisible by 15, 5, and 3
   if (0 === number % 15) {
     return 'fizzbuzz';
   }

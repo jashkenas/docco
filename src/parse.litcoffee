@@ -42,27 +42,33 @@ normal below.
 
       for line in lines
         if language.linkMatcher and line.match(language.linkMatcher)
-
           LINK_REGEX = /\((.+)\)/
           TEXT_REGEX = /\[(.+)\]/
           STYLE_REGEX = /\{(.+)\}/
           links = LINK_REGEX.exec(line)
           texts = TEXT_REGEX.exec(line)
-          style = STYLE_REGEX.exec(line)
-          if links? and links.length > 1 and texts? and texts.length > 1
+          styles = STYLE_REGEX.exec(line)
+          if links? and links.length > 0 and texts? and texts.length > 1
             link = links[1]
-            text = texts[1]
-            style = style[1]
-            console.log("STYLE:"+JSON.stringify(style))
+            if texts and texts.length > 0 then text = texts[1] else text = ''
+            if styles and styles.length > 0 then style = styles[1] else style = ''
             codeText += '<div><img src="'+link+'" style="'+style+'"></img><p>'+text+'</p></div>' + '\n'
           hasCode = yes
-        else if line.match(htmlImageMatcher)
+        else if line.match(htmlImageMatcher) # only one per line!
           codeText += line
           hasCode = yes
+        else if multilineComment and language.stopMatcher and line.match(language.stopMatcher)
+          multilineComment = false
+          docsText += (line = line.replace(language.stopMatcher, '')) + '\n'
+          save()
+        else if multilineComment or (language.startMatcher and line.match(language.startMatcher))
+          multilineComment = true
+          save() if hasCode
+          docsText += (line = line.replace(language.startMatcher, '')) + '\n'
         else if language.sectionMatcher and line.match(language.sectionMatcher)
           save() if hasCode
           docsText += (line = line.replace(language.commentMatcher, '')) + '\n'
-          save() # if /^(---+|===+)$/.test line
+          save()
         else if line.match(language.commentMatcher) and not line.match(language.commentFilter)
           save() if hasCode
           docsText += (line = line.replace(language.commentMatcher, '')) + '\n'

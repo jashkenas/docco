@@ -21,7 +21,7 @@
   htmlImageMatcher = /^<img .*\/>/;
 
   module.exports = parse = function(source, language, code, config = {}) {
-    var LINK_REGEX, STYLE_REGEX, TEXT_REGEX, codeText, docsText, hasCode, i, isText, j, k, len, len1, line, lines, link, links, match, maybeCode, save, sections, style, text, texts;
+    var LINK_REGEX, STYLE_REGEX, TEXT_REGEX, codeText, docsText, hasCode, i, isText, j, k, len, len1, line, lines, link, links, match, maybeCode, multilineComment, save, sections, style, styles, text, texts;
     lines = code.split('\n');
     sections = [];
     hasCode = docsText = codeText = '';
@@ -44,18 +44,35 @@
         STYLE_REGEX = /\{(.+)\}/;
         links = LINK_REGEX.exec(line);
         texts = TEXT_REGEX.exec(line);
-        style = STYLE_REGEX.exec(line);
-        if ((links != null) && links.length > 1 && (texts != null) && texts.length > 1) {
+        styles = STYLE_REGEX.exec(line);
+        if ((links != null) && links.length > 0 && (texts != null) && texts.length > 1) {
           link = links[1];
-          text = texts[1];
-          style = style[1];
-          console.log("STYLE:" + JSON.stringify(style));
+          if (texts && texts.length > 0) {
+            text = texts[1];
+          } else {
+            text = '';
+          }
+          if (styles && styles.length > 0) {
+            style = styles[1];
+          } else {
+            style = '';
+          }
           codeText += '<div><img src="' + link + '" style="' + style + '"></img><p>' + text + '</p></div>' + '\n';
         }
         hasCode = true;
       } else if (line.match(htmlImageMatcher)) {
         codeText += line;
         hasCode = true;
+      } else if (multilineComment && language.stopMatcher && line.match(language.stopMatcher)) {
+        multilineComment = false;
+        docsText += (line = line.replace(language.stopMatcher, '')) + '\n';
+        save();
+      } else if (multilineComment || (language.startMatcher && line.match(language.startMatcher))) {
+        multilineComment = true;
+        if (hasCode) {
+          save();
+        }
+        docsText += (line = line.replace(language.startMatcher, '')) + '\n';
       } else if (language.sectionMatcher && line.match(language.sectionMatcher)) {
         if (hasCode) {
           save();
