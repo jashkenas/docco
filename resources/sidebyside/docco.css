@@ -175,7 +175,7 @@ ul.sections > li > div {
 }
 
 #jump_wrapper {
-  display: block;
+  display: none;
   padding:0;
 }
 
