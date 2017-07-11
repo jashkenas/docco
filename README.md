@@ -76,7 +76,7 @@ npm run build
 
     * Added configuration file capabilities with a .docco.json file
     * --setup flag to specify a different configuration file
-    * Images (.png, .jpg, .jpeg and .tiff) can now be copied to the doccumentation directory
+    * Images (.png, .jpg, .jpeg and .tiff) can now be copied to the documentation directory
     * The source directory structure is kept in the target location by default
     * --flatten flag to override keeping the directory structure and flattening it
     * For markdown files, referenced images are displayed in the code section
@@ -87,7 +87,7 @@ npm run build
 
 #### Refactors:
 
-    * Code refactored into smaller chuncks
+    * Code refactored into smaller chunks
     * Unit testing framework added and unit tests written to %85 coverage (more work needed here)
     * 'npm build' builds all javascript with gulp
     * 'npm test' runs all unit tests
@@ -95,20 +95,31 @@ npm run build
 
 #### Breaking Changes:
 
-    * .jst template files need to remove call to 'path.basename()'
-      to modify the destination source file for links to other files
+    * .jst template files have a different set of data available for building links to other files.
+        The question here is are there other templates that have been created and should a backward compatibility flag be added to proved the old behaviour?
 
-      This:
+This: 
 
-        `<a class="source" href="<%= path.basename(destination(source)) %>">`
+    `<a class="source" href="<%= path.basename(destination(source)) %>">`
 
-      Needs to be changed to
+Can be changed to whatever is needed since links to all other files as well as other options are available:
 
-        `<a class="source" href="<%= destination(source) %>">`
+```
+     <% for (var i=0, l = links.length; i < l; i++) { %>
+        <li>
+          <a class="source" href="<%= links[i].link %>">
+            <% if (flatten) %>
+            <%= path.basename(links[i].file) %>
+            <% else %>
+            <%= links[i].file %>
+          </a>
+        </li>
+      <% } %>
+```
 
     * hierarchical directory structure of source is kept by default.
-      Use --flatten to get the old behavior
-
+            Use --flatten to get the old behaviour
+            Should this flag be changed to something else with a default behaviour being flatten?
 
 ### TODO:
 
@@ -116,4 +127,3 @@ npm run build
     * publish to github
     * index.html documentation update
     * All built javascript is ignored in .gitignore (npm packaging is the problem here).
-
