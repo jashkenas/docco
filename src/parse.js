@@ -61,7 +61,7 @@
         }
         hasCode = true;
       } else if (line.match(htmlImageMatcher)) {
-        codeText += line;
+        codeText += line + '\n';
         hasCode = true;
       } else if (multilineComment && (language.stopMatcher && line.match(language.stopMatcher))) {
         multilineComment = false;
@@ -75,11 +75,21 @@
         docsText += (line = line.replace(language.startMatcher, '')) + '\n';
       } else if (textToCode && (language.codeMatcher && line.match(language.codeMatcher))) {
         textToCode = false;
-        codeText += (line = line.replace(language.codeMatcher, '')) + '\n';
+        text = (line = line.replace(language.codeMatcher, '')) + '\n';
+        if (language.html) {
+          text += "</pre>";
+        }
+        codeText += text;
       } else if (textToCode || (language.codeMatcher && line.match(language.codeMatcher))) {
         textToCode = true;
         hasCode = true;
-        codeText += (line = line.replace(language.codeMatcher, '')) + '\n';
+        if (language.html) {
+          text = "<pre>";
+        } else {
+          text = "";
+        }
+        text += (line = line.replace(language.codeMatcher, '')) + '\n';
+        codeText += text;
       } else if (language.sectionMatcher && line.match(language.sectionMatcher)) {
         if (hasCode) {
           save();

@@ -55,7 +55,7 @@ normal below.
             codeText += '<div><img src="'+link+'" style="'+style+'"></img><p>'+text+'</p></div>' + '\n'
           hasCode = yes
         else if line.match(htmlImageMatcher)  # only one per line!
-          codeText += line
+          codeText += line + '\n'
           hasCode = yes
 
         else if multilineComment and
@@ -72,13 +72,16 @@ normal below.
         else if textToCode and
         (language.codeMatcher and line.match(language.codeMatcher))
           textToCode = false
-          codeText += (line = line.replace(language.codeMatcher, '')) + '\n'
+          text = (line = line.replace(language.codeMatcher, '')) + '\n'
+          text += "</pre>" if language.html
+          codeText += text
         else if textToCode or
         (language.codeMatcher and line.match(language.codeMatcher))
           textToCode = true
           hasCode = yes
-          codeText += (line = line.replace(language.codeMatcher, '')) + '\n'
-
+          if language.html then text = "<pre>" else text = ""
+          text += (line = line.replace(language.codeMatcher, '')) + '\n'
+          codeText += text
         else if language.sectionMatcher and line.match(language.sectionMatcher)
           save() if hasCode
           docsText += (line = line.replace(language.commentMatcher, '')) + '\n'

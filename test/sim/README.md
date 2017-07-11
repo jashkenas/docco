@@ -28,11 +28,18 @@ Leap to and fro.
 <//pre>
 <img src="images/fluffybunny2.jpg" alt="Drawing" style="width:50%;"/>
 
+``` 
+ # here is some code.
+ {
+   "context": {
+     "name": "promotion10"
+   },
+   "fact": {
+     "product": {},
+     "cart": {"total": 500}
+   }
+ }
 ```
-Here's some code
-```
-
-
 
 
 ### Stanza 3
@@ -52,11 +59,12 @@ Wriggle to and fro.
 
 
 ### Stanza 4
-```
+
+<pre>
 I love them, they love me, 
 that makes me the most happy 
 bunny I can be.
-```
+</pre>
 
 ## Author
 
