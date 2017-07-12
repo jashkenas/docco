@@ -14,8 +14,8 @@ Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_%28Unix%29) and interpol
 Look for links if necessary.
 
         if l.link
-          l.linkMatcher = ///^#{l.link}\[(.+)\]\((.+)\)///
-
+          l.imageMatcher = ///^#{l.link}\[(.+)\]\((.+)\)///
+          l.linkMatcher = ///^\[(.+)\]\((.+)\)///
 Look for explict section breaks
 
         if l.section

@@ -18,7 +18,8 @@ describe('docco buildMatchers', function() {
       assert.deepEqual(l.commentMatcher, RegExp("^\\s*" + l.symbol + "\\s?"));
       assert.deepEqual(l.commentFilter, /(^#![\/]|^\s*#\{)/);
       if (l.link) {
-        assert.deepEqual(l.linkMatcher, RegExp("^" + l.link + "\\[(.+)\\]\\((.+)\\)"));
+        assert.deepEqual(l.imageMatcher, RegExp("^" + l.link + "\\[(.+)\\]\\((.+)\\)"));
+        assert.deepEqual(l.linkMatcher, RegExp("^\\[(.+)\\]\\((.+)\\)"));
       }
       if (l.section) {
         results.push(assert.deepEqual(l.sectionMatcher, RegExp("^" + l.section + "\\s?")));

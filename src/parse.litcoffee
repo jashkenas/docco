@@ -3,10 +3,14 @@
     path        = require 'path'
     marked      = require 'marked'
     commander   = require 'commander'
+    Handlebars  = require 'handlebars'
     highlightjs = require 'highlight.js'
     path        = require 'path'
     glob        = require 'glob'
     htmlImageMatcher = /^<img .*\/>/
+
+    imageLinkTemplate = Handlebars.compile('<div><img src="{{link}}" style="{{style}}"></img><p>{{text}}</p></div>\n')
+    hrefLinkTemplate = Handlebars.compile('<div><a href="{{link}}" style="{{style}}">{{text}}</a></div>\n')
 
 Given a string of source code, **parse** out each block of prose and the code that
 follows it — by detecting which is which, line by line — and then create an
@@ -40,42 +44,63 @@ normal below.
             isText = yes
             language.symbol + ' ' + line
 
+      getLinkComponents = (line, matcher) ->
+        # todo: use the matcher with groups!
+        LINK_REGEX = /\((.+?)\)/
+        TEXT_REGEX = /\[(.+?)\]/
+        STYLE_REGEX = /\{(.+?)\}/
+        links = LINK_REGEX.exec(line)
+        texts = TEXT_REGEX.exec(line)
+        styles = STYLE_REGEX.exec(line)
+
+        console.log("LINKS ----> "+JSON.stringify(links, null, 2))
+
+        if links? and links.length > 0 and texts? and texts.length > 1
+          link = links[1] # grab the first group.
+          if texts and texts.length > 0 then text = texts[1] else text = ''
+          if styles and styles.length > 0 then style = styles[1] else style = ''
+          return { link, text, style }
+        else
+          return null
+
+      makeLink = (line, parts, template) ->
+        return template(parts)
+
       for line in lines
-        if language.linkMatcher and line.match(language.linkMatcher)
-          LINK_REGEX = /\((.+)\)/
-          TEXT_REGEX = /\[(.+)\]/
-          STYLE_REGEX = /\{(.+)\}/
-          links = LINK_REGEX.exec(line)
-          texts = TEXT_REGEX.exec(line)
-          styles = STYLE_REGEX.exec(line)
-          if links? and links.length > 0 and texts? and texts.length > 1
-            link = links[1]
-            if texts and texts.length > 0 then text = texts[1] else text = ''
-            if styles and styles.length > 0 then style = styles[1] else style = ''
-            codeText += '<div><img src="'+link+'" style="'+style+'"></img><p>'+text+'</p></div>' + '\n'
+        if language.imageMatcher and line.match language.imageMatcher
+          parts = getLinkComponents line, language.imageMatcher
+          codeText += imageLinkTemplate(parts) if parts?
           hasCode = yes
+
+        else if language.linkMatcher and line.match language.linkMatcher
+          parts = getLinkComponents line, language.linkMatcher
+          codeText += hrefLinkTemplate(parts) if parts?
+          hasCode = yes
+
         else if line.match(htmlImageMatcher)  # only one per line!
           codeText += line + '\n'
           hasCode = yes
 
-        else if multilineComment and
+        else if multilineComment and # stop
         (language.stopMatcher and line.match(language.stopMatcher))
           multilineComment = false
           docsText += (line = line.replace(language.stopMatcher, '')) + '\n'
-          save()
-        else if multilineComment or
+          hasCode = yes
+
+        else if multilineComment or # start
         (language.startMatcher and line.match(language.startMatcher))
           multilineComment = true
           save() if hasCode
           docsText += (line = line.replace(language.startMatcher, '')) + '\n'
 
-        else if textToCode and
+        else if textToCode and # start
         (language.codeMatcher and line.match(language.codeMatcher))
           textToCode = false
           text = (line = line.replace(language.codeMatcher, '')) + '\n'
           text += "</pre>" if language.html
+          save() if hasCode
           codeText += text
-        else if textToCode or
+        else if textToCode or # stop
         (language.codeMatcher and line.match(language.codeMatcher))
           textToCode = true
           hasCode = yes

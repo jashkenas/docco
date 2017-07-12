@@ -20,8 +20,9 @@ A fake for the flattended getInformationOnFiles test.
           "commentFilter": /(^#![\/]|^\s*#\{)/
           "commentMatcher": /^\s*\s?/
           "html": true
-          "link": "!"
-          "linkMatcher": /^!\[(.+)\]\((.+)\)/
+          "imageMatcher": /^!\[(.+)\]\((.+)\)/,
+          "link": "!",
+          "linkMatcher": /^\[(.+)\]\((.+)\)/,
           "name": "markdown"
           "section": "#"
           "sectionMatcher": /^#\s?/

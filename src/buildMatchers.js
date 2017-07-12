@@ -9,7 +9,8 @@
       l.commentMatcher = RegExp(`^\\s*${l.symbol}\\s?`);
       l.commentFilter = /(^#![\/]|^\s*#\{)/;
       if (l.link) {
-        l.linkMatcher = RegExp(`^${l.link}\\[(.+)\\]\\((.+)\\)`);
+        l.imageMatcher = RegExp(`^${l.link}\\[(.+)\\]\\((.+)\\)`);
+        l.linkMatcher = /^\[(.+)\]\((.+)\)/;
       }
       if (l.section) {
         l.sectionMatcher = RegExp(`^${l.section}\\s?`);

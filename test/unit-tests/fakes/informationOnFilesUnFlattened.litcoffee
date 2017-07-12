@@ -20,6 +20,7 @@ A fake for the unflattended getInformationOnFiles test.
           "commentFilter": /(^#![\/]|^\s*#\{)/
           "commentMatcher": /^\s*\s?/
           "html": true
+          "imageMatcher": /^!\[(.+)\]\((.+)\)/
           "link": "!"
           "linkMatcher": /^!\[(.+)\]\((.+)\)/
           "name": "markdown"
