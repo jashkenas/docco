@@ -77,193 +77,31 @@ assets, reading all the source files in, splitting them up into prose+code
 sections, highlighting each file in the appropriate language, and printing them
 out in an HTML template.
 
-    document = (options = {}, callback) ->
-      config = configure options
-
-      fs.mkdirs config.output, ->
-
-        callback or= (error) -> throw error if error
-        copyAsset  = (file, callback) ->
-          return callback() unless fs.existsSync file
-          fs.copy file, path.join(config.output, path.basename(file)), callback
-        complete   = ->
-          copyAsset config.css, (error) ->
-            return callback error if error
-            return copyAsset config.public, callback if fs.existsSync config.public
-            callback()
-
-        files = config.sources.slice()
-
-        nextFile = ->
-          source = files.shift()
-          fs.readFile source, (error, buffer) ->
-            return callback error if error
-
-            code = buffer.toString()
-            sections = parse source, code, config
-            format source, sections, config
-            write source, sections, config
-            if files.length then nextFile() else complete()
-
-        nextFile()
+    document = require './src/document'
 
 Given a string of source code, **parse** out each block of prose and the code that
 follows it — by detecting which is which, line by line — and then create an
 individual **section** for it. Each section is an object with `docsText` and
 `codeText` properties, and eventually `docsHtml` and `codeHtml` as well.
 
-    parse = (source, code, config = {}) ->
-      lines    = code.split '\n'
-      sections = []
-      lang     = getLanguage source, config
-      hasCode  = docsText = codeText = ''
-
-      save = ->
-        sections.push {docsText, codeText}
-        hasCode = docsText = codeText = ''
-
-Our quick-and-dirty implementation of the literate programming style. Simply
-invert the prose and code relationship on a per-line basis, and then continue as
-normal below.
-
-      if lang.literate
-        isText = maybeCode = yes
-        for line, i in lines
-          lines[i] = if maybeCode and match = /^([ ]{4}|[ ]{0,3}\t)/.exec line
-            isText = no
-            line[match[0].length..]
-          else if maybeCode = /^\s*$/.test line
-            if isText then lang.symbol else ''
-          else
-            isText = yes
-            lang.symbol + ' ' + line
-
-      for line in lines
-        if line.match(lang.commentMatcher) and not line.match(lang.commentFilter)
-          save() if hasCode
-          docsText += (line = line.replace(lang.commentMatcher, '')) + '\n'
-          save() if /^(---+|===+)$/.test line
-        else
-          hasCode = yes
-          codeText += line + '\n'
-      save()
-
-      sections
+    parse = require './src/parse'
 
 To **format** and highlight the now-parsed sections of code, we use **Highlight.js**
 over stdio, and run the text of their corresponding comments through
 **Markdown**, using [Marked](https://github.com/chjj/marked).
 
-    format = (source, sections, config) ->
-      language = getLanguage source, config
-
-Pass any user defined options to Marked if specified via command line option
-
-      markedOptions =
-        smartypants: true
-
-      if config.marked
-        markedOptions = config.marked
-
-      marked.setOptions markedOptions
-
-Tell Marked how to highlight code blocks within comments, treating that code
-as either the language specified in the code block or the language of the file
-if not specified.
-
-      marked.setOptions {
-        highlight: (code, lang) ->
-          lang or= language.name
-
-          if highlightjs.getLanguage(lang)
-            highlightjs.highlight(lang, code).value
-          else
-            console.warn "docco: couldn't highlight code block with unknown language '#{lang}' in #{source}"
-            code
-      }
-
-      for section, i in sections
-        code = highlightjs.highlight(language.name, section.codeText).value
-        code = code.replace(/\s+$/, '')
-        section.codeHtml = "<div class='highlight'><pre>#{code}</pre></div>"
-        section.docsHtml = marked(section.docsText)
-
-Once all of the code has finished highlighting, we can **write** the resulting
-documentation file by passing the completed HTML sections into the template,
-and rendering it to the specified output path.
-
-    write = (source, sections, config) ->
-
-      destination = (file) ->
-        path.join(config.output, path.basename(file, path.extname(file)) + '.html')
-
-The **title** of the file is either the first heading in the prose, or the
-name of the source file.
-
-      firstSection = _.find sections, (section) ->
-        section.docsText.length > 0
-      first = marked.lexer(firstSection.docsText)[0] if firstSection
-      hasTitle = first and first.type is 'heading' and first.depth is 1
-      title = if hasTitle then first.text else path.basename source
-
-      html = config.template {sources: config.sources, css: path.basename(config.css),
-        title, hasTitle, sections, path, destination,}
-
-      console.log "docco: #{source} -> #{destination source}"
-      fs.writeFileSync destination(source), html
-
+    format = require './src/format'
 
 Configuration
 -------------
-
-Default configuration **options**. All of these may be extended by
-user-specified options.
-
-    defaults =
-      layout:     'parallel'
-      output:     'docs'
-      template:   null
-      css:        null
-      extension:  null
-      languages:  {}
-      marked:     null
 
 **Configure** this particular run of Docco. We might use a passed-in external
 template, or one of the built-in **layouts**. We only attempt to process
 source files for languages for which we have definitions.
 
-    configure = (options) ->
-      config = _.extend {}, defaults, _.pick(options, _.keys(defaults)...)
+    configure = require './src/configure'
 
-      config.languages = buildMatchers config.languages
-
-The user is able to override the layout file used with the `--template` parameter.
-In this case, it is also neccessary to explicitly specify a stylesheet file.
-These custom templates are compiled exactly like the predefined ones, but the `public` folder
-is only copied for the latter.
-
-      if options.template
-        unless options.css
-          console.warn "docco: no stylesheet file specified"
-        config.layout = null
-      else
-        dir = config.layout = path.join __dirname, 'resources', config.layout
-        config.public       = path.join dir, 'public' if fs.existsSync path.join dir, 'public'
-        config.template     = path.join dir, 'docco.jst'
-        config.css          = options.css or path.join dir, 'docco.css'
-      config.template = _.template fs.readFileSync(config.template).toString()
-
-      if options.marked
-        config.marked = JSON.parse fs.readFileSync(options.marked)
-
-      config.sources = options.args.filter((source) ->
-        lang = getLanguage source, config
-        console.warn "docco: skipped unknown type (#{path.basename source})" unless lang
-        lang
-      ).sort()
-
-      config
-
+    getInformationOnFiles = require './src/getInformationOnFiles'
 
 Helpers & Initial Setup
 -----------------------
@@ -276,6 +114,8 @@ Require our external dependencies.
     marked      = require 'marked'
     commander   = require 'commander'
     highlightjs = require 'highlight.js'
+    path        = require 'path'
+    glob        = require 'glob'
 
 Languages are stored in JSON in the file `resources/languages.json`.
 Each item maps the file extension to the name of the language and the
@@ -284,37 +124,24 @@ language to Docco, just add it to the file.
 
     languages = JSON.parse fs.readFileSync(path.join(__dirname, 'resources', 'languages.json'))
 
-Build out the appropriate matchers and delimiters for each language.
-
-    buildMatchers = (languages) ->
-      for ext, l of languages
-
-Does the line begin with a comment?
-
-        l.commentMatcher = ///^\s*#{l.symbol}\s?///
-
-Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_%28Unix%29) and interpolations...
-
-        l.commentFilter = /(^#![/]|^\s*#\{)/
-      languages
-    languages = buildMatchers languages
-
-A function to get the current language we're documenting, based on the
-file extension. Detect and tag "literate" `.ext.md` variants.
-
-    getLanguage = (source, config) ->
-      ext  = config.extension or path.extname(source) or path.basename(source)
-      lang = config.languages?[ext] or languages[ext]
-      if lang and lang.name is 'markdown'
-        codeExt = path.extname(path.basename(source, ext))
-        if codeExt and codeLang = languages[codeExt]
-          lang = _.extend {}, codeLang, {literate: yes}
-      lang
-
 Keep it DRY. Extract the docco **version** from `package.json`
 
     version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version
 
+Default configuration **options**. All of these may be extended by
+user-specified options.
+
+    defaults =
+      layout:     'parallel'
+      output:     'docs'
+      template:   null
+      css:        null
+      extension:  null
+      languages:  {}
+      marked:     null
+      setup:      '.docco.json'
+      help:      false
+      flatten: false
 
 Command Line Interface
 ----------------------
@@ -323,25 +150,48 @@ Finally, let's define the interface to run Docco from the command line.
 Parse options using [Commander](https://github.com/visionmedia/commander.js).
 
     run = (args = process.argv) ->
-      c = defaults
+      config = defaults
+
       commander.version(version)
-        .usage('[options] files')
+        .usage('[options] [file]')
+        .option('-c, --css [file]',       'use a custom css file', config.css)
+        .option('-e, --extension [ext]',  'assume a file extension for all inputs', config.extension)
+        .option('-f, --flatten',          'flatten the directory hierarchy', config.flatten)
         .option('-L, --languages [file]', 'use a custom languages.json', _.compose JSON.parse, fs.readFileSync)
-        .option('-l, --layout [name]',    'choose a layout (parallel, linear or classic)', c.layout)
-        .option('-o, --output [path]',    'output to a given folder', c.output)
-        .option('-c, --css [file]',       'use a custom css file', c.css)
-        .option('-t, --template [file]',  'use a custom .jst template', c.template)
-        .option('-e, --extension [ext]',  'assume a file extension for all inputs', c.extension)
-        .option('-m, --marked [file]',    'use custom marked options', c.marked)
+        .option('-l, --layout [name]',    'choose a layout (parallel, linear or classic)', config.layout)
+        .option('-m, --marked [file]',    'use custom marked options', config.marked)
+        .option('-o, --output [path]',    'output to a given folder', config.output)
+        .option('-s, --setup [file]',     'use configuration file, normally docco.json', '.docco.json')
+        .option('-t, --template [file]',  'use a custom .jst template', config.template)
         .parse(args)
         .name = "docco"
-      if commander.args.length
-        document commander
+
+      config = configure commander, defaults, languages
+
+      setup = path.resolve config.setup
+      if fs.existsSync(setup)
+        config = _.extend(config, JSON.parse fs.readFileSync setup) if setup
+
+      config.root = process.cwd()
+      if config.sources.length isnt 0
+        files =[]
+        for globName in config.sources
+          files = _.flatten _.union files, glob.sync path.resolve config.root, globName
+          if files.length is 0
+            files.push(globName) # not a glob.
+
+        config.sources = []
+        for file in files
+          config.sources.push path.relative(config.root, file)
+
+        config.informationOnFiles = getInformationOnFiles config
+
+        document config
       else
         console.log commander.helpInformation()
-
+      return
 
 Public API
 ----------
 
-    Docco = module.exports = {run, document, parse, format, version}
+    module.exports = Docco = {run, document, parse, format, languages, version}

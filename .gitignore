@@ -3,3 +3,10 @@ output
 docs
 test/data
 node_modules
+doc
+#**/*.js
+#**/*.map
+artifacts
+.nyc_output
+!/test/sim/src/fake_litcoffee.js
+npm-debug.log
