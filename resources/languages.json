@@ -67,6 +67,7 @@
   ".sty":         {"name": "tex", "symbol": "%"},
   ".styl":        {"name": "stylus", "symbol": "//"},
   ".stylus":      {"name": "stylus", "symbol": "//"},
+  ".svg":         {"name": "image", "copy": true},
   ".swift":       {"name": "swift", "symbol": "//"},
   ".t":           {"name": "perl", "symbol": "#"},
   ".tiff":        {"name": "image", "copy": true},
