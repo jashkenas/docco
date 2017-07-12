@@ -50,7 +50,6 @@
       links = LINK_REGEX.exec(line);
       texts = TEXT_REGEX.exec(line);
       styles = STYLE_REGEX.exec(line);
-      console.log("LINKS ----> " + JSON.stringify(links, null, 2));
       if ((links != null) && links.length > 0 && (texts != null) && texts.length > 1) {
         link = links[1];
         if (texts && texts.length > 0) {

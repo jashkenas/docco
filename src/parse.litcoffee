@@ -52,9 +52,6 @@ normal below.
         links = LINK_REGEX.exec(line)
         texts = TEXT_REGEX.exec(line)
         styles = STYLE_REGEX.exec(line)
-
-        console.log("LINKS ----> "+JSON.stringify(links, null, 2))
-
         if links? and links.length > 0 and texts? and texts.length > 1
           link = links[1] # grab the first group.
           if texts and texts.length > 0 then text = texts[1] else text = ''
