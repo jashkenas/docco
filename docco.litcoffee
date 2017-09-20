@@ -19,7 +19,7 @@ source files, with a menu linking to the other pages, saving the whole mess
 into a `docs` folder (configurable).
 
 The [Docco source](http://github.com/jashkenas/docco) is available on GitHub,
-and is released under the [MIT license](http://opensource.org/licenses/MIT).
+and is released under the [Lil License](http://lillicense.org/v1.html).
 
 Docco can be used to process code written in any programming language. If it
 doesn't handle your favorite yet, feel free to
