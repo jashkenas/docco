@@ -324,10 +324,10 @@ ul.sections > li > div {
 
   ul.sections > li > div.content {
     padding: 13px;
-    vertical-align: top;
     border: none;
     -webkit-box-shadow: none;
     box-shadow: none;
+    vertical-align: bottom;
   }
 
   .pilwrap {
