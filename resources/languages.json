@@ -29,7 +29,7 @@
   ".hs":          {"name": "haskell", "symbol": "--"},
   ".ini":         {"name": "ini", "symbol": ";"},
   ".jade":        {"name": "jade", "symbol": "//-"},
-  ".js":          {"name": "javascript", "symbol": "//"},
+  ".js":          {"name": "javascript", "symbol": "//", "altSymbol": "*"},
   ".jsm":         {"name": "javascript", "symbol": "//"},
   ".jsx":         {"name": "javascript", "symbol": "//"},
   ".java":        {"name": "java", "symbol": "//"},
