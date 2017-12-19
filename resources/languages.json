@@ -25,6 +25,7 @@
   ".go":          {"name": "go", "symbol": "//"},
   ".groovy":      {"name": "groovy", "symbol": "//"},
   ".h":           {"name": "objectivec", "symbol": "//"},
+  ".hpp":         {"name": "cpp", "symbol": "//"},
   ".hrl":         {"name": "erlang", "symbol": "%"},
   ".hs":          {"name": "haskell", "symbol": "--"},
   ".ini":         {"name": "ini", "symbol": ";"},
