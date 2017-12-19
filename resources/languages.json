@@ -12,6 +12,7 @@
   ".cmake":       {"name": "cmake", "symbol": "#"},
   ".cmd":         {"name": "dos", "symbol": "@?rem"},
   ".coffee":      {"name": "coffeescript", "symbol": "#"},
+  ".cjsx":        {"name": "coffeescript", "symbol": "#"},
   ".cpp":         {"name": "cpp", "symbol": "//"},
   ".cs":          {"name": "cs", "symbol": "//"},
   ".cson":        {"name": "coffeescript", "symbol": "#"},
