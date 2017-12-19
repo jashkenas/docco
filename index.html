@@ -42,7 +42,7 @@ This page is the result of running Docco against its own
 source files, with a menu linking to the other pages, saving the whole mess
 into a <code>docs</code> folder (configurable).</p>
 <p>The <a href="http://github.com/jashkenas/docco">Docco source</a> is available on GitHub,
-and is released under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
+and is released under the <a href="http://lillicense.org/v1.html">Lil License</a>.</p>
 <p>Docco can be used to process code written in any programming language. If it
 doesn’t handle your favorite yet, feel free to
 <a href="https://github.com/jashkenas/docco/blob/master/resources/languages.json">add it to the list</a>.
@@ -238,7 +238,12 @@ and rendering it to the specified output path.</p>
           <div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">write</span> = <span class="hljs-params">(source, sections, config)</span> -&gt;</span>
 <span class="hljs-function">
   <span class="hljs-title">destination</span> = <span class="hljs-params">(file)</span> -&gt;</span>
-    path.join(config.output, path.basename(file, path.extname(file)) + <span class="hljs-string">'.html'</span>)</pre></div>
+    path.join(config.output, path.dirname(file), path.basename(file, path.extname(file)) + <span class="hljs-string">'.html'</span>)
+<span class="hljs-function">
+  <span class="hljs-title">relative</span> = <span class="hljs-params">(file)</span> -&gt;</span>
+    to = path.dirname(path.resolve(file))
+    <span class="hljs-keyword">from</span> = path.dirname(path.resolve(destination(source)))
+    path.join(path.relative(<span class="hljs-keyword">from</span>, to), path.basename(file))</pre></div>
         
       
         
@@ -251,12 +256,13 @@ name of the source file.</p>
   first = marked.lexer(firstSection.docsText)[<span class="hljs-number">0</span>] <span class="hljs-keyword">if</span> firstSection
   hasTitle = first <span class="hljs-keyword">and</span> first.type <span class="hljs-keyword">is</span> <span class="hljs-string">'heading'</span> <span class="hljs-keyword">and</span> first.depth <span class="hljs-keyword">is</span> <span class="hljs-number">1</span>
   title = <span class="hljs-keyword">if</span> hasTitle <span class="hljs-keyword">then</span> first.text <span class="hljs-keyword">else</span> path.basename source
+  css = relative path.join(config.output, path.basename(config.css))
 
-  html = config.template {sources: config.sources, css: path.basename(config.css),
-    title, hasTitle, sections, path, destination,}
+  html = config.template {sources: config.sources, css,
+    title, hasTitle, sections, path, destination, relative}
 
   <span class="hljs-built_in">console</span>.log <span class="hljs-string">"docco: <span class="hljs-subst">#{source}</span> -&gt; <span class="hljs-subst">#{destination source}</span>"</span>
-  fs.writeFileSync destination(source), html</pre></div>
+  fs.outputFileSync destination(source), html</pre></div>
         
       
         
