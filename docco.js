@@ -27,7 +27,8 @@
   // doesn't handle your favorite yet, feel free to
   // [add it to the list](https://github.com/jashkenas/docco/blob/master/resources/languages.json).
   // Finally, the ["literate" style](http://coffeescript.org/#literate) of *any*
-  // language is also supported — just tack an `.md` extension on the end:
+  // language listed in [languages.json](https://github.com/jashkenas/docco/blob/master/resources/languages.json) 
+  // is also supported — just tack an `.md` extension on the end:
   // `.coffee.md`, `.py.md`, and so on.
 
   // Partners in Crime:
