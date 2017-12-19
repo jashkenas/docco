@@ -3,7 +3,7 @@
   "description":  "The Quick and Dirty Literate Programming Documentation Generator",
   "keywords":     ["documentation", "docs", "generator", "literate", "coffeescript"],
   "author":       "Jeremy Ashkenas",
-  "version":      "0.7.0",
+  "version":      "0.8.0",
   "license":      "MIT",
   "repository": {
     "type": "git",
