@@ -76,6 +76,7 @@
   ".vert":        {"name": "glsl", "symbol": "//"},
   ".vhdl":        {"name": "vhdl", "symbol": "--"},
   ".vim":         {"name": "vim", "symbol": "\""},
+  ".vue":         {"name": "vuejs", "symbol": "//"},
   ".r":           {"name": "r", "symbol": "#"},
   ".rc":          {"name": "rust", "symbol": "//"},
   ".rs":          {"name": "rust", "symbol": "//"},
