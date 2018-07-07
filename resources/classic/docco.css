@@ -8,7 +8,7 @@ body {
   margin: 0; padding: 0;
   height:100%;
 }
-#container { min-height: 100%; }
+.container { min-height: 100%; }
 
 a {
   color: #261a3b;
@@ -166,7 +166,7 @@ ul.sections > li > div {
 
 /*----------------------  (> 481px) ---------------------*/
 @media only screen and (min-width: 481px) {
-  #container {
+  .container {
     position: relative;
   }
   body {
@@ -200,7 +200,7 @@ ul.sections > li > div {
 
 
 
-  #background {
+  .background {
     position: absolute;
     top: 0; bottom: 0;
     width: 350px;
@@ -275,7 +275,7 @@ ul.sections > li > div {
 /*---------------------- (> 1025px) ---------------------*/
 @media only screen and (min-width: 1025px) {
 
-  #background {
+  .background {
     width: 525px;
   }
   ul.sections > li > div.annotation {
