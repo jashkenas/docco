@@ -1,10 +1,1 @@
-{
-  "version": 3,
-  "file": "getOthers.js",
-  "sourceRoot": "",
-  "sources": [
-    "getOthers.litcoffee"
-  ],
-  "names": [],
-  "mappings": ";AAAI;AAAA,MAAA;;EAAA,eAAA,GAAkB,OAAA,CAAQ,mBAAR;;EAElB,SAAA,GAAY,QAAA,CAAC,IAAD,EAAO,kBAAP,EAA2B,MAA3B,CAAA;AACV,QAAA;IAAA,qBAAA,GAAwB,kBAAmB,CAAA,IAAA;IAC3C,MAAA,GAAS,qBAAqB,CAAC;IAC/B,MAAA,GAAS,CAAA;AACT;AAAA,SAAA,qCAAA;;MACE,0BAAA,GAA6B,kBAAmB,CAAA,KAAA;MAChD,MAAA,GAAS,0BAA0B,CAAC;MACpC,KAAA,GAAQ,0BAA0B,CAAC,QAAQ,CAAC,IAApC,KAA4C;MAEpD,MAAO,CAAA,MAAM,CAAC,IAAP,CAAP,GAAsB;QACpB,IAAA,EAAM,eAAA,CAAgB,MAAM,CAAC,YAAvB,EAAqC,MAAM,CAAC,YAA5C,EAA0D,MAAM,CAAC,IAAjE,CADc;QAEpB,IAAA,EAAM,KAFc;QAGpB,KAAA,EAAO;MAHa;AALxB;WAWA;EAfU;;EAiBZ,MAAM,CAAC,OAAP,GAAiB;AAnBjB"
-}
+{"version":3,"file":"getOthers.js","sources":["getOthers.litcoffee"],"names":[],"mappings":"AAAI,IAAA;;AAAA,eAAA,GAAkB,OAAA,CAAQ,mBAAR;;AAElB,SAAA,GAAY,SAAC,IAAD,EAAO,kBAAP,EAA2B,MAA3B;AACV,MAAA;EAAA,qBAAA,GAAwB,kBAAmB,CAAA,IAAA;EAC3C,MAAA,GAAS,qBAAqB,CAAC;EAC/B,MAAA,GAAS;AACT;AAAA,OAAA,qCAAA;;IACE,0BAAA,GAA6B,kBAAmB,CAAA,KAAA;IAChD,MAAA,GAAS,0BAA0B,CAAC;IACpC,KAAA,GAAQ,0BAA0B,CAAC,QAAQ,CAAC,IAApC,KAA4C;IAEpD,MAAO,CAAA,MAAM,CAAC,IAAP,CAAP,GAAsB;MACpB,IAAA,EAAM,eAAA,CAAgB,MAAM,CAAC,YAAvB,EAAqC,MAAM,CAAC,YAA5C,EAA0D,MAAM,CAAC,IAAjE,CADc;MAEpB,IAAA,EAAM,KAFc;MAGpB,KAAA,EAAO,KAHa;;AALxB;SAWA;AAfU;;AAiBZ,MAAM,CAAC,OAAP,GAAiB","sourcesContent":["    getRelativePath = require './getRelativePath'\n\n    getOthers = (file, informationOnFiles, config) ->\n      sourceFileInformation = informationOnFiles[file]\n      source = sourceFileInformation.source\n      others = {}\n      for other in config.sources\n        destinationFileInformation = informationOnFiles[other]\n        target = destinationFileInformation.destination\n        image = destinationFileInformation.language.name is 'image'\n\n        others[target.base] = {\n          link: getRelativePath source.relativefile, target.relativefile, target.base\n          file: other\n          image: image\n        }\n\n      others\n\n    module.exports = getOthers\n"]}
