@@ -22,7 +22,7 @@ A fake for the unflattended getInformationOnFiles test.
           "html": true
           "imageMatcher": /^!\[(.+)\]\((.+)\)/
           "link": "!"
-          "linkMatcher": /^!\[(.+)\]\((.+)\)/
+          "linkMatcher": /^\[(.+)\]\((.+)\)/
           "name": "markdown"
           "section": "#"
           "sectionMatcher": /^#\s?/

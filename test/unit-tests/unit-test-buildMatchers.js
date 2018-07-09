@@ -16,9 +16,9 @@ describe('docco buildMatchers', function() {
     for (ext in languages) {
       l = languages[ext];
       assert.deepEqual(l.commentMatcher, RegExp("^\\s*" + l.symbol + "\\s?"));
-      assert.deepEqual(l.commentFilter, /(^#![\/]|^\s*#\{)/); // /(^#![\/]|^\s*#\{)/);
+      assert.deepEqual(l.commentFilter, /(^#![\/]|^\s*#\{)/);
       if (l.link) {
-        assert.deepEqual(l.linkMatcher, RegExp("^\\[(.+)\\]\\((.+)\\)"));
+        assert.deepEqual(l.linkMatcher, /^\[(.+)\]\((.+)\)/);
       }
       if (l.section) {
         results.push(assert.deepEqual(l.sectionMatcher, RegExp("^" + l.section + "\\s?")));
