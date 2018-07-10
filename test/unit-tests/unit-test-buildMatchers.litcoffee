@@ -13,7 +13,7 @@
           assert.deepEqual(l.commentMatcher,///^\s*#{l.symbol}\s?///)
           assert.deepEqual(l.commentFilter,/(^#![/]|^\s*#\{)/)
           if l.link
-            assert.deepEqual(l.linkMatcher,///^#{l.link}\[(.+)\]\((.+)\)///)
+            assert.deepEqual(l.linkMatcher,///^\[(.+)\]\((.+)\)///)
           if l.section
             assert.deepEqual(l.sectionMatcher,///^#{l.section}\s?///)
       return

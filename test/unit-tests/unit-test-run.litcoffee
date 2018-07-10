@@ -52,7 +52,7 @@
           }
       })
       assert.deepEqual(defaults, {
-        "layout": "parallel",
+        "layout": "sidebyside",
         "output": "docs",
         "template": null,
         "css": null,
@@ -86,7 +86,7 @@
           when 1 then option.should.be.equal('-c, --css [file]')
           when 2 then option.should.be.equal('-e, --extension [ext]')
           when 3 then option.should.be.equal('-f, --flatten')
-          when 4 then option.should.be.equal('-L, --languages [file]')
+          when 4 then option.should.be.equal('-g, --languages [file]')
           when 5 then option.should.be.equal('-l, --layout [name]')
           when 6 then option.should.be.equal('-m, --marked [file]')
           when 7 then option.should.be.equal('-o, --output [path]')

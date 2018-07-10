@@ -65,7 +65,7 @@
           "symbol": "#"
         }
       }
-      "layout": "parallel"
+      "layout": "sidebyside"
       "marked": {}
       "output": "docs"
       "root": "force matched"

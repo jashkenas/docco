@@ -6,5 +6,6 @@
     "src/**/*.litcoffee",
     "src/**/*.java",
     "images/**/*.jpg"
-  ]
+  ],
+  "layout": "linear"
 }

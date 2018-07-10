@@ -1,0 +1,1696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="276b0a16-5b5d-4c51-a0d3-f44cc53e2124" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/docco.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/markdown-navigator/profiles_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/package-lock.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/test/sim/.adocco.json" afterPath="$PROJECT_DIR$/test/sim/.docco.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/classic/public/fonts/aller-bold.eot" afterPath="$PROJECT_DIR$/resources/classic/public/fonts/aller-bold.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/classic/public/fonts/aller-bold.ttf" afterPath="$PROJECT_DIR$/resources/classic/public/fonts/aller-bold.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/classic/public/fonts/aller-bold.woff" afterPath="$PROJECT_DIR$/resources/classic/public/fonts/aller-bold.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/classic/public/fonts/aller-light.eot" afterPath="$PROJECT_DIR$/resources/classic/public/fonts/aller-light.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/classic/public/fonts/aller-light.ttf" afterPath="$PROJECT_DIR$/resources/classic/public/fonts/aller-light.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/classic/public/fonts/aller-light.woff" afterPath="$PROJECT_DIR$/resources/classic/public/fonts/aller-light.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/classic/public/fonts/fleurons.eot" afterPath="$PROJECT_DIR$/resources/classic/public/fonts/fleurons.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/classic/public/fonts/fleurons.ttf" afterPath="$PROJECT_DIR$/resources/classic/public/fonts/fleurons.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/classic/public/fonts/fleurons.woff" afterPath="$PROJECT_DIR$/resources/classic/public/fonts/fleurons.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/classic/public/images/gray.png" afterPath="$PROJECT_DIR$/resources/classic/public/images/gray.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/linear/public/fonts/aller-bold.eot" afterPath="$PROJECT_DIR$/resources/linear/public/fonts/aller-bold.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/linear/public/fonts/aller-bold.ttf" afterPath="$PROJECT_DIR$/resources/linear/public/fonts/aller-bold.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/linear/public/fonts/aller-bold.woff" afterPath="$PROJECT_DIR$/resources/linear/public/fonts/aller-bold.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/linear/public/fonts/aller-light.eot" afterPath="$PROJECT_DIR$/resources/linear/public/fonts/aller-light.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/linear/public/fonts/aller-light.ttf" afterPath="$PROJECT_DIR$/resources/linear/public/fonts/aller-light.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/linear/public/fonts/aller-light.woff" afterPath="$PROJECT_DIR$/resources/linear/public/fonts/aller-light.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/linear/public/fonts/fleurons.eot" afterPath="$PROJECT_DIR$/resources/linear/public/fonts/fleurons.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/linear/public/fonts/fleurons.ttf" afterPath="$PROJECT_DIR$/resources/linear/public/fonts/fleurons.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/linear/public/fonts/fleurons.woff" afterPath="$PROJECT_DIR$/resources/linear/public/fonts/fleurons.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/linear/public/images/gray.png" afterPath="$PROJECT_DIR$/resources/linear/public/images/gray.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/parallel/public/fonts/aller-bold.eot" afterPath="$PROJECT_DIR$/resources/parallel/public/fonts/aller-bold.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/parallel/public/fonts/aller-bold.ttf" afterPath="$PROJECT_DIR$/resources/parallel/public/fonts/aller-bold.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/parallel/public/fonts/aller-bold.woff" afterPath="$PROJECT_DIR$/resources/parallel/public/fonts/aller-bold.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/parallel/public/fonts/aller-light.eot" afterPath="$PROJECT_DIR$/resources/parallel/public/fonts/aller-light.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/parallel/public/fonts/aller-light.ttf" afterPath="$PROJECT_DIR$/resources/parallel/public/fonts/aller-light.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/parallel/public/fonts/aller-light.woff" afterPath="$PROJECT_DIR$/resources/parallel/public/fonts/aller-light.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/sidebyside/public/fonts/aller-bold.eot" afterPath="$PROJECT_DIR$/resources/sidebyside/public/fonts/aller-bold.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/sidebyside/public/fonts/aller-bold.ttf" afterPath="$PROJECT_DIR$/resources/sidebyside/public/fonts/aller-bold.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/sidebyside/public/fonts/aller-bold.woff" afterPath="$PROJECT_DIR$/resources/sidebyside/public/fonts/aller-bold.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/sidebyside/public/fonts/aller-light.eot" afterPath="$PROJECT_DIR$/resources/sidebyside/public/fonts/aller-light.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/sidebyside/public/fonts/aller-light.ttf" afterPath="$PROJECT_DIR$/resources/sidebyside/public/fonts/aller-light.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/sidebyside/public/fonts/aller-light.woff" afterPath="$PROJECT_DIR$/resources/sidebyside/public/fonts/aller-light.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/sim/images/fluffybunny1.jpg" afterPath="$PROJECT_DIR$/test/sim/images/fluffybunny1.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/sim/images/fluffybunny2.jpg" afterPath="$PROJECT_DIR$/test/sim/images/fluffybunny2.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/sim/images/fluffybunny3.jpg" afterPath="$PROJECT_DIR$/test/sim/images/fluffybunny3.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.docco.json" afterPath="$PROJECT_DIR$/.docco.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.npmignore" afterPath="$PROJECT_DIR$/.npmignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Cakefile" afterPath="$PROJECT_DIR$/Cakefile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LICENSE" afterPath="$PROJECT_DIR$/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docco.js" afterPath="$PROJECT_DIR$/docco.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docco.js.map" afterPath="$PROJECT_DIR$/docco.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docco.litcoffee" afterPath="$PROJECT_DIR$/docco.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gulpfile.coffee" afterPath="$PROJECT_DIR$/gulpfile.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/classic/docco.css" afterPath="$PROJECT_DIR$/resources/classic/docco.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/classic/docco.jst" afterPath="$PROJECT_DIR$/resources/classic/docco.jst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/classic/public/stylesheets/normalize.css" afterPath="$PROJECT_DIR$/resources/classic/public/stylesheets/normalize.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/languages.json" afterPath="$PROJECT_DIR$/resources/languages.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/linear/docco.css" afterPath="$PROJECT_DIR$/resources/linear/docco.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/linear/docco.jst" afterPath="$PROJECT_DIR$/resources/linear/docco.jst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/linear/public/stylesheets/normalize.css" afterPath="$PROJECT_DIR$/resources/linear/public/stylesheets/normalize.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/parallel/docco.css" afterPath="$PROJECT_DIR$/resources/parallel/docco.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/parallel/docco.jst" afterPath="$PROJECT_DIR$/resources/parallel/docco.jst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/parallel/public/stylesheets/normalize.css" afterPath="$PROJECT_DIR$/resources/parallel/public/stylesheets/normalize.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/plain-markdown/README.md" afterPath="$PROJECT_DIR$/resources/plain-markdown/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/plain-markdown/docco.jst" afterPath="$PROJECT_DIR$/resources/plain-markdown/docco.jst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/sidebyside/docco.css" afterPath="$PROJECT_DIR$/resources/sidebyside/docco.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/sidebyside/docco.jst" afterPath="$PROJECT_DIR$/resources/sidebyside/docco.jst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/sidebyside/public/stylesheets/normalize.css" afterPath="$PROJECT_DIR$/resources/sidebyside/public/stylesheets/normalize.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/buildMatchers.js" afterPath="$PROJECT_DIR$/src/buildMatchers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/buildMatchers.js.map" afterPath="$PROJECT_DIR$/src/buildMatchers.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/buildMatchers.litcoffee" afterPath="$PROJECT_DIR$/src/buildMatchers.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/configure.js" afterPath="$PROJECT_DIR$/src/configure.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/configure.litcoffee" afterPath="$PROJECT_DIR$/src/configure.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/document.js" afterPath="$PROJECT_DIR$/src/document.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/document.litcoffee" afterPath="$PROJECT_DIR$/src/document.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/format.js" afterPath="$PROJECT_DIR$/src/format.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/format.js.map" afterPath="$PROJECT_DIR$/src/format.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/format.litcoffee" afterPath="$PROJECT_DIR$/src/format.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getCSSPath.js" afterPath="$PROJECT_DIR$/src/getCSSPath.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getCSSPath.litcoffee" afterPath="$PROJECT_DIR$/src/getCSSPath.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getDestinationInformation.js" afterPath="$PROJECT_DIR$/src/getDestinationInformation.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getDestinationInformation.litcoffee" afterPath="$PROJECT_DIR$/src/getDestinationInformation.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getInformationOnFiles.js" afterPath="$PROJECT_DIR$/src/getInformationOnFiles.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getInformationOnFiles.js.map" afterPath="$PROJECT_DIR$/src/getInformationOnFiles.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getInformationOnFiles.litcoffee" afterPath="$PROJECT_DIR$/src/getInformationOnFiles.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getLanguage.js" afterPath="$PROJECT_DIR$/src/getLanguage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getLanguage.litcoffee" afterPath="$PROJECT_DIR$/src/getLanguage.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getOthers.js" afterPath="$PROJECT_DIR$/src/getOthers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getOthers.js.map" afterPath="$PROJECT_DIR$/src/getOthers.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getOthers.litcoffee" afterPath="$PROJECT_DIR$/src/getOthers.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getRelativePath.js" afterPath="$PROJECT_DIR$/src/getRelativePath.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getRelativePath.litcoffee" afterPath="$PROJECT_DIR$/src/getRelativePath.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getSourceInformation.js" afterPath="$PROJECT_DIR$/src/getSourceInformation.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/getSourceInformation.litcoffee" afterPath="$PROJECT_DIR$/src/getSourceInformation.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/parse.js" afterPath="$PROJECT_DIR$/src/parse.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/parse.js.map" afterPath="$PROJECT_DIR$/src/parse.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/parse.litcoffee" afterPath="$PROJECT_DIR$/src/parse.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/write.js" afterPath="$PROJECT_DIR$/src/write.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/write.js.map" afterPath="$PROJECT_DIR$/src/write.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/write.litcoffee" afterPath="$PROJECT_DIR$/src/write.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/sim/.groc.json" afterPath="$PROJECT_DIR$/test/sim/.groc.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/sim/README.md" afterPath="$PROJECT_DIR$/test/sim/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/sim/src/fake_coffee.coffee" afterPath="$PROJECT_DIR$/test/sim/src/fake_coffee.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/sim/src/fake_coffee2.coffee" afterPath="$PROJECT_DIR$/test/sim/src/fake_coffee2.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/sim/src/fake_java.java" afterPath="$PROJECT_DIR$/test/sim/src/fake_java.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/sim/src/fake_javascript.js" afterPath="$PROJECT_DIR$/test/sim/src/fake_javascript.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/sim/src/fake_litcoffee.litcoffee" afterPath="$PROJECT_DIR$/test/sim/src/fake_litcoffee.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake-config.js" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake-config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake-config.js.map" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake-config.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake-config.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake-config.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake-jst-result.js" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake-jst-result.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake-jst-result.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake-jst-result.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake-jst.js" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake-jst.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake-jst.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake-jst.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-flattened-result.js" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-flattened-result.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-flattened-result.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-flattened-result.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-unflattened-result.js" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-unflattened-result.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-unflattened-result.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-unflattened-result.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst.js" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/fake_coffee.coffee" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/fake_coffee.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesFlattened.js" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesFlattened.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesFlattened.js.map" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesFlattened.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesFlattened.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesFlattened.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesUnFlattened.js" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesUnFlattened.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesUnFlattened.js.map" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesUnFlattened.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesUnFlattened.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesUnFlattened.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.js.map" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-configure.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-configure.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-configure.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-configure.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-document.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-document.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-document.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-document.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-fixForMatch.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-fixForMatch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-fixForMatch.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-fixForMatch.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-format.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-format.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-format.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-format.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-getCSSPath.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-getCSSPath.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-getCSSPath.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-getCSSPath.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-getDestinationInformation.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-getDestinationInformation.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-getDestinationInformation.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-getDestinationInformation.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-getInformationOnFiles.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-getInformationOnFiles.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-getInformationOnFiles.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-getInformationOnFiles.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-getLanguage.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-getLanguage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-getLanguage.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-getLanguage.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.js.map" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-getRelativePath.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-getRelativePath.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-getRelativePath.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-getRelativePath.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-parse.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-parse.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-parse.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-parse.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-run.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-run.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-run.js.map" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-run.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-run.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-run.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-typeIsArray.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-typeIsArray.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-typeIsArray.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-typeIsArray.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-write.js" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-write.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/unit-test-write.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/unit-test-write.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/utils/fixForMatch.js" afterPath="$PROJECT_DIR$/test/unit-tests/utils/fixForMatch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/utils/fixForMatch.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/utils/fixForMatch.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/utils/typeIsArray.js" afterPath="$PROJECT_DIR$/test/unit-tests/utils/typeIsArray.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/utils/typeIsArray.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/utils/typeIsArray.litcoffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/utils/typeIsObject.js" afterPath="$PROJECT_DIR$/test/unit-tests/utils/typeIsObject.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit-tests/utils/typeIsObject.litcoffee" afterPath="$PROJECT_DIR$/test/unit-tests/utils/typeIsObject.litcoffee" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="unit-test-getInformationOnFiles.litcoffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-getInformationOnFiles.litcoffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="9" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="unit-test-getInformationOnFiles.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-getInformationOnFiles.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="24" column="11" lean-forward="false" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="informationOnFilesUnFlattened.litcoffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesUnFlattened.litcoffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="364">
+              <caret line="24" column="27" lean-forward="false" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="unit-test-run.litcoffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-run.litcoffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="54" column="29" lean-forward="false" selection-start-line="54" selection-start-column="29" selection-end-line="54" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="unit-test-buildMatchers.litcoffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.litcoffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="47" lean-forward="false" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="unit-test-buildMatchers.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="271">
+              <caret line="20" column="49" lean-forward="false" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
+              <folding>
+                <marker date="1531189548000" expanded="true" signature="272:898" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="324:894" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="438:870" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="625:696" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="718:819" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="825:864" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="unit-test-run.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-run.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="158">
+              <caret line="60" column="9" lean-forward="false" selection-start-line="60" selection-start-column="9" selection-end-line="60" selection-end-column="9" />
+              <folding>
+                <marker date="1531189548000" expanded="true" signature="1190:2044" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="1638:1864" ph="{&quot;layout&quot;: &quot;parallel&quot;...}" />
+                <marker date="1531189548000" expanded="true" signature="2100:3322" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="2131:2191" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="2218:2287" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="2336:3148" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="2382:3127" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="2397:2464" ph="..." />
+                <marker date="1531189548000" expanded="true" signature="2478:2550" ph="..." />
+                <marker date="1531189548000" expanded="true" signature="2564:2628" ph="..." />
+                <marker date="1531189548000" expanded="true" signature="2642:2715" ph="..." />
+                <marker date="1531189548000" expanded="true" signature="2729:2799" ph="..." />
+                <marker date="1531189548000" expanded="true" signature="2813:2883" ph="..." />
+                <marker date="1531189548000" expanded="true" signature="2897:2967" ph="..." />
+                <marker date="1531189548000" expanded="true" signature="2981:3050" ph="..." />
+                <marker date="1531189548000" expanded="true" signature="3064:3121" ph="..." />
+                <marker date="1531189548000" expanded="true" signature="3174:3239" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="3264:3320" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="3390:3531" ph="{...}" />
+                <marker date="1531189548000" expanded="true" signature="3440:3476" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fake-config.litcoffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-config.litcoffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="16" column="14" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="unit-test-typeIsArray.litcoffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-typeIsArray.litcoffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>jumpwa</find>
+      <find>jumpw</find>
+      <find>jump_</find>
+      <find>jump_w</find>
+      <find>jump_wr</find>
+      <find>jump_wra</find>
+      <find>jump_wrap</find>
+      <find>jump_wrappe</find>
+      <find>jump_wrapper</find>
+      <find>jump_page_wrapper</find>
+      <find>display:</find>
+      <find>display: none</find>
+      <find>deepEqual</find>
+      <find>Version</find>
+      <find>hidden</find>
+      <find>block</find>
+      <find>wrapper</find>
+      <find>source</find>
+      <find>l</find>
+      <find>link</find>
+      <find>linkM</find>
+      <find>linkMa</find>
+      <find>linkMatc</find>
+      <find>linkMatcher</find>
+      <find>im</find>
+      <find>img</find>
+      <find>name</find>
+      <find>jump</find>
+      <find>layout</find>
+      <find>paral</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>console.log</replace>
+      <replace>to</replace>
+      <replace>,</replace>
+      <replace>+&quot;/&quot;+</replace>
+      <replace>../..</replace>
+      <replace>../../fakes</replace>
+      <replace>../fakes</replace>
+      <replace>#{JSON.stringify(</replace>
+      <replace>\'</replace>
+      <replace>mockery</replace>
+      <replace>document</replace>
+      <replace>buildMatchers</replace>
+      <replace>format</replace>
+      <replace>multiline</replace>
+      <replace>stopMatcher</replace>
+      <replace>imgMatcher</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/document.litcoffee" />
+        <option value="$PROJECT_DIR$/gulpfile.coffee" />
+        <option value="$PROJECT_DIR$/README" />
+        <option value="$PROJECT_DIR$/README.markdown" />
+        <option value="$PROJECT_DIR$/travis.yml" />
+        <option value="$PROJECT_DIR$/.travis.yml" />
+        <option value="$PROJECT_DIR$/test/unit-tests/unit-test-configure.litcoffee" />
+        <option value="$PROJECT_DIR$/test/unit-tests/utils/typeIsArray.litcoffee" />
+        <option value="$PROJECT_DIR$/test/unit-tests/utils/typeIsObject.litcoffee" />
+        <option value="$PROJECT_DIR$/test/unit-tests/unit-test-fixForMatch.coffee" />
+        <option value="vm:170" />
+        <option value="$PROJECT_DIR$/test/unit-tests/unit-test-fixForMatch.litcoffee" />
+        <option value="$PROJECT_DIR$/test/unit-tests/utils/fixForMatch.litcoffee" />
+        <option value="$PROJECT_DIR$/test/unit-tests/utils/fixForMatch.js" />
+        <option value="$PROJECT_DIR$/test/unit-tests/unit-test-typeIsArray.coffee" />
+        <option value="$PROJECT_DIR$/test/unit-tests/unit-test-typeIsArray.litcoffee" />
+        <option value="$PROJECT_DIR$/.docco.json" />
+        <option value="$PROJECT_DIR$/bin/docco" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/src/getInformationOnFiles.js" />
+        <option value="$PROJECT_DIR$/test/sim/src/fake_litcoffee.js" />
+        <option value="$PROJECT_DIR$/test/sim/src/fake_coffee2.coffee" />
+        <option value="$PROJECT_DIR$/test/sim/src/fake_coffee.coffee" />
+        <option value="$PROJECT_DIR$/src/write.js" />
+        <option value="$PROJECT_DIR$/src/getOthers.js" />
+        <option value="$PROJECT_DIR$/resources/parallel/docco.jst" />
+        <option value="$PROJECT_DIR$/src/write.litcoffee" />
+        <option value="$PROJECT_DIR$/resources/linear/docco.jst" />
+        <option value="$PROJECT_DIR$/test/sim/.adocco.json" />
+        <option value="$PROJECT_DIR$/src/getInformationOnFiles.litcoffee" />
+        <option value="$PROJECT_DIR$/src/getOthers.litcoffee" />
+        <option value="$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.litcoffee" />
+        <option value="$PROJECT_DIR$/resources/sidebyside/docco.jst" />
+        <option value="$PROJECT_DIR$/test/sim/README.md" />
+        <option value="$PROJECT_DIR$/src/format.litcoffee" />
+        <option value="$PROJECT_DIR$/resources/sidebyside/docco.css" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesUnFlattened.js" />
+        <option value="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesFlattened.litcoffee" />
+        <option value="$PROJECT_DIR$/src/parse.litcoffee" />
+        <option value="$PROJECT_DIR$/resources/languages.json" />
+        <option value="$PROJECT_DIR$/src/buildMatchers.litcoffee" />
+        <option value="$PROJECT_DIR$/test/sim/.docco.json" />
+        <option value="$PROJECT_DIR$/docco.litcoffee" />
+        <option value="$PROJECT_DIR$/test/unit-tests/fakes/fake-config.litcoffee" />
+        <option value="$PROJECT_DIR$/test/unit-tests/unit-test-run.js" />
+        <option value="$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesUnFlattened.litcoffee" />
+        <option value="$PROJECT_DIR$/test/unit-tests/unit-test-run.litcoffee" />
+        <option value="$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.js" />
+        <option value="$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.litcoffee" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>true</other-services-enabled>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="4" />
+    <option name="y" value="23" />
+    <option name="width" value="1916" />
+    <option name="height" value="1057" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>CoffeeScript</id>
+          </State>
+          <State>
+            <id>File Watchers</id>
+          </State>
+          <State>
+            <id>GeneralCoffeeScript</id>
+          </State>
+          <State>
+            <id>Probable bugsCoffeeScript</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>AngularJS</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="docco" type="b2602c69:ProjectViewProjectNode" />
+              <item name="docco" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="docco" type="b2602c69:ProjectViewProjectNode" />
+              <item name="docco" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="docco" type="b2602c69:ProjectViewProjectNode" />
+              <item name="docco" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="docco" type="b2602c69:ProjectViewProjectNode" />
+              <item name="docco" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="unit-tests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="docco" type="b2602c69:ProjectViewProjectNode" />
+              <item name="docco" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="unit-tests" type="462c0819:PsiDirectoryNode" />
+              <item name="fakes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="docco" type="b2602c69:ProjectViewProjectNode" />
+              <item name="docco" type="462c0819:PsiDirectoryNode" />
+              <item name="docco.litcoffee" type="620a8d5e:NestingTreeNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="nodejs_interpreter_path" value="$USER_HOME$/.nvm/versions/node/v7.7.0/bin/node" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+    <property name="nodejs.mocha.mocha_node_package_dir" value="$PROJECT_DIR$/node_modules/mocha" />
+    <property name="JavaScriptPreferStrict" value="false" />
+    <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
+    <property name="settings.editor.splitter.proportion" value="0.23874755" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.js&#10;/Users/rolov/Code/docco/test/unit-tests/unit-test-fixForMatch.js&#10;/Users/rolov/Code/docco/docco.js&#10;/Users/rolov/Code/docco/test/unit-tests/unit-test-getCSSPath.js&#10;/Users/rolov/Code/docco/test/unit-tests/utils/fixForMatch.js&#10;/Users/rolov/Code/docco/src/parse.js&#10;/Users/rolov/Code/docco/src/document.js" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources" />
+      <recent name="$PROJECT_DIR$/resources/groc" />
+      <recent name="$PROJECT_DIR$/test/unit-tests" />
+      <recent name="$PROJECT_DIR$/test/unit-tests/utils" />
+      <recent name="$PROJECT_DIR$/test/unit-tests/fakes" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test/unit-tests" />
+      <recent name="$PROJECT_DIR$/test/fakes/images" />
+      <recent name="$PROJECT_DIR$/test" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Mocha.Unit Tests">
+    <configuration name="README.html (1)" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/docco/docs/README.html" />
+    <configuration name="README.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/docco/test/sim/docs/README.html" />
+    <configuration name="Unit Tests" type="mocha-javascript-test-runner" factoryName="Mocha" singleton="false">
+      <node-interpreter>$USER_HOME$/.nvm/versions/node/v10.4.0/bin/node</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory>$PROJECT_DIR$/test/unit-tests</test-directory>
+      <recursive>false</recursive>
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+    </configuration>
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
+    <configuration default="true" type="DartTestRunConfigurationType" factoryName="Dart Test">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" value="" />
+      <option name="executablePath" />
+      <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui />
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+    <configuration name="buildMatchers" type="mocha-javascript-test-runner" factoryName="Mocha" singleton="false">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.js</test-file>
+    </configuration>
+    <configuration name="docco --setup only  --layout linear --template" type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" path-to-node="project" path-to-js-file="$PROJECT_DIR$/bin/docco" application-parameters="--setup=.adocco.json --layout linear --css ../../resource/classic/docco.jst --template ../../resources/classic/docco.jst" working-dir="$PROJECT_DIR$/test/sim">
+      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+        <option name="envVars">
+          <list />
+        </option>
+        <option name="extraHosts">
+          <list />
+        </option>
+        <option name="links">
+          <list />
+        </option>
+        <option name="networkDisabled" value="false" />
+        <option name="networkMode" value="bridge" />
+        <option name="portBindings">
+          <list />
+        </option>
+        <option name="publishAllPorts" value="false" />
+        <option name="version" value="1" />
+        <option name="volumeBindings">
+          <list />
+        </option>
+      </EXTENSION>
+    </configuration>
+    <configuration name="docco --setup only  --layout linear" type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" path-to-node="project" path-to-js-file="$PROJECT_DIR$/bin/docco" application-parameters="--setup=.adocco.json   --layout linear" working-dir="$PROJECT_DIR$/test/sim">
+      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+        <option name="envVars">
+          <list />
+        </option>
+        <option name="extraHosts">
+          <list />
+        </option>
+        <option name="links">
+          <list />
+        </option>
+        <option name="networkDisabled" value="false" />
+        <option name="networkMode" value="bridge" />
+        <option name="portBindings">
+          <list />
+        </option>
+        <option name="publishAllPorts" value="false" />
+        <option name="version" value="1" />
+        <option name="volumeBindings">
+          <list />
+        </option>
+      </EXTENSION>
+    </configuration>
+    <configuration name="docco --setup only  --layout sidebyside" type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" path-to-node="project" path-to-js-file="$PROJECT_DIR$/bin/docco" application-parameters="--setup=.adocco.json   --layout sidebyside" working-dir="$PROJECT_DIR$/test/sim">
+      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+        <option name="envVars">
+          <list />
+        </option>
+        <option name="extraHosts">
+          <list />
+        </option>
+        <option name="links">
+          <list />
+        </option>
+        <option name="networkDisabled" value="false" />
+        <option name="networkMode" value="bridge" />
+        <option name="portBindings">
+          <list />
+        </option>
+        <option name="publishAllPorts" value="false" />
+        <option name="version" value="1" />
+        <option name="volumeBindings">
+          <list />
+        </option>
+      </EXTENSION>
+    </configuration>
+    <configuration name="docco --setup only" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" path-to-js-file="$PROJECT_DIR$/bin/docco" application-parameters="--setup=.adocco.json " working-dir="$PROJECT_DIR$/test/sim">
+      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+        <option name="envVars">
+          <list />
+        </option>
+        <option name="extraHosts">
+          <list />
+        </option>
+        <option name="links">
+          <list />
+        </option>
+        <option name="networkDisabled" value="false" />
+        <option name="networkMode" value="bridge" />
+        <option name="portBindings">
+          <list />
+        </option>
+        <option name="publishAllPorts" value="false" />
+        <option name="version" value="1" />
+        <option name="volumeBindings">
+          <list />
+        </option>
+      </EXTENSION>
+    </configuration>
+    <configuration name="docco --setup with --flatten --layout linear --css " type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" path-to-node="project" path-to-js-file="$PROJECT_DIR$/bin/docco" application-parameters="--setup=.adocco.json --flatten  --layout linear -c ../../resources/classic/docco.css" working-dir="$PROJECT_DIR$/test/sim">
+      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+        <option name="envVars">
+          <list />
+        </option>
+        <option name="extraHosts">
+          <list />
+        </option>
+        <option name="links">
+          <list />
+        </option>
+        <option name="networkDisabled" value="false" />
+        <option name="networkMode" value="bridge" />
+        <option name="portBindings">
+          <list />
+        </option>
+        <option name="publishAllPorts" value="false" />
+        <option name="version" value="1" />
+        <option name="volumeBindings">
+          <list />
+        </option>
+      </EXTENSION>
+    </configuration>
+    <configuration name="docco --setup with --flatten --layout linear" type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" path-to-node="project" path-to-js-file="$PROJECT_DIR$/bin/docco" application-parameters="--setup=.adocco.json --flatten  --layout linear" working-dir="$PROJECT_DIR$/test/sim">
+      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+        <option name="envVars">
+          <list />
+        </option>
+        <option name="extraHosts">
+          <list />
+        </option>
+        <option name="links">
+          <list />
+        </option>
+        <option name="networkDisabled" value="false" />
+        <option name="networkMode" value="bridge" />
+        <option name="portBindings">
+          <list />
+        </option>
+        <option name="publishAllPorts" value="false" />
+        <option name="version" value="1" />
+        <option name="volumeBindings">
+          <list />
+        </option>
+      </EXTENSION>
+    </configuration>
+    <configuration name="docco --setup with --flatten" type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" path-to-node="project" path-to-js-file="$PROJECT_DIR$/bin/docco" application-parameters="--setup=.adocco.json --flatten " working-dir="$PROJECT_DIR$/test/sim">
+      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+        <option name="envVars">
+          <list />
+        </option>
+        <option name="extraHosts">
+          <list />
+        </option>
+        <option name="links">
+          <list />
+        </option>
+        <option name="networkDisabled" value="false" />
+        <option name="networkMode" value="bridge" />
+        <option name="portBindings">
+          <list />
+        </option>
+        <option name="publishAllPorts" value="false" />
+        <option name="version" value="1" />
+        <option name="volumeBindings">
+          <list />
+        </option>
+      </EXTENSION>
+    </configuration>
+    <configuration name="docco --setup with --languages resouces/languages.json" type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" path-to-node="project" path-to-js-file="$PROJECT_DIR$/bin/docco" application-parameters="--setup=.adocco.json --languages ../../resources/languages.json" working-dir="$PROJECT_DIR$/test/sim">
+      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+        <option name="envVars">
+          <list />
+        </option>
+        <option name="extraHosts">
+          <list />
+        </option>
+        <option name="links">
+          <list />
+        </option>
+        <option name="networkDisabled" value="false" />
+        <option name="networkMode" value="bridge" />
+        <option name="portBindings">
+          <list />
+        </option>
+        <option name="publishAllPorts" value="false" />
+        <option name="version" value="1" />
+        <option name="volumeBindings">
+          <list />
+        </option>
+      </EXTENSION>
+    </configuration>
+    <configuration name="docco files on command line" type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" path-to-node="project" path-to-js-file="$PROJECT_DIR$/bin/docco" application-parameters="README.md images/**/*.jpg" working-dir="$PROJECT_DIR$/test/sim">
+      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+        <option name="envVars">
+          <list />
+        </option>
+        <option name="extraHosts">
+          <list />
+        </option>
+        <option name="links">
+          <list />
+        </option>
+        <option name="networkDisabled" value="false" />
+        <option name="networkMode" value="bridge" />
+        <option name="portBindings">
+          <list />
+        </option>
+        <option name="publishAllPorts" value="false" />
+        <option name="version" value="1" />
+        <option name="volumeBindings">
+          <list />
+        </option>
+      </EXTENSION>
+    </configuration>
+    <configuration name="docco getOthers" type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>SUITE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.js</test-file>
+      <test-names>
+        <name value="docco getOthers" />
+      </test-names>
+    </configuration>
+    <configuration name="docco getOthers.gets paths to other destination files: 1 level down, flattened." type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.litcoffee</test-file>
+      <test-names>
+        <name value="docco getOthers" />
+        <name value="gets paths to other destination files: 1 level down, flattened." />
+      </test-names>
+    </configuration>
+    <configuration name="docco no --setup  with --layout parallel" type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" path-to-node="project" path-to-js-file="$PROJECT_DIR$/bin/docco" application-parameters="--setup=.adocco.json  --flatten  --layout parallel" working-dir="$PROJECT_DIR$/test/sim">
+      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+        <option name="envVars">
+          <list />
+        </option>
+        <option name="extraHosts">
+          <list />
+        </option>
+        <option name="links">
+          <list />
+        </option>
+        <option name="networkDisabled" value="false" />
+        <option name="networkMode" value="bridge" />
+        <option name="portBindings">
+          <list />
+        </option>
+        <option name="publishAllPorts" value="false" />
+        <option name="version" value="1" />
+        <option name="volumeBindings">
+          <list />
+        </option>
+      </EXTENSION>
+    </configuration>
+    <configuration name="document" type="mocha-javascript-test-runner" factoryName="Mocha" singleton="false">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-document.js</test-file>
+    </configuration>
+    <configuration name="fake_javascript.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/docco/test/sim/docs/src/fake_javascript.html" />
+    <configuration name="fix for match" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-fixForMatch.js</test-file>
+    </configuration>
+    <configuration name="format" type="mocha-javascript-test-runner" factoryName="Mocha" singleton="false">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-format.js</test-file>
+    </configuration>
+    <configuration name="getCSSPath" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-getCSSPath.js</test-file>
+    </configuration>
+    <configuration name="getDestinationInformation" type="mocha-javascript-test-runner" factoryName="Mocha" singleton="false">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-getDestinationInformation.js</test-file>
+    </configuration>
+    <configuration name="getInformationOnFiles" type="mocha-javascript-test-runner" factoryName="Mocha" singleton="false">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-getInformationOnFiles.js</test-file>
+    </configuration>
+    <configuration name="getLanguage" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-getLanguage.js</test-file>
+    </configuration>
+    <configuration name="getOthers" type="mocha-javascript-test-runner" factoryName="Mocha" singleton="false">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.js</test-file>
+    </configuration>
+    <configuration name="getRelativePath" type="mocha-javascript-test-runner" factoryName="Mocha" singleton="false">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-getRelativePath.js</test-file>
+    </configuration>
+    <configuration name="parse" type="mocha-javascript-test-runner" factoryName="Mocha" singleton="false">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-parse.js</test-file>
+    </configuration>
+    <configuration name="run" type="mocha-javascript-test-runner" factoryName="Mocha" singleton="false">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-run.js</test-file>
+    </configuration>
+    <configuration name="write" type="mocha-javascript-test-runner" factoryName="Mocha" singleton="false">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/unit-tests/unit-test-write.js</test-file>
+    </configuration>
+    <list size="29">
+      <item index="0" class="java.lang.String" itemvalue="Node.js.docco --setup only" />
+      <item index="1" class="java.lang.String" itemvalue="Node.js.docco --setup with --flatten" />
+      <item index="2" class="java.lang.String" itemvalue="Node.js.docco files on command line" />
+      <item index="3" class="java.lang.String" itemvalue="Node.js.docco --setup only  --layout linear" />
+      <item index="4" class="java.lang.String" itemvalue="Node.js.docco --setup with --flatten --layout linear" />
+      <item index="5" class="java.lang.String" itemvalue="Mocha.getLanguage" />
+      <item index="6" class="java.lang.String" itemvalue="Mocha.getInformationOnFiles" />
+      <item index="7" class="java.lang.String" itemvalue="Mocha.getCSSPath" />
+      <item index="8" class="java.lang.String" itemvalue="Mocha.getRelativePath" />
+      <item index="9" class="java.lang.String" itemvalue="Mocha.Unit Tests" />
+      <item index="10" class="java.lang.String" itemvalue="Mocha.getDestinationInformation" />
+      <item index="11" class="java.lang.String" itemvalue="Mocha.write" />
+      <item index="12" class="java.lang.String" itemvalue="Mocha.getOthers" />
+      <item index="13" class="java.lang.String" itemvalue="Node.js.docco no --setup  with --layout parallel" />
+      <item index="14" class="java.lang.String" itemvalue="Mocha.parse" />
+      <item index="15" class="java.lang.String" itemvalue="Mocha.format" />
+      <item index="16" class="java.lang.String" itemvalue="Mocha.document" />
+      <item index="17" class="java.lang.String" itemvalue="Mocha.buildMatchers" />
+      <item index="18" class="java.lang.String" itemvalue="Mocha.run" />
+      <item index="19" class="java.lang.String" itemvalue="Node.js.docco --setup with --flatten --layout linear --css " />
+      <item index="20" class="java.lang.String" itemvalue="Node.js.docco --setup with --languages resouces/languages.json" />
+      <item index="21" class="java.lang.String" itemvalue="Node.js.docco --setup only  --layout linear --template" />
+      <item index="22" class="java.lang.String" itemvalue="Mocha.fix for match" />
+      <item index="23" class="java.lang.String" itemvalue="Node.js.docco --setup only  --layout sidebyside" />
+      <item index="24" class="java.lang.String" itemvalue="JavaScript Debug.README.html" />
+      <item index="25" class="java.lang.String" itemvalue="JavaScript Debug.README.html (1)" />
+      <item index="26" class="java.lang.String" itemvalue="JavaScript Debug.fake_javascript.html" />
+      <item index="27" class="java.lang.String" itemvalue="Mocha.docco getOthers.gets paths to other destination files: 1 level down, flattened." />
+      <item index="28" class="java.lang.String" itemvalue="Mocha.docco getOthers" />
+    </list>
+    <recent_temporary>
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.README.html" />
+        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.README.html (1)" />
+        <item index="2" class="java.lang.String" itemvalue="Mocha.docco getOthers" />
+        <item index="3" class="java.lang.String" itemvalue="Mocha.docco getOthers.gets paths to other destination files: 1 level down, flattened." />
+        <item index="4" class="java.lang.String" itemvalue="JavaScript Debug.fake_javascript.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="276b0a16-5b5d-4c51-a0d3-f44cc53e2124" name="Default" comment="" />
+      <created>1499113411165</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1499113411165</updated>
+      <workItem from="1499113413336" duration="48134000" />
+      <workItem from="1499270789324" duration="26498000" />
+      <workItem from="1499311905250" duration="7328000" />
+      <workItem from="1499363746950" duration="21026000" />
+      <workItem from="1499413604060" duration="10261000" />
+      <workItem from="1499463726746" duration="7655000" />
+      <workItem from="1499709490623" duration="6620000" />
+      <workItem from="1499721529302" duration="552000" />
+      <workItem from="1499722183283" duration="810000" />
+      <workItem from="1499727695046" duration="1103000" />
+      <workItem from="1499731477751" duration="1082000" />
+      <workItem from="1499736178047" duration="13868000" />
+      <workItem from="1499795270542" duration="619000" />
+      <workItem from="1499801213252" duration="8497000" />
+      <workItem from="1500051307473" duration="376000" />
+      <workItem from="1500052270841" duration="836000" />
+      <workItem from="1531187960815" duration="1681000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="Unit_Tests - 2018.07.09 at 19h 21m 16s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Unit_Tests - 2018.07.09 at 19h 21m 47s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Unit_Tests - 2018.07.09 at 19h 22m 35s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Unit_Tests - 2018.07.09 at 19h 22m 52s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Unit_Tests - 2018.07.09 at 19h 23m 27s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Unit_Tests - 2018.07.09 at 19h 24m 06s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Unit_Tests - 2018.07.09 at 19h 24m 08s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Unit_Tests - 2018.07.09 at 19h 24m 18s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Unit_Tests - 2018.07.09 at 19h 25m 18s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Unit_Tests - 2018.07.09 at 19h 25m 51s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="156946000" />
+  </component>
+  <component name="TodoView" selected-index="2">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="4" y="23" width="1916" height="1057" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20263852" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27608874" sideWeight="0.4983539" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Buck" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47295082" sideWeight="0.49860057" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32851985" sideWeight="0.5871007" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3985932" sideWeight="0.32332808" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.55146265" sideWeight="0.5676672" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39761648" sideWeight="0.6766719" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27608874" sideWeight="0.4983539" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4051724" sideWeight="0.30053192" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32949877" sideWeight="0.4983539" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3040263" sideWeight="0.4983539" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1606383" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4051724" sideWeight="0.6994681" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="87" />
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="NodeJSConfigurationType">
+        <watch expression="links" language="JavaScript" />
+        <watch expression="files" language="JavaScript" />
+        <watch expression="fileInfo.others" language="JavaScript" />
+      </configuration>
+      <configuration name="mocha-javascript-test-runner">
+        <watch expression="result" language="JavaScript" />
+        <watch expression="result.thingId" language="JavaScript" />
+        <watch expression="indexOf.call(valuesToFake, ref)" language="JavaScript" />
+        <watch expression="valuesToFake" language="JavaScript" />
+        <watch expression="k" language="JavaScript" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/resources/groc/default.coffee" />
+    <entry file="file://$PROJECT_DIR$/src/getLanguage.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/buildMatchers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="31" lean-forward="false" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/sim/src/fake_javascript.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="48" lean-forward="false" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/sim/src/fake_java.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/sim/src/fake_coffee.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/sim/src/fake_coffee2.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="42" lean-forward="false" selection-start-line="11" selection-start-column="42" selection-end-line="11" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-format.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="31" lean-forward="false" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/configure.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="30" column="22" lean-forward="false" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/sim/.adocco.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/parallel/docco.jst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="28" column="11" lean-forward="false" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/write.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="49" column="19" lean-forward="false" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/getDestinationInformation.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6">
+          <caret line="4" column="41" lean-forward="false" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-write.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="43" column="9" lean-forward="false" selection-start-line="43" selection-start-column="9" selection-end-line="43" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/getOthers.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1215">
+          <caret line="81" column="49" lean-forward="false" selection-start-line="81" selection-start-column="48" selection-end-line="81" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/getInformationOnFiles.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="60" column="44" lean-forward="false" selection-start-line="60" selection-start-column="44" selection-end-line="60" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1425">
+          <caret line="95" column="11" lean-forward="false" selection-start-line="95" selection-start-column="11" selection-end-line="95" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/getOthers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="4" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="47" column="2" lean-forward="false" selection-start-line="47" selection-start-column="2" selection-end-line="47" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/parallel/docco.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2655">
+          <caret line="177" column="7" lean-forward="false" selection-start-line="177" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/sidebyside/docco.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2625">
+          <caret line="175" column="0" lean-forward="false" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/sidebyside/docco.jst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="36" column="22" lean-forward="false" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/linear/docco.jst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="37" column="21" lean-forward="false" selection-start-line="28" selection-start-column="14" selection-end-line="37" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="1605">
+            <caret line="107" column="23" lean-forward="false" selection-start-line="107" selection-start-column="23" selection-end-line="107" selection-end-column="23" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="38" column="118" lean-forward="false" selection-start-line="38" selection-start-column="118" selection-end-line="38" selection-end-column="118" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/docco">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesUnFlattened.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="24" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/sim/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="810">
+            <caret line="54" column="19" lean-forward="false" selection-start-line="54" selection-start-column="19" selection-end-line="54" selection-end-column="19" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parse.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1155">
+          <caret line="77" column="47" lean-forward="false" selection-start-line="77" selection-start-column="47" selection-end-line="77" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/document.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1020">
+          <caret line="68" column="45" lean-forward="false" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parse.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="87" column="43" lean-forward="false" selection-start-line="87" selection-start-column="43" selection-end-line="87" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/languages.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="51" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesFlattened.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="45" lean-forward="false" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/buildMatchers.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="21" column="3" lean-forward="false" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.docco.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/sim/.docco.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="1" lean-forward="false" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/sim/docs/README.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-344">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1531189046000" expanded="true" signature="8027:8032" ph="..." />
+            <marker date="1531189046000" expanded="true" signature="8027:8040" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/format.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="42" column="45" lean-forward="false" selection-start-line="42" selection-start-column="45" selection-end-line="42" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/write.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="43" column="17" lean-forward="false" selection-start-line="43" selection-start-column="17" selection-end-line="43" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/configure.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="66" lean-forward="false" selection-start-line="34" selection-start-column="66" selection-end-line="34" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docco.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="161" column="39" lean-forward="false" selection-start-line="161" selection-start-column="39" selection-end-line="161" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-typeIsArray.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-config.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="16" column="14" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-getInformationOnFiles.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="9" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-getInformationOnFiles.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="24" column="11" lean-forward="false" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesUnFlattened.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="24" column="27" lean-forward="false" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-run.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="60" column="9" lean-forward="false" selection-start-line="60" selection-start-column="9" selection-end-line="60" selection-end-column="9" />
+          <folding>
+            <marker date="1531189548000" expanded="true" signature="1190:2044" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="1638:1864" ph="{&quot;layout&quot;: &quot;parallel&quot;...}" />
+            <marker date="1531189548000" expanded="true" signature="2100:3322" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="2131:2191" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="2218:2287" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="2336:3148" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="2382:3127" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="2397:2464" ph="..." />
+            <marker date="1531189548000" expanded="true" signature="2478:2550" ph="..." />
+            <marker date="1531189548000" expanded="true" signature="2564:2628" ph="..." />
+            <marker date="1531189548000" expanded="true" signature="2642:2715" ph="..." />
+            <marker date="1531189548000" expanded="true" signature="2729:2799" ph="..." />
+            <marker date="1531189548000" expanded="true" signature="2813:2883" ph="..." />
+            <marker date="1531189548000" expanded="true" signature="2897:2967" ph="..." />
+            <marker date="1531189548000" expanded="true" signature="2981:3050" ph="..." />
+            <marker date="1531189548000" expanded="true" signature="3064:3121" ph="..." />
+            <marker date="1531189548000" expanded="true" signature="3174:3239" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="3264:3320" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="3390:3531" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="3440:3476" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-run.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="54" column="29" lean-forward="false" selection-start-line="54" selection-start-column="29" selection-end-line="54" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="20" column="49" lean-forward="false" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
+          <folding>
+            <marker date="1531189548000" expanded="true" signature="272:898" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="324:894" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="438:870" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="625:696" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="718:819" ph="{...}" />
+            <marker date="1531189548000" expanded="true" signature="825:864" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="47" lean-forward="false" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <last-edited>Hide Literate Coffeescript js and map files</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

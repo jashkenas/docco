@@ -59,7 +59,7 @@ mockery.registerMock('./src/configure', function(commander, defaults, languages)
     }
   });
   assert.deepEqual(defaults, {
-    "layout": "parallel",
+    "layout": "sidebyside",
     "output": "docs",
     "template": null,
     "css": null,
@@ -101,7 +101,7 @@ mockery.registerMock('commander', {
         option.should.be.equal('-f, --flatten');
         break;
       case 4:
-        option.should.be.equal('-L, --languages [file]');
+        option.should.be.equal('-g, --languages [file]');
         break;
       case 5:
         option.should.be.equal('-l, --layout [name]');

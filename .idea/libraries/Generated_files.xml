@@ -1,0 +1,101 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/src/getLanguage.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-typeIsArray.js" />
+        <item url="file://$PROJECT_DIR$/src/getSourceInformation.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getCSSPath.js" />
+        <item url="file://$PROJECT_DIR$/src/format.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getInformationOnFiles.js" />
+        <item url="file://$PROJECT_DIR$/src/getInformationOnFiles.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-parse.js" />
+        <item url="file://$PROJECT_DIR$/src/buildMatchers.js" />
+        <item url="file://$PROJECT_DIR$/src/getRelativePath.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-run.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getDestinationInformation.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getLanguage.js" />
+        <item url="file://$PROJECT_DIR$/src/getCSSPath.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-write.js" />
+        <item url="file://$PROJECT_DIR$/src/getOthers.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-document.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-configure.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getRelativePath.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-format.js" />
+        <item url="file://$PROJECT_DIR$/src/configure.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-unflattened-result.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesUnFlattened.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-config.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-flattened-result.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/unit-test-fixForMatch.js" />
+        <item url="file://$PROJECT_DIR$/docco.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesFlattened.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-jst-result.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-jst.js" />
+        <item url="file://$PROJECT_DIR$/src/write.js" />
+        <item url="file://$PROJECT_DIR$/src/parse.js" />
+        <item url="file://$PROJECT_DIR$/src/document.js" />
+        <item url="file://$PROJECT_DIR$/src/getDestinationInformation.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/utils/fixForMatch.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/utils/typeIsObject.js" />
+        <item url="file://$PROJECT_DIR$/test/unit-tests/utils/typeIsArray.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getCSS.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getCSS.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-result.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-result.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-a-write.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-a-write.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesFlattenedRelative.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesFlattenedRelative.js" />
+      <root url="file://$PROJECT_DIR$/docco_original.js" />
+      <root url="file://$PROJECT_DIR$/docco_original.js" />
+      <root url="file://$PROJECT_DIR$/src/getLanguage.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-typeIsArray.js" />
+      <root url="file://$PROJECT_DIR$/src/getSourceInformation.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getCSSPath.js" />
+      <root url="file://$PROJECT_DIR$/src/format.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getInformationOnFiles.js" />
+      <root url="file://$PROJECT_DIR$/src/getInformationOnFiles.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-parse.js" />
+      <root url="file://$PROJECT_DIR$/src/buildMatchers.js" />
+      <root url="file://$PROJECT_DIR$/src/getRelativePath.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-run.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getDestinationInformation.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getLanguage.js" />
+      <root url="file://$PROJECT_DIR$/src/getCSSPath.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-write.js" />
+      <root url="file://$PROJECT_DIR$/src/getOthers.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-document.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getOthers.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-buildMatchers.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-configure.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-getRelativePath.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-format.js" />
+      <root url="file://$PROJECT_DIR$/src/configure.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-unflattened-result.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesUnFlattened.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-config.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-linear-jst-flattened-result.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/unit-test-fixForMatch.js" />
+      <root url="file://$PROJECT_DIR$/docco.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/fakes/informationOnFilesFlattened.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-jst-result.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/fakes/fake-jst.js" />
+      <root url="file://$PROJECT_DIR$/src/write.js" />
+      <root url="file://$PROJECT_DIR$/src/parse.js" />
+      <root url="file://$PROJECT_DIR$/src/document.js" />
+      <root url="file://$PROJECT_DIR$/src/getDestinationInformation.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/utils/fixForMatch.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/utils/typeIsObject.js" />
+      <root url="file://$PROJECT_DIR$/test/unit-tests/utils/typeIsArray.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

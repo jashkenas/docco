@@ -132,7 +132,7 @@ Default configuration **options**. All of these may be extended by
 user-specified options.
 
     defaults =
-      layout:     'parallel'
+      layout:     'sidebyside'
       output:     'docs'
       template:   null
       css:        null
@@ -157,7 +157,7 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         .option('-c, --css [file]',       'use a custom css file', config.css)
         .option('-e, --extension [ext]',  'assume a file extension for all inputs', config.extension)
         .option('-f, --flatten',          'flatten the directory hierarchy', config.flatten)
-        .option('-L, --languages [file]', 'use a custom languages.json', _.compose JSON.parse, fs.readFileSync)
+        .option('-g, --languages [file]', 'use a custom languages.json', _.compose JSON.parse, fs.readFileSync)
         .option('-l, --layout [name]',    'choose a layout (parallel, linear or classic)', config.layout)
         .option('-m, --marked [file]',    'use custom marked options', config.marked)
         .option('-o, --output [path]',    'output to a given folder', config.output)
