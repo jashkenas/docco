@@ -31,7 +31,7 @@ languages = JSON.parse(fs.readFileSync(path.join(__dirname, 'resources', 'langua
 version = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version;
 
 defaults = {
-  layout: 'parallel',
+  layout: 'sidebyside',
   output: 'docs',
   template: null,
   css: null,
@@ -49,7 +49,7 @@ run = function(args) {
     args = process.argv;
   }
   config = defaults;
-  commander.version(version).usage('[options] [file]').option('-c, --css [file]', 'use a custom css file', config.css).option('-e, --extension [ext]', 'assume a file extension for all inputs', config.extension).option('-f, --flatten', 'flatten the directory hierarchy', config.flatten).option('-L, --languages [file]', 'use a custom languages.json', _.compose(JSON.parse, fs.readFileSync)).option('-l, --layout [name]', 'choose a layout (parallel, linear or classic)', config.layout).option('-m, --marked [file]', 'use custom marked options', config.marked).option('-o, --output [path]', 'output to a given folder', config.output).option('-s, --setup [file]', 'use configuration file, normally docco.json', '.docco.json').option('-t, --template [file]', 'use a custom .jst template', config.template).parse(args).name = "docco";
+  commander.version(version).usage('[options] [file]').option('-c, --css [file]', 'use a custom css file', config.css).option('-e, --extension [ext]', 'assume a file extension for all inputs', config.extension).option('-f, --flatten', 'flatten the directory hierarchy', config.flatten).option('-g, --languages [file]', 'use a custom languages.json', _.compose(JSON.parse, fs.readFileSync)).option('-l, --layout [name]', 'choose a layout (parallel, linear or classic)', config.layout).option('-m, --marked [file]', 'use custom marked options', config.marked).option('-o, --output [path]', 'output to a given folder', config.output).option('-s, --setup [file]', 'use configuration file, normally docco.json', '.docco.json').option('-t, --template [file]', 'use a custom .jst template', config.template).parse(args).name = "docco";
   config = configure(commander, defaults, languages);
   setup = path.resolve(config.setup);
   if (fs.existsSync(setup)) {
