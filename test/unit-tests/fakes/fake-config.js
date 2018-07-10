@@ -63,7 +63,7 @@ module.exports = {
       "symbol": "#"
     }
   },
-  "layout": "sidebyside",
+  "layout": "parallel",
   "marked": {},
   "output": "docs",
   "root": "force matched",
