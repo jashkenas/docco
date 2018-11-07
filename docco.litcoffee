@@ -25,7 +25,7 @@ Docco can be used to process code written in any programming language. If it
 doesn't handle your favorite yet, feel free to
 [add it to the list](https://github.com/jashkenas/docco/blob/master/resources/languages.json).
 Finally, the ["literate" style](http://coffeescript.org/#literate) of *any*
-language listed in [languages.json](https://github.com/jashkenas/docco/blob/master/resources/languages.json) 
+language listed in [languages.json](https://github.com/jashkenas/docco/blob/master/resources/languages.json)
 is also supported — just tack an `.md` extension on the end:
 `.coffee.md`, `.py.md`, and so on.
 
@@ -153,48 +153,37 @@ normal below.
 
 To **format** and highlight the now-parsed sections of code, we use **Highlight.js**
 over stdio, and run the text of their corresponding comments through
-**Markdown**, using [Marked](https://github.com/chjj/marked).
+**Markdown**, using [markdown-it](https://github.com/markdown-it/markdown-it).
 
     format = (source, sections, config) ->
       language = getLanguage source, config
-
-Pass any user defined options to Marked if specified via command line option
-
-      markedOptions =
-        smartypants: true
-
-      if config.marked
-        markedOptions = config.marked
-
-      marked.setOptions markedOptions
+      console.log('language', language)
 
 Tell Marked how to highlight code blocks within comments, treating that code
 as either the language specified in the code block or the language of the file
 if not specified.
 
-      marked.setOptions {
-        highlight: (code, lang) ->
-          lang or= language.name
+```uml
+@startuml
+a -> b
+@enduml
+```
 
-          if highlightjs.getLanguage(lang)
-            highlightjs.highlight(lang, code).value
-          else
-            console.warn "docco: couldn't highlight code block with unknown language '#{lang}' in #{source}"
-            code
-      }
+@startuml
+a -> b
+@enduml
 
       for section, i in sections
-        code = highlightjs.highlight(language.name, section.codeText).value
+        code = hljs.highlight(language.name, section.codeText).value
         code = code.replace(/\s+$/, '')
         section.codeHtml = "<div class='highlight'><pre>#{code}</pre></div>"
-        section.docsHtml = marked(section.docsText)
+        section.docsHtml = md.render(section.docsText)
 
 Once all of the code has finished highlighting, we can **write** the resulting
 documentation file by passing the completed HTML sections into the template,
 and rendering it to the specified output path.
 
     write = (source, sections, config) ->
-
       destination = (file) ->
         path.join(config.output, path.dirname(file), path.basename(file, path.extname(file)) + '.html')
 
@@ -203,18 +192,14 @@ and rendering it to the specified output path.
         from = path.dirname(path.resolve(destination(source)))
         path.join(path.relative(from, to), path.basename(file))
 
-The **title** of the file is either the first heading in the prose, or the
-name of the source file.
+The **title** of the file is the name of the source file.
 
-      firstSection = _.find sections, (section) ->
-        section.docsText.length > 0
-      first = marked.lexer(firstSection.docsText)[0] if firstSection
-      hasTitle = first and first.type is 'heading' and first.depth is 1
-      title = if hasTitle then first.text else path.basename source
+      title = path.basename source
       css = relative path.join(config.output, path.basename(config.css))
 
-      html = config.template {sources: config.sources, css,
-        title, hasTitle, sections, path, destination, relative}
+      html = config.template {
+        sources: config.sources, css, title, hasTitle:true , sections, path, destination, relative
+      }
 
       console.log "docco: #{source} -> #{destination source}"
       fs.outputFileSync destination(source), html
@@ -280,9 +265,19 @@ Require our external dependencies.
     _           = require 'underscore'
     fs          = require 'fs-extra'
     path        = require 'path'
-    marked      = require 'marked'
+    MarkdownIt  = require 'markdown-it'
     commander   = require 'commander'
-    highlightjs = require 'highlight.js'
+    hljs = require 'highlight.js'
+
+    md = MarkdownIt({
+      highlight: (str, lang) =>
+        if lang && hljs.getLanguage(lang)
+          try
+            return hljs.highlight(lang, str).value
+          catch __
+
+        return '';
+    }).use(require('markdown-it-plantuml'))
 
 Languages are stored in JSON in the file `resources/languages.json`.
 Each item maps the file extension to the name of the language and the
@@ -339,7 +334,6 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         .option('-c, --css [file]',       'use a custom css file', c.css)
         .option('-t, --template [file]',  'use a custom .jst template', c.template)
         .option('-e, --extension [ext]',  'assume a file extension for all inputs', c.extension)
-        .option('-m, --marked [file]',    'use custom marked options', c.marked)
         .parse(args)
         .name = "docco"
       if commander.args.length
