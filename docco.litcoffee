@@ -163,16 +163,6 @@ Tell Marked how to highlight code blocks within comments, treating that code
 as either the language specified in the code block or the language of the file
 if not specified.
 
-```uml
-@startuml
-a -> b
-@enduml
-```
-
-@startuml
-a -> b
-@enduml
-
       for section, i in sections
         code = hljs.highlight(language.name, section.codeText).value
         code = code.replace(/\s+$/, '')
@@ -271,13 +261,47 @@ Require our external dependencies.
 
     md = MarkdownIt({
       highlight: (str, lang) =>
+        console.log 'lang', lang
+
         if lang && hljs.getLanguage(lang)
           try
             return hljs.highlight(lang, str).value
           catch __
 
         return '';
-    }).use(require('markdown-it-plantuml'))
+    })
+
+uml support
+```puml
+@startuml
+a -> b
+@enduml
+```
+
+@startuml
+a -> b
+@enduml
+
+    .use(require('markdown-it-plantuml'),{imageFormat:'png'})
+
+math support
+```
+\begin{equation}
+e^{\pi i} + 1 = 0
+\end{equation}
+```
+
+\begin{equation}
+e^{\pi i} + 1 = 0
+\end{equation}
+
+
+    .use(require('markdown-it-mathjax')())
+
+
+
+
+
 
 Languages are stored in JSON in the file `resources/languages.json`.
 Each item maps the file extension to the name of the language and the

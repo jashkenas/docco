@@ -6,6 +6,9 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
   <link rel="stylesheet" media="all" href="resources/linear/docco.css" />
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
 </head>
 <body>
   <div class="container">
@@ -209,10 +212,6 @@ over stdio, and run the text of their corresponding comments through
         <p>Tell Marked how to highlight code blocks within comments, treating that code
 as either the language specified in the code block or the language of the file
 if not specified.</p>
-<pre><code class="language-uml">@startuml
-a -&gt; b
-@enduml
-</code></pre>
 
         
           <div class='highlight'><pre>  <span class="hljs-keyword">for</span> section, i <span class="hljs-keyword">in</span> sections
@@ -333,13 +332,41 @@ hljs = <span class="hljs-built_in">require</span> <span class="hljs-string">'hig
 
 md = MarkdownIt({
   highlight: <span class="hljs-function"><span class="hljs-params">(str, lang)</span> =&gt;</span>
+    <span class="hljs-built_in">console</span>.log <span class="hljs-string">'lang'</span>, lang
+
     <span class="hljs-keyword">if</span> lang &amp;&amp; hljs.getLanguage(lang)
       <span class="hljs-keyword">try</span>
         <span class="hljs-keyword">return</span> hljs.highlight(lang, str).value
       <span class="hljs-keyword">catch</span> __
 
     <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
-}).use(<span class="hljs-built_in">require</span>(<span class="hljs-string">'markdown-it-plantuml'</span>))</pre></div>
+})</pre></div>
+        
+      
+        
+        <p>uml support</p>
+<pre><code class="language-puml">@startuml
+a -&gt; b
+@enduml
+</code></pre>
+<img src="http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKfKqBLJIE9oICrB0N81" alt="uml diagram">
+
+        
+          <div class='highlight'><pre>.use(<span class="hljs-built_in">require</span>(<span class="hljs-string">'markdown-it-plantuml'</span>),{imageFormat:<span class="hljs-string">'png'</span>})</pre></div>
+        
+      
+        
+        <p>math support</p>
+<pre><code>\begin{equation}
+e^{\pi i} + 1 = 0
+\end{equation}
+</code></pre>
+<p>\begin{equation}
+e^{\pi i} + 1 = 0
+\end{equation}</p>
+
+        
+          <div class='highlight'><pre>.use(<span class="hljs-built_in">require</span>(<span class="hljs-string">'markdown-it-mathjax'</span>)())</pre></div>
         
       
         

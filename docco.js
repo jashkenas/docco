@@ -183,12 +183,6 @@
 // Tell Marked how to highlight code blocks within comments, treating that code
 // as either the language specified in the code block or the language of the file
 // if not specified.
-
-// ```uml
-// @startuml
-// a -> b
-// @enduml
-// ```
     results = [];
     for (i = j = 0, len = sections.length; j < len; i = ++j) {
       section = sections[i];
@@ -304,6 +298,7 @@
   md = MarkdownIt({
     highlight: (str, lang) => {
       var __;
+      console.log('lang', lang);
       if (lang && hljs.getLanguage(lang)) {
         try {
           return hljs.highlight(lang, str).value;
@@ -313,7 +308,24 @@
       }
       return '';
     }
-  }).use(require('markdown-it-plantuml'));
+  // uml support
+  // ```puml
+  // @startuml
+  // a -> b
+  // @enduml
+  // ```
+
+  // @startuml
+  // a -> b
+  // @enduml
+  }).use(require('markdown-it-plantuml'), {
+    imageFormat: 'png'
+  // math support
+  }).use(require('markdown-it-mathjax')());
+
+  // \begin{equation}
+  // E = mc^2
+  // \end{equation}
 
   // Languages are stored in JSON in the file `resources/languages.json`.
   // Each item maps the file extension to the name of the language and the

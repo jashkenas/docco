@@ -16,7 +16,7 @@ task 'install', 'install the `docco` command into /usr/local (or --prefix)', (op
   lib  = base + '/lib/docco'
   exec([
     'mkdir -p ' + lib + ' ' + base + '/bin'
-    'cp -rf bin README resources ' + lib
+    'cp -rf bin README resources docco.js node_modules ' + lib
     'ln -sf ' + lib + '/bin/docco ' + base + '/bin/docco'
   ].join(' && '), (err, stdout, stderr) ->
    if err then console.error stderr

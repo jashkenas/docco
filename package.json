@@ -23,6 +23,7 @@
     "fs-extra": ">= 0.6.0",
     "highlight.js": ">= 8.0.x",
     "markdown-it": "^8.4.2",
+    "markdown-it-mathjax": "^2.0.0",
     "markdown-it-plantuml": "^1.3.0",
     "marked": ">= 0.2.7",
     "underscore": ">= 1.0.0"
