@@ -8,8 +8,8 @@
   <link rel="stylesheet" media="all" href="<%= css %>" />
 </head>
 <body>
-  <div id="container">
-    <div id="background"></div>
+  <div class="container">
+    <div class="background"></div>
     <% if (sources.length > 1) { %>
       <ul id="jump_to">
         <li>
@@ -31,7 +31,7 @@
     <% } %>
     <ul class="sections">
         <% if (!hasTitle) { %>
-          <li id="title">
+          <li class="title">
               <div class="annotation">
                   <h1><%= title %></h1>
               </div>
