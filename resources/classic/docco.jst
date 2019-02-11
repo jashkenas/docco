@@ -40,8 +40,8 @@
         <li id="section-<%= i + 1 %>">
             <div class="annotation">
               <% heading = section.docsHtml.match(/^\s*<(h\d)>/) %>
-              <div class="pilwrap <%= heading ? 'for-' + heading[1] : '' %>">
-                <a class="pilcrow" href="#section-<%= i + 1 %>">&#182;</a>
+              <div class="sswrap <%= heading ? 'for-' + heading[1] : '' %>">
+                <a class="ss" href="#section-<%= i + 1 %>">&#x00a7;</a>
               </div>
               <%= section.docsHtml %>
             </div>
