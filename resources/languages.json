@@ -17,6 +17,7 @@
   ".cs":          {"name": "cs", "symbol": "//"},
   ".cson":        {"name": "coffeescript", "symbol": "#"},
   ".d":           {"name": "d", "symbol": "//"},
+  ".dart":        {"name": "dart", "symbol": "///"},
   ".dtx":         {"name": "tex", "symbol": "%"},
   ".erl":         {"name": "erlang", "symbol": "%"},
   ".f":           {"name": "fortran", "symbol": "!"},
