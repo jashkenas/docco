@@ -113,7 +113,7 @@ pre, tt, code {
 }
   .page pre {
     margin: 0;
-    width: 608px;
+    width: 900px;
     padding: 10px 15px;
     background: #fcfcfc;
     -moz-box-shadow:    inset 0 0 10px rgba(0,0,0,0.1);
@@ -138,14 +138,14 @@ pre, tt, code {
 /*--------------------- Layout ----------------------------*/
 
 .container {
-  width: 760px;
+  width: 1000px;
   margin: 0 auto;
   background: #fff;
   background: rgba(255,255,255, 0.4);
   overflow: hidden;
 }
   .page {
-    width: 640px;
+    width: 920px;
     padding: 30px;
     margin: 30px;
     background: #fff;
@@ -334,4 +334,28 @@ pre .hljs-chunk {
 
 pre .hljs-tex .hljs-formula {
   opacity: 0.5;
+}
+
+
+/*
+table
+*/
+
+
+table {
+  display: block;
+  white-space: nowrap;
+  overflow-x: auto;
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 9px 13px;
+  border: 1px solid #d8d8d8;
+}
+
+tr:nth-child(2n) td {
+  background-color: #f4f4f4;
 }

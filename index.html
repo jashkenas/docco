@@ -2,10 +2,13 @@
 
 <html>
 <head>
-  <title>Docco</title>
+  <title>docco.litcoffee</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
   <link rel="stylesheet" media="all" href="resources/linear/docco.css" />
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
 </head>
 <body>
   <div class="container">
@@ -14,7 +17,7 @@
       <div class="header">
         
           
-          <h1 id="docco">Docco</h1>
+          <h1>Docco</h1>
 
           
         
@@ -33,66 +36,77 @@ passed through <a href="http://highlightjs.org/">Highlight.js</a> syntax highlig
 This page is the result of running Docco against its own
 <a href="https://github.com/jashkenas/docco/blob/master/docco.litcoffee">source file</a>.</p>
 <ol>
-<li><p>Install Docco with <strong>npm</strong>: <code>sudo npm install -g docco</code></p>
+<li>
+<p>Install Docco with <strong>npm</strong>: <code>sudo npm install -g docco</code></p>
 </li>
-<li><p>Run it against your code: <code>docco src/*.coffee</code></p>
+<li>
+<p>Run it against your code: <code>docco src/*.coffee</code></p>
 </li>
 </ol>
-<p>There is no “Step 3”. This will generate an HTML page for each of the named
+<p>There is no &quot;Step 3&quot;. This will generate an HTML page for each of the named
 source files, with a menu linking to the other pages, saving the whole mess
 into a <code>docs</code> folder (configurable).</p>
 <p>The <a href="http://github.com/jashkenas/docco">Docco source</a> is available on GitHub,
 and is released under the <a href="http://lillicense.org/v1.html">Lil License</a>.</p>
 <p>Docco can be used to process code written in any programming language. If it
-doesn’t handle your favorite yet, feel free to
+doesn't handle your favorite yet, feel free to
 <a href="https://github.com/jashkenas/docco/blob/master/resources/languages.json">add it to the list</a>.
-Finally, the <a href="http://coffeescript.org/#literate">“literate” style</a> of <em>any</em>
-language listed in <a href="https://github.com/jashkenas/docco/blob/master/resources/languages.json">languages.json</a> 
+Finally, the <a href="http://coffeescript.org/#literate">&quot;literate&quot; style</a> of <em>any</em>
+language listed in <a href="https://github.com/jashkenas/docco/blob/master/resources/languages.json">languages.json</a>
 is also supported — just tack an <code>.md</code> extension on the end:
 <code>.coffee.md</code>, <code>.py.md</code>, and so on.</p>
-<h2 id="partners-in-crime-">Partners in Crime:</h2>
+<h2>Partners in Crime:</h2>
 
         
       
         
         <ul>
-<li><p>If Node.js doesn’t run on your platform, or you’d prefer a more
-convenient package, get <a href="http://github.com/rtomayko">Ryan Tomayko</a>‘s
-<a href="http://rtomayko.github.io/rocco/rocco.html">Rocco</a>, the <strong>Ruby</strong> port that’s
+<li>
+<p>If Node.js doesn't run on your platform, or you'd prefer a more
+convenient package, get <a href="http://github.com/rtomayko">Ryan Tomayko</a>'s
+<a href="http://rtomayko.github.io/rocco/rocco.html">Rocco</a>, the <strong>Ruby</strong> port that's
 available as a gem.</p>
 </li>
-<li><p>If you’re writing shell scripts, try
+<li>
+<p>If you're writing shell scripts, try
 <a href="http://rtomayko.github.io/shocco/">Shocco</a>, a port for the <strong>POSIX shell</strong>,
 also by Mr. Tomayko.</p>
 </li>
-<li><p>If <strong>Python</strong> is more your speed, take a look at
-<a href="http://github.com/fitzgen">Nick Fitzgerald</a>‘s <a href="https://pycco-docs.github.io/pycco/">Pycco</a>.</p>
+<li>
+<p>If <strong>Python</strong> is more your speed, take a look at
+<a href="http://github.com/fitzgen">Nick Fitzgerald</a>'s <a href="https://pycco-docs.github.io/pycco/">Pycco</a>.</p>
 </li>
-<li><p>For <strong>Clojure</strong> fans, <a href="http://blog.fogus.me/">Fogus</a>‘s
-<a href="https://gdeer81.github.io/marginalia/">Marginalia</a> is a bit of a departure from
-“quick-and-dirty”, but it’ll get the job done.</p>
+<li>
+<p>For <strong>Clojure</strong> fans, <a href="http://blog.fogus.me/">Fogus</a>'s
+<a href="http://fogus.me/fun/marginalia/">Marginalia</a> is a bit of a departure from
+&quot;quick-and-dirty&quot;, but it'll get the job done.</p>
 </li>
-<li><p>There’s a <strong>Go</strong> port called <a href="http://nikhilm.github.io/gocco/">Gocco</a>,
+<li>
+<p>There's a <strong>Go</strong> port called <a href="http://nikhilm.github.io/gocco/">Gocco</a>,
 written by <a href="https://github.com/nikhilm">Nikhil Marathe</a>.</p>
 </li>
-<li><p>For all you <strong>PHP</strong> buffs out there, Fredi Bach’s
-<a href="http://jquery-jkit.com/sourcemakeup/">sourceMakeup</a> (we’ll let the faux pas
+<li>
+<p>For all you <strong>PHP</strong> buffs out there, Fredi Bach's
+<a href="http://jquery-jkit.com/sourcemakeup/">sourceMakeup</a> (we'll let the faux pas
 with respect to our naming scheme slide), should do the trick nicely.</p>
 </li>
-<li><p><strong>Lua</strong> enthusiasts can get their fix with
-<a href="https://github.com/rgieseke">Robert Gieseke</a>‘s <a href="http://rgieseke.github.io/locco/">Locco</a>.</p>
+<li>
+<p><strong>Lua</strong> enthusiasts can get their fix with
+<a href="https://github.com/rgieseke">Robert Gieseke</a>'s <a href="http://rgieseke.github.io/locco/">Locco</a>.</p>
 </li>
-<li><p>And if you happen to be a <strong>.NET</strong>
-aficionado, check out <a href="https://github.com/dontangg">Don Wilson</a>‘s
+<li>
+<p>And if you happen to be a <strong>.NET</strong>
+aficionado, check out <a href="https://github.com/dontangg">Don Wilson</a>'s
 <a href="http://dontangg.github.io/nocco/">Nocco</a>.</p>
 </li>
-<li><p>Going further afield from the quick-and-dirty, <a href="http://nevir.github.io/groc/">Groc</a>
+<li>
+<p>Going further afield from the quick-and-dirty, <a href="http://nevir.github.io/groc/">Groc</a>
 is a <strong>CoffeeScript</strong> fork of Docco that adds a searchable table of contents,
 and aims to gracefully handle large projects with complex hierarchies of code.</p>
 </li>
 </ul>
-<p>Note that not all ports will support all Docco features … yet.</p>
-<h2 id="main-documentation-generation-functions">Main Documentation Generation Functions</h2>
+<p>Note that not all ports will support all Docco features ... yet.</p>
+<h2>Main Documentation Generation Functions</h2>
 
         
       
@@ -186,24 +200,12 @@ normal below.</p>
         
         <p>To <strong>format</strong> and highlight the now-parsed sections of code, we use <strong>Highlight.js</strong>
 over stdio, and run the text of their corresponding comments through
-<strong>Markdown</strong>, using <a href="https://github.com/chjj/marked">Marked</a>.</p>
+<strong>Markdown</strong>, using <a href="https://github.com/markdown-it/markdown-it">markdown-it</a>.</p>
 
         
           <div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">format</span> = <span class="hljs-params">(source, sections, config)</span> -&gt;</span>
-  language = getLanguage source, config</pre></div>
-        
-      
-        
-        <p>Pass any user defined options to Marked if specified via command line option</p>
-
-        
-          <div class='highlight'><pre>  markedOptions =
-    smartypants: <span class="hljs-literal">true</span>
-
-  <span class="hljs-keyword">if</span> config.marked
-    markedOptions = config.marked
-
-  marked.setOptions markedOptions</pre></div>
+  language = getLanguage source, config
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'language'</span>, language)</pre></div>
         
       
         
@@ -212,22 +214,11 @@ as either the language specified in the code block or the language of the file
 if not specified.</p>
 
         
-          <div class='highlight'><pre>  marked.setOptions {
-    highlight: <span class="hljs-function"><span class="hljs-params">(code, lang)</span> -&gt;</span>
-      lang <span class="hljs-keyword">or</span>= language.name
-
-      <span class="hljs-keyword">if</span> highlightjs.getLanguage(lang)
-        highlightjs.highlight(lang, code).value
-      <span class="hljs-keyword">else</span>
-        <span class="hljs-built_in">console</span>.warn <span class="hljs-string">"docco: couldn't highlight code block with unknown language '<span class="hljs-subst">#{lang}</span>' in <span class="hljs-subst">#{source}</span>"</span>
-        code
-  }
-
-  <span class="hljs-keyword">for</span> section, i <span class="hljs-keyword">in</span> sections
-    code = highlightjs.highlight(language.name, section.codeText).value
+          <div class='highlight'><pre>  <span class="hljs-keyword">for</span> section, i <span class="hljs-keyword">in</span> sections
+    code = hljs.highlight(language.name, section.codeText).value
     code = code.replace(<span class="hljs-regexp">/\s+$/</span>, <span class="hljs-string">''</span>)
     section.codeHtml = <span class="hljs-string">"&lt;div class='highlight'&gt;&lt;pre&gt;<span class="hljs-subst">#{code}</span>&lt;/pre&gt;&lt;/div&gt;"</span>
-    section.docsHtml = marked(section.docsText)</pre></div>
+    section.docsHtml = md.render(section.docsText)</pre></div>
         
       
         
@@ -237,8 +228,7 @@ and rendering it to the specified output path.</p>
 
         
           <div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">write</span> = <span class="hljs-params">(source, sections, config)</span> -&gt;</span>
-<span class="hljs-function">
-  <span class="hljs-title">destination</span> = <span class="hljs-params">(file)</span> -&gt;</span>
+<span class="hljs-function">  <span class="hljs-title">destination</span> = <span class="hljs-params">(file)</span> -&gt;</span>
     path.join(config.output, path.dirname(file), path.basename(file, path.extname(file)) + <span class="hljs-string">'.html'</span>)
 <span class="hljs-function">
   <span class="hljs-title">relative</span> = <span class="hljs-params">(file)</span> -&gt;</span>
@@ -248,26 +238,22 @@ and rendering it to the specified output path.</p>
         
       
         
-        <p>The <strong>title</strong> of the file is either the first heading in the prose, or the
-name of the source file.</p>
+        <p>The <strong>title</strong> of the file is the name of the source file.</p>
 
         
-          <div class='highlight'><pre>  firstSection = _.find sections, <span class="hljs-function"><span class="hljs-params">(section)</span> -&gt;</span>
-    section.docsText.length &gt; <span class="hljs-number">0</span>
-  first = marked.lexer(firstSection.docsText)[<span class="hljs-number">0</span>] <span class="hljs-keyword">if</span> firstSection
-  hasTitle = first <span class="hljs-keyword">and</span> first.type <span class="hljs-keyword">is</span> <span class="hljs-string">'heading'</span> <span class="hljs-keyword">and</span> first.depth <span class="hljs-keyword">is</span> <span class="hljs-number">1</span>
-  title = <span class="hljs-keyword">if</span> hasTitle <span class="hljs-keyword">then</span> first.text <span class="hljs-keyword">else</span> path.basename source
+          <div class='highlight'><pre>  title = path.basename source
   css = relative path.join(config.output, path.basename(config.css))
 
-  html = config.template {sources: config.sources, css,
-    title, hasTitle, sections, path, destination, relative}
+  html = config.template {
+    sources: config.sources, css, title, hasTitle:<span class="hljs-literal">true</span> , sections, path, destination, relative
+  }
 
   <span class="hljs-built_in">console</span>.log <span class="hljs-string">"docco: <span class="hljs-subst">#{source}</span> -&gt; <span class="hljs-subst">#{destination source}</span>"</span>
   fs.outputFileSync destination(source), html</pre></div>
         
       
         
-        <h2 id="configuration">Configuration</h2>
+        <h2>Configuration</h2>
 
         
       
@@ -329,7 +315,7 @@ is only copied for the latter.</p>
         
       
         
-        <h2 id="helpers-initial-setup">Helpers &amp; Initial Setup</h2>
+        <h2>Helpers &amp; Initial Setup</h2>
 
         
       
@@ -340,9 +326,47 @@ is only copied for the latter.</p>
           <div class='highlight'><pre>_           = <span class="hljs-built_in">require</span> <span class="hljs-string">'underscore'</span>
 fs          = <span class="hljs-built_in">require</span> <span class="hljs-string">'fs-extra'</span>
 path        = <span class="hljs-built_in">require</span> <span class="hljs-string">'path'</span>
-marked      = <span class="hljs-built_in">require</span> <span class="hljs-string">'marked'</span>
+MarkdownIt  = <span class="hljs-built_in">require</span> <span class="hljs-string">'markdown-it'</span>
 commander   = <span class="hljs-built_in">require</span> <span class="hljs-string">'commander'</span>
-highlightjs = <span class="hljs-built_in">require</span> <span class="hljs-string">'highlight.js'</span></pre></div>
+hljs = <span class="hljs-built_in">require</span> <span class="hljs-string">'highlight.js'</span>
+
+md = MarkdownIt({
+  highlight: <span class="hljs-function"><span class="hljs-params">(str, lang)</span> =&gt;</span>
+    <span class="hljs-built_in">console</span>.log <span class="hljs-string">'lang'</span>, lang
+
+    <span class="hljs-keyword">if</span> lang &amp;&amp; hljs.getLanguage(lang)
+      <span class="hljs-keyword">try</span>
+        <span class="hljs-keyword">return</span> hljs.highlight(lang, str).value
+      <span class="hljs-keyword">catch</span> __
+
+    <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+})</pre></div>
+        
+      
+        
+        <p>uml support</p>
+<pre><code class="language-puml">@startuml
+a -&gt; b
+@enduml
+</code></pre>
+<img src="http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKfKqBLJIE9oICrB0N81" alt="uml diagram">
+
+        
+          <div class='highlight'><pre>.use(<span class="hljs-built_in">require</span>(<span class="hljs-string">'markdown-it-plantuml'</span>),{imageFormat:<span class="hljs-string">'png'</span>})</pre></div>
+        
+      
+        
+        <p>math support</p>
+<pre><code>\begin{equation}
+e^{\pi i} + 1 = 0
+\end{equation}
+</code></pre>
+<p>\begin{equation}
+e^{\pi i} + 1 = 0
+\end{equation}</p>
+
+        
+          <div class='highlight'><pre>.use(<span class="hljs-built_in">require</span>(<span class="hljs-string">'markdown-it-mathjax'</span>)())</pre></div>
         
       
         
@@ -371,7 +395,7 @@ language to Docco, just add it to the file.</p>
         
       
         
-        <p>Ignore <a href="http://en.wikipedia.org/wiki/Shebang_%28Unix%29">hashbangs</a> and interpolations…</p>
+        <p>Ignore <a href="http://en.wikipedia.org/wiki/Shebang_%28Unix%29">hashbangs</a> and interpolations...</p>
 
         
           <div class='highlight'><pre>    l.commentFilter = <span class="hljs-regexp">/(^#![/</span>]|^\s*<span class="hljs-comment">#\{)/</span>
@@ -380,8 +404,8 @@ languages = buildMatchers languages</pre></div>
         
       
         
-        <p>A function to get the current language we’re documenting, based on the
-file extension. Detect and tag “literate” <code>.ext.md</code> variants.</p>
+        <p>A function to get the current language we're documenting, based on the
+file extension. Detect and tag &quot;literate&quot; <code>.ext.md</code> variants.</p>
 
         
           <div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">getLanguage</span> = <span class="hljs-params">(source, config)</span> -&gt;</span>
@@ -402,12 +426,12 @@ file extension. Detect and tag “literate” <code>.ext.md</code> variants.</p>
         
       
         
-        <h2 id="command-line-interface">Command Line Interface</h2>
+        <h2>Command Line Interface</h2>
 
         
       
         
-        <p>Finally, let’s define the interface to run Docco from the command line.
+        <p>Finally, let's define the interface to run Docco from the command line.
 Parse options using <a href="https://github.com/visionmedia/commander.js">Commander</a>.</p>
 
         
@@ -421,7 +445,6 @@ Parse options using <a href="https://github.com/visionmedia/commander.js">Comman
     .option(<span class="hljs-string">'-c, --css [file]'</span>,       <span class="hljs-string">'use a custom css file'</span>, c.css)
     .option(<span class="hljs-string">'-t, --template [file]'</span>,  <span class="hljs-string">'use a custom .jst template'</span>, c.template)
     .option(<span class="hljs-string">'-e, --extension [ext]'</span>,  <span class="hljs-string">'assume a file extension for all inputs'</span>, c.extension)
-    .option(<span class="hljs-string">'-m, --marked [file]'</span>,    <span class="hljs-string">'use custom marked options'</span>, c.marked)
     .parse(args)
     .name = <span class="hljs-string">"docco"</span>
   <span class="hljs-keyword">if</span> commander.args.length
@@ -431,7 +454,7 @@ Parse options using <a href="https://github.com/visionmedia/commander.js">Comman
         
       
         
-        <h2 id="public-api">Public API</h2>
+        <h2>Public API</h2>
 
         
       
