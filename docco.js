@@ -68,7 +68,7 @@
   // is a **CoffeeScript** fork of Docco that adds a searchable table of contents,
   // and aims to gracefully handle large projects with complex hierarchies of code.
 
-  // * For ES6 fans, [Docco Next](https://github.com/mobily-enterprises/docco-next)
+  // * For **ES6** fans, [Docco Next](https://github.com/mobily-enterprises/docco-next)
   // is an expanded rewrite of Docco in modern JavaScript, thoroughly commented,
   // and with the bonus that your existing templates will still work.
 
