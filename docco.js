@@ -27,7 +27,7 @@
   // doesn't handle your favorite yet, feel free to
   // [add it to the list](https://github.com/jashkenas/docco/blob/master/resources/languages.json).
   // Finally, the ["literate" style](http://coffeescript.org/#literate) of *any*
-  // language listed in [languages.json](https://github.com/jashkenas/docco/blob/master/resources/languages.json) 
+  // language listed in [languages.json](https://github.com/jashkenas/docco/blob/master/resources/languages.json)
   // is also supported — just tack an `.md` extension on the end:
   // `.coffee.md`, `.py.md`, and so on.
 
@@ -68,7 +68,11 @@
   // is a **CoffeeScript** fork of Docco that adds a searchable table of contents,
   // and aims to gracefully handle large projects with complex hierarchies of code.
 
-  // Note that not all ports will support all Docco features ... yet.
+  // * For ES6 fans, [Docco Next](https://github.com/mobily-enterprises/docco-next)
+  // is an expanded rewrite of Docco in modern JavaScript, thoroughly commented,
+  // and with the bonus that your existing templates will still work.
+
+  // Note that not all ports support all Docco features.
 
   // Main Documentation Generation Functions
   // ---------------------------------------

@@ -47,7 +47,7 @@ and is released under the <a href="http://lillicense.org/v1.html">Lil License</a
 doesn’t handle your favorite yet, feel free to
 <a href="https://github.com/jashkenas/docco/blob/master/resources/languages.json">add it to the list</a>.
 Finally, the <a href="http://coffeescript.org/#literate">“literate” style</a> of <em>any</em>
-language listed in <a href="https://github.com/jashkenas/docco/blob/master/resources/languages.json">languages.json</a> 
+language listed in <a href="https://github.com/jashkenas/docco/blob/master/resources/languages.json">languages.json</a>
 is also supported — just tack an <code>.md</code> extension on the end:
 <code>.coffee.md</code>, <code>.py.md</code>, and so on.</p>
 <h2 id="partners-in-crime-">Partners in Crime:</h2>
@@ -69,7 +69,7 @@ also by Mr. Tomayko.</p>
 <a href="http://github.com/fitzgen">Nick Fitzgerald</a>‘s <a href="https://pycco-docs.github.io/pycco/">Pycco</a>.</p>
 </li>
 <li><p>For <strong>Clojure</strong> fans, <a href="http://blog.fogus.me/">Fogus</a>‘s
-<a href="https://gdeer81.github.io/marginalia/">Marginalia</a> is a bit of a departure from
+<a href="http://fogus.me/fun/marginalia/">Marginalia</a> is a bit of a departure from
 “quick-and-dirty”, but it’ll get the job done.</p>
 </li>
 <li><p>There’s a <strong>Go</strong> port called <a href="http://nikhilm.github.io/gocco/">Gocco</a>,
@@ -90,8 +90,12 @@ aficionado, check out <a href="https://github.com/dontangg">Don Wilson</a>‘s
 is a <strong>CoffeeScript</strong> fork of Docco that adds a searchable table of contents,
 and aims to gracefully handle large projects with complex hierarchies of code.</p>
 </li>
+<li><p>For ES6 fans, <a href="https://github.com/mobily-enterprises/docco-next">Docco Next</a>
+is an expanded rewrite of Docco in modern JavaScript, thoroughly commented,
+and with the bonus that your existing templates will still work.</p>
+</li>
 </ul>
-<p>Note that not all ports will support all Docco features … yet.</p>
+<p>Note that not all ports support all Docco features.</p>
 <h2 id="main-documentation-generation-functions">Main Documentation Generation Functions</h2>
 
         
@@ -389,7 +393,8 @@ file extension. Detect and tag “literate” <code>.ext.md</code> variants.</p>
   lang = config.languages?[ext] <span class="hljs-keyword">or</span> languages[ext]
   <span class="hljs-keyword">if</span> lang <span class="hljs-keyword">and</span> lang.name <span class="hljs-keyword">is</span> <span class="hljs-string">'markdown'</span>
     codeExt = path.extname(path.basename(source, ext))
-    <span class="hljs-keyword">if</span> codeExt <span class="hljs-keyword">and</span> codeLang = languages[codeExt]
+    codeLang = config.languages?[codeExt] <span class="hljs-keyword">or</span> languages[codeExt]
+    <span class="hljs-keyword">if</span> codeExt <span class="hljs-keyword">and</span> codeLang
       lang = _.extend {}, codeLang, {literate: <span class="hljs-literal">yes</span>}
   lang</pre></div>
         
