@@ -33,6 +33,10 @@ is also supported — just tack an `.md` extension on the end:
 Partners in Crime:
 ------------------
 
+* For ES6 fans, [Docco Next](https://github.com/mobily-enterprises/docco-next) is
+a total (and more verbose) rewrite of Docco, using its core ideas and architecture
+-- with the bonus that your existing templates will still work.
+
 * If Node.js doesn't run on your platform, or you'd prefer a more
 convenient package, get [Ryan Tomayko](http://github.com/rtomayko)'s
 [Rocco](http://rtomayko.github.io/rocco/rocco.html), the **Ruby** port that's
