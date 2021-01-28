@@ -45,6 +45,7 @@
   ".lua":         {"name": "lua", "symbol": "--"},
   ".n":           {"name": "nemerle", "symbol": "//"},
   ".m":           {"name": "objectivec", "symbol": "//"},
+  ".marko"        {"name": "javascript", "symbol": "//"},
   ".mel":         {"name": "mel", "symbol": "//"},
   ".markdown":    {"name": "markdown", "symbol": ""},
   ".md":          {"name": "markdown", "symbol": ""},
