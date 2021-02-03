@@ -275,7 +275,7 @@
   // source files for languages for which we have definitions.
   configure = function(options) {
     var config, dir;
-    config = _.extend({}, defaults, _.pick(options, ..._.keys(defaults)));
+    config = _.extend({}, defaults, _.pick(options.opts(), ..._.keys(defaults)));
     config.languages = buildMatchers(config.languages);
     // The user is able to override the layout file used with the `--template` parameter.
     // In this case, it is also neccessary to explicitly specify a stylesheet file.

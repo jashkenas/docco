@@ -244,7 +244,7 @@ template, or one of the built-in **layouts**. We only attempt to process
 source files for languages for which we have definitions.
 
     configure = (options) ->
-      config = _.extend {}, defaults, _.pick(options, _.keys(defaults)...)
+      config = _.extend {}, defaults, _.pick(options.opts(), _.keys(defaults)...)
 
       config.languages = buildMatchers config.languages
 
