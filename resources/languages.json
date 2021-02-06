@@ -19,6 +19,7 @@
   ".d":           {"name": "d", "symbol": "//"},
   ".dart":        {"name": "dart", "symbol": "///"},
   ".dtx":         {"name": "tex", "symbol": "%"},
+  ".ejs":         {"name": "javascript", "symbol": "//"},
   ".erl":         {"name": "erlang", "symbol": "%"},
   ".f":           {"name": "fortran", "symbol": "!"},
   ".for":         {"name": "fortran", "symbol": "!"},
