@@ -43,6 +43,7 @@
   ".litcoffee":   {"name": "coffeescript", "symbol": "#", "literate": true},
   ".ls":          {"name": "coffeescript", "symbol": "#"},
   ".lua":         {"name": "lua", "symbol": "--"},
+  ".lualit":      {"name": "lua", "symbol": "--", "literate": true},
   ".n":           {"name": "nemerle", "symbol": "//"},
   ".m":           {"name": "objectivec", "symbol": "//"},
   ".mel":         {"name": "mel", "symbol": "//"},
