@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "commander":  ">= 0.5.2",
-    "marked":     ">= 0.2.7",
+    "marked":     "^0.3.19",
     "fs-extra":   ">= 0.6.0",
     "underscore": ">= 1.0.0",
     "highlight.js": ">= 8.0.x"
