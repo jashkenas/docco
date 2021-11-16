@@ -284,7 +284,7 @@ Require our external dependencies.
     _           = require 'underscore'
     fs          = require 'fs-extra'
     path        = require 'path'
-    marked      = require 'marked'
+    marked      = require('marked').marked
     commander   = require 'commander'
     highlightjs = require 'highlight.js'
 

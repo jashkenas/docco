@@ -1,26 +1,32 @@
 {
-  "name":         "docco",
-  "description":  "The Quick and Dirty Literate Programming Documentation Generator",
-  "keywords":     ["documentation", "docs", "generator", "literate", "coffeescript"],
-  "author":       "Jeremy Ashkenas",
-  "version":      "0.8.1",
-  "license":      "MIT",
+  "name": "docco",
+  "description": "The Quick and Dirty Literate Programming Documentation Generator",
+  "keywords": [
+    "documentation",
+    "docs",
+    "generator",
+    "literate",
+    "coffeescript"
+  ],
+  "author": "Jeremy Ashkenas",
+  "version": "0.9.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/jashkenas/docco.git"
   },
   "engines": {
-    "node":       ">=0.2.0"
+    "node": ">=0.2.0"
   },
   "dependencies": {
-    "commander":  ">= 0.5.2",
-    "marked":     ">= 0.2.7",
-    "fs-extra":   ">= 0.6.0",
-    "underscore": ">= 1.0.0",
-    "highlight.js": ">= 8.0.x"
+    "commander": "~ 8.3.0",
+    "marked": "~ 4.0.3",
+    "fs-extra": "~ 10.0.0",
+    "underscore": "~ 1.13.1",
+    "highlight.js": "~ 11.3.1"
   },
-  "main" :        "./docco",
+  "main": "./docco",
   "bin": {
-    "docco":      "./bin/docco"
+    "docco": "./bin/docco"
   }
 }
