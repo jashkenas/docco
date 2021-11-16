@@ -181,14 +181,14 @@ if not specified.
           lang or= language.name
 
           if highlightjs.getLanguage(lang)
-            highlightjs.highlight(lang, code).value
+            highlightjs.highlight(code, {language: lang}).value
           else
             console.warn "docco: couldn't highlight code block with unknown language '#{lang}' in #{source}"
             code
       }
 
       for section, i in sections
-        code = highlightjs.highlight(language.name, section.codeText).value
+        code = highlightjs.highlight(section.codeText, {language: language.name}).value
         code = code.replace(/\s+$/, '')
         section.codeHtml = "<div class='highlight'><pre>#{code}</pre></div>"
         section.docsHtml = marked(section.docsText)

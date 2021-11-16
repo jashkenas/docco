@@ -198,7 +198,9 @@
       highlight: function(code, lang) {
         lang || (lang = language.name);
         if (highlightjs.getLanguage(lang)) {
-          return highlightjs.highlight(lang, code).value;
+          return highlightjs.highlight(code, {
+            language: lang
+          }).value;
         } else {
           console.warn(`docco: couldn't highlight code block with unknown language '${lang}' in ${source}`);
           return code;
@@ -208,7 +210,9 @@
     results = [];
     for (i = j = 0, len = sections.length; j < len; i = ++j) {
       section = sections[i];
-      code = highlightjs.highlight(language.name, section.codeText).value;
+      code = highlightjs.highlight(section.codeText, {
+        language: language.name
+      }).value;
       code = code.replace(/\s+$/, '');
       section.codeHtml = `<div class='highlight'><pre>${code}</pre></div>`;
       results.push(section.docsHtml = marked(section.docsText));

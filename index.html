@@ -221,14 +221,14 @@ if not specified.</p>
       lang <span class="hljs-keyword">or</span>= language.name
 
       <span class="hljs-keyword">if</span> highlightjs.getLanguage(lang)
-        highlightjs.highlight(lang, code).value
+        highlightjs.highlight(code, {language: lang}).value
       <span class="hljs-keyword">else</span>
         console.warn <span class="hljs-string">&quot;docco: couldn&#x27;t highlight code block with unknown language &#x27;<span class="hljs-subst">#{lang}</span>&#x27; in <span class="hljs-subst">#{source}</span>&quot;</span>
         code
   }
 
   <span class="hljs-keyword">for</span> section, i <span class="hljs-keyword">in</span> sections
-    code = highlightjs.highlight(language.name, section.codeText).value
+    code = highlightjs.highlight(section.codeText, {language: language.name}).value
     code = code.replace(<span class="hljs-regexp">/\s+$/</span>, <span class="hljs-string">&#x27;&#x27;</span>)
     section.codeHtml = <span class="hljs-string">&quot;&lt;div class=&#x27;highlight&#x27;&gt;&lt;pre&gt;<span class="hljs-subst">#{code}</span>&lt;/pre&gt;&lt;/div&gt;&quot;</span>
     section.docsHtml = marked(section.docsText)</pre></div>
