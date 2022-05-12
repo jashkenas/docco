@@ -67,6 +67,7 @@
   ".sty":         {"name": "tex", "symbol": "%"},
   ".styl":        {"name": "stylus", "symbol": "//"},
   ".stylus":      {"name": "stylus", "symbol": "//"},
+  ".svelte":      {"name": "typescript", "symbol": "//"},
   ".swift":       {"name": "swift", "symbol": "//"},
   ".t":           {"name": "perl", "symbol": "#"},
   ".ts":          {"name": "typescript", "symbol": "//"},
