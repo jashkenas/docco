@@ -69,6 +69,7 @@
   ".stylus":      {"name": "stylus", "symbol": "//"},
   ".swift":       {"name": "swift", "symbol": "//"},
   ".t":           {"name": "perl", "symbol": "#"},
+  ".tcl":         {"name": "tcl", "symbol": "#"},
   ".ts":          {"name": "typescript", "symbol": "//"},
   ".v":           {"name": "verilog", "symbol": "//"},
   ".vala":        {"name": "vala", "symbol": "//"},
