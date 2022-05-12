@@ -224,9 +224,9 @@
   // documentation file by passing the completed HTML sections into the template,
   // and rendering it to the specified output path.
   write = function(source, sections, config) {
-    var css, destination, first, firstSection, hasTitle, html, relative, title;
+    var css, destination, first, firstSection, hasTitle, html, prefix, relative, title;
     destination = function(file) {
-      return path.join(config.output, path.dirname(file), path.basename(file, path.extname(file)) + '.html');
+      return path.join(config.output, path.dirname(file).replace(config.prefix, ''), path.basename(file, path.extname(file)) + '.html');
     };
     relative = function(file) {
       var from, to;
@@ -245,6 +245,7 @@
     hasTitle = first && first.type === 'heading' && first.depth === 1;
     title = hasTitle ? first.text : path.basename(source);
     css = relative(path.join(config.output, path.basename(config.css)));
+    prefix = config.prefix;
     html = config.template({
       sources: config.sources,
       css,
@@ -253,7 +254,8 @@
       sections,
       path,
       destination,
-      relative
+      relative,
+      prefix
     });
     console.log(`docco: ${source} -> ${destination(source)}`);
     return fs.outputFileSync(destination(source), html);
@@ -267,6 +269,7 @@
   defaults = {
     layout: 'parallel',
     output: 'docs',
+    prefix: '',
     template: null,
     css: null,
     extension: null,
@@ -281,6 +284,7 @@
     var config, dir;
     config = _.extend({}, defaults, _.pick(options.opts(), ..._.keys(defaults)));
     config.languages = buildMatchers(config.languages);
+    config.prefix = new RegExp(`^${config.prefix}(\/?)`);
     // The user is able to override the layout file used with the `--template` parameter.
     // In this case, it is also neccessary to explicitly specify a stylesheet file.
     // These custom templates are compiled exactly like the predefined ones, but the `public` folder
@@ -379,7 +383,7 @@
   run = function(args = process.argv) {
     var c;
     c = defaults;
-    commander.version(version).usage('[options] files').option('-L, --languages [file]', 'use a custom languages.json', _.compose(JSON.parse, fs.readFileSync)).option('-l, --layout [name]', 'choose a layout (parallel, linear or classic)', c.layout).option('-o, --output [path]', 'output to a given folder', c.output).option('-c, --css [file]', 'use a custom css file', c.css).option('-t, --template [file]', 'use a custom .jst template', c.template).option('-e, --extension [ext]', 'assume a file extension for all inputs', c.extension).option('-m, --marked [file]', 'use custom marked options', c.marked).parse(args).name = "docco";
+    commander.version(version).usage('[options] files').option('-L, --languages [file]', 'use a custom languages.json', _.compose(JSON.parse, fs.readFileSync)).option('-l, --layout [name]', 'choose a layout (parallel, linear or classic)', c.layout).option('-o, --output [path]', 'output to a given folder', c.output).option('-p, --prefix [path]', 'trim file prefix', c.prefix).option('-c, --css [file]', 'use a custom css file', c.css).option('-t, --template [file]', 'use a custom .jst template', c.template).option('-e, --extension [ext]', 'assume a file extension for all inputs', c.extension).option('-m, --marked [file]', 'use custom marked options', c.marked).parse(args).name = "docco";
     if (commander.args.length) {
       return document(commander);
     } else {
