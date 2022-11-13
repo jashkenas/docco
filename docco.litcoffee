@@ -253,19 +253,19 @@ In this case, it is also neccessary to explicitly specify a stylesheet file.
 These custom templates are compiled exactly like the predefined ones, but the `public` folder
 is only copied for the latter.
 
-      if options.template
-        unless options.css
+      if config.template
+        unless config.css
           console.warn "docco: no stylesheet file specified"
         config.layout = null
       else
         dir = config.layout = path.join __dirname, 'resources', config.layout
         config.public       = path.join dir, 'public' if fs.existsSync path.join dir, 'public'
         config.template     = path.join dir, 'docco.jst'
-        config.css          = options.css or path.join dir, 'docco.css'
+        config.css          = config.css or path.join dir, 'docco.css'
       config.template = _.template fs.readFileSync(config.template).toString()
 
-      if options.marked
-        config.marked = JSON.parse fs.readFileSync(options.marked)
+      if config.marked
+        config.marked = JSON.parse fs.readFileSync(config.marked)
 
       config.sources = options.args.filter((source) ->
         lang = getLanguage source, config
