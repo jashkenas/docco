@@ -253,8 +253,8 @@ In this case, it is also neccessary to explicitly specify a stylesheet file.
 These custom templates are compiled exactly like the predefined ones, but the `public` folder
 is only copied for the latter.
 
-      if options.template
-        unless options.css
+      if config.template
+        unless config.css
           console.warn "docco: no stylesheet file specified"
         config.layout = null
       else

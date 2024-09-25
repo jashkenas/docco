@@ -309,8 +309,8 @@ These custom templates are compiled exactly like the predefined ones, but the <c
 is only copied for the latter.</p>
 
         
-          <div class='highlight'><pre>  <span class="hljs-keyword">if</span> options.template
-    <span class="hljs-keyword">unless</span> options.css
+          <div class='highlight'><pre>  <span class="hljs-keyword">if</span> config.template
+    <span class="hljs-keyword">unless</span> config.css
       console.warn <span class="hljs-string">&quot;docco: no stylesheet file specified&quot;</span>
     config.layout = <span class="hljs-literal">null</span>
   <span class="hljs-keyword">else</span>
