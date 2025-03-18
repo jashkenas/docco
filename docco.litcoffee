@@ -104,7 +104,7 @@ out in an HTML template.
           fs.readFile source, (error, buffer) ->
             return callback error if error
 
-            code = buffer.toString()
+            code = buffer.toString().replace(/\r\n/g, '\n')
             sections = parse source, code, config
             format source, sections, config
             write source, sections, config
