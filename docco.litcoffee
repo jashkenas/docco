@@ -200,7 +200,7 @@ and rendering it to the specified output path.
     write = (source, sections, config) ->
 
       destination = (file) ->
-        path.join(config.output, path.dirname(file), path.basename(file, path.extname(file)) + '.html')
+        path.join(config.output, path.dirname(file).replace(config.prefix, ''), path.basename(file, path.extname(file)) + '.html')
 
       relative = (file) ->
         to = path.dirname(path.resolve(file))
@@ -216,9 +216,10 @@ name of the source file.
       hasTitle = first and first.type is 'heading' and first.depth is 1
       title = if hasTitle then first.text else path.basename source
       css = relative path.join(config.output, path.basename(config.css))
+      prefix = config.prefix
 
       html = config.template {sources: config.sources, css,
-        title, hasTitle, sections, path, destination, relative}
+        title, hasTitle, sections, path, destination, relative, prefix}
 
       console.log "docco: #{source} -> #{destination source}"
       fs.outputFileSync destination(source), html
@@ -233,6 +234,7 @@ user-specified options.
     defaults =
       layout:     'parallel'
       output:     'docs'
+      prefix:     ''
       template:   null
       css:        null
       extension:  null
@@ -247,6 +249,8 @@ source files for languages for which we have definitions.
       config = _.extend {}, defaults, _.pick(options.opts(), _.keys(defaults)...)
 
       config.languages = buildMatchers config.languages
+
+      config.prefix = new RegExp "^#{config.prefix}(\/?)"
 
 The user is able to override the layout file used with the `--template` parameter.
 In this case, it is also neccessary to explicitly specify a stylesheet file.
@@ -341,6 +345,7 @@ Parse options using [Commander](https://github.com/visionmedia/commander.js).
         .option('-L, --languages [file]', 'use a custom languages.json', _.compose JSON.parse, fs.readFileSync)
         .option('-l, --layout [name]',    'choose a layout (parallel, linear or classic)', c.layout)
         .option('-o, --output [path]',    'output to a given folder', c.output)
+        .option('-p, --prefix [path]',    'trim file prefix', c.prefix)
         .option('-c, --css [file]',       'use a custom css file', c.css)
         .option('-t, --template [file]',  'use a custom .jst template', c.template)
         .option('-e, --extension [ext]',  'assume a file extension for all inputs', c.extension)
