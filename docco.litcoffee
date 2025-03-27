@@ -261,11 +261,11 @@ is only copied for the latter.
         dir = config.layout = path.join __dirname, 'resources', config.layout
         config.public       = path.join dir, 'public' if fs.existsSync path.join dir, 'public'
         config.template     = path.join dir, 'docco.jst'
-        config.css          = options.css or path.join dir, 'docco.css'
+        config.css          = config.css or path.join dir, 'docco.css'
       config.template = _.template fs.readFileSync(config.template).toString()
 
-      if options.marked
-        config.marked = JSON.parse fs.readFileSync(options.marked)
+      if config.marked
+        config.marked = JSON.parse fs.readFileSync(config.marked)
 
       config.sources = options.args.filter((source) ->
         lang = getLanguage source, config
