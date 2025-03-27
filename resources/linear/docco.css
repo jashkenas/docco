@@ -66,6 +66,8 @@ h1, h2, h3, h4, h5, h6 {
   h1 {
     margin: 0;
     text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   h2 {
     font-size: 1.26em;
@@ -169,7 +171,7 @@ ul.sections {
 
 .toc {
   max-height: 0;
-  overflow: hidden;
+  overflow: auto;
   text-align: center;
   font-size: 13px;
   line-height: 20px;
