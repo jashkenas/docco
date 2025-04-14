@@ -296,11 +296,11 @@
         config.public = path.join(dir, 'public');
       }
       config.template = path.join(dir, 'docco.jst');
-      config.css = options.css || path.join(dir, 'docco.css');
+      config.css = config.css || path.join(dir, 'docco.css');
     }
     config.template = _.template(fs.readFileSync(config.template).toString());
-    if (options.marked) {
-      config.marked = JSON.parse(fs.readFileSync(options.marked));
+    if (config.marked) {
+      config.marked = JSON.parse(fs.readFileSync(config.marked));
     }
     config.sources = options.args.filter(function(source) {
       var lang;
